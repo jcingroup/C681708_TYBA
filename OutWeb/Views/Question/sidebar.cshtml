@@ -1,0 +1,20 @@
+﻿@using OutWeb.Provider
+
+@{
+    ViewBag.Current = "問卷填寫";
+}
+
+<aside class="sidebar">
+    <h2 class="title underline my-0">@ViewBag.Current</h2>
+    <nav>
+        <a href="~/Question/List" class="@(ViewBag.Subnav == "Question" ? "current" : "")">@ViewBag.Current</a>
+
+        @* 假如有登入時 *@
+        @if (UserFrontProvider.Instance.User != null)
+        {
+            <a href="~/User/QuestionList" class="@(ViewBag.Subnav == "Write" ? "current" : "")">已填寫問卷</a>
+            <a href="~/Home/LogOut">登出</a>
+        }
+</nav>
+</aside>
+

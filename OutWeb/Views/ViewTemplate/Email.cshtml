@@ -1,0 +1,163 @@
+﻿@using OutWeb.Entities
+@using OutWeb.Repositories
+@model EMAIL
+@{
+    Layout = null;
+    ViewBag.Title = "MsgMail";
+    ViewBag.Website = "能源資訊網";
+    var web_url = "http://" + PublicMethodRepository.GetConfigAppSetting("WebUrl");
+}
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>【能源資訊網】資訊通知</title>
+    <style>
+        body {
+            width: 100% !important;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            margin: 0;
+            padding: 0;
+            background: #fff;
+        }
+
+        * {
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .ExternalClass * {
+            line-height: 100%;
+        }
+
+        table td {
+            border-collapse: collapse;
+        }
+
+        *[class].wlf {
+            width: 600px;
+        }
+
+        *[class].w-280 {
+            width: 280px;
+        }
+
+        *[class].w-200 {
+            width: 200px;
+        }
+
+        *[class].w-150 {
+            width: 150px;
+        }
+
+        *[class].w-130 {
+            width: 130px;
+        }
+
+        *[class].w-120 {
+            width: 120px;
+        }
+
+        *[class].w-30 {
+            width: 30px;
+        }
+    </style>
+</head>
+<body style="font: .8em/140% '微軟正黑體', 'Microsoft JhengHei', Helvetica, sans-serif;">
+    <table width="100%" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed">
+        <tr>
+            <td>
+
+                <!--[if mso]><table width="600" border="0" cellspacing="0" cellpadding="0" align="center"><tr><td><![endif]-->
+
+                <table class="wlf full-width" width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="margin:0 auto;max-width:600px">
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td width="14%">&nbsp;</td>
+                                    <td align="center" style="padding:12px 0">
+                                        <a href="#" target="_blank" style="text-decoration: none;color: #00556a">
+                                            <img src=@(web_url + "/Content/images/logo.png" ) width="74" style="border:none;width:74px;max-width:74px;max-height:65px;margin-right: 12px;vertical-align: middle;" />
+                                            <h1 style="display: inline;margin-top: 24px;">@ViewBag.Website</h1>
+                                        </a>
+                                    </td>
+                                    <td width="14%">&nbsp;</td>
+                                </tr>
+                            </table>
+
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center" style="font-size:1px;line-height:1px"><img src="https://s3.amazonaws.com/rejoiner/generic/b/div.png" width="574" alt="@ViewBag.Website" style="display:block;width:100%;max-width:574px;max-height:8px" /></td>
+                                </tr>
+                                <tr>
+                                    <td height="25">&nbsp;</td>
+                                </tr>
+                            </table>
+
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td width="10%">&nbsp;</td>
+                                    <td>
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td style="color:#000001;font-size:30px;font-weight:bold;line-height:34px">訊息通知</td>
+                                            </tr>
+                                            <tr><td height="25">&nbsp;</td></tr>
+                                            <tr>
+                                                <td style="color:#000001;font-size:18px;line-height:24px">
+                                                    @Html.Raw(Model.MAIL_BODY)
+                                                </td>
+                                            </tr>
+                                            <tr><td height="25">&nbsp;</td></tr>
+                                        </table>
+                                    </td>
+                                    <td width="10%">&nbsp;</td>
+                                </tr>
+                            </table>
+
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center" style="font-size:1px;line-height:1px"><img src="https://s3.amazonaws.com/rejoiner/generic/b/div.png" width="574" alt="" style="display:block;width:100%;max-width:574px;max-height:8px" /></td>
+                                </tr>
+                                <tr>
+                                    <td height="30">&nbsp;</td>
+                                </tr>
+                            </table>
+
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td width="5%">&nbsp;</td>
+                                    <td>
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td align="center" style="color:#000001;font-size:20px;font-weight:bold;line-height:28px">
+                                                    TEL: (03) 591-8588
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="15" style="font-size:1px;line-height:1px">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" style="color:#666666;font-family:Arial, sans-serif;font-size:11px;line-height:16px">Copyright &copy; 2017 @ViewBag.Website All Rights Reserved</td>
+                                            </tr>
+                                            <tr>
+                                                <td height="20">&nbsp;</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td width="5%">&nbsp;</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+                <!--[if mso]></td></tr></table><![endif]-->
+
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

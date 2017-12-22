@@ -1,0 +1,29 @@
+﻿@using OutWeb.Modules.Manage
+
+@{
+    ViewBag.Current = "國內外新聞";
+    //出版品分類
+    TypeManageModule typeModule = new TypeManageModule();
+    SelectList typeList = typeModule.CreateTypeManageDropList(0, false, "News");
+
+    typeList = new SelectList(typeList
+                      .Where(x => !string.IsNullOrEmpty(x.Value))
+                      .ToList(),
+                      "Value",
+                      "Text");
+
+}
+
+<aside class="sidebar">
+    <h2 class="title underline my-0">@ViewBag.Current</h2>
+    <nav>
+        @foreach (var nwsTp in typeList)
+        {
+            <a href="@Url.Content("~/News/List?type="+ nwsTp.Value)" class="@(ViewBag.Subnav == "sub-news"+ nwsTp.Value ? "current" : "")">@nwsTp.Text</a>
+        }
+
+        @*<a href="~/News/List" class="@(ViewBag.Subnav == "sub-newsIn" ? "current" : "")">國內新聞</a>
+        <a href="~/News/List" class="@(ViewBag.Subnav == "sub-newsOut" ? "current" : "")">國外新聞</a>*@
+    </nav>
+</aside>
+

@@ -1,0 +1,119 @@
+﻿@using OutWeb.Models.FrontEnd.TrainModels.TrainApplyModels
+@model TrainContentModel
+@using OutWeb.Provider
+@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
+
+@{
+    ViewBag.Title = Model.ActivityName;
+    ViewBag.BodyClass = "Train";
+    ViewBag.Subnav = "Train";
+    ViewBag.Breadcrumb = Model.ActivityName; @* 最後層的麵包屑 *@
+string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
+string ActionName = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Action"]);
+}
+
+@* 中間層的麵包屑 *@
+@section breadcrumb {
+    <li><a href="~/Train">研討會</a></li>
+}
+
+<div class="wrap zoom">
+    @Html.Partial("sidebar")
+
+    <div id="content" class="text-left">
+
+        <header class="sub-title">
+            <h3 class="mt-0 underline">@ViewBag.Title</h3>
+            <small class="date font-sm">@Model.CreateDate</small>
+        </header>
+
+        <nav class="btn-group pull-right signin-btn">
+            @if (Model.IsStopRegistering)
+            {
+                <a href="@Url.Content("~/Train/ApplyAdd?trainID=" + Model.ID)" class="btn info">線上報名</a>
+                <a href="@Url.Content("~/User/TrainApply?trainID="+ Model.ID)" class="btn warning">修改報名(需登入)</a>
+                @*if (UserFrontProvider.Instance.User != null)
+                    {
+                        <a href="javascript:;" id="editBtn" class="btn warning">修改報名(需登入)</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Content("~/Home/Login")" class="btn warning">修改報名(需登入)</a>
+                    }*@
+            }
+            else
+            {
+                <a href="javascript:;" class="btn" disabled>報名截止</a>
+            }
+
+        </nav>
+
+        <div class="table-rwd clear">
+            <table class="table-striped text-left bg-muted">
+                <colgroup>
+                    <col style="width:18%">
+                </colgroup>
+                <tr><th>活動時間</th><td>@Model.ActivityDate</td></tr>
+                <tr><th>活動地點</th><td>@Model.ActivityLocation</td></tr>
+                <tr><th>主辦單位</th><td>@Model.Organizer</td></tr>
+                <tr><th>協辦單位</th><td>@Model.CoOrganiser</td></tr>
+                <tr><th>報名期限</th><td>@Model.DeadlineBegin 至 @Model.DeadlineEnd</td></tr>
+                <tr><th>聯絡人</th><td>@Model.ContactPerson</td></tr>
+                <tr><th>聯絡電話</th><td>@Model.ContactPhoneNumber</td></tr>
+                <tr><th>報名人數限制</th><td>@Model.EnrollmentRestrictions</td></tr>
+                <tr><th>費用</th><td>@Model.ChargesStatusStr</td></tr>
+                <tr><th>備註</th><td>@Model.Remarks</td></tr>
+            </table>
+        </div>
+
+        <article class="mt-16 editor">
+            @Html.Raw(Model.ActivityContent)
+        </article>
+
+        @if (Model.FilesData.Count > 0 && Model.FilesData != null)
+        {
+            <footer class="download">
+
+                @foreach (var file in Model.FilesData)
+                {
+                    string fileUrl = currentUrl + "/" + file.FileUrl;
+                    <a class="inline-block ti-clip" href="@fileUrl" url="@fileUrl" real-name="@file.RealFileName">@file.RealFileName</a>
+                }
+
+                @*<a href="" class="inline-block ti-clip">附件2</a>*@
+            </footer>
+        }
+
+        <hr class="mb-12">
+
+        <div class="text-right">
+            <button class="ti-printer mr-12" type="button" onclick="webprint('content')" onkeypress="webprint('content')">友善列印</button>
+            <a href="~/Train" class="ti-layout-grid2-alt">回列表</a>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        @*$('#editBtn').click(function () {
+
+            var url = "/Train/GetApplyIDByTrainID?trainID="+ @Model.ID;
+            $.ajax({
+                async: false,
+                type: 'GET',
+                url: url,
+                success: function (result) {
+                    if(!result.success)
+                    {
+                        alert(result.msg);
+                    }
+                    else
+                    {
+                        window.location.href = result.url;
+                    }
+                }
+            })
+
+
+        });*@
+    })
+</script>

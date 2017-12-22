@@ -1,0 +1,20 @@
+﻿@using OutWeb.Provider
+
+@{
+    ViewBag.Current = "研討會";
+}
+
+<aside class="sidebar">
+    <h2 class="title underline my-0">@ViewBag.Current</h2>
+    <nav>
+        <a href="~/Train" class="@(ViewBag.Subnav == "Train" ? "current" : "")">@ViewBag.Current</a>
+
+        @* 假如有登入時 *@
+        @if (UserFrontProvider.Instance.User != null)
+        {
+            <a href="~/User/TrainList" class="@(ViewBag.Subnav == "Apply" ? "current" : "")">已報名課程</a>
+            <a href="~/Home/LogOut">登出</a>
+        }
+</nav>
+</aside>
+

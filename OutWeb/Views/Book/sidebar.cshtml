@@ -1,0 +1,29 @@
+﻿@using OutWeb.Modules.Manage
+
+@{
+    ViewBag.Current = "出版品";
+    //出版品分類
+    TypeManageModule typeModule = new TypeManageModule();
+    SelectList typeList = typeModule.CreateTypeManageDropList(0, false, "Book");
+
+    typeList = new SelectList(typeList
+                      .Where(x => !string.IsNullOrEmpty(x.Value))
+                      .ToList(),
+                      "Value",
+                      "Text");
+    }
+
+<aside class="sidebar">
+    <h2 class="title underline my-0">@ViewBag.Current</h2>
+    <nav>
+        @foreach (var bokTp in typeList)
+        {
+            <a href="@Url.Content("~/Book/List?type="+ bokTp.Value)" class="@(ViewBag.Subnav == "sub-book"+ bokTp.Value ? "current" : "")">@bokTp.Text</a>
+        }
+
+        @*<a href="~/Book/List?type=" class="@(ViewBag.Subnav == "sub-book1" ? "current" : "")">能源查核年報</a>
+        <a href="~/Book/List" class="@(ViewBag.Subnav == "sub-book2" ? "current" : "")">節約能源要覽</a>
+        <a href="~/Book/List" class="@(ViewBag.Subnav == "sub-book3" ? "current" : "")">技術手冊</a>*@
+    </nav>
+</aside>
+

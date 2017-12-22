@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Current = "線上課程";
+}
+
+<aside class="sidebar">
+    <h2 class="title underline my-0">@ViewBag.Current</h2>
+    <nav>
+        <a href="~/Course/List" class='@(ViewBag.Subnav == "sub1" ? "current" : "")'>課程瀏覽</a>
+    </nav>
+</aside>
+

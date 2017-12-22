@@ -1,0 +1,209 @@
+﻿@using OutWeb.Models.Manage.ManageTrainApplyModels
+@model TrainApplyDetailsModel
+@{
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "報名維護";
+    ViewBag.subnav = "Trains";
+    ViewBag.subnav2 = "TrainApply";
+}
+
+@section IncludeScript {
+    <script>
+
+        $('.delApply').click(function () {
+            if (confirm("是否確定刪除報名?")) {
+                var trID = $(this).attr('train-id');
+                var apID = $(this).attr('apply-id');
+                deleteApply(trID, apID);
+            }
+        });
+
+        $('#ExportSign,#ExportList').click(function (e) {
+            var formType = $(this).attr('id');
+            e.preventDefault();
+            var url = "@Url.Content("~/FileProcess/GetFile")";
+
+            var t ='';
+
+            if (formType == 'ExportSign')
+            {
+                t = 'TrainSignEmptyList';
+            }
+            else
+            {
+                t = 'TrainEmptyList';
+            }
+
+            $.ajax({
+                async: false,
+                cache: false,
+                type: 'POST',
+                url: url,
+                data: { type: t, ID: '@Model.Data.ID' },
+                success: function (data) {
+                    if (typeof data.success === 'undefined') {
+                        alert('系統發收未知錯誤');
+                        return;
+                    }
+                    else {
+                        if (!data.success) {
+                            alert(data.msg);
+                            return;
+                        }
+                    }
+                    var response = data;
+                    window.location = '/FileProcess/Download?fileGuid=' + response.FileGuid
+                                      + '&filename=' + response.FileName;
+                }
+            })
+
+        });
+
+
+        function deleteApply(trainId, applyId) {
+            url = "@Url.Content("~/_SysAdm/DeleteApply/")";
+
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: url,
+                dataType: 'json',
+                data: { trainID: trainId, applyID: applyId },
+                success: function (result) {
+                    if (result.success == true) {
+                        alert('刪除成功');
+                        window.location.href = result.url;
+                    } else {
+                        alert('刪除成失敗');
+                        return;
+                    }
+                },
+                error: function (error) {
+                    alert('error');
+                    return;
+                }
+            });
+        }
+
+        function openModal(trainId, applyId) {
+            var url = "/_SysAdm/TrainApplyViewData?trainID=" + trainId + '&applyID=' + applyId;
+            $.ajax({
+                async: false,
+                type: 'GET',
+                url: url,
+                success: function (result) {
+                    $('#modalArea').html(result);
+                    $('.modal').show();
+                }
+            })
+            $('body').css('overflow', 'hidden');
+        }
+
+        function closeModal() {
+            $('.modal').fadeOut('fast');
+            $('body').removeAttr('style');
+        }
+
+        $('#modalArea').on('click', '.modal', function () {
+            closeModal();
+        });
+        $('#modalArea').on('click', '.modal-content', function (e) {
+            e.stopPropagation();
+        });
+
+    </script>
+}
+
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>研討會管理</li>
+        <li>@ViewBag.Crumb</li>
+    </ul>
+}
+
+<h3 class="title">@ViewBag.Crumb <small class="oi" data-glyph="tags">編輯</small></h3>
+
+<div class="btn-group">
+    <a href="TrainApplyList" class="btn warning oi" data-glyph="chevron-left">回列表</a>
+    <a href="javascript:;" class="btn info oi" id="ExportList" data-glyph="list">匯出清單</a>
+    <a href="javascript:;" class="btn info oi" id="ExportSign" data-glyph="clipboard">匯出簽到表</a>
+</div>
+
+<section class="my-24 p-12 bg-light">
+    <dl class="field">
+        <dt class="col-1">活動時間</dt>
+        <dd class="col-10 form-label underline">@string.Format("{0}~{1}", Model.Data.ActivityDateBegin.ToString("yyyy\\/MM\\/dd"), Model.Data.ActivityDateEnd.ToString("yyyy\\/MM\\/dd"))</dd>
+        <dd class="col-1">
+            @{ 
+                string chargesSatusStr = Model.Data.ChargesSatus ? "收費" : "免費";
+                string chargesSatusStyle = Model.Data.ChargesSatus ? "label-danger" : "label";
+            }
+            @* 這裡是顯示研討會的收費狀況 *@
+            <span class="@chargesSatusStyle">@chargesSatusStr</span>
+        </dd>
+    </dl>
+    <dl class="field">
+        <dt class="col-1">課程名稱</dt>
+        <dd class="col-10 form-label underline">@Model.Data.ActivityName</dd>
+    </dl>
+    <dl class="field">
+        <dt class="col-1">人數上限</dt>
+        <dd class="col-2 form-label underline">@Model.Data.EnrollmentRestrictions</dd>
+
+        <dt class="col-2">已報名/完成繳費</dt>
+        <dd class="col-2 form-label underline">@Model.Data.AlreadyRegisteredCount / @Model.Data.AlreadyRegisteredCount</dd>
+
+        <dt class="col-2">便當(葷/素)</dt>
+        <dd class="col-2 form-label underline">@Model.Data.MeatCount / @Model.Data.VegetarianCount</dd>
+    </dl>
+</section>
+
+<table class="table-list table-hover table-striped">
+    <colgroup>
+        <col span="2">
+        <col style="width:90px">
+        <col span="3">
+        <col span="3" style="width:80px">
+        <col style="width:8%">
+    </colgroup>
+    <tr>
+        <th class="item-edit">取消報名</th>
+        <th class="item-edit">編輯</th>
+        <th>報名序號</th>
+        <th class="text-left">公司名稱</th>
+        <th class="text-left">公司電話</th>
+        <th class="text-left">姓名(聯絡人)</th>
+        <th>參加人數</th>
+        <th>報名完成</th>
+        <th>額滿候補</th>
+        @*  <th>繳費狀況</th>  *@
+    </tr>
+    @foreach (var apply in Model.List)
+    {
+        <tr>
+            <td><button class="text-danger oi delApply" type="button" data-glyph="x" train-id="@apply.MapTrainID" apply-id="@apply.ID"></button></td>
+            <td>
+                <button class="text-primary oi" type="button" data-glyph="pencil" onclick="openModal('@Model.Data.ID','@apply.ID')"></button>
+            </td>
+            <td>@apply.ID</td>
+            <td class="text-left">@apply.CompanyName</td>
+            <td class="text-left">@apply.CompanyPhone</td>
+            <td class="text-left">@apply.ContactPerson</td>
+            <td>@apply.RegistrationCount</td>
+            <td>@apply.RegistrationSuccessCount</td>
+            <td>@apply.RegistrationAlternateCount</td>
+            @* <td>
+                這裡是顯示研討會的繳費設定，共2種，不做判斷此報名是否繳費完成，因此挪到上方 137行
+                <span class="label">@apply.PaymentStatus</span>
+                <span class="label-danger">收費</span>
+                <!-- <span class="label-warning">未繳費</span>
+                <span class="label-success">已繳費</span> -->
+            </td> *@
+        </tr>
+    }
+</table>
+
+@* 隱藏: hidden *@
+<div id="modalArea">
+</div>
+<!-- modal //-->

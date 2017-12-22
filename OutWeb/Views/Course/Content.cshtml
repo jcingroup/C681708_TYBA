@@ -1,0 +1,75 @@
+﻿@using OutWeb.Models.Manage.ManageCourseModels
+@model CourseDetailsDataModel
+
+@{
+    ViewBag.Title = Model.Data.標題;
+    ViewBag.BodyClass = "Course";
+    ViewBag.Subnav = "sub1";
+    ViewBag.Breadcrumb = Model.Data.標題; @* 最後層的麵包屑 *@
+string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
+}
+
+@* 中間層的麵包屑 *@
+@section breadcrumb {
+    <li><a href="~/Course">線上課程</a></li>
+}
+
+<div class="wrap zoom">
+    @Html.Partial("sidebar")
+
+    <div id="content" class="text-left">
+
+        <header class="sub-title">
+            <h3 class="mt-0 underline">@ViewBag.Title</h3>
+            <small class="date font-sm">@Model.Data.發稿日期</small>
+            @{
+                string newsRedirectUrl = string.Empty;
+                string urlBlank = string.Empty;
+                string alertUrl = string.Empty;
+                if (string.IsNullOrEmpty(Model.Data.連結位址))
+                {
+                    alertUrl = "haveNoUrl";
+                }
+                else
+                {
+                    newsRedirectUrl = Model.Data.連結位址;
+                    urlBlank = "_blank";
+                }
+            }
+            <a id="@alertUrl" target="@urlBlank" href="@newsRedirectUrl" class="btn lg pull-right ti-new-window">進入課程</a>
+        </header>
+
+        <article class="mt-16 editor">
+            @* 編輯器 *@
+            @Html.Raw(Model.Data.內容)
+        </article>
+
+
+        @if (Model.FilesData.Count > 0 && Model.FilesData != null)
+        {
+            <footer class="download">
+                @foreach (var file in Model.FilesData)
+                {
+                string fileUrl = string.Concat(currentUrl, "/", file.FileUrl);
+                    <a real-name="@file.RealFileName" href="@fileUrl" class="inline-block ti-clip" target="new">@file.RealFileName</a>
+
+                }
+            </footer>
+        }
+
+        <hr class="mb-12">
+
+        <div class="text-right">
+            <button class="ti-printer mr-12" type="button" onclick="webprint('content')" onkeypress="webprint('content')">友善列印</button>
+            <a href="~/Course" class="ti-layout-grid2-alt">回列表</a>
+        </div>
+    </div><!-- content //-->
+</div>
+
+<script>
+    $(function () {
+        $('#haveNoUrl').click(function () {
+            alert('尚未有相關課程連結');
+        });
+    })
+</script>

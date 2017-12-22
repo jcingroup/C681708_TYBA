@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "分類管理設定";
+    ViewBag.subnav = "TypeManageSetting";
+}
+
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>@ViewBag.Crumb</li>
+    </ul>
+}
+
+<h3 class="title">@ViewBag.Crumb <small class="oi" data-glyph="tags">編輯</small></h3>
+
+@using (Html.BeginForm("TypeManageSetting", "_SysAdm", FormMethod.Post, new { id = "formManageTypeManageSetting", @class = "form-list" }))
+{
+
+    <section class="row row-x0">
+        <div class="col-6">
+
+            <dl class="field">
+                <dt class="col-2"><sup title="必填">*</sup> 項目名稱</dt>
+                <dd class="col-10">
+                    @Html.DropDownList("ItemList", null, new { @id = "itemList", @Name = "item" })
+                </dd>
+            </dl>
+            <dl class="field">
+                <dt class="col-2"><sup title="必填">*</sup> 分類類別</dt>
+                <dd class="col-10">
+                    @Html.DropDownList("TypeList", null, new { @id = "typeList", @Name = "type" })
+                </dd>
+            </dl>
+            <footer class="submit-bar clear mt-24">
+                <button class="btn success oi" data-glyph="circle-check" type="button" id="sumbitBtn">確定儲存</button>
+                <button class="btn warning oi" data-glyph="circle-x" type="button" id="bakList">回到列表</button>
+            </footer>
+        </div>
+
+
+    </section>
+
+}
+<script>
+    $(function () {
+        $("#bakList").click(function (event) {
+            event.preventDefault();
+            var url = '@Url.Action("TypeManageList", "_SysAdm")';
+            window.location.href = url;
+        });
+
+        $('#sumbitBtn').click(function () {
+            var itemVal = $('#itemList').val();
+            var typeVal = $('#typeList').val();
+            if (itemVal == '' || typeVal == '') {
+                alert('未選擇項目名稱或分類類別');
+                return;
+            }
+            else {
+                $('#formManageTypeManageSetting')[0].submit();
+            }
+        });
+        if ('@TempData["Error"]' != '') {
+            alert('@TempData["Error"]');
+        }
+        if ('@TempData["Success"]' != '') {
+            alert('@TempData["Success"]');
+        }
+    });
+</script>

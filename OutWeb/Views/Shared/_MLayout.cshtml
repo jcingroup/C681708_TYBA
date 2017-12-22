@@ -1,0 +1,164 @@
+﻿@using OutWeb.Provider
+
+@{
+    ViewBag.mainName = "能源資訊網管理系統";
+}
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.mainName</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed">
+    <link rel="stylesheet" href="~/Content/css/vendor/open-iconic.css">
+    <link rel="stylesheet" href="~/Content/css/grid.css">
+    @Scripts.Render("~/Custom/JS")
+    @Styles.Render("~/Custom/CSS")
+    @*<script src="~/Scripts/jquery-1.10.2.js"></script>
+        <script src="~/Scripts/jquery-ui.js"></script>*@
+    @*<script src="~/Scripts/datepicker-zh-TW.js"></script>*@
+
+    @if (ViewBag.IsFirstPage)
+    {
+        <link rel="stylesheet" href="~/Content/css/login.css">
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/Content/css/admin.css">
+    }
+
+
+    @RenderSection("IncludeCSS", false)
+    @RenderSection("css", false)
+
+
+    <style>
+        div.ui-datepicker {
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        @if (!ViewBag.IsFirstPage)
+        {
+            <header id="header">
+                <h1 class="site-title">@ViewBag.mainName</h1>
+
+                <nav class="navbar">
+                    <span class="nav-link">登入身份: 管理者</span>
+
+                    <a href="~/Home" class="nav-link oi home" data-glyph="home">
+                        回首頁
+                    </a>
+                    <a href="~/_SysAdm/LogOut" class="nav-link oi logout" data-glyph="power-standby">
+                        登出
+                    </a>
+                </nav>
+            </header><!-- header //-->
+        }
+
+        <main id="main">
+
+            @if (ViewBag.IsFirstPage)
+            {
+                @RenderBody()
+            }
+            else
+            {
+                <div id="content" class="font-md">
+                    @RenderSection("Breadcrumb", false)
+                    @RenderBody()
+                </div><!-- content //-->
+
+                <aside id="sidebar">
+                    <h6 class="oi" data-glyph="menu">功能選單 MENU</h6>
+
+                    @*<a href="~/_SysAdm/GeneralTypeList" class='collapse-toggle oi @(ViewBag.subnav == "GeneralType" ? "active" : "")' data-glyph="bell">一般分類</a>*@
+                    @*先隱藏，menager登入後不能看到這個功能
+        @if (UserProvider.Instance.User.Role == OutWeb.Enums.UserRoleEnum.SUPERADMIN)
+    {
+            <a href="~/_SysAdm/TypeManageList" class='collapse-toggle oi @(ViewBag.subnav == "TypeManageList" ? "active" : "")' data-glyph="flag">分類管理</a>
+        }*@
+
+                    <header class='collapse-toggle oi @(ViewBag.subnav == "General" ? "active" : "")' data-glyph="file">一般頁面管理</header>
+                    <nav class='collapse-content @(ViewBag.subnav == "General" ? "in" : "")'>
+                        <a href="~/_SysAdm/NewsList" class='@(ViewBag.subnav2 == "News" ? "active" : "")'>國內外新聞</a>
+                        <a href="~/_SysAdm/EnergyAudit" class='@(ViewBag.subnav2 == "EnergyAudit" ? "active" : "")'>能源查核申報系統頁</a>
+                        <a href="~/_SysAdm/EnergyIndex" class='@(ViewBag.subnav2 == "EnergyIndex" ? "active" : "")'>能效指標申報系統頁</a>
+                        <a href="~/_SysAdm/CourseList" class='@(ViewBag.subnav2 == "Course" ? "active" : "")'>線上課程</a>
+                        <a href="~/_SysAdm/CasesList" class='@(ViewBag.subnav2 == "Cases" ? "active" : "")'>節能案例</a>
+                        @*<a href="~/_SysAdm/BookList" class='@(ViewBag.subnav2 == "Book" ? "active" : "")'>出版品維護</a>*@
+                        <a href="~/_SysAdm/LinksList" class='@(ViewBag.subnav2 == "Link" ? "active" : "")'>外部連結維護</a>
+                    </nav>
+
+                    <header class='collapse-toggle oi @(ViewBag.subnav == "Books" ? "active" : "")' data-glyph="book">出版品管理</header>
+                    <nav class='collapse-content @(ViewBag.subnav == "Books" ? "in" : "")'>
+                        <a href="~/_SysAdm/BookList" class='@(ViewBag.subnav2 == "Book" ? "active" : "")'>出版品維護</a>
+                        <a href="~/_SysAdm/BookKindList" class='@(ViewBag.subnav2 == "BookKind" ? "active" : "")'>出版品分類維護</a>
+                    </nav>
+
+                    <header class='collapse-toggle oi @(ViewBag.subnav == "Trains" ? "active" : "")' data-glyph="beaker">研討會管理</header>
+                    <nav class='collapse-content @(ViewBag.subnav == "Trains" ? "in" : "")'>
+                        <a href="~/_SysAdm/TrainList" class='@(ViewBag.subnav2 == "Train" ? "active" : "")'>研討會維護</a>
+                        <a href="~/_SysAdm/TrainApplyList" class='@(ViewBag.subnav2 == "TrainApply" ? "active" : "")'>報名維護</a>
+                    </nav>
+
+                    <header class='collapse-toggle oi @(ViewBag.subnav == "Question" ? "active" : "")' data-glyph="bar-chart">問卷管理</header>
+                    <nav class='collapse-content @(ViewBag.subnav == "Question" ? "in" : "")'>
+                        <a href="~/_SysAdm/QuestionnairesList" class='@(ViewBag.subnav2 == "QuestionList" ? "active" : "")'>問卷維護</a>
+                        <a href="~/_SysAdm/QuestionnaireStatisticsList" class='@(ViewBag.subnav2 == "QuestionStatistics" ? "active" : "")'>問卷統計</a>
+                    </nav>
+
+                    @* <header class='collapse-toggle oi @(ViewBag.subnav == "Links" ? "active" : "")' data-glyph="link-intact">外部連結管理</header>
+                        <nav class='collapse-content @(ViewBag.subnav == "Links" ? "in" : "")'>
+                            <a href="~/_SysAdm/LinksList" class='@(ViewBag.subnav2 == "Link" ? "active" : "")'>外部連結護維</a>
+                            <a href="~/_SysAdm/LinksKind" class='@(ViewBag.subnav2 == "LinksKind" ? "active" : "")'>外部連結分類維護</a>
+                        </nav> *@
+
+                    <a href="~/_SysAdm/NoticeList" class='collapse-toggle oi @(ViewBag.subnav == "Notice" ? "active" : "")' data-glyph="bullhorn">通知管理</a>
+
+                    <header class='collapse-toggle oi @(ViewBag.subnav == "Cog" ? "active" : "")' data-glyph="cog">系統設定</header>
+                    <nav class='collapse-content @(ViewBag.subnav == "Cog" ? "in" : "")'>
+                        <a href="~/_SysAdm/ChangePW" class='@(ViewBag.subnav2 == "ChangPW" ? "active" : "")'>變更密碼</a>
+                        <a href="~/_SysAdm/IP" class='@(ViewBag.subnav2 == "IP" ? "active" : "")'>IP登入來源</a>
+                    </nav>
+                </aside><!-- sidebar //-->
+            }
+
+        </main><!-- main //-->
+
+    </div><!-- wrapper //-->
+
+    @if (ViewBag.IsFirstPage)
+    {
+        <footer id="footer" class="text-muted">
+            <div class="copyright font-sp">Powered By <a class="hover-info" href="http://www.jcin.com.tw" target="new">JCIN INFORMATION CO.</a></div>
+            <small>本網站適用 Chrome, firefox, IE10.0+, 最佳瀏覽解析度為 1280*800 以上</small>
+        </footer><!-- footer //-->
+    }
+
+    @* 引用 jQuery *@
+    @*<script src="//code.jquery.com/jquery-latest.min.js"></script>*@
+
+    @if (!ViewBag.IsFirstPage)
+    {
+        <script>
+            // 左選單縮放特效
+            var $collapse = $('.collapse-toggle');
+            var fall = '.collapse-content';
+
+            $collapse.click(function (e) {
+                $(this).addClass('active').next(fall).slideToggle();
+                $(this).siblings().removeClass('active').next(fall).slideUp();
+                // event.preventDefault();
+            });
+        </script>
+    }
+    @RenderSection("IncludeScript", false)
+
+</body>
+</html>

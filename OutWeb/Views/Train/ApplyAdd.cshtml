@@ -1,0 +1,269 @@
+﻿@using OutWeb.Models.FrontEnd.TrainModels.TrainApplyModels
+@model TrainApplyViewModel
+@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
+
+@{
+    ViewBag.Title = "研討會";
+    ViewBag.BodyClass = "Train";
+    ViewBag.Subnav = "Train";
+    ViewBag.Breadcrumb = "線上報名"; @* 最後層的麵包屑 *@
+string alert = string.Format(@"<p class=""my-24"">因名額有限，每一用戶編號，僅限 {0} 位報名。已超過報名截止日，如有需求請聯絡{1}，電話：03-5910085</p>", Model.TrainInfo.SingleEnrollmentRestrictions, Model.TrainInfo.ContactPerson);
+string stopRegistering = Model.TrainInfo.IsStopRegistering ? @"<span class=""label-warning ti-na"">報名截止</span>" : "";
+
+}
+
+@* 中間層的麵包屑 *@
+@section breadcrumb {
+    <li><a href="~/Train">研討會</a></li>
+    <li><a href="~/Train/Content">@Model.TrainInfo.ActivityName</a></li>
+}
+
+<div class="wrap zoom">
+    @Html.Partial("sidebar")
+
+    <div id="content" class="text-left">
+
+        <header class="sub-title">
+            <h3 class="underline mt-0"><span class="text-black mr-16">您欲參加的活動是</span> @Model.TrainInfo.ActivityName</h3>
+            <small class="date font-sm">@Model.TrainInfo.CreateDate</small>
+        </header>
+
+
+        @using (Html.BeginForm("ApplyAdd", "Train", FormMethod.Post, new { id = "frmFrontTrainApply", @class = "bg-muted form-signup" }))
+        {
+            <input type="hidden" name="TrainInfo.ID" value="@Model.TrainInfo.ID" />
+            <fieldset class="state">
+                <h4 class="text-center text-primary mt-0">個人資料蒐集聲明</h4>
+                <p>工研院非常重視您的隱私權，為維護您個人資料之安全性，謹遵循「個人資料保護法」（下稱個資法）規範，告知您相關權益，俾取得您同意蒐集、處理及利用您所提供之個人資料：</p>
+                <p>在此前提下，您同意本院得於法律許可之範圍內處理及利用相關資料以提供資訊或服務，但您仍得依法律規定之相關個人資訊權利主張如下事項：查詢、閱覽、複製、補充、更正、處理、利用及刪除，請以電子郵件向本院聯繫，</p>
+                <p>Email：<a href="mailto:energyaudit@itri.org.tw">energyaudit@itri.org.tw</a>。您亦可拒絕提供相關之個人資料，但拒絕提供將無法完成報名程序。</p>
+
+                <footer class="text-center pt-12 mt-12">
+                    <label for="agree">
+                        <input id="agree" class="checkbox" type="checkbox" name="Apply.Agree" value="true" required>
+                        <i class="icon ti-check"></i> 同意
+                    </label>
+                </footer>
+            </fieldset>
+
+            <fieldset class="mb-24">
+                <legend class="font-xl">請填寫下列資料</legend>
+                <dl class="field mb-24">
+                    <dt class="col-sm-2"><sup title="必填">*</sup> 用戶編號</dt>
+                    <dd class="col-sm-10">
+                        <input type="text" class="form-element" name="Apply.UserNo" required value="@Model.Apply.UserNo" placeholder="請輸入用戶編號">
+                        <small class="text-danger">* 無用戶編號者請來電詢問 03-5910085 僅限生產性質產業用戶報名</small>
+                    </dd>
+                </dl>
+                <section class="col-md-6 pl-0">
+                    <dl class="field">
+                        <dt class="col-sm-2 col-md-4"><sup title="必填">*</sup> 公司名稱</dt>
+                        <dd class="col-sm-10 col-md-8">
+                            <input type="text" class="form-element" name="Apply.CompanyName" required value="@Model.Apply.CompanyName" placeholder="請輸入公司名稱">
+                        </dd>
+                    </dl>
+                    <dl class="field">
+                        <dt class="col-sm-2 col-md-4"><sup title="必填">*</sup> 姓名(聯絡人)</dt>
+                        <dd class="col-sm-10 col-md-8">
+                            <input type="text" class="form-element" name="Apply.ContactPerson" required value="@Model.Apply.ContactPerson" placeholder="請輸入聯絡人">
+                        </dd>
+                    </dl>
+                    <dl class="field">
+                        <dt class="col-sm-2 col-md-4"><sup title="必填">*</sup> Email(登入帳號)</dt>
+                        <dd class="col-sm-10 col-md-8">
+                            <input type="email" class="form-element" name="Apply.Email" required value="@Model.Apply.Email" placeholder="請輸入登入帳號">
+                        </dd>
+                    </dl>
+                    <dl class="field">
+                        <dt class="col-sm-2 col-md-4"><sup title="必填">*</sup> 生日(登入密碼)</dt>
+                        <dd class="col-sm-10 col-md-8">
+                            <input type="text" class="form-element datepicker" name="Apply.Birthday" required value="@Model.Apply.Birthday" placeholder="請輸入登入密碼">
+                        </dd>
+                    </dl>
+                    <dl class="field">
+                        <dt class="col-sm-2 col-md-4"><sup title="必填">*</sup> 手機</dt>
+                        <dd class="col-sm-10 col-md-8">
+                            <input type="tel" class="form-element" maxlength="10" name="Apply.MobilePhone" required value="@Model.Apply.MobilePhone" placeholder="請輸入手機">
+                        </dd>
+                    </dl>
+                </section>
+                <section class="col-md-6 pr-0">
+                    <dl class="field">
+                        <dt class="col-sm-2 col-md-4"><sup title="必填">*</sup> 公司電話</dt>
+                        <dd class="col-sm-10 col-md-8">
+                            <input type="tel" class="form-element" name="Apply.CompanyPhone" required value="@Model.Apply.CompanyPhone" placeholder="請輸入公司電話">
+                        </dd>
+                    </dl>
+                    <dl class="field">
+                        <dt class="col-sm-2 col-md-4">公司傳真</dt>
+                        <dd class="col-sm-10 col-md-8">
+                            <input type="tel" class="form-element" name="Apply.CompanyFax" value="@Model.Apply.CompanyFax">
+                        </dd>
+                    </dl>
+                    <dl class="field">
+                        <dt class="col-sm-2 col-md-4">統編</dt>
+                        <dd class="col-sm-10 col-md-8">
+                            <input type="number" class="form-element" name="Apply.BusinessNo" value="@Model.Apply.BusinessNo">
+                        </dd>
+                    </dl>
+                    <dl class="field">
+                        <dt class="col-sm-2 col-md-4">統編抬頭</dt>
+                        <dd class="col-sm-10 col-md-8">
+                            <input type="text" class="form-element" name="Apply.BusinessNoTitle" value="@Model.Apply.BusinessNoTitle">
+                        </dd>
+                    </dl>
+                </section>
+            </fieldset>
+
+            <fieldset class="clear">
+                <legend class="font-lg underline">參加人員 <small>(限 @Model.TrainInfo.SingleEnrollmentRestrictions 人)</small></legend>
+
+                @for (int i = 0; i < Model.TrainInfo.SingleEnrollmentRestrictions; i++)
+                {
+                    <dl class="field participantsData">
+                        @*<dt class="col-sm-1"><sup title="必填">*</sup> 姓名</dt>*@
+                        <dt class="col-sm-1"> 姓名</dt>
+                        <dd class="col-sm-4">
+                            <input type="text" class="form-element applyerName" name="Apply.ParticipantsData[@i].Name" placeholder="請輸入姓名">
+                        </dd>
+                        <dt class="col-sm-1">職稱</dt>
+                        <dd class="col-sm-4">
+                            <input type="text" class="form-element applyerJobTitle" name="Apply.ParticipantsData[@i].JobTitle" placeholder="請輸入職稱">
+                        </dd>
+                        <dd class="col-sm-2">
+                            <label>
+                                <input type="radio" class="radio" name="Apply.ParticipantsData[@i].DietTypeValue" value="Meat" checked>
+                                <i class="icon"></i>葷
+                            </label>
+                            <label class="ml-12">
+                                <input type="radio" class="radio" name="Apply.ParticipantsData[@i].DietTypeValue" value="Vegetarian">
+                                <i class="icon"></i>素
+                            </label>
+                        </dd>
+                    </dl>
+                }
+
+            </fieldset>
+
+            <footer class="submit-bar text-center">
+                @*  上方的同意有選取時，送出button才可點選
+                    不可點選的button如下:
+                    <button class="btn lg" disabled>送出</button>
+                *@
+                @if (Model.TrainInfo.IsStopRegistering)
+                {
+                    <button id="btnSubmit" type="button" class="btn lg" disabled>送出</button>
+                    <button id="cancelBtn" type="button" class="btn muted lg">取消</button>
+                }
+                else
+                {
+                    <button type="button" class="btn lg" disabled>報名截止</button>
+                }
+            </footer>
+
+
+        }
+
+        @{
+            Html.Raw(alert);
+
+            Html.RenderPartial("../Shared/_ApplyContentPartial", Model.TrainInfo);
+        }
+
+
+        <hr class="mb-12">
+
+        <div class="text-right">
+            <button class="ti-printer mr-12" type="button" onclick="webprint('content')" onkeypress="webprint('content')">友善列印</button>
+            <a href="~/Train" class="ti-layout-grid2-alt">回列表</a>
+        </div>
+    </div><!-- content //-->
+</div><!-- wrap -->
+
+<script>
+    $(function () {
+
+        //上方的同意有選取時，送出button才可點選
+        $('#agree').change(function () {
+            if ($(this).is(":checked")) {
+                $('#btnSubmit').prop('disabled', false);
+            }
+            else {
+                $('#btnSubmit').prop('disabled', true);
+            }
+        });
+
+        $('#btnSubmit').click(function () {
+            var validSuccess = validHtmlFormRequired();
+            if (!validSuccess) {
+                return;
+            }
+
+            var mail = $('input[type="email"]').val();
+            if (mail != '') {
+                var vailMail = validEmail(mail);
+                if (!vailMail) {
+                    alert('信箱格式不正確');
+                    return;
+                }
+            }
+
+            var firstPaVal = $('.participantsData').find('input').first().val();
+            if (firstPaVal == '') {
+                alert('至少需要一位參加人員');
+                return;
+            }
+
+            var validNameJob = true;
+            $('.applyerName').each(function (i, e) {
+                var nameValue = $(e).val();
+                if (nameValue != '') {
+                    var job = $('.applyerJobTitle').eq(i).val();
+                    if (job == '') {
+                        validNameJob = false;
+                        return false;
+                    }
+                }
+            });
+
+            if (!validNameJob) {
+                alert('報名者必須請輸入職稱');
+                return;
+            }
+
+
+            $('#frmFrontTrainApply')[0].submit();
+        });
+
+        $('#cancelBtn').click(function () {
+            window.location.href = '@Url.Action("List", "Train")';
+        });
+    })
+
+    function validEmail(url) {
+        var expression = /^(([^<>()\[\]\.,;:\s@@\"]+(\.[^<>()\[\]\.,;:\s@@\"]+)*)|(\".+\"))@@(([^<>()[\]\.,;:\s@@\"]+\.)+[^<>()[\]\.,;:\s@@\"]{2,})$/i;
+        var regex = new RegExp(expression);
+
+        if (url.match(regex)) {
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
+
+    //驗證Required欄位
+    function validHtmlFormRequired() {
+        var valid = true;
+        var form = document.getElementById('frmFrontTrainApply');
+        for (var i = 0; i < form.elements.length; i++) {
+            if (form.elements[i].value === '' && form.elements[i].hasAttribute('required')) {
+                alert(form.elements[i].placeholder);
+                valid = false;
+                return;
+            }
+        }
+        return valid;
+    }
+</script>

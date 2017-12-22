@@ -1,0 +1,65 @@
+﻿@using OutWeb.Models.FrontEnd.EditModels
+@model EditorFront
+@{
+    ViewBag.Title = "能源查核申報";
+    ViewBag.BodyClass = "ERL";
+    ViewBag.Breadcrumb = "能源查核申報"; @* 最後層的麵包屑 *@
+string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
+
+}
+
+<h2 class="title underline wrap">生產性質能源查核申報</h2>
+
+<div class="wrap zoom editor">
+    <a href="http://emis.itri.org.tw/erl/" target="new" class="btn lg pull-right">進入申報網站</a>
+    <br class="clear">
+
+    @* 編輯器內容 *@
+    @Html.Raw(Model.Content)
+    @*<h5 class="title-primary py-8 px-16">申報流程&重要日期</h5>
+        <article class="px-16">
+            面對臺灣地區未來幾年可能缺電的情況，政府訂定全國以節電 1%為目標， 從「政府帶動」、「產業參與」及「民眾自發改變用電習慣」三大方向推動，經 由全面的努力改變全民電力使用行為。為推動產業達成節電 1%目標，經濟部 於 103 年 8 月 1 日公告「能源用戶訂定節約能源目標及執行計畫規定」，指定 能源用戶於民國 104 年至 108 年，其年度節電率及平均年節電率應達 1%以上。 該年度指定能源用戶能源查核申報、訂定之節約能源目標及執行計畫， 其年度節電率應達 1%以上，未達 1%者須提出正當理由說明；此外，能源用戶 當年度平均年節電率未達 1%者，應提出說明及改善計畫。<span class="text-danger">能源用戶應於每年一月三十一日前，向中央主管機關申報前一年度節電措施執行情形、年度節電量、年度節電率及平均年節電率。能源用戶當年度平均年節電率未達百分之一者，應於次年一月三十一日前向中央主管機關提出說明及改善計畫，經中央主管機關核定後執行之；違反者，依有關法令規定處理。</span>
+            <img class="my-24 img-center" src="/Content/images/erl-process.gif" alt="申報流程">
+        </article>
+
+        <h5 class="title-primary py-8 px-16">法源依據</h5>
+        <article class="px-16">
+            <a href="http://law.moj.gov.tw/LawClass/LawAll.aspx?PCode=J0130002" target="new">能源管理法</a><br>
+            <a href="http://law.moj.gov.tw/LawClass/LawAllIf.aspx?PCode=J0130043" target="new">能源用戶自置或委託技師或合格能源管理人員設置登記辦法</a>
+
+        </article>
+
+        <h5 class="title-primary py-8 px-16">聯絡窗口</h5>
+        <article class="px-16">
+            電話：03-591-0085︱傳真：03-591-0255︱聯絡人：陳沛涵 (<a href="mailto:energyaudit@itri.org.tw">energyaudit@itri.org.tw</a>)
+        </article>*@
+    @* 編輯器內容 end *@
+
+    <footer class="download">
+        <h5 class="text-primary mt-0">附件下載</h5>
+        @foreach (var file in Model.FilesData)
+        {
+            string fileUrl = currentUrl + "/" + file.FileUrl;
+            <a real-name="@file.RealFileName" href="@fileUrl"  class="ti-clip dlFile">@file.RealFileName</a><br>
+        }
+        @*<a href="" class="ti-clip">工業及其他生產性質行業-1051209(更新).pdf</a><br>
+        <a href="" class="ti-clip">修正P16表名與紡織業、人纖業折合率之「註解4-2」說明.doc</a><br>
+        <a href="" class="ti-clip">修正P16表名與紡織業、人纖業折合率之「註解4-2」說明.pdf</a><br>
+        <a href="" class="ti-clip">申報常見問題.doc</a>*@
+    </footer>
+</div>
+
+<script>
+    $(function () {
+        //檔案下載
+        $(document).on('click', '.dlFile', function () {
+            downloadFile(this);
+        });
+    })
+    //下載檔案存為指定檔名
+    function downloadFile(elem) {
+        $(elem).attr('download', $(elem).attr('real-name'))
+              .attr('href', $(elem).attr('url'))
+              .attr('target', '_blank');
+    }
+</script>

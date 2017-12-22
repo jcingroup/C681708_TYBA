@@ -1,0 +1,110 @@
+﻿@using OutWeb.Models.Manage.TypeManageModels
+@model TypeManageDetailsDataModel
+
+<input type="hidden" name="TypeID" value="@Model.ID" />
+<input type="hidden" name="FilterTypeID" value="@Model.FilterTypeID" />
+@{
+    string typeNameDefualtStr = "";
+}
+
+@if (Model.FilterTypeID.HasValue)
+{
+    typeNameDefualtStr = "子分類名稱";
+    <dl class="field">
+        <dt class="col-2">分類類別</dt>
+        <dd class="col-10">
+            <p>@Model.FilterTypeName</p>
+        </dd>
+    </dl>
+}
+else
+{
+    typeNameDefualtStr = "主分類名稱";
+}
+
+<dl class="field">
+    <dt class="col-2"><sup title="必填">*</sup> @typeNameDefualtStr</dt>
+    <dd class="col-5">
+        <input class="form-element" maxlength="64" type="text" placeholder="請輸入分類類別名稱" name="typeName" value="@Model.TypeName" required>
+    </dd>
+</dl>
+
+<dl class="field">
+    <dt class="col-2">排序</dt>
+    <dd class="col-10">
+        <input class="inline" maxlength="64" type="number" name="sortIndex" value="@Model.Sort">
+        <small>數字愈大愈前面</small>
+    </dd>
+</dl>
+
+<dl class="field">
+    <dt class="col-2">停用</dt>
+    <dd class="col-4">
+        <label class="switch">
+            <input type="checkbox" name="disable">
+            <div class="slider round"></div>
+        </label>
+    </dd>
+</dl>
+@if (Model.FilterTypeID.HasValue)
+{
+    <dl class="field">
+        <dt class="col-2">自訂代碼</dt>
+        <dd class="col-5">
+            <input class="inline" maxlength="64" type="number" name="customCode" value="@Model.CustomID">
+        </dd>
+    </dl>
+}
+else
+{
+    <dl class="field">
+        <dt class="col-2">備註</dt>
+        <dd class="col-5">
+            <input class="form-element" maxlength="64" type="text" placeholder="請輸入備註" name="remark" value="@Model.Remark">
+        </dd>
+    </dl>
+}
+
+@*<dl class="field">
+        <dt class="col-2"><sup title="必填">*</sup> 表格代碼</dt>
+        <dd class="col-5">
+            <input class="inline" maxlength="64" type="number" name="formCode" value="@Model.Data.表格代碼">
+        </dd>
+    </dl>*@
+
+@*<dl class="field">
+        <dt class="col-2">其他</dt>
+        <dd class="col-10">
+            <input class="inline" type="text" name="remark" value="@Model.Data.其他">
+        </dd>
+    </dl>*@
+
+<footer class="submit-bar clear mt-24">
+    <button class="btn success oi" data-glyph="circle-check" type="submit">確定儲存</button>
+    <button class="btn warning oi" data-glyph="circle-x" type="button" id="bakList">回到列表</button>
+</footer>
+
+<script>
+    (function ($) {
+        $(function () {
+            $("#bakList").click(function (event) {
+                event.preventDefault();
+                var url = '@Url.Action("TypeManageList", "_SysAdm")';
+                window.location.href = url;
+            });
+
+            $('#formManageTypeManageData').submit(function () {
+                return true;
+            });
+
+            //停用狀態
+            if ('@Model.Disabled' == '@true') {
+                $('[name="disable"]').prop('checked', 'checked');
+            }
+            else {
+                $('[name="disable"]').prop('checked', '');
+            }
+
+        })
+    })(jQuery);
+</script>

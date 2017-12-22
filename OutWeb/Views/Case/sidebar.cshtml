@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Current = "節能案例";
+}
+
+<aside class="sidebar">
+    <h2 class="title underline my-0">@ViewBag.Current</h2>
+    <nav>
+        <a href="~/Case/List" class="@(ViewBag.Subnav == "sub1" ? "current" : "")">依行業別瀏覽</a>
+        <!-- <a href="https://www.energypark.org.tw/topgoal/topgoal/list.asp" target="new">節能績優案例</a> -->
+        <a href="http://www.energypark.org.tw/topgoal/topgoal/list.asp" target="new" title="節約能源園區 另開新視窗">節約能源績優獎</a>
+        <a href="http://www.energypark.org.tw/topfirm" target="new" title="節能標竿網 另開新視窗">節能標竿網</a>
+    </nav>
+</aside>
+

@@ -1,0 +1,694 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "傳真通知維護";
+    ViewBag.subnav = "Notice";
+    string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
+    string ActionName = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Action"]);
+}
+
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>通知管理</li>
+        <li>@ViewBag.Crumb</li>
+    </ul>
+}
+
+<h3 class="title">
+    @ViewBag.Crumb <small class="oi" data-glyph="tags">編輯</small>
+    <button class="btn info oi pull-right" id="" data-glyph="external-link" type="button" onclick="openHiNetWindow()">查看HiNet傳真紀錄</button>
+</h3>
+
+<form action="" class="form-list" id="formManageFaxData">
+    <input type="hidden" id="hdnFaxID" name="faxID" value="@Model.Data.FAX_ID" />
+    <dl class="field">
+        <dt class="col-2"><sup title="必填">*</sup> 標題</dt>
+        <dd class="col-7">
+            <input type="text"  name="TITLE" value="@Model.Data.TITLE" placeholder="請輸入標題" required>
+        </dd>
+        <dd class="col-3 form-label">
+            <small class="text-danger">*本次通知說明</small>
+        </dd>
+    </dl>
+    <dl class="field">
+        <dt class="col-2">發佈人</dt>
+        <dd class="col-7">
+            <input type="text" name="PUBLISHER" value="@Model.Data.PUBLISHER" placeholder="請輸入本次通知發佈人(將顯示於傳真寄件人)">
+        </dd>
+        <dd class="col-3 form-label">
+            <small class="text-danger">*本次通知發佈人(將顯示於傳真寄件人)</small>
+        </dd>
+    </dl>
+    @*<dl class="field">
+        <dt class="col-2">發送狀態</dt>
+        <dd class="col-7">
+            <label>
+                <input type="radio" class="radio" name="send"  id="send_R"  checked>
+                <i class="icon"></i> 預約發送(需設定發送時間)
+            </label>
+            <label class="ml-12">
+                <input type="radio" class="radio" name="send"  id="send_I">
+                <i class="icon"></i> 立即發送
+            </label>
+        </dd>
+    </dl>
+    <dl class="field">
+        <dt class="col-2">發送時間</dt>
+        <dd class="col-4">
+            <div class="input-group">
+                <span class="input-group-addon">日期</span>
+                <label><input type="date" name="DELIEVER_DATE_DATE" value="@Convert.ToDateTime(Model.Data.DELIEVER_DATE).ToString("yyyy\\/MM\\/dd")"></label>
+            </div>
+        </dd>
+        <dd class="col-3">
+            <div class="input-group">
+                <span class="input-group-addon">時間</span>
+                <label><input type="time"  name="DELIEVER_DATE_TIME" value="@Convert.ToDateTime(Model.Data.DELIEVER_DATE).ToString("HH:mm")"></label>
+            </div>
+        </dd>
+    </dl>*@
+
+    <dl class="field" id="sendTest">
+        <dt class="col-2">發送測試</dt>
+        <dd class="col-10">
+            <input id="testTel" class="form-element inline" type="text" name="SENDTESTTEL" placeholder="請輸入測試用傳真號碼" onkeyup="return ValidateNumber(this,value)">
+            <input id="testName" class="form-element inline" type="text" name="SENDTESTNAME" placeholder="請輸入收件人員">
+            <input id="testCompany" class="form-element inline" type="text" name="SENDTESTCOMPANY" placeholder="請輸入測試用收件公司">
+            <button id="testBtn" class="btn info oi" data-glyph="print" type="button" onclick="">儲存並測試</button>
+            <br>
+            <small class="text-danger">*傳真號碼格式為:國碼+區碼+電話號碼 例:886289232702<br>*測試時請輸入[發送內容]的[傳真標題]、[附件上傳]、[頁數]等資料</small>
+        </dd>
+    </dl>
+
+    <fieldset class="mt-24">
+        <legend class="underline">
+            [ 發送內容 ]
+            <a class="btn sm warning pull-right" href="/Content/ExcelTemp/FAXTemp.xlsx" target="new">收件人FAX Excel檔填寫範例</a>
+        </legend>
+        @*<dl class="field">
+            <dt class="col-2"><sup title="必填">*</sup> 寄件人</dt>
+            <dd class="col-7">
+                <div class="">
+                    <input type="text" id="" onchange="postFiles(this);" placeholder="請輸入寄件人">
+                </div>
+            </dd>
+            <dd class="col-3 form-label">
+
+            </dd>
+        </dl>
+
+        <dl class="field">
+            <dt class="col-2"><sup title="必填">*</sup> 寄件公司</dt>
+            <dd class="col-7">
+                <div class="">
+                    <input type="text" id="" onchange="postFiles(this);" placeholder="請輸入寄件公司">
+                </div>
+            </dd>
+            <dd class="col-3 form-label">
+
+            </dd>
+        </dl>*@
+
+        <dl class="field bg-light py-12">
+            <dt class="col-2"><sup title="必填">*</sup> 收件人</dt>
+            <dd class="col-9">
+                <div class="input-file">
+                    <input type="file" id="files_m" onchange="postFiles(this);" placeholder="請上傳收件人檔案">
+                </div>
+                <small class="text-danger">可上傳 1 個Excel(.xlsx格式)檔案，檔案大小不超過 2Mb</small>
+                <ul id="fileMember">
+                    @foreach (var file in Model.MemberFile)
+                    {
+                        string fileUrl = currentUrl + "/" + file.FileUrl;
+                        int index = Model.MemberFile.IndexOf(file);
+                        <li class="uploaded">
+                            <button type="button" class="btn-del" del-obj="fm" id="@file.FileName" onclick="deleteFile(this)">&times;</button>
+                            <a class="dlFile" href="javascript:;" url="@fileUrl" real-name="@file.RealFileName">@file.RealFileName</a>
+                            <input type="hidden" id="fileID" name="MemberFile[@index].ID" value="@file.ID" />
+                        </li>
+
+                    }
+                </ul>
+            </dd>
+        </dl>
+
+        <dl class="field">
+            <dt class="col-2"><sup title="必填">*</sup> 傳真標題</dt>
+            <dd class="col-9">
+                <input type="text" id="" onchange="postFiles(this);" placeholder="請輸入傳真標題" name="FAX_TITLE" value="@Model.Data.FAX_TITLE" required>
+                <small class="text-danger">*請勿超過20字</small>
+            </dd>
+        </dl>
+
+        <dl class="field">
+            <dt class="col-2"><sup title="必填">*</sup> 附件上傳</dt>
+            <dd class="col-9">
+                <div class="input-file">
+                    <input type="file" id="files_a" onchange="postFiles(this);" placeholder="請上傳附件檔案">
+                </div>
+                <small class="text-danger">可上傳 1 個檔案(.pdf,.doc,.docx格式)，檔案大小不超過 2Mb，圖片採直式方向傳送</small>
+                <ul id="fileAttachment">
+                    @foreach (var file in Model.AttachmentFiles)
+                    {
+                        string fileUrl = currentUrl + "/" + file.FileUrl;
+                        int index = Model.AttachmentFiles.IndexOf(file);
+                        <li class="uploaded">
+                            <button type="button" class="btn-del" del-obj="fa" id="@file.FileName" onclick="deleteFile(this)">&times;</button>
+                            <a class="dlFile" href="javascript:;" url="@fileUrl" real-name="@file.RealFileName">@file.RealFileName</a>
+                            <input type="hidden" id="fileID" name="AttachmentFile[@index].ID" value="@file.ID" />
+                        </li>
+
+                    }
+                </ul>
+
+                @*<div class="uploaded">
+                    <button class="btn-del" type="button">&times;</button>
+                    <a href="">xxxxxxx.pdf</a>
+                </div>
+                <div class="uploaded">
+                    <button class="btn-del" type="button">&times;</button>
+                    <a href="">xxxxxxx.doc</a>
+                </div>*@
+            </dd>
+        </dl>
+        <dl class="field">
+            <dt class="col-2"><sup title="必填">*</sup> 頁數</dt>
+            <dd class="col-2">
+                <div class="">
+                    <input type="text" id="" placeholder="請輸入頁數" name="FILE_PAGE"  onkeyup="return ValidateNumber(this,value)" value="@Model.Data.FILE_PAGE" required>
+                </div>
+            </dd>
+            <dd class="col-3 form-label">
+                <small class="text-danger">*為附件上傳檔的總頁數</small>
+            </dd>
+        </dl>
+    </fieldset>
+
+    <footer class="submit-bar clear mt-24">
+        <button id="saveBtn" type="button" class="btn success oi" data-glyph="circle-check">
+            暫存草稿
+        </button>
+        <button id="sendBtn" type="button" class="btn info oi" data-glyph="check">
+            儲存且啓動發送
+        </button>
+        <button id="cancelBtn" type="button" class="btn secondary oi" data-glyph="x">
+            取消發送
+        </button>
+        <button type="button" class="btn warning oi" data-glyph="circle-x" onclick="location.href = 'NoticeList'">
+            回列表
+        </button>
+    </footer>
+</form>
+
+@section IncludeScript {
+    <script>
+        function openModal() {
+            $('#replyMsgDiv').show();
+            $('body').css('overflow', 'hidden');
+        }
+        function closeModal() {
+            $('#replyMsgDiv').hide();
+            $('body').removeAttr('style');
+        }
+    </script>
+}
+
+@*<div class="modal" id="replyMsgDiv" hidden >
+    <div class="modal-content p-24">
+        <button onclick="closeModal();" class="modal-close">&#10005;</button>
+        <p>請至HiNet查看傳真回報狀況</p>
+        <div class="modal-content p-24">
+            <button class="btn info oi" data-glyph="external-link" type="button" onclick="">點擊開啟HiNet網站</button>
+        </div>
+    </div>
+</div>*@
+
+<div class="modal" id="backBlockDiv" hidden>
+    <div class="modal-content p-24" style="text-align:center">
+        資料傳遞中...  請稍後...
+    </div>
+</div>
+
+<script>
+    (function ($) {
+        $(function () {
+            if ('@Model.Data.FAX_ID' != '0') {
+                $('[id="send_I"]').prop('checked', '');
+                $('[id="send_R"]').prop('checked', '');
+                if ('@Model.Data.DELIEVER_TYPE' == 'R') {
+                    $('[id="send_R"]').prop('checked', 'checked');
+                }
+                else {
+                    $('[id="send_I"]').prop('checked', 'checked');
+                }
+
+                nowMemberFile = @Model.MemberFile.Count;
+                nowAttachmentFile = @Model.AttachmentFiles.Count;
+
+                $("#saveBtn").hide();
+                $("#sendBtn").hide();
+                $("#cancelBtn").hide();
+
+                if ('@Model.Data.STATUS' == '0'){
+                    $("#saveBtn").show();
+                    $("#sendBtn").show();
+                    $("#cancelBtn").hide();
+                }
+
+                if ('@Model.Data.STATUS' == '2') {
+                    $("#cancelBtn").show();
+                }
+
+            } else {
+                $("#saveBtn").show();
+                $("#sendBtn").show();
+                $("#cancelBtn").hide();
+
+            }
+
+        })
+
+    })(jQuery);
+</script>
+
+
+<script>
+    var fileList = [];
+       var fileLimitFileSize = 2097152//檔案大小2mb 單位bit
+    var nowMemberFile = 0;
+    var nowAttachmentFile = 0;
+    var blobBuffer = {};
+
+    //驗證Required欄位
+    function validHtmlFormRequired() {
+
+        var valid = true;
+        var form = document.getElementById('formManageFaxData');
+
+        for (var i = 0; i < form.elements.length; i++) {
+            if (form.elements[i].value === '' && form.elements[i].hasAttribute('required')) {
+                alert(form.elements[i].placeholder);
+                valid = false;
+                return;
+            }
+        }
+        return valid;
+    }
+
+
+    //檔案下載
+    $(document).on('click', '.dlFile', function () {
+        downloadFile(this);
+    });
+
+    //下載檔案存為指定檔名
+    function downloadFile(elem) {
+        //for IE
+        if (window.navigator.msSaveOrOpenBlob) {
+            if (Object.keys(blobBuffer).length > 0) {
+                var key = $(elem).attr('ie-id');
+                var obj = blobBuffer[key];
+
+                var blobObject = new Blob([obj.blobObj]);
+                window.navigator.msSaveOrOpenBlob(blobObject, obj.fileName);
+            }
+        }
+        else {
+            $(elem).attr('download', $(elem).attr('real-name'))
+           .attr('href', $(elem).attr('url'))
+           .attr('target', '_blank');
+        }
+    }
+
+
+    //檔案刪除
+    function deleteFile(elem) {
+
+        var delIndex = [];
+        var id = $(elem).attr('id');
+        var t = $(elem).attr('del-obj');
+
+        for (var i = 0; i < fileList.length; i++) {
+            var data = fileList[i];
+            if (data.type == t && data.files.name == id) {
+                delIndex.push(i);
+            }
+        }
+        for (var i = 0; i < delIndex.length; i++) {
+            fileList.splice(delIndex[i], 1);
+        }
+
+        $(elem).parent('li').remove();
+
+        if (t == "fm") {
+            nowMemberFile--;
+        } else {
+            nowAttachmentFile--;
+        }
+    }
+
+    //檔案預覽
+    function postFiles(elem) {
+        var f = document.getElementById(elem.id);
+
+        if (elem.id == "files_m") {
+            if (nowMemberFile >= 1) {
+                alert("最多只能上傳一個檔案");
+                f.value = "";
+                return;
+            }
+        }
+        if (elem.id == "files_a") {
+            if (nowAttachmentFile >= 1) {
+                alert("最多只能上傳一個附檔");
+                f.value = "";
+                return;
+
+            }
+        }
+
+        //檢查檔案類型
+        var typePass = checkFileExtension(f);
+
+        //檢查格式尺寸
+        var sizePass = checkFileLimitSize(f, fileLimitFileSize);
+
+        if (!sizePass || !typePass) {
+            f.value = "";
+            return;
+        }
+
+
+        if (elem.id == "files_m") {
+            //檢查檔案內容
+            var result = checkFileContentValidate(f);
+            if (!result) {
+                f.value = "";
+                return;
+            }
+        }
+
+
+        for (var i = 0; i < f.files.length; i++) {
+
+            //建立Object URL
+            var url = window.URL.createObjectURL(f.files[i]);
+            var filename = f.files[i].name;
+            var blobObjectFile = f.files[i];
+            var ra = '';
+            //For IE
+            if (window.navigator.msSaveOrOpenBlob) {
+                ra = Math.random();
+                blobBuffer[ra] = { blobObj: blobObjectFile, fileName: filename };
+            }
+            //收件人檔案
+            if (elem.id == "files_m") {
+                var $li = '<li class="uploaded"><button type="button" class="btn-del" del-obj="fm" id="' + f.files[i].name + '"  onclick="deleteFile(this)">&times;</button>' +
+                    '<a class="dlFile"  ie-id="' + ra + '" href="javascript:;" url="' + url + '" real-name="' + filename + '">' + filename + '</a>' +
+                    '</li>';
+
+                $('#fileMember').append($li);
+                fileList.push({ type: 'fm', files: f.files[i] });
+                nowMemberFile++;
+                f.value = "";
+
+            } else {
+                //附件上傳檔案
+                var $li = '<li class="uploaded"><button type="button" class="btn-del" del-obj="fa" id="' + f.files[i].name + '"  onclick="deleteFile(this)">&times;</button>' +
+                    '<a class="dlFile"  ie-id="' + ra + '" href="javascript:;" url="' + url + '" real-name="' + filename + '">' + filename + '</a>' +
+                    '</li>';
+
+                $('#fileAttachment').append($li);
+                fileList.push({ type: 'fa', files: f.files[i] });
+                nowAttachmentFile++;
+                f.value = "";
+            }
+
+        }
+
+
+        f.value = "";
+
+    }
+
+        //檢查副檔名
+        function checkFileExtension(totalFiles) {
+            var success = true;
+            if (totalFiles == null) {
+                return;
+            }
+            //收件人檔案
+            if (totalFiles.id == "files_m") {
+                var allowedExtension = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
+                for (var i = 0; i < totalFiles.files.length; i++) {
+                    var fileExtension = totalFiles.files[i].type;
+                    var findIndex = $.inArray(fileExtension, allowedExtension);
+                    if (findIndex < 0) {
+                        success = false;
+                        alert("只允許上傳 xmls 格式的檔案");
+                        break;
+                    }
+                }
+            } else {
+                //附件檔案
+                var allowedExtension = ["application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/pdf"];
+                for (var i = 0; i < totalFiles.files.length; i++) {
+                    var fileExtension = totalFiles.files[i].type;
+                    var findIndex = $.inArray(fileExtension, allowedExtension);
+                    if (findIndex < 0) {
+                        success = false;
+                        alert("只允許上傳 doc, docx, pdf 格式的檔案");
+                        break;
+                    }
+                }
+            }
+            return success;
+        }
+
+        //檢查尺寸
+        function checkFileLimitSize(Files, fileLimitSize) {
+            var success = true;
+            var file = Files;
+            if (file.size > fileLimitSize) {
+                success = false;
+                alert("圖片或檔案大小不可超過" + (fileLimitSize / 1024) + " kb.");
+                return;
+            }
+            return success;
+        }
+
+        function checkFileContentValidate(f) {
+            var value = 0;
+            var success = false;
+            var file = f.files[0];
+            var formData = new FormData();
+            formData.append("file", file);
+
+            if (file == null) {
+                return;
+            }
+
+            url = "@Url.Content("~/CheckExcel/CheckFAXExcel/")";
+
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: url,
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.validate == true) {
+                        alert("檔案格式檢查正確" + "\n" + "收件者人數為:" + response.count);
+                        success = true;
+                    } else {
+                        alert("檔案有錯誤，錯誤如下：" + "\n" + response.errorMsg);
+                        success = false;
+                    }
+
+                },
+                error: function (error) {
+                    alert('ajax error');
+                    success = false;
+                    window.location.reload();
+                }
+            });
+
+            return success;
+        }
+
+        $(function () {
+
+            $("#saveBtn").click(function () {
+                var valid = validHtmlFormRequired();
+                if (!valid) {
+                    return false;
+                }
+                SaveFilesAndImg("save");
+            });
+
+            $('#sendBtn').click(function () {
+                var valid = validHtmlFormRequired();
+                if (!valid) {
+                    return false;
+                }
+
+                if (confirm("是否確定要啟動發送?" + "\r" + "啟動後請稍後約10~20秒" + "\r\r" + "※發送後即不可再進行修改與取消")) {
+                    SaveFilesAndImg("send");
+                }
+            });
+
+            $('#testBtn').click(function () {
+                var valid = validHtmlFormRequired();
+                if (!valid) {
+                    return false;
+                }
+
+                if ($("#testName").val().length>20){
+                    alert("姓名最多輸入20個字母");
+                    return false;
+                }
+
+                testTel = $("#testTel").val();
+
+                if (testTel == "") {
+                    alert("請輸入測試用傳真號碼");
+                    return false;
+                }
+                if (testTel.substr(0, 3) != "886" || testTel.length >20 || testTel.length<10) {
+                    alert("格式錯誤!!，格式為：國碼+區碼+電話號碼" + "\n" + "例:886289232702");
+                    return false;
+                }
+
+                if (confirm("是否確定要發送測試?" + "\r" + "啟動後請稍後約10~20秒")) {
+                    SaveFilesAndImg("test");
+                }
+            });
+
+        });
+
+        //圖片/檔案存server
+        function SaveFilesAndImg(btntype) {
+
+            if ($("#fileMember >li[class='uploaded']").length <= 0 && btntype !="test") {
+                alert("請上傳收件人檔案");
+                return;
+            }
+
+            if ($("#fileAttachment >li[class='uploaded']").length <= 0) {
+                alert("請上傳附件檔案");
+                return;
+            }
+
+            var ID = $('#hdnFaxID').val();
+
+            var formData = document.getElementById('formManageFaxData');
+            formData = new FormData(formData);
+
+            for (var i = 0; i < fileList.length; i++) {
+                var data = fileList[i];
+
+                if (data.type == 'fm') {
+                    formData.append('member', data.files);
+                } else if (data.type == 'fa') {
+                    formData.append('attachment', data.files);
+                }
+
+            }
+
+
+            formData.append("act", 'post');
+            formData.append("actionName", '@ActionName');
+            formData.append("ID", ID);
+
+            ////Time Check
+            //var date = new Date();
+            //var datestring = date.getFullYear() + "-" + +(date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
+            //var choseDateString = $("input[name='DELIEVER_DATE_DATE']").val() + " " + $("input[name='DELIEVER_DATE_TIME']").val();
+
+            //if ((Date.parse(datestring) > Date.parse(choseDateString)) && $("#send_R").is(":checked")) {
+            //    alert("預約時間不得早於現在時間，請重新確認");
+            //    return;
+            //}
+
+            //if ($("#send_I").is(":checked")) {
+            //    formData.append("DELIEVER_TYPECheck", "I");
+            //} else {
+            //    formData.append("DELIEVER_TYPECheck", "R");
+            //}
+
+
+            formData.append("DELIEVER_TYPECheck", "I");
+
+            formData.append("type", btntype);
+
+            var url = '';
+
+            @*if (ID == 0) {
+                url = "@Url.Content("~/_SysAdm/NoticeFaxAdd/")";
+            }
+            else {
+                url = "@Url.Content("~/_SysAdm/NoticeFaxEdit/")";
+            }*@
+
+            url = "@Url.Content("~/_SysAdm/NoticeFaxEditAndAdd/")";
+
+            $waitBlock = $("#backBlockDiv");
+
+            $.ajax({
+                //async: false,
+                type: "POST",
+                url: url,
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    $waitBlock.show();
+                },
+                complete: function () {
+                    $waitBlock.hide();
+                },
+                success: function (response) {
+                    if ((btntype == "save")) {
+                        if (ID == "0") {
+                            alert("新增成功");
+                        } else {
+                            alert("編輯成功");
+                        }
+                    } else {
+                        if (response.Status == false) {
+                            if (response.ErrorMsg != "") {
+                                alert("啟動發送失敗，" + response.ErrorMsg);
+                            } else {
+                                alert("啟動發送失敗");
+                            }
+
+                        } else {
+                            alert("啟動發送成功" + "\n" + "發送人數:" + response.Count);
+                        }
+                    }
+                    window.location.href = response.Url;
+                },
+                error: function (error) {
+                    alert('ajax error');
+                    window.location.reload();
+                }
+            });
+        }
+
+        //檢查只能輸入數字
+        function ValidateNumber(e, pnumber) {
+            if (!/^\d+$/.test(pnumber)) {
+                e.value = /^\d+/.exec(e.value);
+            }
+            return false;
+        }
+
+        function openHiNetWindow(){
+            alert("請於 HiNet網際傳真 網站【SETP2 輸入驗證資料】中輸入" + "\r" + "(HiNet帳號 與 HiNet密碼)" + "\r" + "即可登入頁面查看發送紀錄" + "\r\r" + "※提醒:新紀錄可能需等約5~10分鐘");
+            window.open('http://www.hinetfax.hinet.net/index_iframe.html');
+        }
+
+</script>

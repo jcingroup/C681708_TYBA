@@ -1,0 +1,22 @@
+﻿@using OutWeb.Models.Manage.ManageLinkModels
+@model LinkDetailsDataModel
+@{
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "外部連結維護";
+    ViewBag.subnav = "General";
+    ViewBag.subnav2 = "Link";
+}
+
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>一般頁面管理</li>
+        <li>@ViewBag.Crumb</li>
+    </ul>
+}
+
+<h3 class="title">@ViewBag.Crumb <small class="oi" data-glyph="tags">新增</small></h3>
+
+@using (Html.BeginForm("LinksAdd", "_SysAdm", FormMethod.Post, new { id = "formManageLinksData", @class = "form-list" }))
+{
+    Html.RenderPartial("_LinksDataPartial", Model);
+}

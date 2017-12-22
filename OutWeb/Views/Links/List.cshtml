@@ -1,0 +1,56 @@
+﻿@using OutWeb.Models.FrontEnd.LinkFrontEndModels
+@model LinkListFrontViewModel
+@{
+    ViewBag.Title = "外部連結";
+    ViewBag.BodyClass = "Links";
+    ViewBag.Breadcrumb = "外部連結"; @* 最後層的麵包屑 *@
+string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
+}
+
+<h2 class="title underline wrap">@ViewBag.Title</h2>
+
+<div class="wrap zoom text-left links-list">
+
+    @if (Model.Result.Data.Count > 0)
+    {
+        foreach (var data in Model.Result.Data)
+        {
+            if (data.Image.Count > 0)
+            {
+                foreach (var img in data.Image)
+                {
+                    string imgUrl = string.Concat(currentUrl, "/", img.FileUrl);
+                    <a class="link-item" href="@data.UrlAddr" target="new"><img src="@imgUrl" alt="@data.Title"></a>
+                }
+            }
+            else
+            {
+                <a class="link-item ti-new-window" href="@data.UrlAddr" target="new">
+                    <span>@data.Title</span>
+                </a>
+            }
+        }
+    }
+
+        @* 圖片版 *@
+        @*<a class="link-item" href="http://www.moeaboe.gov.tw/" target="new"><img src="~/Content/images/link.jpg" alt="名稱"></a>
+
+            <a class="link-item ti-new-window" href="http://www.moeaboe.gov.tw/" target="new">
+                <span>經濟部能源局</span>
+            </a>
+            <a class="link-item ti-new-window" href="https://www.youtube.com/user/moeaboe1/videos" target="new">
+                <span>經濟部能源局 MOEABOE (Youtube)</span>
+            </a>
+            <a class="link-item ti-new-window" href="http://www.energypark.org.tw/" target="new">
+                <span>節約能源園區</span>
+            </a>
+            <a class="link-item ti-new-window" href="https://www.tgpf.org.tw/" target="new">
+                <span>財團法人台灣綠色生產力基金會</span>
+            </a>
+            <a class="link-item ti-new-window" href="https://energy.csd.org.tw/" target="new">
+                <span>能源管理學院</span>
+            </a>
+            <a class="link-item ti-new-window" href="http://www.csd.org.tw/" target="new">
+                <span>財團法人中衛發展中心</span>
+            </a>*@
+    </div>

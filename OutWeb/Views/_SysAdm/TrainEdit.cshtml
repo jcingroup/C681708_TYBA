@@ -1,0 +1,21 @@
+﻿@using OutWeb.Models.Manage.ManageTrainModels
+@model TrainDetailsDataModel
+@{
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "研討會報名";
+    ViewBag.subnav = "Trains";
+    ViewBag.subnav2 = "Train";
+}
+
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>@ViewBag.Crumb</li>
+    </ul>
+}
+
+<h3 class="title">@ViewBag.Crumb <small class="oi" data-glyph="tags">編輯</small></h3>
+
+@using (Html.BeginForm("TrainEdit", "_SysAdm", FormMethod.Post, new { id = "formManageTrainData", @class = "form-list" }))
+{
+    Html.RenderPartial("_TrainDataPartial", Model);
+}

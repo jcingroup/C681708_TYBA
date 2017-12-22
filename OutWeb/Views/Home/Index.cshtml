@@ -1,0 +1,187 @@
+﻿@using OutWeb.Models.FrontEnd.HomeMultipleModels
+@model HomeFrontListDataModel
+
+@{
+    ViewBag.Title = "首頁";
+}
+
+@section css {
+    <link rel="stylesheet" href="~/Content/css/vendor/swiper.min.css">
+}
+@section scripts {
+    <script src="~/Content/js/swiper.min.js"></script>
+    <script>
+        // slider 輪播效果
+        var swiperBanner = new Swiper(document.getElementById('banner'), {
+            pagination: '.swiper-pager',
+            paginationClickable: true,
+            autoplay: 5000,
+            autoplayDisableOnInteraction: false,
+            speed: 1000,
+            // grabCursor: true,
+            effect: 'fade'
+        });
+    </script>
+}
+
+@* <iframe class="energy-light" src="http://stpc00601.taipower.com.tw/loadGraph/loadGraph/loremoea.html" width="200" height="150" scrolling="no" frameborder="0" title="iframe: 預估尖峰供電燈號"></iframe> *@
+
+<section id="banner" class="swiper-container">
+    <main class="swiper-wrapper">
+        @* <div class="swiper-slide" style="background-image: url(/Content/images/index/banner.jpg);"></div> *@
+        <div class="swiper-slide" style="background-image: url(/Content/images/index/banner2.jpg);"></div>
+        <div class="swiper-slide" style="background-image: url(/Content/images/index/banner3.jpg);"></div>
+    </main>
+    <div class="swiper-pager"></div>
+</section>
+
+<section class="wrap row-x-0 zoom main" id="content">
+    <aside class="col-md-4 quick-nav">
+        <a href="~/Home/ERL">能源查核申報系統</a>
+        <a href="~/Book/List">出版品</a>
+        <a href="~/Course">線上課程</a>
+        <a href="~/Train">研討會</a>
+    </aside>
+
+    <article class="col-md-8 news">
+        <header class="col">
+            <h2 class="title">最新消息 <small class="block font-sp">NEWS</small></h2>
+            <div class="text-right"><a href="~/News" class="more">more</a></div>
+        </header>
+
+        @* 套程式 - 最多5則 *@
+
+        <nav class="col">
+            @foreach (var data in Model.News.Result.Data)
+            {
+                string newsRedirectUrl = string.Empty;
+                string urlBlank = string.Empty;
+                if (string.IsNullOrEmpty(data.NewsUrl))
+                {
+                    newsRedirectUrl = Url.Content("~/News/Content?ID=" + data.ID);
+                }
+                else
+                {
+                    newsRedirectUrl = data.NewsUrl;
+                    urlBlank = "_blank";
+                }
+
+                <a target="@urlBlank" href="@newsRedirectUrl" class="news-link">
+                    <span class="date">@data.PublishDateStr</span>
+                    @data.Title
+                </a>
+            }
+
+            @*<a href="~/News/Content" class="news-link">
+                    <span class="date">2017/07/18</span>
+                    【線上報名】106年產業公用設備節約能源研習課程節約能源研習課程節約能源研習課程節約能源研習課程
+                </a>
+                <a href="~/News/Content" class="news-link">
+                    <span class="date">2017/06/26</span>
+                    【講義下載】電子業及紡織業能源效率指標申報說明會節約能源研習課程節約能源研習課程節約能源研習課程
+                </a>
+                <a href="~/News/Content" class="news-link">
+                    <span class="date">2017/06/26</span>
+                    【報名查詢】電子業及紡織業能源效率指標申報說明會
+                </a>
+                <a href="~/News/Content" class="news-link">
+                    <span class="date">2017/06/16</span>
+                    2017水泥業提升能源效率研討會
+                </a>
+                <a href="~/News/Content" class="news-link">
+                    <span class="date">2017/06/06</span>
+                    電機電子業能源效率提升技術研討會
+                </a>*@
+
+            @* @foreach (var data in Model)
+                {
+                    string imgUrl = data.ImagesData == null ?string.Empty: data.ImagesData.FileUrl;
+
+                    <!-- <figure class="newslist">
+                        <div class="cut">
+                            <img src="~/@imgUrl" alt="最新消息列表圖">
+                        </div>
+                        <a href="@Url.Content("~/News/Content?ID="+data.ID)"></a>
+                        <figcaption>
+                            <h4>@data.Title</h4>
+                            <a href="@Url.Content("~/News/Content?ID="+data.ID)" class="more">more</a>
+                            <small class="date">@data.PublishDateStr</small>
+                        </figcaption>
+                    </figure> -->
+
+                    <a href="@Url.Content("~/News/Content?ID="+data.ID)" class="news-link">
+                        <span class="date">@data.PublishDateStr</span>
+                        @data.Title
+                    </a>
+                    <a href="@Url.Content("~/News/Content?ID="+data.ID)" class="news-link">
+                        <span class="date">@data.PublishDateStr</span>
+                        @data.Title
+                    </a>
+                    <a href="@Url.Content("~/News/Content?ID="+data.ID)" class="news-link">
+                        <span class="date">@data.PublishDateStr</span>
+                        @data.Title
+                    </a>
+                    <a href="@Url.Content("~/News/Content?ID="+data.ID)" class="news-link">
+                        <span class="date">@data.PublishDateStr</span>
+                        @data.Title
+                    </a>
+                    <a href="@Url.Content("~/News/Content?ID="+data.ID)" class="news-link">
+                        <span class="date">@data.PublishDateStr</span>
+                        @data.Title
+                    </a>
+                } *@
+        </nav>
+    </article>
+</section>
+
+<section class="info">
+    <div class="wrap zoom">
+        <aside class="col-sm-6 col-md-4">
+            <div class="video-contain">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/y2-yEDHKqa8" title="Youtube 台灣的綠能能發展到多少？" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </aside>
+
+        <nav class="col-sm-6 col-md-3 course-list text-left font-lg">
+
+            <h2 class="title">線上課程</h2>
+            @foreach (var data in Model.Course.Result.Data)
+            {
+                <a href="@Url.Content("~/Course/Content?ID=" + data.ID)" class="block">@data.Title</a>
+            }
+
+            @*<a href="~/Course/Content" class="block">能源管理與能源查核</a>
+                <a href="~/Course/Content" class="block">鍋爐系統節能管理</a>
+                <a href="~/Course/Content" class="block">袪水器節能管理</a>
+                <a href="~/Course/Content" class="block">壓縮空氣系統</a>
+                <a href="~/Course/Content" class="block">泵浦的維護與效率管理</a>*@
+            <a href="~/Course" class="more">more</a>
+        </nav>
+        <section class="col-md-5">
+            <h2 class="title">節能案例</h2>
+            <nav class="case-list clearfix">
+                @foreach (var data in Model.CaseData.Result.ListData)
+                {
+                    string title = (data.Title.Length > 18) ? data.Title.Substring(0, 18) : data.Title;
+                    <a href="@Url.Content("~/Case/Content?ID=" + data.ID)" class="col"><span>@title</span></a>
+                }
+
+                @* 沒有節能技術專區，修改為節能案例(抓標題)，字數最多顯示25字，如下：
+                    <a href="~/Case/Content" class="col"><span>更換高效率冰水主機</span></a>
+                    <a href="~/Case/Content" class="col"><span>提高冰水主機出水溫度</span></a>
+                    <a href="~/Case/Content" class="col"><span>降低冰水主機主冰水泵冰水流量</span></a>
+                    <a href="~/Case/Content" class="col"><span>啟用備用冷卻水塔增加風車運轉台數降低冷卻水溫度</span></a> *@
+            </nav>
+        </section>
+    </div>
+</section>
+
+<section class="links">
+    <nav class="wrap">
+        <a class="link" href="http://emis.itri.org.tw/OnePercentFactory/OutWeb/L_CT/item1/item1.asp?TTL=48318.99" target="_blank" title="另開新視窗"><img src="~/Content/images/index/link1.jpg" alt="製造業加強節電1%"></a>
+        <a class="link" href="http://www.mdss.org.tw/subsidy/index/index.aspx" target="_blank" title="另開新視窗"><img src="~/Content/images/index/link2.jpg" alt="動力與公用設備補助方案"></a>
+        <a class="link" href="https://www.energypark.org.tw/nesc/index.htm" target="_blank" title="另開新視窗"><img src="~/Content/images/index/link3.jpg" alt="全民節電運動"></a>
+        <a class="link" href="https://energy.csd.org.tw/" target="_blank" title="另開新視窗"><img src="~/Content/images/index/link4.jpg" alt="能源管理學院"></a>
+        <a class="link" href="http://web3.moeaboe.gov.tw/ECW/ad04/home/Home.aspx" target="_blank" title="另開新視窗"><img src="~/Content/images/index/link5.jpg" alt="能源局-節約能源"></a>
+    </nav>
+</section>

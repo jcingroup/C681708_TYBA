@@ -1,0 +1,59 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "變更密碼";
+    ViewBag.subnav = "Cog";
+    ViewBag.subnav2 = "ChangPW";
+}
+
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>系統設定</li>
+        <li>@ViewBag.Crumb</li>
+    </ul>
+}
+@section IncludeScript{
+    <script>
+        $(function () {
+            if ('@ViewBag.Message' != '') {
+                if ('@ViewBag.Message' == 'success') {
+                    alert('更改密碼成功，請使用新密碼重新登入.');
+                    window.location.href = '/_SysAdm/LogOut';
+                }
+                else {
+                    alert('@ViewBag.Message');
+                }
+            }
+        })
+    </script>
+}
+<h3 class="title">@ViewBag.Crumb</h3>
+
+@using (Html.BeginForm("ChangePW", "_SysAdm", FormMethod.Post, new { id = "formManageChangePW", @class = "form-list" }))
+{
+    <dl class="field">
+        <dt class="col-2">目前密碼</dt>
+        <dd class="col-5">
+            <input type="password" name="oldPw" required>
+        </dd>
+    </dl>
+    <dl class="field">
+        <dt class="col-2">新密碼</dt>
+        <dd class="col-5">
+            <input type="password" name="newPw" required>
+        </dd>
+        @* 有限制密碼規則時才顯示
+            <dd class="col-4 text-danger">*密碼規則</dd> *@
+    </dl>
+    <dl class="field">
+        <dt class="col-2">確認密碼</dt>
+        <dd class="col-5">
+            <input type="password" name="rePw" required>
+        </dd>
+    </dl>
+    <footer class="submit-bar clear mt-24">
+        <button type="submit" class="btn success oi" data-glyph="circle-check">
+            確認儲存
+        </button>
+    </footer>
+}

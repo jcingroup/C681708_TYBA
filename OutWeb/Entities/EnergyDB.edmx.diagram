@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="70a32c797ac24e5e8d9f1b51f94a5193" Name="Diagram1" ZoomLevel="78">
+        <EntityTypeShape EntityType="EnergyNModel.EMAIL" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EnergyNModel.FAX" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EnergyNModel.FAXDetail" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EnergyNModel.LOGERR" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="EnergyNModel.SiteCounter" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="EnergyNModel.SMS" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EnergyNModel.SMSDetail" Width="1.5" PointX="6.75" PointY="5.75" />
+        <EntityTypeShape EntityType="EnergyNModel.SMSResponseMsg" Width="1.5" PointX="2.75" PointY="7.75" />
+        <EntityTypeShape EntityType="EnergyNModel.SystemLog" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EnergyNModel.TempValidUser" Width="1.5" PointX="8.75" PointY="4.75" />
+        <EntityTypeShape EntityType="EnergyNModel.人員" Width="1.5" PointX="8.75" PointY="7.75" />
+        <EntityTypeShape EntityType="EnergyNModel.分類主檔" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EnergyNModel.分類明細檔" Width="1.5" PointX="10.75" PointY="4.75" />
+        <EntityTypeShape EntityType="EnergyNModel.分類對應檔" Width="1.5" PointX="4.75" PointY="10.75" />
+        <EntityTypeShape EntityType="EnergyNModel.出版品主檔" Width="1.5" PointX="10.75" PointY="7.75" />
+        <EntityTypeShape EntityType="EnergyNModel.出版品章節明細檔" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="EnergyNModel.功能項目檔" Width="1.5" PointX="6.75" PointY="11.75" />
+        <EntityTypeShape EntityType="EnergyNModel.外部連結" Width="1.5" PointX="8.75" PointY="11.75" />
+        <EntityTypeShape EntityType="EnergyNModel.研討會主檔" Width="1.5" PointX="10.75" PointY="11.75" />
+        <EntityTypeShape EntityType="EnergyNModel.研討會報名主檔" Width="1.5" PointX="12.75" PointY="10.75" />
+        <EntityTypeShape EntityType="EnergyNModel.研討會報名對應檔" Width="1.5" PointX="2.75" PointY="13.75" />
+        <EntityTypeShape EntityType="EnergyNModel.問卷主檔" Width="1.5" PointX="4.75" PointY="14.75" />
+        <EntityTypeShape EntityType="EnergyNModel.問卷答案主檔" Width="1.5" PointX="14.75" PointY="5.75" />
+        <EntityTypeShape EntityType="EnergyNModel.問卷答案明細檔" Width="1.5" PointX="14.75" PointY="8.75" />
+        <EntityTypeShape EntityType="EnergyNModel.問卷選項檔" Width="1.5" PointX="14.75" PointY="12.75" />
+        <EntityTypeShape EntityType="EnergyNModel.問卷題目檔" Width="1.5" PointX="6.75" PointY="15.75" />
+        <EntityTypeShape EntityType="EnergyNModel.問卷題目類型檔" Width="1.5" PointX="8.75" PointY="15.75" />
+        <EntityTypeShape EntityType="EnergyNModel.新聞" Width="1.5" PointX="10.75" PointY="15.75" />
+        <EntityTypeShape EntityType="EnergyNModel.編輯器" Width="1.5" PointX="12.75" PointY="15.75" />
+        <EntityTypeShape EntityType="EnergyNModel.課程" Width="1.5" PointX="14.75" PointY="15.75" />
+        <EntityTypeShape EntityType="EnergyNModel.檔案" Width="1.5" PointX="16.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EnergyNModel.SMS_EMAIL_FAX_LIST" Width="1.5" PointX="0.75" PointY="16.75" />
+        <EntityTypeShape EntityType="EnergyNModel.能源案例" Width="1.5" PointX="17.375" PointY="5.75" />
+        <EntityTypeShape EntityType="EnergyNModel.研討會報名人員" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EnergyNModel.研討會明細檔" Width="1.5" PointX="17.375" PointY="10.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

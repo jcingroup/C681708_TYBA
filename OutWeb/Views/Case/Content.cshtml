@@ -1,0 +1,154 @@
+﻿@using OutWeb.Models.Manage.CasesModels
+@model CasesDetailsDataModel
+@{
+    ViewBag.Title = Model.Data.案例標題;
+    ViewBag.BodyClass = "Case";
+    ViewBag.Subnav = "sub1";
+    ViewBag.Breadcrumb = Model.Data.案例標題; @* 最後層的麵包屑 *@
+string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
+
+}
+
+@* 中間層的麵包屑 *@
+@section breadcrumb {
+    <li><a href="~/Case">節能案例</a></li>
+}
+
+<div class="wrap zoom">
+    @Html.Partial("sidebar")
+
+    <div id="content" class="text-left">
+
+        <header class="sub-title">
+            <h3 class="mt-0 underline">@ViewBag.Title</h3>
+            <small class="date font-sm">@Model.Data.建立日期</small>
+        </header>
+
+        <article class="mt-16 editor">
+            @Html.Raw(Model.Data.內容)
+            @*編輯器
+
+            文字內容
+            <p>依據2007年行政院科技顧問會議資料顯示，台灣住商部門耗電占全國29%、照明用電占30%，空調用電則占48%，以節約能源觀點，台灣若發展高效率照明產品並推動照明節能技術，一方面直接節約照明用電，另一方面因提升照明系統效率而減少照明產品的發熱量，間接節約空調用電，因此未來應積極推動照明節能產品及發展照明省能技術。</p>
+            <p>在光源技術部分，研發OLED固態光源、奈米場效平面發光元件以及高效率、高演色性的複金屬燈光源技術。複金屬燈為目前全球市場成長率最高的光源，擁有高效率、高演色性及小體積等優點。平面光源是國內外照明大廠正在積極研發與推動的產品，工研院已進行開發無汞、高效率的平面光源，已開發出10x10 cm2的平面光源，發光效率接近40Lm/W。</p>
+
+            <br>
+
+            表格
+            <div class="table-rwd">
+                <table class="case-table fixed">
+                    <tbody>
+                        <tr>
+                            <th id="h1">案例名稱</th>
+                            <td colspan="3" data-title="案例名稱" headers="h1">@ViewBag.Title</td>
+                        </tr>
+                        <tr>
+                            <th id="h2">年度</th>
+                            <td colspan="3" data-title="年度" headers="h2">FY106</td>
+                        </tr>
+                        <tr>
+                            <th id="h3">行業別</th>
+                            <td colspan="3" data-title="行業別" headers="h3">電子電機業</td>
+                        </tr>
+                        <tr>
+                            <th id="h4">技術別</th>
+                            <td colspan="3" data-title="技術別" headers="h4">空調系統(AC)</td>
+                        </tr>
+                        <tr>
+                            <th id="h5">設備別</th>
+                            <td colspan="3" data-title="設備別" headers="h5">空調系統</td>
+                        </tr>
+                        <tr>
+                            <th id="h6">現況</th>
+                            <td colspan="3" data-title="現況" headers="h6">
+                                冰水主機購置時占總購置成本之15%左右，效率高低會影響決標之金額，若無明確規範，在運轉成本上有相當大之影響。冰水主機運轉時約占總空調用電50%以上。冰水主機運於生命周期間之運轉費用占總支出費用之約80%(以20年估算) ，設置成本只占約8.5 %，若可針對主機作提昇，將可有效節約能源及運轉費用。往復式冰水主機效率1.02kW/RT，容量220RT，用電187.2kW，負載率65%使用時數為4000小時/年)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th id="h7">改善措施</th>
+                            <td colspan="3" data-title="改善措施" headers="h7">
+                                改善為螺旋式效率為0.75kW/RT
+                                節約率=(1.02-0.75)/0.75=26.4%
+                                節約空調總用電13.2%，若空調用電占總用電50%，則約可節約總用電5%左右。
+                                電力需量(kW)=0.75kW/RT×220RT =165kW
+                            </td>
+                        </tr>
+                        <tr>
+                            <th id="h8">資料來源</th>
+                            <td colspan="3" data-title="資料來源" headers="h8">能源資訊網</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="t1">
+                            <th colspan="4" id="h9">預期效益</th>
+                        </tr>
+                        <tr class="t2">
+                            <th id="h9-1">節約用電量</th>
+                            <th id="h9-2">節約電費</th>
+                            <th id="h9-3">投資費用</th>
+                            <th id="h9-4">回收年限</th>
+                        </tr>
+                        <tr>
+                            <td data-title="節約用電量" headers="h9 h9-1">187.2kW - 165kW = 22.2kW</td>
+                            <td data-title="節約電費" headers="h9 h9-2">22.2kW × 4000h = 88,800kWh/Y</td>
+                            <td data-title="投資費用" headers="h9 h9-3"></td>
+                            <td data-title="回收年限" headers="h9 h9-4">88,800kWh × 2元 / kWh = 177,600元/年</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>*@
+        </article>
+
+        @if (Model.FilesData.Count > 0 && Model.FilesData != null)
+        {
+            <footer class="download">
+
+                @foreach (var file in Model.FilesData)
+                {
+                string fileUrl = string.Concat(currentUrl, "/", file.FileUrl);
+                    <a real-name="@file.RealFileName" href="@fileUrl" class="inline-block ti-clip" target="new">@file.RealFileName</a>
+                }
+            </footer>
+        }
+
+        <hr class="mb-12">
+
+        <div class="text-right">
+            <button class="ti-printer mr-12" type="button" onclick="webprint('content')" onkeypress="webprint('content')">友善列印</button>
+            <a href="~/Case" class="ti-layout-grid2-alt">回列表</a>
+        </div>
+    </div><!-- content //-->
+
+</div>
+
+@*<div class="wrap row">
+    <aside class="col-7 work-img">
+        <section class="swiper-container gallery">
+            <main class="swiper-wrapper">
+                @foreach (var data in Model.OtherImagesData)
+                {
+                    <div class="swiper-slide"><img src="~/@data.FileUrl" alt="案例大圖"></div>
+                }
+            </main>
+            <div class="swiper-button-next swiper-button-white"></div>
+            <div class="swiper-button-prev swiper-button-white"></div>
+        </section>
+        <section class="swiper-container thumbs">
+            <main class="swiper-wrapper">
+                @foreach (var data in Model.OtherImagesData)
+                {
+                    <div class="swiper-slide"><img src="~/@data.FileUrl" alt="案例大圖"></div>
+                }
+            </main>
+        </section>
+    </aside>
+
+    <article class="col-5 pl-32 text-left">
+        <span class="date">2017/09/25</span>
+        <header class="font-xxl">@Model.WorksTitle</header>
+    </article>
+</div>
+
+<div class="wrap clearfix editor text-left">
+    @Html.Raw(Model.Content)
+</div>*@

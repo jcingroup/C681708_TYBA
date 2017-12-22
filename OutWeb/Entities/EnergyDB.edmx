@@ -1,0 +1,1696 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EnergyNModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EMAIL">
+          <Key>
+            <PropertyRef Name="EMAIL_ID" />
+          </Key>
+          <Property Name="EMAIL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PUBLISHER" Type="nvarchar" MaxLength="20" />
+          <Property Name="DELIEVER_DATE" Type="datetime" />
+          <Property Name="DELIEVER_TYPE" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="TITLE" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="STATUS" Type="int" Nullable="false" />
+          <Property Name="UPDATE_DATE" Type="datetime" />
+          <Property Name="UPDATE_NAME" Type="int" />
+          <Property Name="SEND_NAME" Type="int" />
+          <Property Name="SEND_DATE" Type="datetime" />
+          <Property Name="INSERT_DATE" Type="datetime" Nullable="false" />
+          <Property Name="INSERT_NAME" Type="int" Nullable="false" />
+          <Property Name="MAIL_FORM" Type="nvarchar" MaxLength="50" />
+          <Property Name="MAIL_SUBJECT" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="MAIL_BODY" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FAX">
+          <Key>
+            <PropertyRef Name="FAX_ID" />
+          </Key>
+          <Property Name="FAX_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PUBLISHER" Type="nvarchar" MaxLength="20" />
+          <Property Name="DELIEVER_DATE" Type="datetime" />
+          <Property Name="DELIEVER_TYPE" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="TITLE" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="STATUS" Type="int" Nullable="false" />
+          <Property Name="STATUSDETAIL" Type="int" />
+          <Property Name="INSERT_DATE" Type="datetime" Nullable="false" />
+          <Property Name="INSERT_NAME" Type="int" Nullable="false" />
+          <Property Name="UPDATE_DATE" Type="datetime" />
+          <Property Name="UPDATE_NAME" Type="int" />
+          <Property Name="SEND_NAME" Type="int" />
+          <Property Name="SEND_DATE" Type="datetime" />
+          <Property Name="FAX_TITLE" Type="nvarchar" MaxLength="20" />
+          <Property Name="FILE_PAGE" Type="int" />
+        </EntityType>
+        <EntityType Name="FAXDetail">
+          <Key>
+            <PropertyRef Name="FAX_NO" />
+          </Key>
+          <Property Name="FAX_ID" Type="int" Nullable="false" />
+          <Property Name="FAX_NO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FAX_TITLE" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="FAX_TEL" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="FAX_COMPANY" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="FAX_NAME" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="SEND_COMPANY" Type="nvarchar" MaxLength="20" />
+          <Property Name="SEND_NAME" Type="nvarchar" MaxLength="20" />
+          <Property Name="USEDFOR" Type="int" Nullable="false" />
+          <Property Name="INSERT_DATE" Type="datetime" Nullable="false" />
+          <Property Name="INSERT_NAME" Type="int" Nullable="false" />
+          <Property Name="IS_SUCCESS" Type="bit" />
+        </EntityType>
+        <EntityType Name="LOGERR">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ERR_GID" Type="int" Nullable="false" />
+          <Property Name="ERR_SMRY" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ERR_DESC" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ERR_SRC" Type="varchar(max)" Nullable="false" />
+          <Property Name="LOG_DTM" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SiteCounter">
+          <Key>
+            <PropertyRef Name="SN" />
+          </Key>
+          <Property Name="SN" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SITE_COUNT" Type="int" Nullable="false" />
+          <Property Name="SITE_TYPE" Type="nvarchar" MaxLength="15" />
+          <Property Name="PARM" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="SMS">
+          <Key>
+            <PropertyRef Name="SMS_ID" />
+          </Key>
+          <Property Name="SMS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TITLE" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="PUBLISHER" Type="nvarchar" MaxLength="20" />
+          <Property Name="DELIEVER_DATE" Type="datetime" />
+          <Property Name="DELIEVER_TYPE" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="CONTENTTEXT" Type="ntext" Nullable="false" />
+          <Property Name="INSERT_DATE" Type="datetime" Nullable="false" />
+          <Property Name="INSERT_NAME" Type="int" Nullable="false" />
+          <Property Name="UPDATE_DATE" Type="datetime" />
+          <Property Name="UPDATE_NAME" Type="int" />
+          <Property Name="STATUS" Type="int" Nullable="false" />
+          <Property Name="STATUSDETAIL" Type="int" />
+          <Property Name="SEND_NAME" Type="int" />
+          <Property Name="SEND_DATE" Type="datetime" />
+          <Property Name="CANCEL_NAME" Type="int" />
+          <Property Name="CANCEL_DATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SMSDetail">
+          <Key>
+            <PropertyRef Name="SMS_NO" />
+          </Key>
+          <Property Name="SMS_ID" Type="int" Nullable="false" />
+          <Property Name="SMS_NO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="20" />
+          <Property Name="TEL" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="MSG_ID" Type="nvarchar" MaxLength="10" />
+          <Property Name="STATUSCODE" Type="nvarchar" MaxLength="50" />
+          <Property Name="USEDFOR" Type="int" Nullable="false" />
+          <Property Name="INSERT_NAME" Type="int" Nullable="false" />
+          <Property Name="INSERT_DATE" Type="datetime" Nullable="false" />
+          <Property Name="IS_SUCCESS" Type="bit" />
+          <Property Name="DLVTIME_RE" Type="datetime" />
+          <Property Name="DONETIME_RE" Type="datetime" />
+          <Property Name="STATUSCODE_RE" Type="int" />
+          <Property Name="STATUSSTR_RE" Type="nvarchar" MaxLength="10" />
+          <Property Name="STATUSFLAG_RE" Type="int" />
+          <Property Name="STATUSSTRMEMO_RE" Type="nvarchar" MaxLength="50" />
+          <Property Name="RECEIVE_DATE_RE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SMSResponseMsg">
+          <Key>
+            <PropertyRef Name="msg_id" />
+          </Key>
+          <Property Name="msg_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="dstaddr" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="dlvtime" Type="datetime" Nullable="false" />
+          <Property Name="donetime" Type="datetime" Nullable="false" />
+          <Property Name="statuscode" Type="int" Nullable="false" />
+          <Property Name="statusstr" Type="nvarchar" MaxLength="10" />
+          <Property Name="statusFlag" Type="int" />
+          <Property Name="receiveDate" Type="datetime" Nullable="false" />
+          <Property Name="statusstrMemo" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SystemLog">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FromIP" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="OperateType" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="OperateDes" Type="nvarchar" MaxLength="1000" />
+          <Property Name="OperateID" Type="varchar" MaxLength="10" />
+          <Property Name="OperateDate" Type="datetime" Nullable="false" />
+          <Property Name="CustId" Type="varchar" MaxLength="10" />
+          <Property Name="Parm" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="TempValidUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Account" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ConmpanyName" Type="nvarchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="人員">
+          <Key>
+            <PropertyRef Name="人員代碼" />
+          </Key>
+          <Property Name="人員代碼" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="帳號" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="密碼" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="姓名" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="單位代碼" Type="int" />
+          <Property Name="停權" Type="bit" Nullable="false" />
+          <Property Name="代碼" Type="char" MaxLength="20" />
+          <Property Name="職稱" Type="nvarchar" MaxLength="20" />
+          <Property Name="職務代理人" Type="nvarchar" MaxLength="20" />
+          <Property Name="到職日" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="分類主檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="分類名稱" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="備註" Type="nvarchar" MaxLength="200" />
+          <Property Name="排序" Type="float" Nullable="false" />
+          <Property Name="停用" Type="bit" Nullable="false" />
+          <Property Name="建立日期" Type="datetime" Nullable="false" />
+          <Property Name="建立人員" Type="int" Nullable="false" />
+          <Property Name="修改日期" Type="datetime" Nullable="false" />
+          <Property Name="修改人員" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="分類明細檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="對應分類主檔索引" Type="int" Nullable="false" />
+          <Property Name="分類名稱" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="自訂代碼" Type="int" Nullable="false" />
+          <Property Name="排序" Type="float" Nullable="false" />
+          <Property Name="停用" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="分類對應檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+            <PropertyRef Name="項次" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="對應分類類別索引" Type="int" Nullable="false" />
+          <Property Name="對應項目索引" Type="int" Nullable="false" />
+          <Property Name="項次" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="出版品主檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="對應分類索引" Type="int" Nullable="false" />
+          <Property Name="發稿時間" Type="datetime" Nullable="false" />
+          <Property Name="發稿人" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="名稱" Type="nvarchar" MaxLength="50" />
+          <Property Name="摘要" Type="nvarchar(max)" />
+          <Property Name="排序" Type="float" />
+          <Property Name="顯示狀態" Type="bit" Nullable="false" />
+          <Property Name="建立時間" Type="datetime" Nullable="false" />
+          <Property Name="更新時間" Type="datetime" Nullable="false" />
+          <Property Name="更新人員" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="出版品章節明細檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="對應出版品索引" Type="int" Nullable="false" />
+          <Property Name="對應檔案索引" Type="int" Nullable="false" />
+          <Property Name="檔案別名" Type="nvarchar" MaxLength="50" />
+          <Property Name="排序" Type="float" />
+        </EntityType>
+        <EntityType Name="功能項目檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="項目代碼" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="項目名稱" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="外部連結">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="名稱" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="網址連結" Type="nvarchar" MaxLength="200" />
+          <Property Name="排序" Type="float" Nullable="false" />
+          <Property Name="狀態" Type="bit" Nullable="false" />
+          <Property Name="建立日期" Type="datetime" Nullable="false" />
+          <Property Name="建立人員" Type="int" Nullable="false" />
+          <Property Name="更新日期" Type="datetime" Nullable="false" />
+          <Property Name="更新人員" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="研討會主檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="研討會名稱" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="建立日期" Type="datetime" Nullable="false" />
+          <Property Name="建立人員" Type="int" Nullable="false" />
+          <Property Name="更新日期" Type="datetime" Nullable="false" />
+          <Property Name="更新人員" Type="int" Nullable="false" />
+          <Property Name="排序" Type="int" />
+        </EntityType>
+        <EntityType Name="研討會明細檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="對應研討會主索引" Type="int" Nullable="false" />
+          <Property Name="活動地點" Type="nvarchar" MaxLength="50" />
+          <Property Name="活動日期起" Type="datetime" />
+          <Property Name="活動日期訖" Type="datetime" />
+          <Property Name="活動時間範圍" Type="nvarchar" MaxLength="30" />
+          <Property Name="主辦單位" Type="nvarchar" MaxLength="50" />
+          <Property Name="協辦單位" Type="nvarchar" MaxLength="50" />
+          <Property Name="報名期限_起" Type="varchar" MaxLength="10" />
+          <Property Name="報名期限_迄" Type="varchar" MaxLength="10" />
+          <Property Name="聯絡人" Type="nvarchar" MaxLength="10" />
+          <Property Name="連絡電話" Type="nvarchar" MaxLength="50" />
+          <Property Name="備註" Type="nvarchar" MaxLength="200" />
+          <Property Name="活動人數上限" Type="int" />
+          <Property Name="活動內容" Type="nvarchar(max)" />
+          <Property Name="顯示狀態" Type="bit" />
+          <Property Name="排序" Type="float" />
+          <Property Name="首頁顯示" Type="bit" />
+          <Property Name="用戶參加人數限制" Type="int" />
+          <Property Name="收費狀態" Type="bit" />
+        </EntityType>
+        <EntityType Name="研討會報名人員">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="對應報名檔主索引" Type="int" Nullable="false" />
+          <Property Name="參加人員姓名" Type="nvarchar" MaxLength="50" />
+          <Property Name="參加人員職稱" Type="nvarchar" MaxLength="50" />
+          <Property Name="膳食種類" Type="nvarchar" MaxLength="15" />
+          <Property Name="是否為聯絡人" Type="bit" />
+          <Property Name="報名狀態" Type="int" />
+          <Property Name="繳費狀態" Type="bit" />
+        </EntityType>
+        <EntityType Name="研討會報名主檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="用戶編號" Type="nvarchar" MaxLength="50" />
+          <Property Name="公司名稱" Type="nvarchar" MaxLength="50" />
+          <Property Name="聯絡人姓名" Type="nvarchar" MaxLength="10" />
+          <Property Name="聯絡人Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="聯絡人生日" Type="nvarchar" MaxLength="10" />
+          <Property Name="聯絡人手機" Type="nvarchar" MaxLength="50" />
+          <Property Name="公司電話" Type="nvarchar" MaxLength="50" />
+          <Property Name="公司傳真" Type="nvarchar" MaxLength="50" />
+          <Property Name="公司統編" Type="nvarchar" MaxLength="50" />
+          <Property Name="統編抬頭" Type="nvarchar" MaxLength="50" />
+          <Property Name="同意條文" Type="bit" Nullable="false" />
+          <Property Name="排序" Type="int" />
+          <Property Name="更新時間" Type="datetime" />
+        </EntityType>
+        <EntityType Name="研討會報名對應檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="對應研討會主索引" Type="int" Nullable="false" />
+          <Property Name="報名檔主索引" Type="int" Nullable="false" />
+          <Property Name="報名用戶編號" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="能源案例">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="案例標題" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="設備別" Type="int" Nullable="false" />
+          <Property Name="行業別" Type="int" Nullable="false" />
+          <Property Name="排序" Type="float" Nullable="false" />
+          <Property Name="建立日期" Type="datetime" Nullable="false" />
+          <Property Name="建立人員" Type="int" Nullable="false" />
+          <Property Name="更新日期" Type="datetime" Nullable="false" />
+          <Property Name="更新人員" Type="int" Nullable="false" />
+          <Property Name="發佈日期" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="顯示狀態" Type="bit" Nullable="false" />
+          <Property Name="內容" Type="nvarchar(max)" />
+          <Property Name="樣板代碼" Type="int" Nullable="false" />
+          <Property Name="首頁顯示" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="問卷主檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="問卷標題" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="問卷描述" Type="nvarchar" MaxLength="500" />
+          <Property Name="開放時間起始日" Type="datetime" Nullable="false" />
+          <Property Name="開放時間結束日" Type="datetime" Nullable="false" />
+          <Property Name="是否上架" Type="bit" Nullable="false" />
+          <Property Name="預計發出量" Type="int" Nullable="false" />
+          <Property Name="是否需要登入" Type="bit" Nullable="false" />
+          <Property Name="問卷網址" Type="nvarchar" MaxLength="150" />
+          <Property Name="排序" Type="float" Nullable="false" />
+          <Property Name="建立日期" Type="datetime" Nullable="false" />
+          <Property Name="建立人員" Type="int" Nullable="false" />
+          <Property Name="更新日期" Type="datetime" Nullable="false" />
+          <Property Name="更新人員" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="問卷答案主檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="對應問卷主檔索引" Type="int" Nullable="false" />
+          <Property Name="填寫人" Type="nvarchar" MaxLength="50" />
+          <Property Name="填寫人ID" Type="int" />
+          <Property Name="填寫日期" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="問卷答案明細檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="對應問卷答案索引" Type="int" Nullable="false" />
+          <Property Name="對應問卷題目索引" Type="int" Nullable="false" />
+          <Property Name="對應問題類型索引" Type="int" Nullable="false" />
+          <Property Name="問卷答案選項值" Type="int" />
+          <Property Name="問卷答案文字值" Type="nvarchar" MaxLength="500" />
+          <Property Name="回答日期" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="問卷選項檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="對應問卷主檔索引" Type="int" Nullable="false" />
+          <Property Name="對應問卷題目索引" Type="int" Nullable="false" />
+          <Property Name="對應問題類型索引" Type="int" Nullable="false" />
+          <Property Name="題目選項內容" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="排序" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="問卷題目檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="對應問卷索引" Type="int" />
+          <Property Name="對應問卷題目類型索引" Type="int" />
+          <Property Name="問卷題目內容" Type="nvarchar" MaxLength="300" />
+          <Property Name="更新日期" Type="datetime" Nullable="false" />
+          <Property Name="更新人員" Type="int" Nullable="false" />
+          <Property Name="是否必填" Type="bit" Nullable="false" />
+          <Property Name="排序" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="問卷題目類型檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="問卷類型名稱" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="建立日期" Type="datetime" Nullable="false" />
+          <Property Name="建立人員" Type="int" Nullable="false" />
+          <Property Name="更新日期" Type="datetime" Nullable="false" />
+          <Property Name="更新人員" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="新聞">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="分類代碼" Type="int" Nullable="false" />
+          <Property Name="發稿時間" Type="datetime" Nullable="false" />
+          <Property Name="發稿人" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="標題" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="內容" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="登錄人" Type="int" Nullable="false" />
+          <Property Name="修改日期" Type="datetime" Nullable="false" />
+          <Property Name="修改人" Type="int" Nullable="false" />
+          <Property Name="連結位址" Type="nvarchar" MaxLength="200" />
+          <Property Name="排序" Type="float" Nullable="false" />
+          <Property Name="顯示狀態" Type="bit" Nullable="false" />
+          <Property Name="首頁顯示" Type="bit" Nullable="false" />
+          <Property Name="流水號" Type="int" />
+          <Property Name="樣板代碼" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="編輯器">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="對應名稱" Type="nvarchar" MaxLength="20" />
+          <Property Name="內容" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="課程">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="分類代碼" Type="int" />
+          <Property Name="發稿日期" Type="datetime" Nullable="false" />
+          <Property Name="發稿人" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="標題" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="內容" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="登錄人" Type="int" Nullable="false" />
+          <Property Name="修改日期" Type="datetime" Nullable="false" />
+          <Property Name="修改人" Type="int" Nullable="false" />
+          <Property Name="連結位址" Type="nvarchar" MaxLength="200" />
+          <Property Name="排序" Type="float" Nullable="false" />
+          <Property Name="首頁顯示" Type="bit" Nullable="false" />
+          <Property Name="流水號" Type="int" />
+          <Property Name="顯示狀態" Type="bit" Nullable="false" />
+          <Property Name="建立日期" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="檔案">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="對應索引" Type="int" Nullable="false" />
+          <Property Name="對應名稱" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="檔案模式" Type="nchar" MaxLength="1" Nullable="false" />
+          <Property Name="檔案格式" Type="nchar" MaxLength="1" Nullable="false" />
+          <Property Name="檔案名稱" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="原始檔名" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="檔案路徑" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="檔案虛擬路徑" Type="nvarchar" MaxLength="200" />
+          <Property Name="更新時間" Type="datetime" Nullable="false" />
+          <Property Name="更新人員" Type="int" Nullable="false" />
+          <Property Name="建立時間" Type="datetime" Nullable="false" />
+          <Property Name="建立人員" Type="int" Nullable="false" />
+          <Property Name="排序" Type="int" Nullable="false" />
+          <Property Name="識別碼" Type="int" />
+          <Property Name="傳真檔案路徑" Type="nvarchar" MaxLength="200" />
+          <Property Name="傳真檔案名稱" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'EnergyN.dbo.SMS_EMAIL_FAX_LIST' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="SMS_EMAIL_FAX_LIST">
+          <Key>
+            
+            
+            
+            
+            
+            <PropertyRef Name="NO" />
+          </Key>
+          <Property Name="NO" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="STYPE" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="TITLE" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="INSERT_DATE" Type="datetime" Nullable="false" />
+          <Property Name="DELIEVER_DATE" Type="datetime" />
+          <Property Name="STATUS" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="EnergyNModelStoreContainer">
+          <EntitySet Name="EMAIL" EntityType="Self.EMAIL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FAX" EntityType="Self.FAX" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FAXDetail" EntityType="Self.FAXDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOGERR" EntityType="Self.LOGERR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SiteCounter" EntityType="Self.SiteCounter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SMS" EntityType="Self.SMS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SMSDetail" EntityType="Self.SMSDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SMSResponseMsg" EntityType="Self.SMSResponseMsg" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemLog" EntityType="Self.SystemLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempValidUser" EntityType="Self.TempValidUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="人員" EntityType="Self.人員" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="分類主檔" EntityType="Self.分類主檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="分類明細檔" EntityType="Self.分類明細檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="分類對應檔" EntityType="Self.分類對應檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="出版品主檔" EntityType="Self.出版品主檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="出版品章節明細檔" EntityType="Self.出版品章節明細檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="功能項目檔" EntityType="Self.功能項目檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="外部連結" EntityType="Self.外部連結" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="研討會主檔" EntityType="Self.研討會主檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="研討會明細檔" EntityType="Self.研討會明細檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="研討會報名人員" EntityType="Self.研討會報名人員" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="研討會報名主檔" EntityType="Self.研討會報名主檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="研討會報名對應檔" EntityType="Self.研討會報名對應檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="能源案例" EntityType="Self.能源案例" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="問卷主檔" EntityType="Self.問卷主檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="問卷答案主檔" EntityType="Self.問卷答案主檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="問卷答案明細檔" EntityType="Self.問卷答案明細檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="問卷選項檔" EntityType="Self.問卷選項檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="問卷題目檔" EntityType="Self.問卷題目檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="問卷題目類型檔" EntityType="Self.問卷題目類型檔" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="新聞" EntityType="Self.新聞" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="編輯器" EntityType="Self.編輯器" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="課程" EntityType="Self.課程" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="檔案" EntityType="Self.檔案" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SMS_EMAIL_FAX_LIST" EntityType="Self.SMS_EMAIL_FAX_LIST" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SMS_EMAIL_FAX_LIST].[NO] AS [NO], 
+    [SMS_EMAIL_FAX_LIST].[ID] AS [ID], 
+    [SMS_EMAIL_FAX_LIST].[STYPE] AS [STYPE], 
+    [SMS_EMAIL_FAX_LIST].[TITLE] AS [TITLE], 
+    [SMS_EMAIL_FAX_LIST].[INSERT_DATE] AS [INSERT_DATE], 
+    [SMS_EMAIL_FAX_LIST].[DELIEVER_DATE] AS [DELIEVER_DATE], 
+    [SMS_EMAIL_FAX_LIST].[STATUS] AS [STATUS]
+    FROM [dbo].[SMS_EMAIL_FAX_LIST] AS [SMS_EMAIL_FAX_LIST]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EnergyNModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DBEnergy" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EMAIL" EntityType="EnergyNModel.EMAIL" />
+          <EntitySet Name="FAX" EntityType="EnergyNModel.FAX" />
+          <EntitySet Name="FAXDetail" EntityType="EnergyNModel.FAXDetail" />
+          <EntitySet Name="LOGERR" EntityType="EnergyNModel.LOGERR" />
+          <EntitySet Name="SiteCounter" EntityType="EnergyNModel.SiteCounter" />
+          <EntitySet Name="SMS" EntityType="EnergyNModel.SMS" />
+          <EntitySet Name="SMSDetail" EntityType="EnergyNModel.SMSDetail" />
+          <EntitySet Name="SMSResponseMsg" EntityType="EnergyNModel.SMSResponseMsg" />
+          <EntitySet Name="SystemLog" EntityType="EnergyNModel.SystemLog" />
+          <EntitySet Name="TempValidUser" EntityType="EnergyNModel.TempValidUser" />
+          <EntitySet Name="人員" EntityType="EnergyNModel.人員" />
+          <EntitySet Name="分類主檔" EntityType="EnergyNModel.分類主檔" />
+          <EntitySet Name="分類明細檔" EntityType="EnergyNModel.分類明細檔" />
+          <EntitySet Name="分類對應檔" EntityType="EnergyNModel.分類對應檔" />
+          <EntitySet Name="出版品主檔" EntityType="EnergyNModel.出版品主檔" />
+          <EntitySet Name="出版品章節明細檔" EntityType="EnergyNModel.出版品章節明細檔" />
+          <EntitySet Name="功能項目檔" EntityType="EnergyNModel.功能項目檔" />
+          <EntitySet Name="外部連結" EntityType="EnergyNModel.外部連結" />
+          <EntitySet Name="研討會主檔" EntityType="EnergyNModel.研討會主檔" />
+          <EntitySet Name="研討會報名主檔" EntityType="EnergyNModel.研討會報名主檔" />
+          <EntitySet Name="研討會報名對應檔" EntityType="EnergyNModel.研討會報名對應檔" />
+          <EntitySet Name="問卷主檔" EntityType="EnergyNModel.問卷主檔" />
+          <EntitySet Name="問卷答案主檔" EntityType="EnergyNModel.問卷答案主檔" />
+          <EntitySet Name="問卷答案明細檔" EntityType="EnergyNModel.問卷答案明細檔" />
+          <EntitySet Name="問卷選項檔" EntityType="EnergyNModel.問卷選項檔" />
+          <EntitySet Name="問卷題目檔" EntityType="EnergyNModel.問卷題目檔" />
+          <EntitySet Name="問卷題目類型檔" EntityType="EnergyNModel.問卷題目類型檔" />
+          <EntitySet Name="新聞" EntityType="EnergyNModel.新聞" />
+          <EntitySet Name="編輯器" EntityType="EnergyNModel.編輯器" />
+          <EntitySet Name="課程" EntityType="EnergyNModel.課程" />
+          <EntitySet Name="檔案" EntityType="EnergyNModel.檔案" />
+          <EntitySet Name="SMS_EMAIL_FAX_LIST" EntityType="EnergyNModel.SMS_EMAIL_FAX_LIST" />
+          <EntitySet Name="能源案例" EntityType="EnergyNModel.能源案例" />
+          <EntitySet Name="研討會報名人員" EntityType="EnergyNModel.研討會報名人員" />
+          <EntitySet Name="研討會明細檔" EntityType="EnergyNModel.研討會明細檔" />
+        </EntityContainer>
+        <EntityType Name="EMAIL">
+          <Key>
+            <PropertyRef Name="EMAIL_ID" />
+          </Key>
+          <Property Name="EMAIL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PUBLISHER" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DELIEVER_DATE" Type="DateTime" Precision="3" />
+          <Property Name="DELIEVER_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="TITLE" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="STATUS" Type="Int32" Nullable="false" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="UPDATE_NAME" Type="Int32" />
+          <Property Name="SEND_NAME" Type="Int32" />
+          <Property Name="SEND_DATE" Type="DateTime" Precision="3" />
+          <Property Name="INSERT_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="INSERT_NAME" Type="Int32" Nullable="false" />
+          <Property Name="MAIL_FORM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MAIL_SUBJECT" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MAIL_BODY" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="FAX">
+          <Key>
+            <PropertyRef Name="FAX_ID" />
+          </Key>
+          <Property Name="FAX_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PUBLISHER" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DELIEVER_DATE" Type="DateTime" Precision="3" />
+          <Property Name="DELIEVER_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="TITLE" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="STATUS" Type="Int32" Nullable="false" />
+          <Property Name="STATUSDETAIL" Type="Int32" />
+          <Property Name="INSERT_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="INSERT_NAME" Type="Int32" Nullable="false" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="UPDATE_NAME" Type="Int32" />
+          <Property Name="SEND_NAME" Type="Int32" />
+          <Property Name="SEND_DATE" Type="DateTime" Precision="3" />
+          <Property Name="FAX_TITLE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FILE_PAGE" Type="Int32" />
+        </EntityType>
+        <EntityType Name="FAXDetail">
+          <Key>
+            <PropertyRef Name="FAX_NO" />
+          </Key>
+          <Property Name="FAX_ID" Type="Int32" Nullable="false" />
+          <Property Name="FAX_NO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FAX_TITLE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FAX_TEL" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FAX_COMPANY" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FAX_NAME" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SEND_COMPANY" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SEND_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="USEDFOR" Type="Int32" Nullable="false" />
+          <Property Name="INSERT_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="INSERT_NAME" Type="Int32" Nullable="false" />
+          <Property Name="IS_SUCCESS" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="LOGERR">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ERR_GID" Type="Int32" Nullable="false" />
+          <Property Name="ERR_SMRY" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ERR_DESC" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ERR_SRC" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LOG_DTM" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="SiteCounter">
+          <Key>
+            <PropertyRef Name="SN" />
+          </Key>
+          <Property Name="SN" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SITE_COUNT" Type="Int32" Nullable="false" />
+          <Property Name="SITE_TYPE" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="PARM" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SMS">
+          <Key>
+            <PropertyRef Name="SMS_ID" />
+          </Key>
+          <Property Name="SMS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TITLE" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PUBLISHER" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DELIEVER_DATE" Type="DateTime" Precision="3" />
+          <Property Name="DELIEVER_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CONTENTTEXT" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="INSERT_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="INSERT_NAME" Type="Int32" Nullable="false" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="UPDATE_NAME" Type="Int32" />
+          <Property Name="STATUS" Type="Int32" Nullable="false" />
+          <Property Name="STATUSDETAIL" Type="Int32" />
+          <Property Name="SEND_NAME" Type="Int32" />
+          <Property Name="SEND_DATE" Type="DateTime" Precision="3" />
+          <Property Name="CANCEL_NAME" Type="Int32" />
+          <Property Name="CANCEL_DATE" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="SMSDetail">
+          <Key>
+            <PropertyRef Name="SMS_NO" />
+          </Key>
+          <Property Name="SMS_ID" Type="Int32" Nullable="false" />
+          <Property Name="SMS_NO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="TEL" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MSG_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="STATUSCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USEDFOR" Type="Int32" Nullable="false" />
+          <Property Name="INSERT_NAME" Type="Int32" Nullable="false" />
+          <Property Name="INSERT_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IS_SUCCESS" Type="Boolean" />
+          <Property Name="DLVTIME_RE" Type="DateTime" Precision="3" />
+          <Property Name="DONETIME_RE" Type="DateTime" Precision="3" />
+          <Property Name="STATUSCODE_RE" Type="Int32" />
+          <Property Name="STATUSSTR_RE" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="STATUSFLAG_RE" Type="Int32" />
+          <Property Name="STATUSSTRMEMO_RE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RECEIVE_DATE_RE" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="SMSResponseMsg">
+          <Key>
+            <PropertyRef Name="msg_id" />
+          </Key>
+          <Property Name="msg_id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="dstaddr" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="dlvtime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="donetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="statuscode" Type="Int32" Nullable="false" />
+          <Property Name="statusstr" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="statusFlag" Type="Int32" />
+          <Property Name="receiveDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="statusstrMemo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SystemLog">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FromIP" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="OperateType" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="OperateDes" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="OperateID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OperateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CustId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Parm" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TempValidUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Account" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ConmpanyName" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="人員">
+          <Key>
+            <PropertyRef Name="人員代碼" />
+          </Key>
+          <Property Name="人員代碼" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="帳號" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="密碼" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="姓名" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="單位代碼" Type="Int32" />
+          <Property Name="停權" Type="Boolean" Nullable="false" />
+          <Property Name="代碼" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="職稱" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="職務代理人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="到職日" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="分類主檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="分類名稱" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="備註" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="排序" Type="Double" Nullable="false" />
+          <Property Name="停用" Type="Boolean" Nullable="false" />
+          <Property Name="建立日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="建立人員" Type="Int32" Nullable="false" />
+          <Property Name="修改日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="修改人員" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="分類明細檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="對應分類主檔索引" Type="Int32" Nullable="false" />
+          <Property Name="分類名稱" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="自訂代碼" Type="Int32" Nullable="false" />
+          <Property Name="排序" Type="Double" Nullable="false" />
+          <Property Name="停用" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="分類對應檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+            <PropertyRef Name="項次" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="對應分類類別索引" Type="Int32" Nullable="false" />
+          <Property Name="對應項目索引" Type="Int32" Nullable="false" />
+          <Property Name="項次" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="出版品主檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="對應分類索引" Type="Int32" Nullable="false" />
+          <Property Name="發稿時間" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="發稿人" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="名稱" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="摘要" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="排序" Type="Double" />
+          <Property Name="顯示狀態" Type="Boolean" Nullable="false" />
+          <Property Name="建立時間" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="更新時間" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="更新人員" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="出版品章節明細檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="對應出版品索引" Type="Int32" Nullable="false" />
+          <Property Name="對應檔案索引" Type="Int32" Nullable="false" />
+          <Property Name="檔案別名" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="排序" Type="Double" />
+        </EntityType>
+        <EntityType Name="功能項目檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="項目代碼" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="項目名稱" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="外部連結">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="名稱" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="網址連結" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="排序" Type="Double" Nullable="false" />
+          <Property Name="狀態" Type="Boolean" Nullable="false" />
+          <Property Name="建立日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="建立人員" Type="Int32" Nullable="false" />
+          <Property Name="更新日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="更新人員" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="研討會主檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="研討會名稱" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="建立日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="建立人員" Type="Int32" Nullable="false" />
+          <Property Name="更新日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="更新人員" Type="Int32" Nullable="false" />
+          <Property Name="排序" Type="Int32" />
+        </EntityType>
+        <EntityType Name="研討會報名主檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="用戶編號" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="公司名稱" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="聯絡人姓名" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="聯絡人Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="聯絡人生日" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="聯絡人手機" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="公司電話" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="公司傳真" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="公司統編" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="統編抬頭" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="同意條文" Type="Boolean" Nullable="false" />
+          <Property Name="排序" Type="Int32" />
+          <Property Name="更新時間" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="研討會報名對應檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="對應研討會主索引" Type="Int32" Nullable="false" />
+          <Property Name="報名檔主索引" Type="Int32" Nullable="false" />
+          <Property Name="報名用戶編號" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="問卷主檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="問卷標題" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="問卷描述" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="開放時間起始日" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="開放時間結束日" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="是否上架" Type="Boolean" Nullable="false" />
+          <Property Name="預計發出量" Type="Int32" Nullable="false" />
+          <Property Name="是否需要登入" Type="Boolean" Nullable="false" />
+          <Property Name="問卷網址" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="排序" Type="Double" Nullable="false" />
+          <Property Name="建立日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="建立人員" Type="Int32" Nullable="false" />
+          <Property Name="更新日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="更新人員" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="問卷答案主檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="對應問卷主檔索引" Type="Int32" Nullable="false" />
+          <Property Name="填寫人" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="填寫人ID" Type="Int32" />
+          <Property Name="填寫日期" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="問卷答案明細檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="對應問卷答案索引" Type="Int32" Nullable="false" />
+          <Property Name="對應問卷題目索引" Type="Int32" Nullable="false" />
+          <Property Name="對應問題類型索引" Type="Int32" Nullable="false" />
+          <Property Name="問卷答案選項值" Type="Int32" />
+          <Property Name="問卷答案文字值" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="回答日期" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="問卷選項檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="對應問卷主檔索引" Type="Int32" Nullable="false" />
+          <Property Name="對應問卷題目索引" Type="Int32" Nullable="false" />
+          <Property Name="對應問題類型索引" Type="Int32" Nullable="false" />
+          <Property Name="題目選項內容" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="排序" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="問卷題目檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="對應問卷索引" Type="Int32" />
+          <Property Name="對應問卷題目類型索引" Type="Int32" />
+          <Property Name="問卷題目內容" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="更新日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="更新人員" Type="Int32" Nullable="false" />
+          <Property Name="是否必填" Type="Boolean" Nullable="false" />
+          <Property Name="排序" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="問卷題目類型檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="問卷類型名稱" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="建立日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="建立人員" Type="Int32" Nullable="false" />
+          <Property Name="更新日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="更新人員" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="新聞">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="分類代碼" Type="Int32" Nullable="false" />
+          <Property Name="發稿時間" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="發稿人" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="標題" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="內容" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="登錄人" Type="Int32" Nullable="false" />
+          <Property Name="修改日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="修改人" Type="Int32" Nullable="false" />
+          <Property Name="連結位址" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="排序" Type="Double" Nullable="false" />
+          <Property Name="顯示狀態" Type="Boolean" Nullable="false" />
+          <Property Name="首頁顯示" Type="Boolean" Nullable="false" />
+          <Property Name="流水號" Type="Int32" />
+          <Property Name="樣板代碼" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="編輯器">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="對應名稱" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="內容" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="課程">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="分類代碼" Type="Int32" />
+          <Property Name="發稿日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="發稿人" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="標題" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="內容" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="登錄人" Type="Int32" Nullable="false" />
+          <Property Name="修改日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="修改人" Type="Int32" Nullable="false" />
+          <Property Name="連結位址" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="排序" Type="Double" Nullable="false" />
+          <Property Name="首頁顯示" Type="Boolean" Nullable="false" />
+          <Property Name="流水號" Type="Int32" />
+          <Property Name="顯示狀態" Type="Boolean" Nullable="false" />
+          <Property Name="建立日期" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="檔案">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="對應索引" Type="Int32" Nullable="false" />
+          <Property Name="對應名稱" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="檔案模式" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="檔案格式" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="檔案名稱" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="原始檔名" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="檔案路徑" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="檔案虛擬路徑" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="更新時間" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="更新人員" Type="Int32" Nullable="false" />
+          <Property Name="建立時間" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="建立人員" Type="Int32" Nullable="false" />
+          <Property Name="排序" Type="Int32" Nullable="false" />
+          <Property Name="識別碼" Type="Int32" />
+          <Property Name="傳真檔案路徑" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="傳真檔案名稱" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SMS_EMAIL_FAX_LIST">
+          <Key>
+            <PropertyRef Name="NO" />
+          </Key>
+          <Property Name="NO" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="STYPE" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="TITLE" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DELIEVER_DATE" Type="DateTime" Precision="3" />
+          <Property Name="STATUS" Type="Int32" Nullable="false" />
+          <Property Name="INSERT_DATE" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="能源案例">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="案例標題" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="設備別" Type="Int32" Nullable="false" />
+          <Property Name="行業別" Type="Int32" Nullable="false" />
+          <Property Name="排序" Type="Double" Nullable="false" />
+          <Property Name="建立日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="建立人員" Type="Int32" Nullable="false" />
+          <Property Name="更新日期" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="更新人員" Type="Int32" Nullable="false" />
+          <Property Name="發佈日期" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="顯示狀態" Type="Boolean" Nullable="false" />
+          <Property Name="內容" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="樣板代碼" Type="Int32" Nullable="false" />
+          <Property Name="首頁顯示" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="研討會報名人員">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="對應報名檔主索引" Type="Int32" Nullable="false" />
+          <Property Name="參加人員姓名" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="參加人員職稱" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="膳食種類" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="是否為聯絡人" Type="Boolean" />
+          <Property Name="報名狀態" Type="Int32" />
+          <Property Name="繳費狀態" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="研討會明細檔">
+          <Key>
+            <PropertyRef Name="主索引" />
+          </Key>
+          <Property Name="主索引" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="對應研討會主索引" Type="Int32" Nullable="false" />
+          <Property Name="活動地點" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="活動日期起" Type="DateTime" Precision="3" />
+          <Property Name="活動日期訖" Type="DateTime" Precision="3" />
+          <Property Name="活動時間範圍" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="主辦單位" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="協辦單位" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="報名期限_起" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="報名期限_迄" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="聯絡人" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="連絡電話" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="備註" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="活動人數上限" Type="Int32" />
+          <Property Name="活動內容" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="顯示狀態" Type="Boolean" />
+          <Property Name="排序" Type="Double" />
+          <Property Name="首頁顯示" Type="Boolean" />
+          <Property Name="用戶參加人數限制" Type="Int32" />
+          <Property Name="收費狀態" Type="Boolean" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EnergyNModelStoreContainer" CdmEntityContainer="DBEnergy">
+          <EntitySetMapping Name="EMAIL">
+            <EntityTypeMapping TypeName="EnergyNModel.EMAIL">
+              <MappingFragment StoreEntitySet="EMAIL">
+                <ScalarProperty Name="MAIL_BODY" ColumnName="MAIL_BODY" />
+                <ScalarProperty Name="MAIL_SUBJECT" ColumnName="MAIL_SUBJECT" />
+                <ScalarProperty Name="MAIL_FORM" ColumnName="MAIL_FORM" />
+                <ScalarProperty Name="INSERT_NAME" ColumnName="INSERT_NAME" />
+                <ScalarProperty Name="INSERT_DATE" ColumnName="INSERT_DATE" />
+                <ScalarProperty Name="SEND_DATE" ColumnName="SEND_DATE" />
+                <ScalarProperty Name="SEND_NAME" ColumnName="SEND_NAME" />
+                <ScalarProperty Name="UPDATE_NAME" ColumnName="UPDATE_NAME" />
+                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="DELIEVER_TYPE" ColumnName="DELIEVER_TYPE" />
+                <ScalarProperty Name="DELIEVER_DATE" ColumnName="DELIEVER_DATE" />
+                <ScalarProperty Name="PUBLISHER" ColumnName="PUBLISHER" />
+                <ScalarProperty Name="EMAIL_ID" ColumnName="EMAIL_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FAX">
+            <EntityTypeMapping TypeName="EnergyNModel.FAX">
+              <MappingFragment StoreEntitySet="FAX">
+                <ScalarProperty Name="FILE_PAGE" ColumnName="FILE_PAGE" />
+                <ScalarProperty Name="FAX_TITLE" ColumnName="FAX_TITLE" />
+                <ScalarProperty Name="SEND_DATE" ColumnName="SEND_DATE" />
+                <ScalarProperty Name="SEND_NAME" ColumnName="SEND_NAME" />
+                <ScalarProperty Name="UPDATE_NAME" ColumnName="UPDATE_NAME" />
+                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+                <ScalarProperty Name="INSERT_NAME" ColumnName="INSERT_NAME" />
+                <ScalarProperty Name="INSERT_DATE" ColumnName="INSERT_DATE" />
+                <ScalarProperty Name="STATUSDETAIL" ColumnName="STATUSDETAIL" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="DELIEVER_TYPE" ColumnName="DELIEVER_TYPE" />
+                <ScalarProperty Name="DELIEVER_DATE" ColumnName="DELIEVER_DATE" />
+                <ScalarProperty Name="PUBLISHER" ColumnName="PUBLISHER" />
+                <ScalarProperty Name="FAX_ID" ColumnName="FAX_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FAXDetail">
+            <EntityTypeMapping TypeName="EnergyNModel.FAXDetail">
+              <MappingFragment StoreEntitySet="FAXDetail">
+                <ScalarProperty Name="IS_SUCCESS" ColumnName="IS_SUCCESS" />
+                <ScalarProperty Name="INSERT_NAME" ColumnName="INSERT_NAME" />
+                <ScalarProperty Name="INSERT_DATE" ColumnName="INSERT_DATE" />
+                <ScalarProperty Name="USEDFOR" ColumnName="USEDFOR" />
+                <ScalarProperty Name="SEND_NAME" ColumnName="SEND_NAME" />
+                <ScalarProperty Name="SEND_COMPANY" ColumnName="SEND_COMPANY" />
+                <ScalarProperty Name="FAX_NAME" ColumnName="FAX_NAME" />
+                <ScalarProperty Name="FAX_COMPANY" ColumnName="FAX_COMPANY" />
+                <ScalarProperty Name="FAX_TEL" ColumnName="FAX_TEL" />
+                <ScalarProperty Name="FAX_TITLE" ColumnName="FAX_TITLE" />
+                <ScalarProperty Name="FAX_NO" ColumnName="FAX_NO" />
+                <ScalarProperty Name="FAX_ID" ColumnName="FAX_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOGERR">
+            <EntityTypeMapping TypeName="EnergyNModel.LOGERR">
+              <MappingFragment StoreEntitySet="LOGERR">
+                <ScalarProperty Name="LOG_DTM" ColumnName="LOG_DTM" />
+                <ScalarProperty Name="ERR_SRC" ColumnName="ERR_SRC" />
+                <ScalarProperty Name="ERR_DESC" ColumnName="ERR_DESC" />
+                <ScalarProperty Name="ERR_SMRY" ColumnName="ERR_SMRY" />
+                <ScalarProperty Name="ERR_GID" ColumnName="ERR_GID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SiteCounter">
+            <EntityTypeMapping TypeName="EnergyNModel.SiteCounter">
+              <MappingFragment StoreEntitySet="SiteCounter">
+                <ScalarProperty Name="PARM" ColumnName="PARM" />
+                <ScalarProperty Name="SITE_TYPE" ColumnName="SITE_TYPE" />
+                <ScalarProperty Name="SITE_COUNT" ColumnName="SITE_COUNT" />
+                <ScalarProperty Name="SN" ColumnName="SN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SMS">
+            <EntityTypeMapping TypeName="EnergyNModel.SMS">
+              <MappingFragment StoreEntitySet="SMS">
+                <ScalarProperty Name="CANCEL_DATE" ColumnName="CANCEL_DATE" />
+                <ScalarProperty Name="CANCEL_NAME" ColumnName="CANCEL_NAME" />
+                <ScalarProperty Name="SEND_DATE" ColumnName="SEND_DATE" />
+                <ScalarProperty Name="SEND_NAME" ColumnName="SEND_NAME" />
+                <ScalarProperty Name="STATUSDETAIL" ColumnName="STATUSDETAIL" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="UPDATE_NAME" ColumnName="UPDATE_NAME" />
+                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+                <ScalarProperty Name="INSERT_NAME" ColumnName="INSERT_NAME" />
+                <ScalarProperty Name="INSERT_DATE" ColumnName="INSERT_DATE" />
+                <ScalarProperty Name="CONTENTTEXT" ColumnName="CONTENTTEXT" />
+                <ScalarProperty Name="DELIEVER_TYPE" ColumnName="DELIEVER_TYPE" />
+                <ScalarProperty Name="DELIEVER_DATE" ColumnName="DELIEVER_DATE" />
+                <ScalarProperty Name="PUBLISHER" ColumnName="PUBLISHER" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="SMS_ID" ColumnName="SMS_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SMSDetail">
+            <EntityTypeMapping TypeName="EnergyNModel.SMSDetail">
+              <MappingFragment StoreEntitySet="SMSDetail">
+                <ScalarProperty Name="RECEIVE_DATE_RE" ColumnName="RECEIVE_DATE_RE" />
+                <ScalarProperty Name="STATUSSTRMEMO_RE" ColumnName="STATUSSTRMEMO_RE" />
+                <ScalarProperty Name="STATUSFLAG_RE" ColumnName="STATUSFLAG_RE" />
+                <ScalarProperty Name="STATUSSTR_RE" ColumnName="STATUSSTR_RE" />
+                <ScalarProperty Name="STATUSCODE_RE" ColumnName="STATUSCODE_RE" />
+                <ScalarProperty Name="DONETIME_RE" ColumnName="DONETIME_RE" />
+                <ScalarProperty Name="DLVTIME_RE" ColumnName="DLVTIME_RE" />
+                <ScalarProperty Name="IS_SUCCESS" ColumnName="IS_SUCCESS" />
+                <ScalarProperty Name="INSERT_DATE" ColumnName="INSERT_DATE" />
+                <ScalarProperty Name="INSERT_NAME" ColumnName="INSERT_NAME" />
+                <ScalarProperty Name="USEDFOR" ColumnName="USEDFOR" />
+                <ScalarProperty Name="STATUSCODE" ColumnName="STATUSCODE" />
+                <ScalarProperty Name="MSG_ID" ColumnName="MSG_ID" />
+                <ScalarProperty Name="TEL" ColumnName="TEL" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="SMS_NO" ColumnName="SMS_NO" />
+                <ScalarProperty Name="SMS_ID" ColumnName="SMS_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SMSResponseMsg">
+            <EntityTypeMapping TypeName="EnergyNModel.SMSResponseMsg">
+              <MappingFragment StoreEntitySet="SMSResponseMsg">
+                <ScalarProperty Name="statusstrMemo" ColumnName="statusstrMemo" />
+                <ScalarProperty Name="receiveDate" ColumnName="receiveDate" />
+                <ScalarProperty Name="statusFlag" ColumnName="statusFlag" />
+                <ScalarProperty Name="statusstr" ColumnName="statusstr" />
+                <ScalarProperty Name="statuscode" ColumnName="statuscode" />
+                <ScalarProperty Name="donetime" ColumnName="donetime" />
+                <ScalarProperty Name="dlvtime" ColumnName="dlvtime" />
+                <ScalarProperty Name="dstaddr" ColumnName="dstaddr" />
+                <ScalarProperty Name="msg_id" ColumnName="msg_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemLog">
+            <EntityTypeMapping TypeName="EnergyNModel.SystemLog">
+              <MappingFragment StoreEntitySet="SystemLog">
+                <ScalarProperty Name="Parm" ColumnName="Parm" />
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+                <ScalarProperty Name="OperateDate" ColumnName="OperateDate" />
+                <ScalarProperty Name="OperateID" ColumnName="OperateID" />
+                <ScalarProperty Name="OperateDes" ColumnName="OperateDes" />
+                <ScalarProperty Name="OperateType" ColumnName="OperateType" />
+                <ScalarProperty Name="FromIP" ColumnName="FromIP" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempValidUser">
+            <EntityTypeMapping TypeName="EnergyNModel.TempValidUser">
+              <MappingFragment StoreEntitySet="TempValidUser">
+                <ScalarProperty Name="ConmpanyName" ColumnName="ConmpanyName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="人員">
+            <EntityTypeMapping TypeName="EnergyNModel.人員">
+              <MappingFragment StoreEntitySet="人員">
+                <ScalarProperty Name="到職日" ColumnName="到職日" />
+                <ScalarProperty Name="職務代理人" ColumnName="職務代理人" />
+                <ScalarProperty Name="職稱" ColumnName="職稱" />
+                <ScalarProperty Name="代碼" ColumnName="代碼" />
+                <ScalarProperty Name="停權" ColumnName="停權" />
+                <ScalarProperty Name="單位代碼" ColumnName="單位代碼" />
+                <ScalarProperty Name="姓名" ColumnName="姓名" />
+                <ScalarProperty Name="密碼" ColumnName="密碼" />
+                <ScalarProperty Name="帳號" ColumnName="帳號" />
+                <ScalarProperty Name="人員代碼" ColumnName="人員代碼" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="分類主檔">
+            <EntityTypeMapping TypeName="EnergyNModel.分類主檔">
+              <MappingFragment StoreEntitySet="分類主檔">
+                <ScalarProperty Name="修改人員" ColumnName="修改人員" />
+                <ScalarProperty Name="修改日期" ColumnName="修改日期" />
+                <ScalarProperty Name="建立人員" ColumnName="建立人員" />
+                <ScalarProperty Name="建立日期" ColumnName="建立日期" />
+                <ScalarProperty Name="停用" ColumnName="停用" />
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="備註" ColumnName="備註" />
+                <ScalarProperty Name="分類名稱" ColumnName="分類名稱" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="分類明細檔">
+            <EntityTypeMapping TypeName="EnergyNModel.分類明細檔">
+              <MappingFragment StoreEntitySet="分類明細檔">
+                <ScalarProperty Name="停用" ColumnName="停用" />
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="自訂代碼" ColumnName="自訂代碼" />
+                <ScalarProperty Name="分類名稱" ColumnName="分類名稱" />
+                <ScalarProperty Name="對應分類主檔索引" ColumnName="對應分類主檔索引" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="分類對應檔">
+            <EntityTypeMapping TypeName="EnergyNModel.分類對應檔">
+              <MappingFragment StoreEntitySet="分類對應檔">
+                <ScalarProperty Name="項次" ColumnName="項次" />
+                <ScalarProperty Name="對應項目索引" ColumnName="對應項目索引" />
+                <ScalarProperty Name="對應分類類別索引" ColumnName="對應分類類別索引" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="出版品主檔">
+            <EntityTypeMapping TypeName="EnergyNModel.出版品主檔">
+              <MappingFragment StoreEntitySet="出版品主檔">
+                <ScalarProperty Name="更新人員" ColumnName="更新人員" />
+                <ScalarProperty Name="更新時間" ColumnName="更新時間" />
+                <ScalarProperty Name="建立時間" ColumnName="建立時間" />
+                <ScalarProperty Name="顯示狀態" ColumnName="顯示狀態" />
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="摘要" ColumnName="摘要" />
+                <ScalarProperty Name="名稱" ColumnName="名稱" />
+                <ScalarProperty Name="發稿人" ColumnName="發稿人" />
+                <ScalarProperty Name="發稿時間" ColumnName="發稿時間" />
+                <ScalarProperty Name="對應分類索引" ColumnName="對應分類索引" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="出版品章節明細檔">
+            <EntityTypeMapping TypeName="EnergyNModel.出版品章節明細檔">
+              <MappingFragment StoreEntitySet="出版品章節明細檔">
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="檔案別名" ColumnName="檔案別名" />
+                <ScalarProperty Name="對應檔案索引" ColumnName="對應檔案索引" />
+                <ScalarProperty Name="對應出版品索引" ColumnName="對應出版品索引" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="功能項目檔">
+            <EntityTypeMapping TypeName="EnergyNModel.功能項目檔">
+              <MappingFragment StoreEntitySet="功能項目檔">
+                <ScalarProperty Name="項目名稱" ColumnName="項目名稱" />
+                <ScalarProperty Name="項目代碼" ColumnName="項目代碼" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="外部連結">
+            <EntityTypeMapping TypeName="EnergyNModel.外部連結">
+              <MappingFragment StoreEntitySet="外部連結">
+                <ScalarProperty Name="更新人員" ColumnName="更新人員" />
+                <ScalarProperty Name="更新日期" ColumnName="更新日期" />
+                <ScalarProperty Name="建立人員" ColumnName="建立人員" />
+                <ScalarProperty Name="建立日期" ColumnName="建立日期" />
+                <ScalarProperty Name="狀態" ColumnName="狀態" />
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="網址連結" ColumnName="網址連結" />
+                <ScalarProperty Name="名稱" ColumnName="名稱" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="研討會主檔">
+            <EntityTypeMapping TypeName="EnergyNModel.研討會主檔">
+              <MappingFragment StoreEntitySet="研討會主檔">
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="更新人員" ColumnName="更新人員" />
+                <ScalarProperty Name="更新日期" ColumnName="更新日期" />
+                <ScalarProperty Name="建立人員" ColumnName="建立人員" />
+                <ScalarProperty Name="建立日期" ColumnName="建立日期" />
+                <ScalarProperty Name="研討會名稱" ColumnName="研討會名稱" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="研討會報名主檔">
+            <EntityTypeMapping TypeName="EnergyNModel.研討會報名主檔">
+              <MappingFragment StoreEntitySet="研討會報名主檔">
+                <ScalarProperty Name="更新時間" ColumnName="更新時間" />
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="同意條文" ColumnName="同意條文" />
+                <ScalarProperty Name="統編抬頭" ColumnName="統編抬頭" />
+                <ScalarProperty Name="公司統編" ColumnName="公司統編" />
+                <ScalarProperty Name="公司傳真" ColumnName="公司傳真" />
+                <ScalarProperty Name="公司電話" ColumnName="公司電話" />
+                <ScalarProperty Name="聯絡人手機" ColumnName="聯絡人手機" />
+                <ScalarProperty Name="聯絡人生日" ColumnName="聯絡人生日" />
+                <ScalarProperty Name="聯絡人Email" ColumnName="聯絡人Email" />
+                <ScalarProperty Name="聯絡人姓名" ColumnName="聯絡人姓名" />
+                <ScalarProperty Name="公司名稱" ColumnName="公司名稱" />
+                <ScalarProperty Name="用戶編號" ColumnName="用戶編號" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="研討會報名對應檔">
+            <EntityTypeMapping TypeName="EnergyNModel.研討會報名對應檔">
+              <MappingFragment StoreEntitySet="研討會報名對應檔">
+                <ScalarProperty Name="報名用戶編號" ColumnName="報名用戶編號" />
+                <ScalarProperty Name="報名檔主索引" ColumnName="報名檔主索引" />
+                <ScalarProperty Name="對應研討會主索引" ColumnName="對應研討會主索引" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="問卷主檔">
+            <EntityTypeMapping TypeName="EnergyNModel.問卷主檔">
+              <MappingFragment StoreEntitySet="問卷主檔">
+                <ScalarProperty Name="更新人員" ColumnName="更新人員" />
+                <ScalarProperty Name="更新日期" ColumnName="更新日期" />
+                <ScalarProperty Name="建立人員" ColumnName="建立人員" />
+                <ScalarProperty Name="建立日期" ColumnName="建立日期" />
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="問卷網址" ColumnName="問卷網址" />
+                <ScalarProperty Name="是否需要登入" ColumnName="是否需要登入" />
+                <ScalarProperty Name="預計發出量" ColumnName="預計發出量" />
+                <ScalarProperty Name="是否上架" ColumnName="是否上架" />
+                <ScalarProperty Name="開放時間結束日" ColumnName="開放時間結束日" />
+                <ScalarProperty Name="開放時間起始日" ColumnName="開放時間起始日" />
+                <ScalarProperty Name="問卷描述" ColumnName="問卷描述" />
+                <ScalarProperty Name="問卷標題" ColumnName="問卷標題" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="問卷答案主檔">
+            <EntityTypeMapping TypeName="EnergyNModel.問卷答案主檔">
+              <MappingFragment StoreEntitySet="問卷答案主檔">
+                <ScalarProperty Name="填寫日期" ColumnName="填寫日期" />
+                <ScalarProperty Name="填寫人ID" ColumnName="填寫人ID" />
+                <ScalarProperty Name="填寫人" ColumnName="填寫人" />
+                <ScalarProperty Name="對應問卷主檔索引" ColumnName="對應問卷主檔索引" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="問卷答案明細檔">
+            <EntityTypeMapping TypeName="EnergyNModel.問卷答案明細檔">
+              <MappingFragment StoreEntitySet="問卷答案明細檔">
+                <ScalarProperty Name="回答日期" ColumnName="回答日期" />
+                <ScalarProperty Name="問卷答案文字值" ColumnName="問卷答案文字值" />
+                <ScalarProperty Name="問卷答案選項值" ColumnName="問卷答案選項值" />
+                <ScalarProperty Name="對應問題類型索引" ColumnName="對應問題類型索引" />
+                <ScalarProperty Name="對應問卷題目索引" ColumnName="對應問卷題目索引" />
+                <ScalarProperty Name="對應問卷答案索引" ColumnName="對應問卷答案索引" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="問卷選項檔">
+            <EntityTypeMapping TypeName="EnergyNModel.問卷選項檔">
+              <MappingFragment StoreEntitySet="問卷選項檔">
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="題目選項內容" ColumnName="題目選項內容" />
+                <ScalarProperty Name="對應問題類型索引" ColumnName="對應問題類型索引" />
+                <ScalarProperty Name="對應問卷題目索引" ColumnName="對應問卷題目索引" />
+                <ScalarProperty Name="對應問卷主檔索引" ColumnName="對應問卷主檔索引" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="問卷題目檔">
+            <EntityTypeMapping TypeName="EnergyNModel.問卷題目檔">
+              <MappingFragment StoreEntitySet="問卷題目檔">
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="是否必填" ColumnName="是否必填" />
+                <ScalarProperty Name="更新人員" ColumnName="更新人員" />
+                <ScalarProperty Name="更新日期" ColumnName="更新日期" />
+                <ScalarProperty Name="問卷題目內容" ColumnName="問卷題目內容" />
+                <ScalarProperty Name="對應問卷題目類型索引" ColumnName="對應問卷題目類型索引" />
+                <ScalarProperty Name="對應問卷索引" ColumnName="對應問卷索引" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="問卷題目類型檔">
+            <EntityTypeMapping TypeName="EnergyNModel.問卷題目類型檔">
+              <MappingFragment StoreEntitySet="問卷題目類型檔">
+                <ScalarProperty Name="更新人員" ColumnName="更新人員" />
+                <ScalarProperty Name="更新日期" ColumnName="更新日期" />
+                <ScalarProperty Name="建立人員" ColumnName="建立人員" />
+                <ScalarProperty Name="建立日期" ColumnName="建立日期" />
+                <ScalarProperty Name="問卷類型名稱" ColumnName="問卷類型名稱" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="新聞">
+            <EntityTypeMapping TypeName="EnergyNModel.新聞">
+              <MappingFragment StoreEntitySet="新聞">
+                <ScalarProperty Name="樣板代碼" ColumnName="樣板代碼" />
+                <ScalarProperty Name="流水號" ColumnName="流水號" />
+                <ScalarProperty Name="首頁顯示" ColumnName="首頁顯示" />
+                <ScalarProperty Name="顯示狀態" ColumnName="顯示狀態" />
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="連結位址" ColumnName="連結位址" />
+                <ScalarProperty Name="修改人" ColumnName="修改人" />
+                <ScalarProperty Name="修改日期" ColumnName="修改日期" />
+                <ScalarProperty Name="登錄人" ColumnName="登錄人" />
+                <ScalarProperty Name="內容" ColumnName="內容" />
+                <ScalarProperty Name="標題" ColumnName="標題" />
+                <ScalarProperty Name="發稿人" ColumnName="發稿人" />
+                <ScalarProperty Name="發稿時間" ColumnName="發稿時間" />
+                <ScalarProperty Name="分類代碼" ColumnName="分類代碼" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="編輯器">
+            <EntityTypeMapping TypeName="EnergyNModel.編輯器">
+              <MappingFragment StoreEntitySet="編輯器">
+                <ScalarProperty Name="內容" ColumnName="內容" />
+                <ScalarProperty Name="對應名稱" ColumnName="對應名稱" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="課程">
+            <EntityTypeMapping TypeName="EnergyNModel.課程">
+              <MappingFragment StoreEntitySet="課程">
+                <ScalarProperty Name="建立日期" ColumnName="建立日期" />
+                <ScalarProperty Name="顯示狀態" ColumnName="顯示狀態" />
+                <ScalarProperty Name="流水號" ColumnName="流水號" />
+                <ScalarProperty Name="首頁顯示" ColumnName="首頁顯示" />
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="連結位址" ColumnName="連結位址" />
+                <ScalarProperty Name="修改人" ColumnName="修改人" />
+                <ScalarProperty Name="修改日期" ColumnName="修改日期" />
+                <ScalarProperty Name="登錄人" ColumnName="登錄人" />
+                <ScalarProperty Name="內容" ColumnName="內容" />
+                <ScalarProperty Name="標題" ColumnName="標題" />
+                <ScalarProperty Name="發稿人" ColumnName="發稿人" />
+                <ScalarProperty Name="發稿日期" ColumnName="發稿日期" />
+                <ScalarProperty Name="分類代碼" ColumnName="分類代碼" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="檔案">
+            <EntityTypeMapping TypeName="EnergyNModel.檔案">
+              <MappingFragment StoreEntitySet="檔案">
+                <ScalarProperty Name="傳真檔案名稱" ColumnName="傳真檔案名稱" />
+                <ScalarProperty Name="傳真檔案路徑" ColumnName="傳真檔案路徑" />
+                <ScalarProperty Name="識別碼" ColumnName="識別碼" />
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="建立人員" ColumnName="建立人員" />
+                <ScalarProperty Name="建立時間" ColumnName="建立時間" />
+                <ScalarProperty Name="更新人員" ColumnName="更新人員" />
+                <ScalarProperty Name="更新時間" ColumnName="更新時間" />
+                <ScalarProperty Name="檔案虛擬路徑" ColumnName="檔案虛擬路徑" />
+                <ScalarProperty Name="檔案路徑" ColumnName="檔案路徑" />
+                <ScalarProperty Name="原始檔名" ColumnName="原始檔名" />
+                <ScalarProperty Name="檔案名稱" ColumnName="檔案名稱" />
+                <ScalarProperty Name="檔案格式" ColumnName="檔案格式" />
+                <ScalarProperty Name="檔案模式" ColumnName="檔案模式" />
+                <ScalarProperty Name="對應名稱" ColumnName="對應名稱" />
+                <ScalarProperty Name="對應索引" ColumnName="對應索引" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SMS_EMAIL_FAX_LIST">
+            <EntityTypeMapping TypeName="EnergyNModel.SMS_EMAIL_FAX_LIST">
+              <MappingFragment StoreEntitySet="SMS_EMAIL_FAX_LIST">
+                <ScalarProperty Name="INSERT_DATE" ColumnName="INSERT_DATE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="DELIEVER_DATE" ColumnName="DELIEVER_DATE" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="STYPE" ColumnName="STYPE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NO" ColumnName="NO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="能源案例">
+            <EntityTypeMapping TypeName="EnergyNModel.能源案例">
+              <MappingFragment StoreEntitySet="能源案例">
+                <ScalarProperty Name="首頁顯示" ColumnName="首頁顯示" />
+                <ScalarProperty Name="樣板代碼" ColumnName="樣板代碼" />
+                <ScalarProperty Name="內容" ColumnName="內容" />
+                <ScalarProperty Name="顯示狀態" ColumnName="顯示狀態" />
+                <ScalarProperty Name="發佈日期" ColumnName="發佈日期" />
+                <ScalarProperty Name="更新人員" ColumnName="更新人員" />
+                <ScalarProperty Name="更新日期" ColumnName="更新日期" />
+                <ScalarProperty Name="建立人員" ColumnName="建立人員" />
+                <ScalarProperty Name="建立日期" ColumnName="建立日期" />
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="行業別" ColumnName="行業別" />
+                <ScalarProperty Name="設備別" ColumnName="設備別" />
+                <ScalarProperty Name="案例標題" ColumnName="案例標題" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="研討會報名人員">
+            <EntityTypeMapping TypeName="EnergyNModel.研討會報名人員">
+              <MappingFragment StoreEntitySet="研討會報名人員">
+                <ScalarProperty Name="繳費狀態" ColumnName="繳費狀態" />
+                <ScalarProperty Name="報名狀態" ColumnName="報名狀態" />
+                <ScalarProperty Name="是否為聯絡人" ColumnName="是否為聯絡人" />
+                <ScalarProperty Name="膳食種類" ColumnName="膳食種類" />
+                <ScalarProperty Name="參加人員職稱" ColumnName="參加人員職稱" />
+                <ScalarProperty Name="參加人員姓名" ColumnName="參加人員姓名" />
+                <ScalarProperty Name="對應報名檔主索引" ColumnName="對應報名檔主索引" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="研討會明細檔">
+            <EntityTypeMapping TypeName="EnergyNModel.研討會明細檔">
+              <MappingFragment StoreEntitySet="研討會明細檔">
+                <ScalarProperty Name="收費狀態" ColumnName="收費狀態" />
+                <ScalarProperty Name="用戶參加人數限制" ColumnName="用戶參加人數限制" />
+                <ScalarProperty Name="首頁顯示" ColumnName="首頁顯示" />
+                <ScalarProperty Name="排序" ColumnName="排序" />
+                <ScalarProperty Name="顯示狀態" ColumnName="顯示狀態" />
+                <ScalarProperty Name="活動內容" ColumnName="活動內容" />
+                <ScalarProperty Name="活動人數上限" ColumnName="活動人數上限" />
+                <ScalarProperty Name="備註" ColumnName="備註" />
+                <ScalarProperty Name="連絡電話" ColumnName="連絡電話" />
+                <ScalarProperty Name="聯絡人" ColumnName="聯絡人" />
+                <ScalarProperty Name="報名期限_迄" ColumnName="報名期限_迄" />
+                <ScalarProperty Name="報名期限_起" ColumnName="報名期限_起" />
+                <ScalarProperty Name="協辦單位" ColumnName="協辦單位" />
+                <ScalarProperty Name="主辦單位" ColumnName="主辦單位" />
+                <ScalarProperty Name="活動時間範圍" ColumnName="活動時間範圍" />
+                <ScalarProperty Name="活動日期訖" ColumnName="活動日期訖" />
+                <ScalarProperty Name="活動日期起" ColumnName="活動日期起" />
+                <ScalarProperty Name="活動地點" ColumnName="活動地點" />
+                <ScalarProperty Name="對應研討會主索引" ColumnName="對應研討會主索引" />
+                <ScalarProperty Name="主索引" ColumnName="主索引" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

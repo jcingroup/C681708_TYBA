@@ -1,0 +1,247 @@
+﻿@using OutWeb.Models.Manage.QuestionnairesModels
+@using OutWeb.Provider
+@model QuestionDetailsDataModel
+@{
+    ViewBag.Title = "已填寫問卷";
+    ViewBag.BodyClass = "Question";
+    ViewBag.Breadcrumb = Model.Description; @* 最後層的麵包屑 *@
+}
+
+@* 中間層的麵包屑 *@
+@section breadcrumb {
+    <li><a href="~/User/QuestionList">已填寫問卷</a></li>
+}
+
+<div class="wrap zoom text-left">
+    <header class="sub-title">
+        <h3 class="mt-0 underline">@ViewBag.Title</h3>
+        <small class="date font-sm">@Model.CreateDate</small>
+    </header>
+
+    @using (Html.BeginForm("Content", "Question", FormMethod.Get, new { id = "formFontQuestion", @class = "form-qna" }))
+    {
+        <!-- 問卷描述 -->
+        <article class="qna-caption px-12 py-8">
+            @Model.Description
+        </article>
+
+        if (Model.IsSignIn.Equals("on"))
+        {
+             <!-- 如果有登入會才顯示這個資訊 -->
+            if (UserFrontProvider.Instance.User != null)
+            {
+                <dl class="qna-info">
+                    <dt>用戶姓名</dt>
+                    <dd>@UserFrontProvider.Instance.User.UserName</dd>
+                    <dt>公司名稱</dt>
+                    <dd>xxxxxxxxxxxx有限公司</dd>
+                    <dt>用戶編號</dt>
+                    <dd>@UserFrontProvider.Instance.User.UserAccount</dd>
+                </dl>
+            }
+        }
+
+
+        if (Model.Data.Topic.Count == 0)
+        {
+
+        }
+        else
+        {
+            foreach (var question in Model.Data.Topic)
+            {
+                string isAnsOption = string.Empty;
+                string isAnsValue = string.Empty;
+                var ans = question.Answer;
+                int index = Model.Data.Topic.IndexOf(question) + 1;
+                string requiredStr = question.Required == "on" ? @"<sup class=""help"" title=""必填"">*</sup>" : "";
+                string required = question.Required == "on" ? "required" : "";
+                int[] topicTypeIDs = new int[] { 1, 2, 3 };
+                string topicTypeName = question.TopicType == 1 ? "單選" : question.TopicType == 2 ? "複選" : question.TopicType == 3 ? "單選" : "";
+                string htmlTopicTypeSpan = topicTypeIDs.Contains(question.TopicType) ? string.Format(@"<span class=""label-info"">{0}</span>", topicTypeName) : "";
+
+                <fieldset>
+                    <legend><em>@index</em>@question.TopicContent @Html.Raw(requiredStr)
+                    @Html.Raw(htmlTopicTypeSpan)
+                    </legend>
+                    @switch (question.TopicType)
+                    {
+                        case 1:
+
+                            foreach (var op in question.Option)
+                            {
+                                int indexTopic = question.Option.IndexOf(op);
+                                string chkID = "ckb" + indexTopic;
+                                isAnsOption = string.Empty;
+
+                                if (ans.Where(o => o.Value == op.OptionID.ToString()).FirstOrDefault()!=null)
+                                {
+                                    isAnsOption = "checked";
+                                }
+                                    <label class="block" for="@chkID">
+                                        <input class="identify radio" @required type="radio" id="@chkID" name="a1" index="@index" question-id="@question.ID" question-type-id="@question.TopicType" value="@op.OptionID" @isAnsOption>
+                                        <i class="icon"></i> @op.OptionValue
+                                    </label>
+                            }
+
+                            break;
+                        case 2:
+                            foreach (var op in question.Option)
+                            {
+                                int indexTopic = question.Option.IndexOf(op);
+                                string chkID = "ckb" + indexTopic;
+                                isAnsOption = string.Empty;
+                                if (ans.Where(o => o.Value == op.OptionID.ToString()).FirstOrDefault() != null)
+                                {
+                                    isAnsOption = "checked";
+                                }
+                                    <label class="block" for="@chkID">
+                                        <input class="identify checkbox" @required type="checkbox" id="@chkID" name="a2" index="@index" question-id="@question.ID" question-type-id="@question.TopicType" value="@op.OptionID" @isAnsOption>
+                                        <i class="icon ti-check"></i> @op.OptionValue
+                                    </label>
+
+                            }
+                            break;
+                        case 3:
+
+                            <select name="" id="" class="identify form-element inline" @required index="@index" question-id="@question.ID" question-type-id="@question.TopicType">
+                                @foreach (var op in question.Option)
+                                {
+                                    isAnsOption = string.Empty;
+                                    if (ans.Where(o => o.QuestionID == question.ID).FirstOrDefault() != null)
+                                    {
+                                        isAnsOption = "selected";
+                                    }
+                                    <option value="@op.OptionID" @isAnsOption>@op.OptionValue</option>
+                                }
+                            </select>
+                            break;
+                        case 4:
+                            isAnsValue = string.Empty;
+                            if (ans.Where(o => o.QuestionID == question.ID).FirstOrDefault() != null)
+                            {
+                                isAnsValue = ans.Where(o => o.QuestionID == question.ID).FirstOrDefault().Value;
+                            }
+                            <input type="text" class="identify form-element" @required index="@index" id="@question.ID" question-id="@question.ID" question-type-id="@question.TopicType" value="@isAnsValue" title="@question.TopicContent">
+                            break;
+                        case 5:
+                            isAnsValue = string.Empty;
+
+                            if (ans.Where(o => o.QuestionID == question.ID).FirstOrDefault() != null)
+                            {
+                                isAnsValue = ans.Where(o => o.QuestionID == question.ID).FirstOrDefault().Value;
+                            }
+                            <textarea class="identify form-element" @required question-id="@question.ID" question-type-id="@question.TopicType">@Html.Raw(isAnsValue)</textarea>
+                            break;
+                        case 6:
+                            isAnsValue = string.Empty;
+
+                            if (ans.Where(o => o.QuestionID == question.ID).FirstOrDefault() != null)
+                            {
+                                isAnsValue = ans.Where(o => o.QuestionID == question.ID).FirstOrDefault().Value;
+                            }
+                            <input type="text" class="identify form-element inline datepicker" @required index="@index" id="@question.ID" question-id="@question.ID" question-type-id="@question.TopicType" value="@isAnsValue" title="@question.TopicContent">
+                            break;
+                        case 7:
+                            isAnsValue = string.Empty;
+
+                            if (ans.Where(o => o.QuestionID == question.ID).FirstOrDefault() != null)
+                            {
+                                isAnsValue = ans.Where(o => o.QuestionID == question.ID).FirstOrDefault().Value;
+                            }
+                            <input type="time" class="identify form-element inline" @required index="@index" id="@question.ID" question-id="@question.ID" question-type-id="@question.TopicType" value="@isAnsValue" title="@question.TopicContent">
+                            break;
+                    }
+                </fieldset>
+
+            }
+        }
+
+        <footer class="submit-bar text-center">
+            <button type="button" id="submitBtn" class="btn lg">送出</button>
+            <button type="button" class="btn muted lg cancelBtn">取消</button>
+        </footer>
+    }
+    <div class="text-right mt-32"><a href="javascript:;" class="ti-layout-grid2-alt cancelBtn">回列表</a></div>
+</div>
+@section scripts {
+
+    <script>
+        $(function () {
+
+            $('.cancelBtn').click(function (e) {
+                e.preventDefault();
+                window.location.href = '@Url.Action("QuestionList", "User")';
+            });
+            $('#submitBtn').click(function () {
+                var requestList = { ID: '@Model.ID', Answer: [] };
+                $('.identify').each(function () {
+
+                    var questionID = $(this).attr('question-id');
+                    var questionTypeID = $(this).attr('question-type-id');
+                    var val = $(this).val();
+                    var required = (typeof $(this).attr('required') !== 'undefined');
+                    var sort = $(this).attr('index');
+                    switch (questionTypeID) {
+                        case '1':
+                            if (!$(this).is(':checked')) {
+                                val = '';
+                            }
+                            break;
+                        case '2':
+                            if (!$(this).is(':checked')) {
+                                val = '';
+                            }
+                            break;
+                        case '3':
+                            break;
+                        default:
+
+                    }
+                    requestList.Answer.push(
+                            {
+                                QuestionID: questionID,
+                                QuestionTypeID: questionTypeID,
+                                Value: val,
+                                Required: required,
+                                Index: sort
+                            }
+                        );
+                });
+
+                $.ajax({
+                    type: "Post",
+                    async: false,
+                    dataType: "json",
+                    contentType: 'application/json; charset=UTF-8',
+                    url: "@Url.Action("QuestionApply")",
+                    data: JSON.stringify(requestList),
+                    success: function (data) {
+                        alert(data.messages);
+                        if (data.success) {
+                            window.location.href = data.url;
+                        }
+                        else {
+                        }
+
+                    }, error: function (error) {
+                    }
+                })
+            });
+        })
+        //驗證Required欄位
+        function validHtmlFormRequired() {
+            var valid = true;
+            var form = document.getElementById('formFontQuestion');
+            for (var i = 0; i < form.elements.length; i++) {
+                if (form.elements[i].hasAttribute('required')) {
+                    console.log(form.elements[i].checked);
+                    alert('第' + form.elements[i].getAttribute("index") + '題 為必填');
+                    valid = false;
+                    return;
+                }
+            }
+            return valid;
+        }
+    </script>
+}

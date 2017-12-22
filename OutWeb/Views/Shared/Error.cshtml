@@ -1,0 +1,14 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Title = "Error";
+}
+<style>
+    .text-danger {
+        color: red;
+    }
+</style>
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">網站出錯了!</h2>
+<h1>錯誤代碼： @ViewData["LogGuId"]</h1>

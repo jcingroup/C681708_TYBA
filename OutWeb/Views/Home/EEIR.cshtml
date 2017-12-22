@@ -1,0 +1,79 @@
+﻿@using OutWeb.Models.FrontEnd.EditModels
+@model EditorFront
+@{
+    ViewBag.Title = "能效指標申報";
+    ViewBag.BodyClass = "EEIR";
+    ViewBag.Breadcrumb = "能效指標申報"; @* 最後層的麵包屑 *@
+string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
+
+}
+
+<h2 class="title underline wrap">能源效率指標申報</h2>
+
+<div class="wrap zoom editor">
+    <a href="http://eei.itri.org.tw/EEIR_User_Login/" target="new" class="btn green lg pull-right" title="另開新視窗">進入申報網站</a>
+    <br class="clear">
+    @Html.Raw(Model.Content)
+
+
+    @* 編輯器內容 *@
+    @*<h5 class="title-green py-8 px-16">申報流程&重要日期</h5>
+    <article class="px-16">
+        <p>經濟部依據能源管理法第八條第二項規定，訂定「水泥業節約能源及使用能源效率規定」「鋼鐵業節約能源及使用能源效率規定」「造紙業節約能源及使用能源效率規定」「石化業節約能源及使用能源效率規定」「電子業節約能源及使用能源效率規定」及「紡織業節約能源及使用能源效率規定」，分別自101年9月24日陸續公告實施，並自即日生效。適用以上規定之能源用戶，受管制之設備或系統都應符合規定。</p>
+        <br>
+        <ol class="list-ind">
+            <li>水泥業: 指定使用能源設備之能源效率指標，自中華民國一百零四年一月一日起，<span class="text-danger">每半年值應低於規定之能源效率指標值</span>。但因生產情形特殊，經本部同意者，不在此限。</li>
+            <li>鋼鐵業: <span class="text-danger">每年三月底前</span>，計算前一年度之煙氣出口溫度、最末熱回收裝置出口溫度及爐氣含氧體積濃度年平均值，上傳至指定網站並繪製每月監測數值趨勢圖以供查驗。</li>
+            <li>造紙業: <span class="text-danger">每年三月三十一日前</span>填寫規範紙品使用能源數量申報表，並上傳至指定網站</li>
+            <li>石化業: <span class="text-danger">每年三月底前</span>，上傳申報額定總燃燒量、使用燃料、年燃料使用量、煙氣出口溫度年平均值及煙氣含氧體積濃度年平均值至指定網站，並繪製每月監測數值趨勢圖以供查驗。</li>
+            <li>電子業: <span class="text-danger">每年三月底前</span>，上傳申報前一年度冰水機蒸發器冰水出水、回水溫差各月平均值、冷凝器冷卻水出水、回水溫差各月平均值及冰水機實施冰水機負載調控情形至指定網站以供查驗。</li>
+            <li>紡織業: <span class="text-danger">每年三月底前</span>，能源用戶應填寫並上傳申報前一年度冰水機群組及熱媒鍋爐使用情形至指定網站以供查驗。</li>
+        </ol>
+        <img class="my-24 img-center" src="/Content/images/eeir-process.gif" alt="申報流程">
+    </article>
+
+    <h5 class="title-green py-8 px-16">法源依據</h5>
+    <article class="px-16">
+        <ol class="ml-24">
+            <li><a href="http://law.moj.gov.tw/LawClass/LawAll.aspx?PCode=J0130002" target="new" title="另開新視窗">能源管理法</a></li>
+            <li><a href="http://law.moj.gov.tw/LawClass/LawAllIf.aspx?PCode=J0130043" target="new" title="另開新視窗">能源用戶自置或委託技師或合格能源管理人員設置登記辦法</a></li>
+            <li><a href="https://www.moeaboe.gov.tw/ecw/populace/Law/Content.aspx?menu_id=1881" target="new" title="另開新視窗">水泥製造業應遵行之節約能源與能源效率指標規定(經能字第10104606260號)</a></li>
+            <li><a href="https://www.moeaboe.gov.tw/ECW/populace/Law/Content.aspx?menu_id=2111" target="new" title="另開新視窗">鋼鐵製造業應遵行之節約能源及使用能源效率規定(經能字第10204604950號公告訂定)</a></li>
+            <li><a href="https://www.moeaboe.gov.tw/ECW/populace/Law/Content.aspx?menu_id=2181" target="new" title="另開新視窗">造紙業應遵行之節約能源及使用能源效率規定(經能字第10204606460號公告訂定)</a></li>
+            <li><a href="https://www.moeaboe.gov.tw/ECW/populace/Law/Content.aspx?menu_id=2339" target="new" title="另開新視窗">石化業節約能源及使用能源效率規定(經能字第10304603450號)</a></li>
+            <li><a href="https://www.moeaboe.gov.tw/ECW/populace/Law/Content.aspx?menu_id=2735" target="new" title="另開新視窗">電子業節約能源及使用能源效率規定(經能字第10404601080號)</a></li>
+            <li><a href="https://www.moeaboe.gov.tw/ECW/populace/Law/Content.aspx?menu_id=2959" target="new" title="另開新視窗">紡織業節約能源及使用能源效率規定(經能字第10404605050號)</a></li>
+            <li><a href="https://www.moeaboe.gov.tw/ECW/populace/Law/Content.aspx?menu_id=1108" target="new" title="另開新視窗">指定能源用戶使用蒸汽鍋爐應遵行之節約能源規定(經能字第10104602050號)</a></li>
+        </ol>
+    </article>
+
+    <h5 class="title-green py-8 px-16">聯絡窗口</h5>
+    <article class="px-16">
+        電話：03-591-0085︱傳真：03-591-0255︱聯絡人：陳沛涵 (<a href="mailto:energyaudit@itri.org.tw">energyaudit@itri.org.tw</a>)
+    </article>*@
+    @* 編輯器內容 end *@
+
+    <footer class="download">
+        <h5 class="text-primary mt-0">附件下載</h5>
+        @*<a href="" class="ti-clip">106年度電子業及紡織業能源效率指標申報說明會講義.pdf</a><br>*@
+        @foreach (var file in Model.FilesData)
+        {
+            string fileUrl = currentUrl + "/" + file.FileUrl;
+            <a real-name="@file.RealFileName" href="@fileUrl" class="ti-clip dlFile">@file.RealFileName</a><br>
+        }    </footer>
+</div>
+
+<script>
+    $(function () {
+        //檔案下載
+        $(document).on('click', '.dlFile', function () {
+            downloadFile(this);
+        });
+    })
+    //下載檔案存為指定檔名
+    function downloadFile(elem) {
+        $(elem).attr('download', $(elem).attr('real-name'))
+              .attr('href', $(elem).attr('url'))
+              .attr('target', '_blank');
+    }
+</script>

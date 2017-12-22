@@ -1,0 +1,84 @@
+﻿@using OutWeb.Models.UserInfo
+@using BotDetect.Web.Mvc
+@model SignInModel
+@{
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Title = "JCIN後台管理系統";
+    ViewBag.BodyClass = "Login";
+    ViewBag.IsFirstPage = true;
+}
+
+@section IncludeCSS{
+    <link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl"
+          rel="stylesheet" type="text/css" />
+}
+@section IncludeScript{
+    <script>
+        $(function () {
+
+            //禁止按下enter
+            $('#formSignIn').on('keyup keypress', function (e) {
+                var keyCode = e.keyCode || e.which;
+                if (keyCode === 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            $('#formSignIn').submit(function () {
+                $('#formSignIn').attr('action', '/_SysAdm/Index')
+                return true;
+            });
+
+            if ('@TempData["SignInFail"]' != '') {
+                alert('@TempData["SignInFail"]');
+            }
+        })
+        var captchaLinkElem = $('#ExampleCaptcha_CaptchaImage').closest('a');
+        $(captchaLinkElem).removeAttr('onclick');
+        $(captchaLinkElem).attr('href', 'javascript:;');
+        $('#CaptchaCode').attr('tabindex', '3');
+    </script>
+}
+
+<h1 class="site-title">
+    能源資訊網管理系統<small class="text-muted ml-8 font-sp">Web Manager</small>
+</h1>
+<h6 class="sub-copyright">Energy Information Network &copy; 2017</h6>
+
+@using (Html.BeginForm("Login", "SignIn", FormMethod.Post, new { id = "formSignIn", @class = "text-left", autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+    <header class="title font-sp">System Login</header>
+
+    <main>
+        <label>帳號 Username</label>
+        <input type="text" class="mb-12" tabindex="1" name="Account" id="account" placeholder="請輸入帳號" required>
+        @Html.ValidationMessageFor(m => m.Account, "", new { @class = "text-danger" })
+
+
+        <label>密碼 Password</label>
+        <input type="password" class="mb-12" tabindex="2" name="Password" id="pwd" placeholder="請輸入密碼" required>
+        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+        <label>驗證碼 Code</label>
+        <div class="fields clearfix">
+            <div class="mb-8">
+                @{ MvcCaptcha exampleCaptcha = new MvcCaptcha("ExampleCaptcha");
+                    exampleCaptcha.Reset();
+                    exampleCaptcha.UserInputID = "CaptchaCode";
+                }
+                @Html.Captcha(exampleCaptcha)
+            </div>
+            <div class="mb-8">
+                @Html.TextBox("CaptchaCode", null, new { @class = "form-element", required = "required" })
+                @Html.ValidationMessageFor(m => m.CaptchaCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="action-bar text-center">
+        <button type="submit" class="btn info">登入 LOGIN</button>
+    </footer>
+                    }

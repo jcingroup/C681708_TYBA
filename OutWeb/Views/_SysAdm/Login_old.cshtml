@@ -1,0 +1,62 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Title = "JCIN後台管理系統";
+    ViewBag.BodyClass = "Login";
+    ViewBag.IsFirstPage = true;
+}
+
+<script type="text/javascript">
+    function form_ok() {
+        form1.submit();
+    }
+
+    $(function () {
+        $("#valiCode").bind("click", function () {
+
+            this.src = "@Url.Content("~/Manage/GetValidateCode")?time=" + (new Date()).getTime();
+        });
+    });
+</script>
+
+<h1 class="site-title">
+    WTB 懷特博管理系統<small class="text-muted ml-8 font-sp">Web Manager</small>
+</h1>
+<h6 class="sub-copyright">White Board &copy; 2017</h6>
+
+<form class="text-left" name="form1" id="form1" action="@Url.Content("~/Manage/Login_Chk")" method="post">
+    <header class="title font-sp">System Login</header>
+
+    <main>
+        <label>帳號 Username</label>
+        <input type="text" class="mb-12" name="account" id="account" placeholder="請輸入帳號" required>
+
+        <label>密碼 Password</label>
+        <input type="password" class="mb-12" name="pwd" id="pwd" placeholder="請輸入密碼" required>
+
+        <label>驗證碼 Code</label>
+        <input type="text" class="mb-4" name="ValidCode" id="ValidCode" placeholder="請輸入驗證碼" required>
+        <img id="valiCode" style="cursor: pointer;height:30px;" src="@Url.Content("~/Manage/GetValidateCode")" alt="驗證碼" />
+    </main>
+
+    <footer class="action-bar text-center">
+        <button type="button" class="btn info" onclick="form_ok();">登入 LOGIN</button>
+    </footer>
+</form>
+@if (TempData["message"] != null)
+{
+    <script type="text/javascript">
+            var message = @Html.Raw(Json.Encode(TempData["message"]));
+            alert(message);
+    </script>
+}
+<script>
+    //禁止按下enter
+    $('#form1').on('keyup keypress', function (e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
+</script>

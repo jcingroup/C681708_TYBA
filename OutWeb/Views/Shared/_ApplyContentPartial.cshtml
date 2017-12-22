@@ -1,0 +1,16 @@
+﻿@using OutWeb.Models.FrontEnd.TrainModels.TrainApplyModels
+@model  TrainContentModel
+<div class="table-rwd">
+    <table class="table-striped text-left bg-muted">
+        <tr><th>活動時間</th><td>@Model.ActivityDate</td></tr>
+        <tr><th>活動地點</th><td>@Model.ActivityLocation</td></tr>
+        <tr><th>主辦單位</th><td>@Model.Organizer</td></tr>
+        <tr><th>協辦單位</th><td>@Model.CoOrganiser</td></tr>
+        <tr><th>報名期限</th><td>@Model.DeadlineBegin 至 @Model.DeadlineEnd</td></tr>
+        <tr><th>聯絡人</th><td>@Model.ContactPerson</td></tr>
+        <tr><th>聯絡電話</th><td>@Model.ContactPhoneNumber</td></tr>
+        <tr><th>報名人數限制</th><td>@Model.EnrollmentRestrictions</td></tr>
+        <tr><th>費用</th><td>@Model.ChargesStatusStr</td></tr>
+        <tr><th>備註</th><td>@Model.Remarks</td></tr>
+    </table>
+</div>

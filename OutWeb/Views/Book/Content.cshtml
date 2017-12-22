@@ -1,0 +1,99 @@
+﻿@using OutWeb.Models.Manage.ManageBookModels
+@model BookDetailsDataModel
+
+@{
+    ViewBag.Title = Model.Data.名稱;
+    ViewBag.BodyClass = "Book";
+    //ViewBag.Subnav = "sub-book1";
+    ViewBag.Breadcrumb = Model.Data.名稱; /*最後層的麵包屑*/
+    string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
+
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+@* 中間層的麵包屑 *@
+@section breadcrumb {
+    <li><a href="~/Book">出版品</a></li>
+    <li><a href="~/Book/List?type=@ViewBag.Subnav.Replace("sub-book","")">@ViewBag.BreadcrumbCenter </a></li>
+}
+
+<div class="wrap zoom">
+    @Html.Partial("sidebar")
+
+    <div id="content" class="text-left">
+
+        <header class="sub-title">
+            <h3 class="mt-0 underline">@ViewBag.Title</h3>
+            <small class="date font-sm">@Model.Data.發稿時間</small>
+        </header>
+
+        <section class="row">
+            @if (Model.CoverImg.Count > 0 && Model.CoverImg != null)
+            {
+                string imgUrl = string.Concat(currentUrl, "/", Model.CoverImg.First().FileUrl);
+                <aside class="col-xs-5 col-sm-3"><img class="full border" src="@imgUrl" alt="封面圖"></aside>
+            }
+            else
+            {
+                <aside class="col-xs-5 col-sm-3 book-img-none"><i class="font-xxl ti-book" title="無圖片"></i><span class="text-hide">封面圖區塊(無圖)</span></aside>
+            }
+            <article class="col-xs-7 col-sm-9 editor book-intro">
+                <h4 class="title underline inline-block mt-0 mb-24">摘要</h4>
+
+                @* 這裡是編輯器內容-只能改字體大小顏色，不能傳圖 *@
+                <p>@Html.Raw(Model.Data.摘要.Replace("\r\n","<br/>"))</p>
+                @if (Model.FullBookFile.Count > 0 && Model.FullBookFile != null)
+                {
+                    string fileUrl = string.Concat(currentUrl, "/", Model.FullBookFile.First().FileUrl);
+                    <a real-name="@Model.FullBookFile.First().RealFileName" href="@fileUrl" class="btn lg ti-import mt-24 dlFile" target="new">全文下載</a>
+                }
+                @*else
+                {
+                    <a href="javascript:;" class="btn lg ti-import mt-24" target="new">全文下載</a>
+                }*@
+            </article>
+        </section>
+
+        @if (Model.ChapterFiles.Count > 0 && Model.ChapterFiles != null)
+        {
+            <nav class="download">
+                @foreach (var chapter in Model.ChapterFiles)
+                {
+                    string fileUrl = string.Concat(currentUrl, "/", chapter.FileUrl);
+                    string alias = Model.ChapterDetails.Where(o => o.MapFileID == chapter.ID).First().Alias;
+                    <a real-name="@alias" href="@fileUrl" class="item ti-import dlFile" target="new">@alias</a>
+
+                }
+                @*<a href="" class="item ti-import" target="new">2015目錄</a>
+                    <a href="" class="item ti-import" target="new">第一篇 總體能源重要指標</a>
+                    <a href="" class="item ti-import" target="new">第二篇 我國節約能源現況</a>
+                    <a href="" class="item ti-import" target="new">第三篇 我國節約能源政策概要</a>
+                    <a href="" class="item ti-import" target="new">第四篇 其他資料</a>*@
+            </nav>
+        }
+
+        <hr class="mb-12">
+
+        <div class="text-right">
+            <button class="ti-printer mr-12" type="button" onclick="webprint('content')" onkeypress="webprint('content')">友善列印</button>
+            <a href="~/Book/List" class="ti-layout-grid2-alt">回列表</a>
+        </div>
+
+    </div><!-- content //-->
+
+</div>
+<script>
+    $(function () {
+        //檔案下載
+        $(document).on('click', '.dlFile', function () {
+            downloadFile(this);
+        });
+    })
+    //下載檔案存為指定檔名
+    function downloadFile(elem) {
+        $(elem).attr('download', $(elem).attr('real-name'))
+              .attr('href', $(elem).attr('url'))
+              .attr('target', '_blank');
+    }
+</script>

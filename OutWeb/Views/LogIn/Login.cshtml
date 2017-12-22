@@ -1,0 +1,45 @@
+﻿@using OutWeb.Models.FrontEnd.UserInfo
+@model LogInModel
+
+@{
+    ViewBag.Title = "用戶登入";
+    ViewBag.BodyClass = "Login";
+    ViewBag.Breadcrumb = "用戶登入"; @* 最後層的麵包屑 *@
+}
+
+@* 中間層的麵包屑 *@
+@section breadcrumb {
+
+}
+@using (Html.BeginForm("Login", "Home", new { redirectUrl = ViewBag.RedirectUrl }, FormMethod.Post, new { id = "formFrontLogIn", @class = "form-login center wrap" }))
+{
+    @Html.AntiForgeryToken()
+    <h2 class="title underline mb-32">請先登入</h2>
+    <dl class="field">
+        <dt class="col-sm-3 text-right"><sup title="必填">*</sup> <label for="Account">帳號</label></dt>
+        <dd class="col-sm-9">
+            <input type="text" name="Account" id="Account" class="form-element" placeholder="帳號為用戶編號">
+            @Html.ValidationMessageFor(m => m.Account, "", new { @class = "text-danger" })
+        </dd>
+    </dl>
+    <dl class="field">
+        <dt class="col-sm-3 text-right"><sup title="必填">*</sup> <label for="Password">密碼(用戶電號)</label></dt>
+        <dd class="col-sm-9">
+            <input type="password" name="Password" id="Password" class="form-element">
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </dd>
+    </dl>
+
+    <footer class="submit-bar mt-32 text-center">
+        <button type="submit"  class="btn lg">送出</button>
+    </footer>
+}
+<script>
+    if ('@TempData["SignInFail"]' != '') {
+        alert('@TempData["SignInFail"]');
+    }
+
+    if ('@TempData["LoginValid"]' != '') {
+        alert('@TempData["LoginValid"]');
+    }
+</script>

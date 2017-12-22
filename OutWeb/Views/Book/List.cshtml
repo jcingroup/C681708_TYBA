@@ -1,0 +1,125 @@
+﻿@using OutWeb.Models.FrontEnd.BookFrontEndModels
+@model BookFrontEndListDataModel
+
+@{
+    ViewBag.Title = "出版品";
+    ViewBag.BodyClass = "Book";
+    //ViewBag.Subnav = "sub-book1";
+    @*ViewBag.Breadcrumb = "能源查核年報"; @* 最後層的麵包屑 *@
+string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
+
+}
+
+@* 中間層的麵包屑 *@
+@section breadcrumb {
+    <li><a href="~/Book">出版品</a></li>
+}
+
+<div class="wrap zoom">
+    @Html.Partial("sidebar")
+
+    <div id="content">
+
+        <form class="text-left field list-search pb-12 underline" method="get" action="/Book/List" id="frmBookList">
+            @{
+                string type = (ViewBag.Subnav as string).Replace("sub-book", "");
+             }
+            <input type="hidden" name="type" value="@type" />
+            @{
+                string beginDateStr = Model.Filter.PublishBeginDate == DateTime.MinValue ? new DateTime(DateTime.UtcNow.AddHours(8).Year, 01, 01).ToString("yyyy\\/MM\\/dd") : Model.Filter.PublishBeginDate.ToString("yyyy\\/MM\\/dd");
+                string endDateStr = Model.Filter.PublishEndDate == DateTime.MaxValue ? new DateTime(DateTime.UtcNow.AddHours(8).Year, 12, 31).ToString("yyyy\\/MM\\/dd") : Model.Filter.PublishEndDate.ToString("yyyy\\/MM\\/dd");
+            }
+            <div class="col-6 col-sm-3 date">
+                <div class="input-group">
+                    <label for="bdate" class="input-group-addon">起</label>
+                    <span class="input-group-box"><input class="form-element datepicker" id="bdate" name="bdate" type="text" value="@beginDateStr"></span>
+                </div>
+            </div>
+            <div class="col-6 col-sm-3 date pr-0">
+                <div class="input-group">
+                    <label for="edate" class="input-group-addon">迄</label>
+                    <span class="input-group-box"><input class="form-element datepicker" id="edate" name="edate" type="text" value="@endDateStr"></span>
+                </div>
+            </div>
+            <div class="col-sm-4 offset-sm-2">
+                <div class="input-group">
+                    <label for="qry" class="sr-only">關鍵字</label>
+                    <span class="input-group-box"><input class="form-element" type="search" id="qry" name="qry" placeholder="請輸入關鍵字" value="@Model.Filter.QueryString"></span>
+                    <button class="input-group-btn" type="submit">查詢</button>
+                </div>
+            </div>
+        </form>
+
+        @* 寬度不超過450，高度不超過265 *@
+
+        @foreach (var data in Model.Result)
+        {
+            if (data.CoverImg.Count > 0 && data.CoverImg != null)
+            {
+                string imgUrl = string.Concat(currentUrl, "/", data.CoverImg.First().FileUrl);
+
+                <figure class="piclist" title="@data.Title">
+                    <div class="cut"><img src="@imgUrl" alt="封面圖"></div>
+                    <a href="@Url.Content("~/Book/Content?ID=" + data.ID+"&type="+data.Type)" class="text-hide">按我看內容</a>
+                    <figcaption>@data.Title</figcaption>
+                </figure>
+            }
+            else
+            {
+                @* 無圖片樣式 *@
+                <figure class="piclist" title="@data.Title">
+                    <div class="cut none"><i class="font-xxl ti-book" title="無圖片"></i></div>
+                    <a href="@Url.Content("~/Book/Content?ID=" + data.ID+"&type="+data.Type)" class="text-hide">按我看內容</a>
+                    <figcaption>@data.Title</figcaption>
+                </figure>
+            }
+        }
+
+        @*
+
+            <figure class="piclist">
+                無圖片樣式
+                <div class="cut none"><i class="font-xxl ti-book" title="無圖片"></i></div>
+                <a href="~/Book/Content" class="text-hide">按我看內容</a>
+                <figcaption>2015能源查核年報</figcaption>
+            </figure>
+
+                <figure class="piclist">
+                <div class="cut"><img src="~/Content/images/Book.jpg" alt="封面圖"></div>
+                <a href="~/Book/Content" class="text-hide">按我看內容</a>
+                <figcaption>2015能源查核年報</figcaption>
+            </figure>
+            <figure class="piclist">
+                <div class="cut"><img src="~/Content/images/Book.jpg" alt="封面圖"></div>
+                <a href="~/Book/Content" class="text-hide">按我看內容</a>
+                <figcaption>2015能源查核年報</figcaption>
+            </figure>
+            <figure class="piclist">
+                <div class="cut"><img src="~/Content/images/Book.jpg" alt="封面圖"></div>
+                <a href="~/Book/Content" class="text-hide">按我看內容</a>
+                <figcaption>2015能源查核年報</figcaption>
+            </figure>
+            <figure class="piclist">
+                <div class="cut"><img src="~/Content/images/Book.jpg" alt="封面圖"></div>
+                <a href="~/Book/Content" class="text-hide">按我看內容</a>
+                <figcaption>2015能源查核年報</figcaption>
+            </figure>
+            <figure class="piclist">
+                <div class="cut"><img src="~/Content/images/Book.jpg" alt="封面圖"></div>
+                <a href="~/Book/Content" class="text-hide">按我看內容</a>
+                <figcaption>2015能源查核年報</figcaption>
+            </figure>
+            <figure class="piclist">
+                <div class="cut"><img src="~/Content/images/Book.jpg" alt="封面圖"></div>
+                <a href="~/Book/Content" class="text-hide">按我看內容</a>
+                <figcaption>2015能源查核年報</figcaption>
+            </figure>*@
+    </div><!-- content //-->
+</div>
+
+<script>
+
+    if ('@ViewBag.Error' != '') {
+        alert('@ViewBag.Error');
+    }
+</script>
