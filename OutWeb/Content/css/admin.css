@@ -189,14 +189,18 @@ textarea {
   outline: none !important; }
 
 html, body {
-  text-align: center;
+  text-align: center; }
+
+html {
   height: 100%; }
 
 body {
   background: #fff;
   color: #333;
   font: 16px/1.5 \5FAE\8EDF\6B63\9ED1\9AD4, "微軟正黑體", "Microsoft JhengHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  letter-spacing: .01em; }
+  letter-spacing: .01em;
+  min-height: 100%;
+  position: relative; }
 
 img {
   vertical-align: middle; }
@@ -207,8 +211,10 @@ a, area, button, [role="button"], input, label, select, summary, textarea {
 button, [role="button"], [type="button"] {
   background: none;
   cursor: pointer;
-  border: none;
-  outline: 0; }
+  border: none; }
+  button:focus, [role="button"]:focus, [type="button"]:focus {
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px rgba(240, 173, 78, 0.35); }
 
 a {
   color: #438EB9;

@@ -5,124 +5,68 @@
     string ActionName = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Action"]);
 }
 
-
 <input type="hidden" id="hdnNewsID" name="newsID" value="@Model.Data.主索引" />
-<input type="hidden" id="hdnTempID" name="tempID" value="@Model.Data.樣板代碼" />
-
-
 <section class="row row-x0">
-    <div class="col-6">
 
-        <dl class="field">
-            <dt class="col-2"><sup title="必填">*</sup> 分類</dt>
-            <dd class="col-10">
-                @*<select name="type">
-                        <option value="1" selected>國內</option>
-                        <option value="2">國外</option>
-                    </select>*@
-                @Html.DropDownList("TypeList", null, new { @id = "typeList", @Name = "type" })
-            </dd>
-        </dl>
+    <dl class="field">
+        <dt class="col-2"><sup title="必填">*</sup> 發佈時間</dt>
+        <dd class="col-4">
+            <input type="text" class="datepicker" required name="發稿時間" value="@Convert.ToDateTime(Model.Data.發稿時間).ToString("yyyy\\/MM\\/dd")" placeholder="請輸入發佈日期">
+        </dd>
+    </dl>
+    <dl class="field">
+        <dt class="col-2"><sup title="必填">*</sup> 標題</dt>
+        <dd class="col-10">
+            <input type="text" name="標題" value="@Model.Data.標題" required placeholder="請輸入標題">
+        </dd>
+    </dl>
 
-        <dl class="field">
-            <dt class="col-2"><sup title="必填">*</sup> 發稿人</dt>
-            <dd class="col-10">
-                <input type="text" name="發稿人" value="@Model.Data.發稿人" required placeholder="請輸入發稿人">
-            </dd>
-        </dl>
-
-        <dl class="field">
-            <dt class="col-2"><sup title="必填">*</sup> 發稿時間</dt>
-            <dd class="col-10">
-                <input type="text" class="datepicker" required name="發稿時間" value="@Convert.ToDateTime(Model.Data.發稿時間).ToString("yyyy\\/MM\\/dd")" placeholder="請輸入發佈日期">
-            </dd>
-        </dl>
-        <dl class="field">
-            <dt class="col-2"><sup title="必填">*</sup> 標題</dt>
-            <dd class="col-10">
-                <input type="text" name="標題" value="@Model.Data.標題" required placeholder="請輸入標題">
-            </dd>
-        </dl>
-
-        <dl class="field">
-            <dt class="col-2">超連結</dt>
-            <dd class="col-10">
-                @* 2017/11/6非必填 *@
-                <input id="urlAddr" type="text" name="連結位址" value="@Model.Data.連結位址" placeholder="請輸入超連結">
-            </dd>
-        </dl>
-
-        <dl class="field">
-            <dt class="col-2">排序</dt>
-            <dd class="col-10">
-                <input type="number" value="@Model.Data.排序" class="inline" name="sortIndex">
-                <small>數字愈大愈前面</small>
-            </dd>
-        </dl>
-        <dl class="field">
-            <dt class="col-2">首頁顯示</dt>
-            <dd class="col-10">
-                <label class="switch">
-                    <input type="checkbox" name="hSt" checked>
-                    <div class="slider round"></div>
+    <dl class="field">
+        <dt class="col-2">排序</dt>
+        <dd class="col-7">
+            <input type="number" value="@Model.Data.排序" class="inline" name="sortIndex">
+            <small>數字愈大愈前面</small>
+        </dd>
+    </dl>
+    <dl class="field">
+        <dt class="col-2">首頁顯示</dt>
+        <dd class="col-7">
+            <label class="switch">
+                <input type="checkbox" name="hSt" checked>
+                <div class="slider round"></div>
+            </label>
+        </dd>
+    </dl>
+    <dl class="field">
+        <dt class="col-2">顯示狀態</dt>
+        <dd class="col-7">
+            <!-- 新增時預設上架 -->
+            @if (Model.Data.顯示狀態)
+            {
+                <label class="mr-8">
+                    <input type="radio" name="fSt" class="radio" value="Y" checked>
+                    <i class="icon"></i>上架
                 </label>
-            </dd>
-        </dl>
-        <dl class="field">
-            <dt class="col-2">顯示狀態</dt>
-            <dd class="col-10">
-                <!-- 新增時預設上架 -->
-                @if (Model.Data.顯示狀態)
-                {
-                    <label class="mr-8">
-                        <input type="radio" name="fSt" class="radio" value="Y" checked>
-                        <i class="icon"></i>上架
-                    </label>
 
-                    <label>
-                        <input type="radio" name="fSt" value="N" class="radio">
-                        <i class="icon"></i>下架
-                    </label>
-                }
-                else
-                {
-                    <label class="mr-8">
-                        <input type="radio" name="fSt" value="Y" class="radio">
-                        <i class="icon"></i>上架
-                    </label>
+                <label>
+                    <input type="radio" name="fSt" value="N" class="radio">
+                    <i class="icon"></i>下架
+                </label>
+            }
+            else
+            {
+                <label class="mr-8">
+                    <input type="radio" name="fSt" value="Y" class="radio">
+                    <i class="icon"></i>上架
+                </label>
 
-                    <label>
-                        <input type="radio" name="fSt" value="N" class="radio" checked>
-                        <i class="icon"></i>下架
-                    </label>
-                }
-            </dd>
-        </dl>
-    </div>
-
-    <div class="col-6">
-        <dl class="field">
-            <dt class="col-2">附件上傳</dt>
-            <dd class="col-10 append-file-m">
-                <div class="input-file">
-                    <input id="files_m" type="file" onchange="postFiles(this);" multiple>
-                </div>
-                <ul class="file-pre-ul list-unstyled">
-
-                    @foreach (var file in Model.FilesData)
-                    {
-                        string fileUrl = currentUrl + "/" + file.FileUrl;
-                        int index = Model.FilesData.IndexOf(file);
-                        <li class="uploaded">
-                            <button type="button" class="close btn-del file-remove-btn" del-obj="f" id="@file.FileName">&times;</button>
-                            <a class="dlFile" href="javascript:;" url="@fileUrl" real-name="@file.RealFileName">@file.RealFileName</a>
-                            <input type="hidden" id="imgID" name="FileData[@index].ID" value="@file.ID" />
-                        </li>
-                    }
-                </ul>
-            </dd>
-        </dl>
-    </div>
+                <label>
+                    <input type="radio" name="fSt" value="N" class="radio" checked>
+                    <i class="icon"></i>下架
+                </label>
+            }
+        </dd>
+    </dl>
 </section>
 
 <fieldset class="mt-24">
@@ -134,14 +78,6 @@
         檔案尺寸寬度超過 1600 或 高度超過1200 的圖片會被壓縮(PNG透明背景會變成不透明) <br />
         youtube 可勾選「用自適應縮放模式」
     </div>
-    @* 按下會載入html樣版 *@
-
-    <nav class="mb-8">
-        @* 已載入的加 active 、 &#10003;*@
-        <button type="button" class="btn-template temp1" temp-type="1" id="tmp1">樣版一</button>
-        <button type="button" class="btn-template temp2" temp-type="2" id="tmp2">樣版二</button>
-        <button type="button" class="btn-template temp3" temp-type="3" id="tmp3">樣版三</button>
-    </nav>
     <textarea id="art" class="form-element" maxlength="512" name="contenttext" placeholder="請輸入最新消息內容..." rows="15">
         @Model.Data.內容
     </textarea>
@@ -155,60 +91,8 @@
     </button>
 </footer>
 
-@*
-    - 樣版一的html:
-    <figure class="img-group">
-        <img src="/Content/images/pic-temp-full.jpg" alt="滿版圖範例">
-        <figcaption>圖說</figcaption>
-    </figure>
-    <p>文字內容</p>
-
-    - 樣版二的html:
-    <figure class="img-group col-sm-4 pull-right">
-        <img src="~/Content/images/pic-temp.jpg" alt="文繞圖範例">
-        <figcaption>圖說</figcaption>
-    </figure>
-    <p>文字內容</p>
-
-    - 樣版三的文字內容:
-    <p>文字內容</p>
-    <figure class="img-group col-sm-4 pull-right">
-        <img src="~/Content/images/pic-temp.jpg" alt="文繞圖範例">
-        <figcaption>圖說</figcaption>
-    </figure>
-    <p>文字內容</p>
-*@
 
 <script>
-    function template(type) {
-        //- 樣版一的html:
-        var tmp1 =
-        '<figure class="img-group">' +
-        '<img src="/Content/images/pic-temp-full.jpg" alt="滿版圖範例">' +
-        '<figcaption>圖說</figcaption>' +
-        '</figure>' +
-        '<p>這裡是圖片下方的文字內容</p>';
-
-        //- 樣版二的html:
-        var tmp2 =
-        '<figure class="img-group col-sm-4 pull-right">' +
-        '<img src="/Content/images/pic-temp.jpg" alt="文繞圖範例">' +
-        '<figcaption>圖說</figcaption>' +
-        '</figure>' +
-        '<p>這裡是左邊文字內容</p>';
-
-        //- 樣版三的文字內容:
-        var tmp3 =
-        '<p>這裡是圖片上方的文字內容</p>' +
-        '<figure class="img-group col-sm-4 pull-right">' +
-        '<img src="/Content/images/pic-temp.jpg" alt="文繞圖範例">' +
-        '<figcaption>圖說</figcaption>' +
-        '</figure>' +
-        '<p>這裡是圖片左邊的文字內容</p>' +
-        '<p class="clear">這裡是圖片下方的文字內容</p>';
-
-        return type == '1' ? tmp1 : type == '2' ? tmp2 : type == '3' ? tmp3 : tmp1;
-    }
     $(function () {
         //if ($('[type="date"]').prop('type') != 'date') {
         //     不支援date等類型的瀏覽器，類型是date 但是property不是'date'。
@@ -217,407 +101,8 @@
         //}
         //alert($('[type="date"]').prop('type'));
 
-
-
         //alert(CKEDITOR.version);
         CKFinder.setupCKEditor(null, { basePath: '/ckfinder/', skin: 'v1' });
         CKEDITOR.replace('contenttext');
-
-
-        function selectDefualtTemp(type) {
-            $('.btn-template').empty();
-            // $('.btn-template').removeAttr('active');
-            // $('#tmp' + type).attr('active');
-            $('.btn-template').removeClass('active');
-            $('#tmp' + type).addClass('active');
-            var mark = '&#10003;';
-
-            switch (type) {
-                case '1':
-                    $('#tmp1').html(mark + '樣板一');
-                    $('#tmp2').html('樣板二');
-                    $('#tmp3').html('樣板三');
-                    break;
-                case '2':
-                    $('#tmp1').html('樣板一');
-                    $('#tmp2').html(mark + '樣板二');
-                    $('#tmp3').html('樣板三');
-                    break;
-                case '3':
-                    $('#tmp1').html('樣板一');
-                    $('#tmp2').html('樣板二');
-                    $('#tmp3').html(mark + '樣板三');
-                    break;
-                default:
-            }
-        }
-
-        $('.btn-template').click(function () {
-   
-             if (confirm('是否確定更換樣板？更換樣版將會失去已變更的內容。')) {
-                var type = $(this).attr('temp-type');
-                $('#hdnTempID').val(type);
-                selectDefualtTemp(type);
-                var getTemp = template(type);
-                CKEDITOR.instances['art'].setData(getTemp);
-             } else {
-                 return;
-             }
-        });
-
-        if ('@Model.Data.主索引' != '0') {
-            selectDefualtTemp('@Model.Data.樣板代碼');
-            if ('@Model.Data.首頁顯示' == '@true') {
-                $('[name="hSt"]').prop('checked', 'checked');
-            }
-            else {
-                $('[name="hSt"]').prop('checked', '');
-            }
-        }
-        else {
-            selectDefualtTemp('1');
-        }
     })
-
-
-</script>
-
-@*File Upload JS*@
-<script>
-    var fileList = [];
-    var blobBuffer = {};
-    var fileLimitImageSize = 1048576;//圖片大小1mb 單位bit
-    var fileLimitFileSize = 2097152//檔案大小2mb 單位bit
-    //驗證Required欄位
-    function validHtmlFormRequired() {
-        var valid = true;
-        var form = document.getElementById('formManageNewsData');
-        for (var i = 0; i < form.elements.length; i++) {
-            if (form.elements[i].value === '' && form.elements[i].hasAttribute('required')) {
-                alert(form.elements[i].placeholder);
-                valid = false;
-                return;
-            }
-        }
-        return valid;
-    }
-
-    $(function () {
-
-        //刪除圖片
-        $(document).on('click', '.close', function () {
-            var delIndex = [];
-            var id = $(this).attr('id');
-            var t = $(this).attr('del-obj');
-            for (var i = 0; i < fileList.length; i++) {
-                var data = fileList[i];
-                if (data.type == t && data.files.name == id) {
-                    delIndex.push(i);
-                }
-            }
-            for (var i = 0; i < delIndex.length; i++) {
-                fileList.splice(delIndex[i], 1);
-            }
-            $(this).closest('.uploaded ').remove();
-        });
-
-        $('#submitBtn').click(function () {
-            if ($('#typeList').val() == '') {
-                alert('請選擇分類');
-                return;
-            }
-            var valid = validHtmlFormRequired();
-            if (!valid) {
-                return false;
-            }
-            var url = $('#urlAddr').val();
-            if (url) {
-                var urlIsSuccess = validUrl(url);
-                if (!urlIsSuccess) {
-                    alert('連結位址格式不符合網址格式,ex：http://www.google.com');
-                    return;
-                }
-            }
-            SaveImages();
-        });
-    })
-
-    function validUrl(url) {
-        var expression = /[-a-zA-Z0-9@@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@@:%_\+.~#?&//=]*)?/gi;
-        var regex = new RegExp(expression);
-
-        if (url.match(regex)) {
-            return true;
-
-        } else {
-            return false;
-        }
-    }
-
-    //圖片/檔案存server
-    function SaveImages() {
-        $('#images_s').val('');
-        $('#images_m').val('');
-        //重置ckeditor content
-        for (instance in CKEDITOR.instances) {
-            CKEDITOR.instances[instance].updateElement();
-        }
-        var ID = $('#hdnNewsID').val();
-        var formData = document.getElementById('formManageNewsData');
-        formData = new FormData(formData);
-
-        for (var i = 0; i < fileList.length; i++) {
-            var data = fileList[i];
-            if (data.type == 's') {
-                formData.append('image', data.files);
-            }
-            else if (data.type == 'm') {
-                formData.append('images', data.files);
-            }
-            else if (data.type == 'f') {
-                formData.append('files', data.files);
-            }
-        }
-
-        formData.append("act", 'post');
-        formData.append("actionName", '@ActionName');
-        formData.append("ID", ID);
-
-
-        var url = '';
-
-        if (ID == 0) {
-            url = "@Url.Content("~/_SysAdm/NewsAdd/")";
-        }
-        else {
-            url = "@Url.Content("~/_SysAdm/NewsEdit/")";
-        }
-
-        $.ajax({
-            async: false,
-            type: "POST",
-            url: url,
-            data: formData,
-            dataType: 'json',
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                window.location.href = response.Url;
-            },
-            error: function (error, x, e, g) {
-                alert('error');
-                window.location.reload();
-            }
-        });
-    }
-
-
-    //下載檔案存為指定檔名
-    function downloadFile(elem) {
-        //for IE
-        if (window.navigator.msSaveOrOpenBlob) {
-            if (Object.keys(blobBuffer).length > 0) {
-                var key = $(elem).attr('ie-id');
-                var obj = blobBuffer[key];
-
-                var blobObject = new Blob([obj.blobObj]);
-                window.navigator.msSaveOrOpenBlob(blobObject, obj.fileName);
-            }
-        }
-        else {
-            $(elem).attr('download', $(elem).attr('real-name'))
-           .attr('href', $(elem).attr('url'))
-           .attr('target', '_blank');
-        }
-    }
-
-    //檔案下載
-    $(document).on('click', '.dlFile', function () {
-        downloadFile(this);
-    });
-    //檔案刪除
-    $(document).on('click', '.file-remove-btn', function () {
-        var delIndex = [];
-        var id = $(this).attr('id');
-        var t = $(this).attr('del-obj');
-        for (var i = 0; i < fileList.length; i++) {
-            var data = fileList[i];
-            if (data.type == t && data.files.name == id) {
-                delIndex.push(i);
-            }
-        }
-        for (var i = 0; i < delIndex.length; i++) {
-            fileList.splice(delIndex[i], 1);
-        }
-        $(this).parent('li').remove();
-    })
-
-    //檔案預覽
-    function postFiles(elem) {
-        var f = document.getElementById('files_m');
-        //檢查格式尺寸
-        var sizePass = checkFileLimitSize(f, fileLimitFileSize);
-        if (!sizePass) {
-            return;
-        }
-        for (var i = 0; i < f.files.length; i++) {
-            //建立Object URL
-            var url = window.URL.createObjectURL(f.files[i]);
-            var filename = f.files[i].name;
-            var blobObjectFile = f.files[i];
-            var ra = '';
-            //For IE
-            if (window.navigator.msSaveOrOpenBlob) {
-                ra = Math.random();
-                blobBuffer[ra] = { blobObj: blobObjectFile, fileName: filename };
-            }
-
-            var $li = $('<li class="uploaded"><button type="button" class="btn-del file-remove-btn" del-obj="f" id="' + filename + '">&times;</button>' +
-                '<a  class="dlFile" ie-id="' + ra + '"  href="javascript:;" url="' + url + '" real-name="' + filename + '">' + filename + '</a>' +
-                '</li>');
-
-            $('.file-pre-ul').append($li);
-            fileList.push({ type: 'f', files: f.files[i] });
-
-            //註銷Object URL
-            //window.URL.revokeObjectURL(url);
-        }
-        console.log(blobBuffer);
-    }
-
-    //圖片預覽
-    function postImages(elem) {
-        var formData = new FormData();
-        var mode = $(elem).attr('id');
-        var ID = $('#hdnNewsID').val();
-        //append files
-        if (mode == 'images_s') {
-            $('.up-single').remove();
-            for (var i = 0; i < fileList.length; i++) {
-                var data = fileList[i];
-                if (data.type == 's') {
-                    fileList.splice(i, 1);
-                }
-            }
-            var f = document.getElementById('images_s');
-            //檢查格式尺寸
-            var sizePass = checkFileLimitSize(f, fileLimitImageSize);
-            var typePass = checkFileExtension(f);
-            if (!sizePass || !typePass) {
-                return;
-            }
-            fileList.push({ type: 's', files: f.files[0] });
-        }
-        else if (mode == 'images_m') {
-            var f = document.getElementById('images_m');
-            //檢查格式尺寸
-            var sizePass = checkFileLimitSize(f, fileLimitImageSize);
-            var typePass = checkFileExtension(f);
-            if (!sizePass || !typePass) {
-                return;
-            }
-
-            for (var i = 0; i < f.files.length; i++) {
-                fileList.push({ type: 'm', files: f.files[i] });
-            }
-        }
-
-        formData.append("act", 'upload');
-        formData.append("UploadType", mode);
-        formData.append("actionName", '@ActionName');
-        formData.append("ID", ID);
-        for (var i = 0; i < fileList.length; i++) {
-            var data = fileList[i];
-            if (data.type == 's') {
-                formData.append('image', data.files);
-            }
-            else if (data.type == 'm') {
-                formData.append('images', data.files);
-            }
-        }
-
-        var url = "@Url.Content("~/ImgHandler/Index/")";
-        $.ajax({
-            async: false,
-            type: "POST",
-            url: url,
-            data: formData,
-            dataType: 'json',
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                var imgUrl = '@currentUrl' + '/';
-                if (response.redirectToActionUrl != null) {
-                    window.location.href = response.redirectToActionUrl;
-                }
-
-                if (response.MemberData.length > 0) {
-                    $('.up-single').remove();
-                }
-                if (response.MemberDataMultiple.length > 0) {
-                    var currentCount = $('.up-multiple').length;
-                    if (currentCount > 0) {
-                        $('.up-multiple').each(function () {
-                            var chkFrom = $(this).attr('from');
-                            if (typeof chkFrom === 'undefined') {
-                                $(this).remove();
-                            }
-                        });
-                    }
-                }
-
-                for (var i = 0; i < response.MemberData.length; i++) {
-                    var img = response.MemberData[i];
-                    var $elemInsert =
-                       '<div class="uploaded up-single">' +
-                           '<button class="close btn-del" type="button" del-obj="s" id="' + img.FileName + '">&times;</button>' +
-                           '<img src="' + imgUrl + img.FileUrl + '" width="100" />' +
-                       '</div>';
-                    $('.append-img-s').append($elemInsert);
-                }
-                for (var i = 0; i < response.MemberDataMultiple.length; i++) {
-                    var img = response.MemberDataMultiple[i];
-                    var $elemInsert =
-                    '<div class="uploaded up-multiple">' +
-                        '<button class="close btn-del" type="button" del-obj="m"  id="' + img.FileName + '">&times;</button>' +
-                        '<img src="' + imgUrl + img.FileUrl + '" width="100" />' +
-                    '</div>';
-                    $('.append-img-m').append($elemInsert);
-                }
-
-            },
-            error: function (error) {
-                alert("errror");
-            }
-        });
-    }
-
-    //檢查尺寸
-    function checkFileLimitSize(totalFiles, fileLimitSize) {
-        var success = true;
-        for (var i = 0; i < totalFiles.files.length; i++) {
-            var file = totalFiles.files[i];
-            if (file.size > fileLimitSize) {
-                success = false;
-                alert("圖片或檔案大小不可超過" + (fileLimitSize / 1024) + " kb.");
-                break;
-            }
-        }
-        return success;
-    }
-    //檢查副檔名
-    function checkFileExtension(totalFiles) {
-        var success = true;
-        var allowedExtension = ["image/bmp", "image/gif", "image/jpeg", "image/jpg", "image/png"];
-        for (var i = 0; i < totalFiles.files.length; i++) {
-            var fileExtension = totalFiles.files[i].type;
-            var findIndex = $.inArray(fileExtension, allowedExtension);
-            if (findIndex < 0) {
-                success = false;
-                alert("只允許上傳 bmp, gif, jpeg, jpg, png圖檔.");
-                break;
-            }
-        }
-        return success;
-    }
 </script>

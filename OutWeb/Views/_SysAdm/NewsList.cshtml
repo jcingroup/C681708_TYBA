@@ -3,7 +3,7 @@
 @model NewsListViewModel
 @{
     Layout = "~/Views/Shared/_MLayout.cshtml";
-    ViewBag.Crumb = "國內外新聞";
+    ViewBag.Crumb = "比賽訊息";
     ViewBag.subnav = "General";
     ViewBag.subnav2 = "News";
 }
@@ -12,7 +12,7 @@
 @section IncludeScript{
 
     <script>
-     
+
         (function ($) {
             $(function () {
                 if('@TempData["TypeError"]' != '')
@@ -131,8 +131,8 @@
 {
 
     <div class="alert-warning mb-16">
-        <strong>前台：</strong> 數字愈大愈前面。<br>
-        <strong>首頁：</strong> 最多顯示5則消息。(與研討會合併計算)
+        <strong>排序：</strong> 在前台顯示的排序，數字愈大愈前面。<br>
+        <strong>首頁：</strong> 最多顯示5則消息(取排序最大的前5筆)。
     </div>
 
     <div class="btn-group mb-8">
@@ -140,12 +140,7 @@
     </div>
 
     <header class="table-head form-inline">
-        @if (TempData["TypeError"] == null)
-        {
-            <label>分類</label>
-            @Html.DropDownList("TypeList", null, new { @id = "typeList", @Name = "type" });
-        }
-        <label>發稿時間</label>
+        <label>發佈時間</label>
         <input type="text" name="pDate" value="@Model.Filter.PublishDate" class="datepicker">
         <label>首頁</label>
         <select id="statusDropListHome" name="hSt">
@@ -180,7 +175,7 @@
 
             <th class="item-edit">刪除</th>
             <th class="item-edit">修改</th>
-            <th><button id="sortPublishDate" type="button" sort-type="" class="th-sort-toggle">發稿時間</button></th>
+            <th><button id="sortPublishDate" type="button" sort-type="" class="th-sort-toggle">發佈時間</button></th>
             <th class="text-left">標題</th>
             <th><button id="sortDisplayForHome" type="button" sort-type="" class="th-sort-toggle">首頁</button></th>
             <!-- <th><button id="sortDisabled" type="button" sort-type="" class="th-sort-toggle">停用</button></th> -->
@@ -192,6 +187,8 @@
         {
             <tr class="bg-pale-red"><td colspan="7">查無資料!</td></tr>
         }
+
+        @* 預設以發佈時間排序 *@
         @foreach (var data in Model.Result.Data)
         {
             string disFrontStr = data.顯示狀態 ? "上架" : "下架";

@@ -1,0 +1,90 @@
+﻿
+@{
+    //Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "比賽成績公告訊息";
+    ViewBag.subnav = "General";
+    ViewBag.subnav2 = "Result";
+}
+
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>一般頁面管理</li>
+        <li>ViewBag.Crumb</li>
+    </ul>
+}
+
+<h3 class="title">@ViewBag.Crumb</h3>
+
+<div class="alert-warning mb-16">
+    <strong>排序：</strong> 在前台顯示的排序，數字愈大愈前面。
+</div>
+
+<div class="btn-group mb-8">
+    <button type="button" class="btn success oi" data-glyph="plus" onclick="location.href='@Url.Content("NewsAdd")'">新增</button>
+</div>
+
+<header class="table-head form-inline">
+    <label>發佈時間</label>
+    <input type="text" name="pDate" value="@Model.Filter.PublishDate" class="datepicker">
+    <label>狀態</label>
+    <select id="statusDropListFront" name="fSt">
+        <option value="">全部</option>
+        <option value="Y">上架</option>
+        <option value="N">下架</option>
+    </select>
+    <input type="text" placeholder="請輸入關鍵字" name="qry" value="@Model.Filter.QueryString">
+    <button class="btn">搜尋</button>
+</header>
+<table class="table-list table-hover table-striped">
+    <colgroup>
+        <col span="2">
+        <col style="width: 13.5%">
+        <col>
+        <col span="3" style="width: 11%">
+    </colgroup>
+    <tr>
+        @* 點選排序功能 (點一下遞增, 點兩下遞減)
+            <button class="th-sort-toggle"></button>
+            遞增 asc
+            <button class="th-sort-toggle asc"></button>
+            遞減 desc
+            <button class="th-sort-toggle desc"></button>
+        *@
+        <th class="item-edit">刪除</th>
+        <th class="item-edit">修改</th>
+        <th><button id="sortPublishDate" type="button" sort-type="" class="th-sort-toggle">發佈時間</button></th>
+        <th class="text-left">標題</th>
+        <th><button id="sortDisplayForFront" type="button" sort-type="" class="th-sort-toggle">狀態</button></th>
+        <th><button id="sortIndex" sort-type="" type="button" class="th-sort-toggle">排序</button></th>
+    </tr>
+
+    @*
+        <tr class="bg-pale-red"><td colspan="6">查無資料!</td></tr>
+    *@
+
+    @* 預設以發佈時間排序 *@
+    <tr>
+        <td><button class="hover-danger oi delete-btn" title="刪除" type="button" data-glyph="trash" data-id=""></button></td>
+        <td><button class="hover-primary oi" title="修改" data-glyph="pencil" type="button" onclick="location.href='@Url.Content("ResultEdit")'"></button></td>
+        <td>2017/5/11</td>
+        <td class="text-left">xxxxx比賽</td>
+        <td><span class="label-success">上架</span></td>
+        <td>1</td>
+    </tr>
+
+</table>
+
+<footer class="table-foot">
+    <small class="pull-right">第 1 - 1 筆，共 2 筆</small>
+    <nav class="pager">
+        <button disabled class="oi" data-glyph="media-step-backward" title="到最前頁" type="button"></button>
+        <button disabled class="oi" data-glyph="chevron-left" title="上一頁" type="button"></button>
+        <span>
+            第
+            <input disabled id="numPage" name="page" class="text-center" type="number" value="1">
+            頁，共 1 頁
+        </span>
+        <button disabled class="oi" data-glyph="chevron-right" title="下一頁" type="button"></button>
+        <button disabled class="oi" data-glyph="media-step-forward" title="到最後頁" type="button"></button>
+    </nav>
+</footer>

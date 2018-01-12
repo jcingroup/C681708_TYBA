@@ -8,41 +8,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <title>@ViewBag.Title - 能源資訊網</title>
+    <title>@ViewBag.Title - 桃園市籃球委員會</title>
     <link rel="stylesheet" href="~/Content/css/vendor/themify-icons.css">
     <link rel="stylesheet" href="~/Content/css/grid.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
     @Scripts.Render("~/Custom/JS")
     @Styles.Render("~/Custom/CSS")
 
-    @{
-        //出版品分類
-        TypeManageModule typeModule = new TypeManageModule();
-        SelectList bookTypeList = typeModule.CreateTypeManageDropList(0, false, "Book");
-
-        bookTypeList = new SelectList(bookTypeList
-                           .Where(x => !string.IsNullOrEmpty(x.Value))
-                           .ToList(),
-                           "Value",
-                           "Text");
-
-        SelectList newsTypeList = typeModule.CreateTypeManageDropList(0, false, "News");
-
-        newsTypeList = new SelectList(newsTypeList
-                           .Where(x => !string.IsNullOrEmpty(x.Value))
-                           .ToList(),
-                           "Value",
-                           "Text");
-    }
-
     @if (ViewBag.IsFirstPage)
     {
+        <link rel="stylesheet" href="~/Content/css/vendor/swiper.min.css">
         <link rel="stylesheet" href="~/Content/css/index.css">
     }
     else
     {
         <link rel="stylesheet" href="~/Content/css/page.css">
-
     }
     @RenderSection("css", false)
 
@@ -54,97 +34,33 @@
 
 </head>
 <body class="@ViewBag.BodyClass">
-
-    <a href="#C" title="跳到主要內容區" accesskey tabindex="1" class="sr-only sr-only-focusable">跳到主要內容區</a>
-
+    <div class="triangle-up-left"></div>
+    <div class="triangle-down-right"></div>
     <div id="wrapper">
         <header id="header">
-            <div class="wrap main-head">
+            <div class="wrap">
                 <h1 class="logo" onclick="location.href='@Url.Content("~/Home")'" onkeypress="location.href='@Url.Content("~/Home")'" title="回首頁">
-                    能源資訊網
-                    <small class="block">Energy Information NetWork</small>
+                    桃園市籃球委員會
+                    <small class="block">TaoYuan Basketball Association</small>
                 </h1>
-                <section class="top-nav">
-                    <a href="#U" name="U" accesskey="U" title="右上方功能區塊" class="sr-only sr-only-focusable">:::</a>
-                    <nav>
-                        <!-- <a href="~/Home/Sitemap">網站導覽</a> -->
 
-                        <a href="~/Home/RSS" class="ti-rss-alt"><i class="sr-only">訂閱RSS</i></a>
+                <nav id="menu">
+                    <a href="~/AboutUs" class='nav-item @(ViewBag.BodyClass == "AboutUs" ? "current" : "")'>本會簡介</a>
+                    <a href="~/News/List" class='nav-item @(ViewBag.BodayClass == "News" ? "current" : "")'>比賽訊息</a>
+                    <a href="~/Result/List" class='nav-item @(ViewBag.BodayClass == "Result" ? "current" : "")'>比賽成績公告</a>
+                    <a href="~/Download" class='nav-item @(ViewBag.BodayClass == "Download" ? "current" : "")'>檔案下載</a>
+                    <a href="https://www.facebook.com/pg/tyba99/photos/" class="nav-item" target="new">活動相簿</a>
+                    <a href="~/Apply" class='nav-item @(ViewBag.BodyClass == "Apply" ? "current" : "")'>線上報名</a>
+                    <a href="~/Home/ContactUs" class='nav-item @(ViewBag.BodyClass == "ContactUs" ? "current" : "")'>聯絡我們</a>
 
-                        <!-- AddToAny BEGIN https://www.addtoany.com/buttons/for/website-->
-                        <a class="a2a_dd ti-sharethis" href="https://www.addtoany.com/share" name="social"><i class="sr-only">分享文章到社群</i></a>
-                        <script>
-                            var a2a_config = a2a_config || {};
-                            a2a_config.locale = "zh-TW";
-                            a2a_config.num_services = 6;
-                            a2a_config.color_main = "77d5a5";
-                            a2a_config.color_border = "77d5a5";
-                            a2a_config.color_link_text = "00556a";
-                            a2a_config.color_link_text_hover = "00556a";
-                            a2a_config.prioritize = ["facebook", "line", "twitter", "google_plus", "linkedin", "email"];
-                        </script>
-                        <script async src="https://static.addtoany.com/menu/page.js"></script>
-                        <!-- AddToAny END -->
-                        字級
-                        <a class="dozoom font-sm ml-8" href="#" onclick="doZoom('0.875')" onkeypress="doZoom('0.875')">小</a>
-                        <a class="dozoom current" href="#" onclick="doZoom(1)" onkeypress="doZoom(1)">中</a>
-                        <a class="dozoom font-lg" href="#" onclick="doZoom('1.125')" onkeypress="doZoom('1.125')">大</a>
-                    </nav>
-                    <form action="~/Search" id="search" class="search-bar" method="get">
-                        <button class="pull-right ti-search" type="submit" title="送出"></button>
-                        <div class="rest"><input type="search" name="str" id="search-all" accesskey="S" class="form-element" placeholder="搜尋" title="搜尋"></div>
-                    </form>
-                </section>
+                    <a href="https://www.facebook.com/tyba99/" class="fb-link" title="桃園市籃球委員會 Facebook粉絲團" target="_blank">
+                        <svg viewBox="0 0 512 512">
+                            <path d="M211.9 197.4h-36.7v59.9h36.7V433.1h70.5V256.5h49.2l5.2-59.1h-54.4c0 0 0-22.1 0-33.7 0-13.9 2.8-19.5 16.3-19.5 10.9 0 38.2 0 38.2 0V82.9c0 0-40.2 0-48.8 0 -52.5 0-76.1 23.1-76.1 67.3C211.9 188.8 211.9 197.4 211.9 197.4z"/>
+                        </svg>
+                    </a>
+                </nav>
             </div>
-
-            <a href="#M" name="M" accesskey="M" title="主選單區塊" class="sr-only sr-only-focusable">:::</a>
-            <button class="mobile-toggle oi ti-menu" title="開啟行動裝置選單"></button>
-            <nav id="menu">
-                <ul class="wrap list-unstyled">
-                    <li>
-                        <a href="~/News" class='@(ViewBag.BodyClass == "News" ? "current" : "") nav-toggle'>國內外新聞</a>
-                        <nav class="sub-nav">
-                            @foreach (var nwsTp in newsTypeList)
-                            {
-                                <a href="@Url.Content("~/News/List?type="+ nwsTp.Value)" class='@(ViewBag.Subnav == "sub-news"+ nwsTp.Value ? "current" : "")' tabindex="-1">@nwsTp.Text</a>
-                            }
-
-                            @*<a href="~/News/List" class='@(ViewBag.Subnav == "sub-newsIn" ? "current" : "")' tabindex="-1">國內新聞</a>
-                                <a href="~/News/List" class='@(ViewBag.Subnav == "sub-newsOut" ? "current" : "")' tabindex="-1">國外新聞</a>*@
-                        </nav>
-                    </li>
-
-                    <li><a href="~/Home/ERL" class='@(ViewBag.BodyClass == "ERL" ? "current" : "")'>能源查核申報</a></li>
-
-                    <li><a href="~/Home/EEIR" class='@(ViewBag.BodyClass == "EEIR" ? "current" : "")'>能效指標申報</a></li>
-
-                    <li><a href="~/Course" class='@(ViewBag.BodyClass == "Course" ? "current" : "")'>線上課程</a></li>
-
-                    <li><a href="~/Case" class='@(ViewBag.BodyClass == "Case" ? "current" : "")'>節能案例</a></li>
-
-                    <li>
-                        <a href="~/Book" class='@(ViewBag.BodyClass == "Book" ? "current" : "") nav-toggle'>出版品</a>
-                        <nav class="sub-nav">
-                            @foreach (var bokTp in bookTypeList)
-                            {
-                                <a href="@Url.Content("~/Book/List?type="+ bokTp.Value)" class='@(ViewBag.Subnav == "sub-book"+ bokTp.Value ? "current" : "")' tabindex="-1">@bokTp.Text</a>
-                            }
-                            @*<a href="~/Book/List" class='@(ViewBag.Subnav == "sub-book1" ? "current" : "")' tabindex="-1">能源查核年報</a>
-                                <a href="~/Book/List" class='@(ViewBag.Subnav == "sub-book2" ? "current" : "")' tabindex="-1">節約能源要覽</a>
-                                <a href="~/Book/List" class='@(ViewBag.Subnav == "sub-book3" ? "current" : "")' tabindex="-1">技術手冊</a>*@
-                        </nav>
-                    </li>
-
-                    <li><a href="~/Train" class='@(ViewBag.BodyClass == "Train" ? "current" : "")'>研討會</a></li>
-
-                    <li><a href="~/Question" class='@(ViewBag.BodyClass == "Question" ? "current" : "")'>問卷填寫</a></li>
-
-                    <li><a href="~/Links" class='@(ViewBag.BodyClass == "Links" ? "current" : "")'>外部連結</a></li>
-                </ul>
-            </nav>
         </header>
-
-        <a href="#C" name="C" accesskey="C" title="中央內容區塊" class="sr-only sr-only-focusable">:::</a>
 
         @if (ViewBag.IsFirstPage)
         {
@@ -162,119 +78,51 @@
         }
     </div><!-- wrapper //-->
 
-    <a href="#header" class="goTop ti-angle-up"><i class="sr-only">到頂端</i></a>
+    <a href="#header" class="goTop ti-angle-up" title="到頂端"></a>
 
     <footer id="footer">
-        <a href="#F" name="F" accesskey="F" title="下方功能區塊" class="sr-only sr-only-focusable">:::</a>
-        @* <div class="link-rwd">
-                <nav class="cells wrap">
-                    <a href="" class="cell">節能技術專區</a>
-                    <a href="" class="cell">節能專家園地</a>
-                    <a href="" class="cell">節能新資訊</a>
-                    <a href="" class="cell">節能資訊相關網站</a>
-                    <a href="" class="cell">線上省能試算</a>
-                </nav>
-            </div> *@
-        <div class="wrap py-32">
-            <header class="foot-contact col-sm-8">
-                <h2 class="inline-block mt-0"><img src="~/Content/images/logo-s.gif" alt="LOGO:能源資訊網">能源資訊網</h2>
-                <ul class="list-unstyled inline-block">
-                    <li>03-591-8588</li>
-                    <li><a href="mailto:energyaudit@itri.org.tw">energyaudit@itri.org.tw</a></li>
-                </ul>
+        <nav class="foot-nav bg-success">
+            <a href="~/AboutUs" class='@(ViewBag.BodyClass == "AboutUs" ? "current" : "")'>本會簡介</a>
+            <a href="~/News/List" class='@(ViewBag.BodayClass == "News" ? "current" : "")'>比賽訊息</a>
+            <a href="~/Result/List" class='@(ViewBag.BodayClass == "Result" ? "current" : "")'>比賽成績公告</a>
+            <a href="~/Download" class='@(ViewBag.BodayClass == "Download" ? "current" : "")'>檔案下載</a>
+            <a href="https://www.facebook.com/pg/tyba99/photos/" target="new">活動相簿</a>
+            <a href="~/Apply" class='@(ViewBag.BodyClass == "Apply" ? "current" : "")'>線上報名</a>
+            <a href="~/ContactUs" class='@(ViewBag.BodyClass == "ContactUs" ? "current" : "")'>聯絡我們</a>
+        </nav>
+        <div class="wrap pt-16 pb-32 text-left cells">
+            <header class="foot-logo cell">
+                桃園市籃球委員會
+                <small class="block">TaoYuan Basketball Association</small>
             </header>
-            <div class="foot-info col-sm-4 mt-8">
-                瀏覽人數：@PublicMethodRepository.GetCurrentSiteVisitCount() 人
-                <a class="aplus" target="_blank" href="http://www.webguide.nat.gov.tw/enable.jsp?category=20100906140814" title="無障礙網站,另開新視窗">
-                    <img src="~/Content/images/aplus.jpg" alt="通過A+等級無障礙網頁檢測">
-                </a>
-            </div>
-            <ul class="foot-officer col-lg-6">
-                <li>
-                    <img src="~/Content/images/logo-e.gif" alt="LOGO:經濟部能源局">
-                    經濟部能源局
-                </li>
-                <li>
-                    <img src="~/Content/images/logo-i.gif" alt="LOGO:工業技術研究院">
-                    工業技術研究院．綠能與環境研究所 執行
-                </li>
+            <ul class="foot-contact list-unstyled cell">
+                <li>0939-326-040</li>
+                <li><a href="mailto:service@tyba.tw">service@tyba.tw</a></li>
+                <li>tyba99</li>
             </ul>
-            <div class="copyright col-lg-6">
-                版權所有 &copy; 2017 工業技術研究院<br>
-                <a href="http://newwww.itri.org.tw/ip.asp" target="new" title="另開新視窗">智權政策</a>
-                <a href="http://newwww.itri.org.tw/law.asp" target="new" title="另開新視窗">法律聲明</a>
-                <a href="~/Home/Info">政府網站資料開放宣告</a>
-                <a href="~/Home/Sitemap">網站導覽</a>
-            </div>
         </div>
     </footer><!-- footer //-->
-    <!-- <script src="//code.jquery.com/jquery-latest.min.js"></script> -->
-    <script src="~/Content/js/jquery.waypoints.min.js"></script>
+
     <script>
         // 卷軸卷動效果
-        $('body').waypoint(function (direction) {
-            if (direction === 'down') {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 100) {
                 $('body').addClass('scrolled');
-                $('.goTop').fadeIn();
-            }
-            else if (direction === 'up') {
+                $('.goTop').addClass('fade-in').removeClass('fade-out');
+            } else {
                 $('body').removeClass('scrolled');
-                $('.goTop').fadeOut();
+                $('.goTop').removeClass('fade-in').addClass('fade-out');
             }
-        }, { offset: -1 });
+        });
 
         // 點選後跳到 href 指向的位置
-        $('.scroll').click(function () {
+        $('.scroll, .goTop').click(function () {
             var scrollToAnchor = $(this).attr('href');
             $('html, body').stop(true).animate({
                 scrollTop: $(scrollToAnchor).offset().top - 40
             }, 750);
             return false;
         });
-        $('.goTop').click(function () {
-            $('body, html').stop(true).animate({ scrollTop: 0 }, 800);
-            return false;
-        });
-
-        // 行動裝置的主選單
-        $trigger = $('.mobile-toggle');
-        $trigger.click(function () {
-            $(this).toggleClass('active');
-            $('body').toggleClass('js-mobile-body');
-            var menuTop = $('#menu').offset().top + $('#menu').height() - $(document).scrollTop();
-            $('#menu ul').css("top", menuTop);
-        });
-
-        var $dropbtn = $(".nav-toggle"),
-            dropcontent = ".sub-nav";
-
-        // dropdown for sub-nav(only mobile)
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-            $(dropcontent).hide();
-            $dropbtn.click(function (e) {
-                $(this).next(dropcontent).slideToggle();
-                $dropbtn.not(this).siblings(dropcontent).slideUp();
-                e.preventDefault();
-            });
-        }
-
-        // 字體改大小
-        $('.dozoom').click(function () {
-            $(this).toggleClass('current').siblings().removeClass('current');
-        });
-        function doZoom(size) {
-            $('.zoom').css("font-size", size + 'em');
-        }
-
-        // 友善列印
-        function webprint(div) {
-            var printContents = document.getElementById(div).innerHTML;
-            var originalContents = document.body.innerHTML;
-
-            document.body.innerHTML = printContents;
-            window.print();
-            document.body.innerHTML = originalContents;
-        }
     </script>
 
     @RenderSection("scripts", required: false)

@@ -74,55 +74,10 @@ namespace OutWeb.Controllers
             #endregion 節能案例
 
             return View(model);
-        }
+        }        
 
-        // 能源查核申報-暫放
-        public ActionResult ERL()
-        {
-            EditorFront model = new EditorFront();
-            DBEnergy db = new DBEnergy();
-            var data = db.編輯器.Where(o => o.對應名稱 == "EnergyAudit").FirstOrDefault();
-            if (data != null)
-                model.Content = data.內容;
-            PublicMethodRepository.HtmlDecode(model);
-            //取檔案
-            FileModule fileModule = new FileModule();
-            model.FilesData = fileModule.GetFiles(1, "EnergyAudit", "M");
-            db.Dispose();
-            return View(model);
-        }
-
-        // 能效指標申報-暫放
-        public ActionResult EEIR()
-        {
-            EditorFront model = new EditorFront();
-            DBEnergy db = new DBEnergy();
-            var data = db.編輯器.Where(o => o.對應名稱 == "EnergyIndex").FirstOrDefault();
-            if (data != null)
-                model.Content = data.內容;
-            PublicMethodRepository.HtmlDecode(model);
-
-            //取檔案
-            FileModule fileModule = new FileModule();
-            model.FilesData = fileModule.GetFiles(1, "EnergyIndex", "M");
-            db.Dispose();
-            return View(model);
-        }
-
-        // 靜態-政府網站資料開放宣告
-        public ActionResult Info()
-        {
-            return View();
-        }
-
-        // 靜態-RSS頁
-        public ActionResult RSS()
-        {
-            return View();
-        }
-
-        // 靜態-網站導覽
-        public ActionResult Sitemap()
+        // 靜態-聯絡我們
+        public ActionResult ContactUs()
         {
             return View();
         }
