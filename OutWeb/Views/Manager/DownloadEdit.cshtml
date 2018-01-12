@@ -1,7 +1,78 @@
 ﻿
 @{
-    ViewBag.Title = "DownloadEdit";
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "檔案下載";
+    ViewBag.subnav = "General";
+    ViewBag.subnav2 = "Download";
 }
 
-<h2>DownloadEdit</h2>
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>一般頁面管理</li>
+        <li>@ViewBag.Crumb</li>
+    </ul>
+}
 
+<h3 class="title">@ViewBag.Crumb <small class="oi" data-glyph="tags">編輯</small></h3>
+
+<form action="" class="form-list">
+    <section class="row row-x0">
+
+        <dl class="field">
+            <dt class="col-2"><sup title="必填">*</sup> 發佈時間</dt>
+            <dd class="col-4">
+                <input type="text" class="datepicker" required name="發佈時間" value="" placeholder="請輸入發佈日期">
+            </dd>
+        </dl>
+        <dl class="field">
+            <dt class="col-2"><sup title="必填">*</sup> 標題</dt>
+            <dd class="col-10">
+                <input type="text" name="標題" value="" required placeholder="請輸入標題">
+            </dd>
+        </dl>
+
+        <dl class="field">
+            <dt class="col-2">附件上傳</dt>
+            <dd class="col-4 file-buffer">
+                <div class="input-file">
+                    <input type="file" onchange="previewFiles(this, false);" id="full" class="file-obj-input">
+                </div>
+            </dd>
+            <dd class="col-6 form-label font-sm text-secondary">可上傳 1 個檔案，請勿超過 50 MB</dd>
+        </dl>
+
+        <dl class="field">
+            <dt class="col-2">排序</dt>
+            <dd class="col-7">
+                <input type="number" value="" class="inline" name="sortIndex">
+                <small>數字愈大愈前面</small>
+            </dd>
+        </dl>
+
+        <dl class="field">
+            <dt class="col-2">顯示狀態</dt>
+            <dd class="col-7">
+                @*  新增時預設上架  *@
+                <label class="mr-8">
+                    <input type="radio" name="fSt" class="radio" value="Y" checked>
+                    <i class="icon"></i>上架
+                </label>
+
+                <label>
+                    <input type="radio" name="fSt" value="N" class="radio">
+                    <i class="icon"></i>下架
+                </label>
+
+            </dd>
+        </dl>
+    </section>
+
+    <footer class="submit-bar clear mt-24">
+        <button id="submitBtn" type="button" class="btn success oi" data-glyph="circle-check">
+            確認儲存
+        </button>
+        <button type="button" class="btn warning oi" data-glyph="circle-x" onclick="location.href = 'DownloadList'">
+            回列表
+        </button>
+    </footer>
+</form>

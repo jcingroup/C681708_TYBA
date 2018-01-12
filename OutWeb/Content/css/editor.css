@@ -1824,7 +1824,7 @@ th, td {
   .hover-warning:hover, .hover-warning:active {
     color: #f2cd00; }
 
-.text-danger {
+.text-danger, .help {
   color: #090404; }
 
 .bg-danger {
@@ -1840,11 +1840,6 @@ th, td {
 [class*="hover-"][disabled] {
   cursor: not-allowed;
   color: #9b8d74; }
-
-.btn.green {
-  background-color: #1fb496; }
-  .btn.green:hover, .btn.green:active {
-    background-color: #41debf; }
 
 .font-tiny {
   font-size: 13;
@@ -1943,6 +1938,9 @@ th, td {
   line-height: 1.2; }
   .title.underline {
     border-width: 3px; }
+
+.help {
+  cursor: help; }
 
 body {
   padding: 10px 15px;

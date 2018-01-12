@@ -1,0 +1,35 @@
+﻿@using OutWeb.Models.FrontEnd.DownloadFrontEndModels
+@model DownloadListFrontViewModel
+
+@{
+    ViewBag.Title = "檔案下載";
+    ViewBag.BodyClass = "Download";
+    ViewBag.Subnav = "sub1";
+    ViewBag.Breadcrumb = "檔案下載"; @* 最後層的麵包屑 *@
+}
+
+<div class="wrap zoom">
+    @Html.Partial("sidebar")
+
+    <div id="content" class="text-left course-list">
+        @foreach (var data in Model.Result.Data)
+        {
+            <a href="@Url.Content("~/Course/Content?ID=" + data.ID)" class="link-item ti-files">@data.Title </a>
+        }
+
+        @*<a class="link-item ti-files" href="~/Course/Content?id=1">能源管理與能源查核</a>
+            <a class="link-item ti-files" href="~/Course/Content?id=1">鍋爐系統節能管理</a>
+            <a class="link-item ti-files" href="~/Course/Content?id=1">袪水器節能管理</a>
+            <a class="link-item ti-files" href="~/Course/Content?id=1">壓縮空氣系統</a>
+            <a class="link-item ti-files" href="~/Course/Content?id=1">泵浦的維護與效率管理</a>
+            <a class="link-item ti-files" href="~/Course/Content?id=1">變頻器於空調系統之節能應用及案例說明</a>
+            <a class="link-item ti-files" href="~/Course/Content?id=1">蒸氣與冷凝水系統節能管理</a>
+            <a class="link-item ti-files" href="~/Course/Content?id=1">泵浦的效率損失案例分析</a>
+            <a class="link-item ti-files" href="~/Course/Content?id=1">廢熱回收節能管理</a>
+            <a class="link-item ti-files" href="~/Course/Content?id=1">汽電共生系統節能管理</a>
+            <a class="link-item ti-files" href="~/Course/Content?id=1">鋼鐵業電能管理</a>
+            <a class="link-item ti-files" href="~/Course/Content?id=1">冰水主機節能與案例分析</a>
+            <a class="link-item ti-files" href="~/Course/Content?id=1">金屬業工業爐節能與案例分析</a>*@
+    </div><!-- content //-->
+
+</div><!-- zoom //-->

@@ -1,7 +1,95 @@
 ﻿
 @{
-    ViewBag.Title = "ResultEdit";
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "比賽成績公告";
+    ViewBag.subnav = "General";
+    ViewBag.subnav2 = "Result";
 }
 
-<h2>ResultEdit</h2>
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>一般頁面管理</li>
+        <li>@ViewBag.Crumb</li>
+    </ul>
+}
 
+<h3 class="title">@ViewBag.Crumb <small class="oi" data-glyph="tags">編輯</small></h3>
+
+<form action="" class="form-list">
+    <section class="row row-x0">
+
+        <dl class="field">
+            <dt class="col-2"><sup title="必填">*</sup> 發佈時間</dt>
+            <dd class="col-4">
+                <input type="text" class="datepicker" required name="發佈時間" value="" placeholder="請輸入發佈日期">
+            </dd>
+        </dl>
+        <dl class="field">
+            <dt class="col-2"><sup title="必填">*</sup> 標題</dt>
+            <dd class="col-10">
+                <input type="text" name="標題" value="" required placeholder="請輸入標題">
+            </dd>
+        </dl>
+
+        <dl class="field">
+            <dt class="col-2">排序</dt>
+            <dd class="col-7">
+                <input type="number" value="" class="inline" name="sortIndex">
+                <small>數字愈大愈前面</small>
+            </dd>
+        </dl>
+
+        <dl class="field">
+            <dt class="col-2">顯示狀態</dt>
+            <dd class="col-7">
+                @*  新增時預設上架  *@
+                <label class="mr-8">
+                    <input type="radio" name="fSt" class="radio" value="Y" checked>
+                    <i class="icon"></i>上架
+                </label>
+
+                <label>
+                    <input type="radio" name="fSt" value="N" class="radio">
+                    <i class="icon"></i>下架
+                </label>
+
+            </dd>
+        </dl>
+    </section>
+
+    <fieldset class="mt-24">
+        <legend class="underline">[ 內容 ]</legend>
+        <div class="alert-warning mb-16">
+            <strong>編輯器注意事項:</strong><br>
+            從 WORD 複製文字時，請使用下方的 <img src="/Content/images/icon-word.jpg" /> 圖示來貼上 WORD 文字，避免跑版<br />
+            編輯器上傳圖片或新增表格等時，請勿設定寬度及高度(將數字刪除) ，以免行動裝置顯示時會跑版。<br />
+            檔案尺寸寬度超過 1600 或 高度超過1200 的圖片會被壓縮(PNG透明背景會變成不透明) <br />
+            youtube 可勾選「用自適應縮放模式」
+        </div>
+        <textarea id="art" class="form-element" maxlength="512" name="contenttext" placeholder="請輸入最新消息內容..." rows="15">
+        </textarea>
+    </fieldset>
+    <footer class="submit-bar clear mt-24">
+        <button id="submitBtn" type="button" class="btn success oi" data-glyph="circle-check">
+            確認儲存
+        </button>
+        <button type="button" class="btn warning oi" data-glyph="circle-x" onclick="location.href = 'ResultList'">
+            回列表
+        </button>
+    </footer>
+</form>
+
+<script>
+    $(function () {
+        //if ($('[type="date"]').prop('type') != 'date') {
+        //     不支援date等類型的瀏覽器，類型是date 但是property不是'date'。
+        //     在這裡放入其他的datetime picker，例如 jquery ui 的datetime picker
+        //    $('[type="date"]').datepicker();
+        //}
+        //alert($('[type="date"]').prop('type'));
+
+        //alert(CKEDITOR.version);
+        CKFinder.setupCKEditor(null, { basePath: '/ckfinder/', skin: 'v1' });
+        CKEDITOR.replace('contenttext');
+    })
+</script>

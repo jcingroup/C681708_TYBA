@@ -1,7 +1,7 @@
 ﻿
 @{
-    //Layout = "~/Views/Shared/_MLayout.cshtml";
-    ViewBag.Crumb = "比賽成績公告訊息";
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "比賽成績公告";
     ViewBag.subnav = "General";
     ViewBag.subnav2 = "Result";
 }
@@ -9,7 +9,7 @@
 @section Breadcrumb {
     <ul class="breadcrumb">
         <li>一般頁面管理</li>
-        <li>ViewBag.Crumb</li>
+        <li>@ViewBag.Crumb</li>
     </ul>
 }
 
@@ -20,19 +20,19 @@
 </div>
 
 <div class="btn-group mb-8">
-    <button type="button" class="btn success oi" data-glyph="plus" onclick="location.href='@Url.Content("NewsAdd")'">新增</button>
+    <button type="button" class="btn success oi" data-glyph="plus" onclick="location.href='@Url.Content("ResultEdit")'">新增</button>
 </div>
 
 <header class="table-head form-inline">
     <label>發佈時間</label>
-    <input type="text" name="pDate" value="@Model.Filter.PublishDate" class="datepicker">
+    <input type="text" name="" value="" class="datepicker">
     <label>狀態</label>
-    <select id="statusDropListFront" name="fSt">
+    <select id="statusDropListFront" name="">
         <option value="">全部</option>
         <option value="Y">上架</option>
         <option value="N">下架</option>
     </select>
-    <input type="text" placeholder="請輸入關鍵字" name="qry" value="@Model.Filter.QueryString">
+    <input type="text" placeholder="請輸入關鍵字" name="" value="">
     <button class="btn">搜尋</button>
 </header>
 <table class="table-list table-hover table-striped">
