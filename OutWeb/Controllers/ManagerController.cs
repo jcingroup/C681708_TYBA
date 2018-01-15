@@ -7,7 +7,17 @@ namespace OutWeb.Controllers
         public ManagerController()
         {
             ViewBag.IsFirstPage = false;
-        }        
+        }
+
+        // 首頁banner-demo
+        public ActionResult BannerList()
+        {
+            return View();
+        }
+        public ActionResult BannerEdit()
+        {
+            return View();
+        }
 
         // 本會簡介-demo
         public ActionResult AboutUs()

@@ -1,0 +1,75 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "首頁Banner維護";
+    ViewBag.subnav = "General";
+    ViewBag.subnav2 = "Banner";
+}
+
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>一般頁面管理</li>
+        <li>@ViewBag.Crumb</li>
+    </ul>
+}
+
+<h3 class="title">@ViewBag.Crumb <small class="oi" data-glyph="tags">編輯</small></h3>
+
+<form action="" class="form-list">
+
+    <dl class="field">
+        <dt class="col-2"><sup title="必填">*</sup> 標題</dt>
+        <dd class="col-9">
+            <input type="text" name="標題" value="" required placeholder="請輸入標題">
+        </dd>
+    </dl>
+
+    <dl class="field">
+        <dt class="col-2">Banner上傳</dt>
+        <dd class="col-9 file-buffer">
+            <div class="input-file">
+                <input type="file" onchange="previewFiles(this, false);" id="full" class="file-obj-input">
+            </div>
+            <small class="form-label font-sm text-secondary">可上傳 1 個檔案，請勿超過 1 MB</small>
+            <ul class="file-pre-ul list-unstyled">
+                <li class="uploaded">
+                    <button type="button" class="close btn-del file-remove-btn" id="">&times;</button>
+                    <img src="">
+                </li>
+            </ul>
+        </dd>
+    </dl>
+
+    <dl class="field">
+        <dt class="col-2">排序</dt>
+        <dd class="col-7">
+            <input type="number" value="" class="inline" name="sortIndex">
+            <small>數字愈大愈前面</small>
+        </dd>
+    </dl>
+
+    <dl class="field">
+        <dt class="col-2">顯示狀態</dt>
+        <dd class="col-7">
+            @*  新增時預設上架  *@
+            <label class="mr-8">
+                <input type="radio" name="fSt" class="radio" value="Y" checked>
+                <i class="icon"></i>上架
+            </label>
+
+            <label>
+                <input type="radio" name="fSt" value="N" class="radio">
+                <i class="icon"></i>下架
+            </label>
+        </dd>
+    </dl>
+
+    <footer class="submit-bar clear mt-24">
+        <button id="submitBtn" type="button" class="btn success oi" data-glyph="circle-check">
+            確認儲存
+        </button>
+        <button type="button" class="btn warning oi" data-glyph="circle-x" onclick="location.href = 'BannerList'">
+            回列表
+        </button>
+    </footer>
+</form>

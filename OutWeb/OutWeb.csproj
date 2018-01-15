@@ -1990,6 +1990,8 @@
     <Content Include="Views\Manager\ResultEdit.cshtml" />
     <Content Include="Views\Manager\DownloadList.cshtml" />
     <Content Include="Views\Manager\DownloadEdit.cshtml" />
+    <Content Include="Views\Manager\BannerList.cshtml" />
+    <Content Include="Views\Manager\BannerEdit.cshtml" />
     <None Include="Web.Debug2.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
