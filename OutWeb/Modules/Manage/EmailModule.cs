@@ -247,8 +247,8 @@ namespace OutWeb.Modules.Manage
                 List<MailStruc> msList = ReadExcelContent(ID);
                 foreach (var ms in msList)
                     saveJson(ms);
-                if (send)
-                    TestSendMail(msList);
+                //if (send)
+                //    TestSendMail(msList);
             }
             catch (Exception ex)
             {
@@ -256,34 +256,34 @@ namespace OutWeb.Modules.Manage
             }
         }
 
-        /// <summary>
-        /// 測試發信
-        /// </summary>
-        private void TestSendMail(List<MailStruc> mailObjData)
-        {
-            #region 測試發信
+        ///// <summary>
+        ///// 測試發信
+        ///// </summary>
+        //private void TestSendMail(List<MailStruc> mailObjData)
+        //{
+        //    #region 測試發信
 
-            MailerAPI.MailSetting setting = new MailerAPI.MailSetting()
-            {
-                SmtpServer = "smtp.gmail.com",
-                Port = 587,
-                UserName = "***信箱帳號***",
-                Password = "***信箱密碼***",
-                EnableSsl = true
-            };
-            foreach (var mailstruc in mailObjData)
-            {
-                MailerAPI.MailInfo info = new MailerAPI.MailInfo();
-                info.Subject = mailstruc.mailinfo.subject;
-                info.Body = new System.Text.StringBuilder(mailstruc.mailinfo.body);
-                info.To.AddRange(mailstruc.mailinfo.to);
+        //    MailerAPI.MailSetting setting = new MailerAPI.MailSetting()
+        //    {
+        //        SmtpServer = "smtp.gmail.com",
+        //        Port = 587,
+        //        UserName = "***信箱帳號***",
+        //        Password = "***信箱密碼***",
+        //        EnableSsl = true
+        //    };
+        //    foreach (var mailstruc in mailObjData)
+        //    {
+        //        MailerAPI.MailInfo info = new MailerAPI.MailInfo();
+        //        info.Subject = mailstruc.mailinfo.subject;
+        //        info.Body = new System.Text.StringBuilder(mailstruc.mailinfo.body);
+        //        info.To.AddRange(mailstruc.mailinfo.to);
 
-                MailerAPI.Mailer mailer = new MailerAPI.Mailer(setting, info);
-                mailer.SendMail();
-            }
+        //        MailerAPI.Mailer mailer = new MailerAPI.Mailer(setting, info);
+        //        mailer.SendMail();
+        //    }
 
-            #endregion 測試發信
-        }
+        //    #endregion 測試發信
+        //}
 
         //讀取Excel檔案
         private List<MailStruc> ReadExcelContent(int ID)

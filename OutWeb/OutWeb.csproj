@@ -492,8 +492,6 @@
     <Compile Include="Modules\Manage\QuestionnaireStatisticsModule.cs" />
     <Compile Include="Modules\Manage\QuestionnairesModule.cs" />
     <Compile Include="Modules\Manage\LogInModule.cs" />
-    <Compile Include="Modules\Manage\FaxModule.cs" />
-    <Compile Include="Modules\Manage\SMSModule.cs" />
     <Compile Include="Modules\Manage\TrainApplyModule.cs" />
     <Compile Include="Modules\Manage\TrainModule.cs" />
     <Compile Include="Modules\Manage\TypeManageModule.cs" />

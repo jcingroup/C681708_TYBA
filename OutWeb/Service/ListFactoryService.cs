@@ -35,14 +35,6 @@ namespace OutWeb.Service
                     listManageModule = new TrainApplyModule();
                     break;
 
-                case ListMethodType.SMS:
-                    listManageModule = new SMSModule();
-                    break;
-
-                case ListMethodType.FAX:
-                    listManageModule = new FaxModule();
-                    break;
-
                 case ListMethodType.EMAIL:
                     listManageModule = new EmailModule();
                     break;
