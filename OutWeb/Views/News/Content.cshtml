@@ -3,120 +3,23 @@
 @{
     ViewBag.Title = Model.Data.標題;
     ViewBag.BodyClass = "News";
-    //ViewBag.Subnav = "sub-newsIn";
     ViewBag.Breadcrumb = Model.Data.標題.Length > 30 ? Model.Data.標題.Substring(0, 30) : Model.Data.標題; @* 最後層的麵包屑-只取前30字 *@
-
-string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
-
+    string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
+    ViewBag.ContentClass ="text-left ind";
 }
 
-@* 中間層的麵包屑 *@
-@section breadcrumb {
-    <li><a href="~/News">國內外新聞</a></li>
-    @*<li><a href="~/News/List">國內新聞</a></li>*@
-<li><a href="~/News/List?type=@ViewBag.Subnav.Replace("sub-news","")">@ViewBag.BreadcrumbCenter </a></li>
-}
+<h4 class="title text-left ml-72">
+    <span class="underline">@Model.Data.標題</span>
+    <small class="block font-sm text-success mt-16">@Model.Data.發稿時間</small>
+</h4>
 
-<div class="wrap zoom">
-    @Html.Partial("sidebar")
+<article class="editor mt-16 mr-32 ml-72">
+    @* 活動內容(編輯器) *@
+    @Html.Raw(Model.Data.內容)
+</article>
 
-    <div id="content" class="text-left">
+<hr class="mb-12">
 
-        <header class="sub-title">
-            <h3 class="mt-0 underline">@Model.Data.標題</h3>
-            <small class="date font-sm">@Model.Data.發稿時間</small>
-        </header>
-
-        <article class="mt-16 editor">
-            @* 活動內容(編輯器) *@
-            @Html.Raw(Model.Data.內容)
-            @*<h3>樣版一</h3>
-                <figure class="img-group">
-                    <img src="~/Content/images/temp.jpg" alt="測試圖">
-                    <figcaption>圖說</figcaption>
-                </figure>
-                <p>依據2007年行政院科技顧問會議資料顯示，台灣住商部門耗電占全國29%、照明用電占30%，空調用電則占48%，以節約能源觀點，台灣若發展高效率照明產品並推動照明節能技術，一方面直接節約照明用電，另一方面因提升照明系統效率而減少照明產品的發熱量，間接節約空調用電，因此未來應積極推動照明節能產品及發展照明省能技術。</p>
-                <p>在光源技術部分，研發OLED固態光源、奈米場效平面發光元件以及高效率、高演色性的複金屬燈光源技術。複金屬燈為目前全球市場成長率最高的光源，擁有高效率、高演色性及小體積等優點。平面光源是國內外照明大廠正在積極研發與推動的產品，工研院已進行開發無汞、高效率的平面光源，已開發出10x10 cm2的平面光源，發光效率接近40Lm/W。</p>
-
-                <h3>樣版二</h3>
-                <figure class="img-group col-sm-4 pull-right">
-                    <img src="~/Content/images/temp.jpg" alt="測試圖">
-                    <figcaption>圖說</figcaption>
-                </figure>
-                <p>未來將著重在元件結構製作、螢光粉平整塗佈製程的改善等項目，進行平面光源整體發光效率之提升，其中螢光粉的平整塗佈技術是要提高元件的內部量子效率、並配合適當的電源驅動方式以改善發光均勻性。</p>
-                <p>照明系統主要構成零組件有光源體、電控器件（變壓器、安定器）、燈具及控制/管理系統四部分。在光源控制技術部分，工研院除進行高效能電子安定器技術以及數位照明系統控制技術開發外。亦著手研發T5泛用螢光燈電子式安定器具有數位式預熱掃頻，兼作燈管功率偵測等功能，泛用技術為目前國際間的發展趨勢。</p>
-                <p>而複金屬燈電子安定器的國際市場正快速成長，前景相當看好，部分業者也已進入搶得先機，未來可望繼螢光燈電子安定器之後再創一波榮景。複金屬燈調光技術在國際上仍屬先進，因此各方廠家都有機會逐鹿中原；由於綠色節能照明觀念的興起，複金屬燈調光技術的市場需求將提前出現，業者及研發單位必需儘早因應。</p>
-
-                <h3>樣版三</h3>
-                <p>泛用功能因受制於燈管辨識的技術瓶頸，迄今尚未有相關的產品發表，目前工研院已成功開發出燈管辨識技術，可望在此一領域中取得先機。</p>
-                <p>LED具有輕巧、壽命長、驅動電壓低、反應速率快、耐震性佳等眾多優點，被譽為具有高度節能潛力的新興光源。LED更是台灣光電產業中最具競爭力的產品之一，也是台灣光電產業發展中建構最完整的項目，從磊晶片、晶粒至封裝均有業者投入。</p>
-                <figure class="img-group col-sm-4 pull-right">
-                    <img src="~/Content/images/temp.jpg" alt="測試圖">
-                    <figcaption>圖說</figcaption>
-                </figure>
-                <p>台灣目前LED光源研發技術能力緊追先進國家，但是LED照明其他相關產業技術基礎稍嫌薄弱，研發投資意願不高、能力也不足，尤其LED照明技術屬整合性的高科技技術，必須仰賴政府就當前環境、前瞻性、大眾接受程度與具體可行性等考量，提撥研發資源做能源科技研究發展之用。因能源科技研發必須兼顧能源供需情勢及業者能源技術需求，故LED照明各項研發重點必須考量未來照明的實用性為主，強調各項研發技術的務實化以及可商業化。</p>
-                <p>世界各國皆致力制訂LED產品相關標準以加速LED照明的進展。為了掌握LED於照明應用規範的脈動，工研院已著手進行LED照明器具相關標準草案研究，藉由國際LED領導廠商的產品規格分析、國際協會間LED相關量測規範蒐集與比對，並積極參與照明相關研討會掌握最新訊息，透過與國內LED業者溝通，研擬出一份適用於國內並與國際標準接軌的LED元件量測以及LED照明模組標準草案。</p>
-                <p>並且因應經濟部能源局所規畫的LED照明示範的需求，投入大量人力及資源進行LED道路照明燈具標準草案研訂，未來將更積極參與其他國際標準研訂組織，將台灣所研訂的照明標準與國際標準組織共同討論，使LED照明產品提早因應國際標準需求。</p>
-                <p>【資料來源 2008-04-30/經濟日報/G1版/節能照明專刊】</p>*@
-        </article>
-
-        @if (Model.FilesData.Count > 0 && Model.FilesData != null)
-        {
-            <nav class="download">
-                @foreach (var file in Model.FilesData)
-                {
-                    string fileUrl = string.Concat(currentUrl, "/", file.FileUrl);
-                    <a real-name="@file.RealFileName" href="@fileUrl" class="inline-block ti-clip dlFile" target="new">@file.RealFileName</a>
-
-                }
-                @*<a href="" class="item ti-import" target="new">2015目錄</a>
-                    <a href="" class="item ti-import" target="new">第一篇 總體能源重要指標</a>
-                    <a href="" class="item ti-import" target="new">第二篇 我國節約能源現況</a>
-                    <a href="" class="item ti-import" target="new">第三篇 我國節約能源政策概要</a>
-                    <a href="" class="item ti-import" target="new">第四篇 其他資料</a>*@
-            </nav>
-        }
-
-        @*<footer class="download">
-                <a href="" class="inline-block ti-clip">附件1</a>
-                <a href="" class="inline-block ti-clip">附件2</a>
-            </footer>*@
-
-        <hr class="mb-12">
-
-        <div class="text-right">
-            <button class="ti-printer mr-12" type="button" onclick="webprint('content')" onkeypress="webprint('content')">友善列印</button>
-            <a href="~/News" class="ti-layout-grid2-alt">回列表</a>
-        </div>
-    </div><!-- content //-->
+<div class="text-right pr-32">
+    <a href="~/News" class="ti-arrow-left">回列表</a>
 </div>
-
-@* <h1 class="title"><span class="underline">@ViewBag.Title</span></h1>
-
-    <article class="wrap news-post text-left">
-        <span class="date">@Model.PublishDateStr</span>
-        <header>@Model.Title</header>
-
-        <main class="editor">
-            @Html.Raw(Model.NewsContent)
-        </main>
-
-        <footer class="text-center mt-32">
-            <a href="~/News" class="btn lg">回列表</a>
-        </footer>
-    </article> *@
-
-<script>
-    $(function () {
-        //檔案下載
-        $(document).on('click keypress', '.dlFile', function () {
-            downloadFile(this);
-        });
-    })
-    //下載檔案存為指定檔名
-    function downloadFile(elem) {
-        $(elem).attr('download', $(elem).attr('real-name'))
-              .attr('href', $(elem).attr('url'))
-              .attr('target', '_blank');
-    }
-</script>

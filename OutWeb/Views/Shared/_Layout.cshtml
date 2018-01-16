@@ -37,29 +37,27 @@
     <div class="triangle-up-left"></div>
     <div class="triangle-down-right"></div>
     <div id="wrapper">
-        <header id="header">
-            <div class="wrap">
-                <h1 class="logo" onclick="location.href='@Url.Content("~/Home")'" onkeypress="location.href='@Url.Content("~/Home")'" title="回首頁">
-                    桃園市籃球委員會
-                    <small class="block">TaoYuan Basketball Association</small>
-                </h1>
+        <header id="header" class="wrap">
+            <h1 class="logo" onclick="location.href='@Url.Content("~/Home")'" onkeypress="location.href='@Url.Content("~/Home")'" title="回首頁">
+                桃園市籃球委員會
+                <small class="block">TaoYuan Basketball Association</small>
+            </h1>
 
-                <nav id="menu">
-                    <a href="~/AboutUs" class='nav-item @(ViewBag.BodyClass == "AboutUs" ? "current" : "")'>本會簡介</a>
-                    <a href="~/News/List" class='nav-item @(ViewBag.BodayClass == "News" ? "current" : "")'>比賽訊息</a>
-                    <a href="~/Result/List" class='nav-item @(ViewBag.BodayClass == "Result" ? "current" : "")'>比賽成績公告</a>
-                    <a href="~/Download" class='nav-item @(ViewBag.BodayClass == "Download" ? "current" : "")'>檔案下載</a>
-                    <a href="https://www.facebook.com/pg/tyba99/photos/" class="nav-item" target="new">活動相簿</a>
-                    <a href="~/Apply" class='nav-item @(ViewBag.BodyClass == "Apply" ? "current" : "")'>線上報名</a>
-                    <a href="~/Home/ContactUs" class='nav-item @(ViewBag.BodyClass == "ContactUs" ? "current" : "")'>聯絡我們</a>
+            <nav id="menu">
+                <a href="~/AboutUs" class='nav-item @(ViewBag.BodyClass == "AboutUs" ? "current" : "")'>本會簡介</a>
+                <a href="~/News/List" class='nav-item @(ViewBag.BodyClass == "News" ? "current" : "")'>比賽訊息</a>
+                <a href="~/Result/List" class='nav-item @(ViewBag.BodyClass == "Result" ? "current" : "")'>比賽成績公告</a>
+                <a href="~/Download" class='nav-item @(ViewBag.BodyClass == "Download" ? "current" : "")'>檔案下載</a>
+                <a href="https://www.facebook.com/pg/tyba99/photos/" class="nav-item" target="new">活動相簿</a>
+                <a href="~/Apply" class='nav-item @(ViewBag.BodyClass == "Apply" ? "current" : "")'>線上報名</a>
+                <a href="~/Home/ContactUs" class='nav-item @(ViewBag.BodyClass == "ContactUs" ? "current" : "")'>聯絡我們</a>
 
-                    <a href="https://www.facebook.com/tyba99/" class="fb-link" title="桃園市籃球委員會 Facebook粉絲團" target="_blank">
-                        <svg viewBox="0 0 512 512">
-                            <path d="M211.9 197.4h-36.7v59.9h36.7V433.1h70.5V256.5h49.2l5.2-59.1h-54.4c0 0 0-22.1 0-33.7 0-13.9 2.8-19.5 16.3-19.5 10.9 0 38.2 0 38.2 0V82.9c0 0-40.2 0-48.8 0 -52.5 0-76.1 23.1-76.1 67.3C211.9 188.8 211.9 197.4 211.9 197.4z"/>
-                        </svg>
-                    </a>
-                </nav>
-            </div>
+                <a href="https://www.facebook.com/tyba99/" class="fb-link" title="桃園市籃球委員會 Facebook粉絲團" target="_blank">
+                    <svg viewBox="0 0 512 512">
+                        <path d="M211.9 197.4h-36.7v59.9h36.7V433.1h70.5V256.5h49.2l5.2-59.1h-54.4c0 0 0-22.1 0-33.7 0-13.9 2.8-19.5 16.3-19.5 10.9 0 38.2 0 38.2 0V82.9c0 0-40.2 0-48.8 0 -52.5 0-76.1 23.1-76.1 67.3C211.9 188.8 211.9 197.4 211.9 197.4z"/>
+                    </svg>
+                </a>
+            </nav>
         </header>
 
         @if (ViewBag.IsFirstPage)
@@ -68,13 +66,9 @@
         }
         else
         {
-            <ul class="breadcrumb wrap">
-                <li><a href="~/Home">HOME</a></li>
-                @RenderSection("breadcrumb", false)
-                <li>@ViewBag.Breadcrumb</li>
-            </ul>
-
-            @RenderBody()
+            <div class="content wrap @ViewBag.ContentClass">
+                @RenderBody()
+            </div>
         }
     </div><!-- wrapper //-->
 
@@ -83,9 +77,9 @@
     <footer id="footer">
         <nav class="foot-nav bg-success">
             <a href="~/AboutUs" class='@(ViewBag.BodyClass == "AboutUs" ? "current" : "")'>本會簡介</a>
-            <a href="~/News/List" class='@(ViewBag.BodayClass == "News" ? "current" : "")'>比賽訊息</a>
-            <a href="~/Result/List" class='@(ViewBag.BodayClass == "Result" ? "current" : "")'>比賽成績公告</a>
-            <a href="~/Download" class='@(ViewBag.BodayClass == "Download" ? "current" : "")'>檔案下載</a>
+            <a href="~/News/List" class='@(ViewBag.BodyClass == "News" ? "current" : "")'>比賽訊息</a>
+            <a href="~/Result/List" class='@(ViewBag.BodyClass == "Result" ? "current" : "")'>比賽成績公告</a>
+            <a href="~/Download" class='@(ViewBag.BodyClass == "Download" ? "current" : "")'>檔案下載</a>
             <a href="https://www.facebook.com/pg/tyba99/photos/" target="new">活動相簿</a>
             <a href="~/Apply" class='@(ViewBag.BodyClass == "Apply" ? "current" : "")'>線上報名</a>
             <a href="~/ContactUs" class='@(ViewBag.BodyClass == "ContactUs" ? "current" : "")'>聯絡我們</a>

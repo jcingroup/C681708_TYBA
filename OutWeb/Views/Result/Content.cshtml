@@ -1,6 +1,21 @@
 ﻿@{
     ViewBag.Title = "比賽成績公告";
-    ViewBag.Breadcrumb = "比賽成績公告"; @* 最後層的麵包屑 *@
+    ViewBag.BodyClass = "Result";
+    ViewBag.ContentClass ="text-left ind";
 }
 
-<h2 class="wrap title underline mb-32">@ViewBag.Title</h2>
+<h4 class="title text-left ml-72">
+    <span class="underline">xxxx活動報名開始</span>
+    <small class="block font-sm text-success mt-16">2017/10/23</small>
+</h4>
+
+<article class="editor mt-16 mr-32 ml-72">
+    @* 活動內容(編輯器) *@
+    活動內容說明
+</article>
+
+<hr class="mb-12">
+
+<div class="text-right pr-32">
+    <a href="~/Result" class="ti-arrow-left">回列表</a>
+</div>
