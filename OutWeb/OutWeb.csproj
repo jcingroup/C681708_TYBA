@@ -1810,10 +1810,7 @@
     <Content Include="Content\images\ui-icons_777777_256x240.png" />
     <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
     <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
-    <Content Include="Content\js\jquery.waypoints.min.js" />
-    <Content Include="Content\js\lightbox.min.js" />
     <Content Include="Content\js\swiper.min.js" />
-    <Content Include="Content\js\waterfall.js" />
     <Content Include="Content\noIE\bg.gif" />
     <Content Include="Content\noIE\brow.gif" />
     <Content Include="Content\noIE\brow2.gif" />
@@ -2015,7 +2012,6 @@
     <Content Include="Views\_SysAdm\LinksList.cshtml" />
     <Content Include="Views\_SysAdm\TrainAdd.cshtml" />
     <Content Include="Views\_SysAdm\_TrainDataPartial.cshtml" />
-    <Content Include="Views\News\sidebar.cshtml" />
     <Content Include="Views\Shared\_ApplyContentPartial.cshtml" />
     <Content Include="Views\_SysAdm\_TrainApplyViewPartial.cshtml" />
     <Content Include="Views\_SysAdm\_BookDataPartial.cshtml" />

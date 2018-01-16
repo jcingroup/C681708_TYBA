@@ -214,7 +214,7 @@ button, [role="button"], [type="button"] {
   border: none; }
   button:focus, [role="button"]:focus, [type="button"]:focus {
     outline: 0;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px rgba(255, 118, 27, 0.35); }
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px rgba(255, 162, 0, 0.35); }
 
 a {
   color: #000;
@@ -271,7 +271,7 @@ mark {
 hr {
   margin: 2rem 0;
   border: 0;
-  border-top: 1px solid #ed8000; }
+  border-top: 1px solid rgba(0, 0, 0, 0.1); }
 
 p {
   margin: 0; }
@@ -326,7 +326,7 @@ dd {
   .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
     cursor: not-allowed;
     opacity: .65;
-    background: #9b8d74; }
+    background: #c6beaf; }
   .btn.white:hover, .btn.white:active, .btn.white.active {
     background: #ff8f44; }
 
@@ -982,7 +982,7 @@ dd {
 [class*="hover-"].disabled,
 [class*="hover-"][disabled] {
   cursor: not-allowed;
-  color: #9b8d74; }
+  color: #c6beaf; }
 
 /*      layout
 -----------------------------------------------------------------------*/
@@ -1003,15 +1003,15 @@ dd {
   padding-bottom: 330px; }
 
 #header {
+  background: url(../images/header-bg.png) 330px 8px no-repeat;
   height: 122px;
   position: relative;
-  z-index: 3; }
+  z-index: 3;
+  border-bottom: 8px solid #ffa200;
+  background: url(../images/header-bg.png) 330px 8px no-repeat; }
   @media (max-width: 63.9375em) {
     #header {
       height: 134px; } }
-  #header .wrap {
-    border-bottom: 8px solid #ffa200;
-    background: url(../images/header-bg.png) 330px 8px no-repeat; }
 
 .logo {
   cursor: pointer;

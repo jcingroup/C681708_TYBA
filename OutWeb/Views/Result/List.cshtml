@@ -1,7 +1,42 @@
 ﻿@{
     ViewBag.Title = "比賽成績公告";
-    ViewBag.Breadcrumb = "比賽成績公告"; @* 最後層的麵包屑 *@
+    ViewBag.BodyClass = "Result";
+    ViewBag.ContentClass ="ind";
 }
 
-<h2 class="wrap title underline mb-32">@ViewBag.Title</h2>
+<h4 class="title text-left ml-72"><span class="underline">@ViewBag.Title</span></h4>
 
+<form>
+
+    <nav class="list text-left ml-72">
+        <a href="~/Result/Content" class="list-item">
+            <span class="date">2017/10/23</span>
+            <span class="rest">XXXXX活動報名開始</span>
+        </a>
+    </nav>
+
+    <nav class="pager py-16 pr-32">
+        <span class="pull-right">
+            1/2頁 11筆
+        </span>
+
+        <a disabled href="javascript:;"
+           onclick=""
+           class="btn ti-angle-double-left"></a>
+        <a disabled href="javascript:;"
+           onclick=""
+           class="btn ti-angle-left"></a>
+        <a href="javascript:;"
+           onclick=""
+           class="btn ti-angle-right"></a>
+        <a href="javascript:;"
+           onclick=""
+           class="btn ti-angle-double-right"></a>
+
+        <label for="numPage" class="ml-16">
+            第
+            <input id="numPage" name="page" class="form-element inline text-center" type="number" min="1" value="1">
+            頁
+        </label>
+    </nav>
+</form><!-- content //-->

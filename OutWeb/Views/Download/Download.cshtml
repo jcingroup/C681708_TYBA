@@ -1,33 +1,42 @@
-﻿
-
-@{
+﻿@{
     ViewBag.Title = "檔案下載";
     ViewBag.BodyClass = "Download";
-    ViewBag.Subnav = "sub1";
-    ViewBag.Breadcrumb = "檔案下載"; @* 最後層的麵包屑 *@
+    ViewBag.ContentClass ="ind";
 }
 
-<div class="wrap zoom">
+<h4 class="title text-left ml-72"><span class="underline">@ViewBag.Title</span></h4>
 
-    <div id="content" class="text-left course-list">
-        @*@foreach (var data in Model.Result.Data)
-        {
-            <a href="@Url.Content("~/Course/Content?ID=" + data.ID)" class="link-item ti-files">@data.Title </a>
-        }*@
+<form>
 
-        @*<a class="link-item ti-files" href="~/Course/Content?id=1">能源管理與能源查核</a>
-            <a class="link-item ti-files" href="~/Course/Content?id=1">鍋爐系統節能管理</a>
-            <a class="link-item ti-files" href="~/Course/Content?id=1">袪水器節能管理</a>
-            <a class="link-item ti-files" href="~/Course/Content?id=1">壓縮空氣系統</a>
-            <a class="link-item ti-files" href="~/Course/Content?id=1">泵浦的維護與效率管理</a>
-            <a class="link-item ti-files" href="~/Course/Content?id=1">變頻器於空調系統之節能應用及案例說明</a>
-            <a class="link-item ti-files" href="~/Course/Content?id=1">蒸氣與冷凝水系統節能管理</a>
-            <a class="link-item ti-files" href="~/Course/Content?id=1">泵浦的效率損失案例分析</a>
-            <a class="link-item ti-files" href="~/Course/Content?id=1">廢熱回收節能管理</a>
-            <a class="link-item ti-files" href="~/Course/Content?id=1">汽電共生系統節能管理</a>
-            <a class="link-item ti-files" href="~/Course/Content?id=1">鋼鐵業電能管理</a>
-            <a class="link-item ti-files" href="~/Course/Content?id=1">冰水主機節能與案例分析</a>
-            <a class="link-item ti-files" href="~/Course/Content?id=1">金屬業工業爐節能與案例分析</a>*@
-    </div><!-- content //-->
+    <nav class="list text-left ml-72">
+        <a href="" class="list-item" target="new">
+            <span class="date">2017/10/23</span>
+            <span class="rest">活動報名表下載</span>
+        </a>
+    </nav>
 
-</div><!-- zoom //-->
+    <nav class="pager py-16 pr-32">
+        <span class="pull-right">
+            1/2頁 11筆
+        </span>
+
+        <a disabled href="javascript:;"
+           onclick=""
+           class="btn ti-angle-double-left"></a>
+        <a disabled href="javascript:;"
+           onclick=""
+           class="btn ti-angle-left"></a>
+        <a href="javascript:;"
+           onclick=""
+           class="btn ti-angle-right"></a>
+        <a href="javascript:;"
+           onclick=""
+           class="btn ti-angle-double-right"></a>
+
+        <label for="numPage" class="ml-16">
+            第
+            <input id="numPage" name="page" class="form-element inline text-center" type="number" min="1" value="1">
+            頁
+        </label>
+    </nav>
+</form><!-- content //-->
