@@ -230,6 +230,9 @@
     <Compile Include="Controllers\SignInController.cs" />
     <Compile Include="Controllers\ViewTemplateController.cs" />
     <Compile Include="Controllers\_SysAdmController.cs" />
+    <Compile Include="Entities\DLFILES.cs">
+      <DependentUpon>TYBADB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\EMAIL.cs">
       <DependentUpon>EnergyDB.tt</DependentUpon>
     </Compile>
@@ -254,6 +257,9 @@
     <Compile Include="Entities\FAXDetail.cs">
       <DependentUpon>EnergyDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\FILEBASE.cs">
+      <DependentUpon>TYBADB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\LOGERR.cs">
       <DependentUpon>EnergyDB.tt</DependentUpon>
     </Compile>
@@ -277,6 +283,21 @@
     </Compile>
     <Compile Include="Entities\TempValidUser.cs">
       <DependentUpon>EnergyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TYBADB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TYBADB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TYBADB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TYBADB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TYBADB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TYBADB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entities\人員.cs">
       <DependentUpon>EnergyDB.tt</DependentUpon>
@@ -396,6 +417,10 @@
     <Compile Include="Models\FrontEnd\UserInfo\LogInModel.cs" />
     <Compile Include="Models\FrontEnd\UserInfo\LoginUserInfoModel.cs" />
     <Compile Include="Models\IPaginationModel.cs" />
+    <Compile Include="Models\Manage\DownloadModels\DownloadDataModel.cs" />
+    <Compile Include="Models\Manage\DownloadModels\DownloadDetailsModel.cs" />
+    <Compile Include="Models\Manage\DownloadModels\DownloadFilterModel.cs" />
+    <Compile Include="Models\Manage\DownloadModels\DownloadListResultModel.cs" />
     <Compile Include="Models\Manage\EditorModels\EnergyIndexModel.cs" />
     <Compile Include="Models\Manage\EditorModels\EnergyAuditModel.cs" />
     <Compile Include="Models\Manage\EditorModels\Editor.cs" />
@@ -438,7 +463,7 @@
     <Compile Include="Models\Manage\ManageTrainModels\TrainStandardDataModel.cs" />
     <Compile Include="Models\Manage\ExportExcelModels\QuestionnaireStatisticsReplyModels\ReplyDataModel.cs" />
     <Compile Include="Models\Manage\SerializationModels\MailStruc.cs" />
-    <Compile Include="Models\MemberViewModel.cs" />
+    <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\Manage\QuestionnaireStatisticsModels\QuestionnaireStatisticsDetailsDataModel.cs" />
     <Compile Include="Models\Manage\QuestionnaireStatisticsModels\QuestionnaireStatisticsListDataModel.cs" />
     <Compile Include="Models\Manage\QuestionnaireStatisticsModels\QuestionnaireStatisticsListFilterModel.cs" />
@@ -488,6 +513,7 @@
     <Compile Include="Modules\Manage\BookModule.cs" />
     <Compile Include="Modules\Manage\IpHistoryModule.cs" />
     <Compile Include="Modules\Manage\LinkModule.cs" />
+    <Compile Include="Modules\Manage\DownloadModule.cs" />
     <Compile Include="Modules\Manage\NotificationListModule.cs" />
     <Compile Include="Modules\Manage\QuestionnaireStatisticsModule.cs" />
     <Compile Include="Modules\Manage\QuestionnairesModule.cs" />
@@ -1808,6 +1834,16 @@
       <DependentUpon>EnergyDB.edmx</DependentUpon>
       <LastGenOutput>EnergyDB.cs</LastGenOutput>
     </Content>
+    <Content Include="Entities\TYBADB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TYBADB.edmx</DependentUpon>
+      <LastGenOutput>TYBADB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entities\TYBADB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TYBADB.edmx</DependentUpon>
+      <LastGenOutput>TYBADB.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1883,6 +1919,13 @@
     <Content Include="ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff2" />
+    <EntityDeploy Include="Entities\TYBADB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TYBADB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Entities\TYBADB.edmx.diagram">
+      <DependentUpon>TYBADB.edmx</DependentUpon>
+    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1990,6 +2033,10 @@
     <Content Include="Views\Manager\DownloadEdit.cshtml" />
     <Content Include="Views\Manager\BannerList.cshtml" />
     <Content Include="Views\Manager\BannerEdit.cshtml" />
+    <Content Include="Views\_SysAdm\DownloadList.cshtml" />
+    <Content Include="Views\_SysAdm\DownloadEdit.cshtml" />
+    <Content Include="Views\_SysAdm\DownloadAdd.cshtml" />
+    <Content Include="Views\_SysAdm\_DownloadDataPartial.cshtml" />
     <None Include="Web.Debug2.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

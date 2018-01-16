@@ -4,13 +4,13 @@ using OutWeb.Entities;
 using OutWeb.Enums;
 using OutWeb.Exceptions;
 using OutWeb.Models.Manage.CasesModels;
+using OutWeb.Models.Manage.DownloadModels;
 using OutWeb.Models.Manage.EditorModels;
 using OutWeb.Models.Manage.IPModels;
 using OutWeb.Models.Manage.ManageBookModels;
 using OutWeb.Models.Manage.ManageCourseModels;
 using OutWeb.Models.Manage.ManageLinkModels;
 using OutWeb.Models.Manage.ManageNewsModels;
-using OutWeb.Models.Manage.ManageNotificationModels;
 using OutWeb.Models.Manage.ManageTrainApplyModels;
 using OutWeb.Models.Manage.ManageTrainApplyModels.TrainApplyDetailsModels;
 using OutWeb.Models.Manage.ManageTrainModels;
@@ -134,8 +134,6 @@ namespace OutWeb.Controllers
             };
             return chk.Count > 0;
         }
-
-
 
         public ActionResult TypeManageList(int? page, string qry, string sort, string status, int? type)
         {
@@ -870,7 +868,7 @@ namespace OutWeb.Controllers
             defaultModel.Data.ActivityDateBegin = DateTime.UtcNow.AddHours(8);
             defaultModel.Data.DeadlineBegin = DateTime.UtcNow.AddHours(8).ToString("yyyy\\/MM\\/dd");
             defaultModel.Data.DeadlineEnd = DateTime.UtcNow.AddHours(8).ToString("yyyy\\/MM\\/dd");
-            defaultModel.Data.ActivityTimeRange =string.Format("{0}~{1}",  DateTime.UtcNow.AddHours(8).ToString("HH:mm"), DateTime.UtcNow.AddHours(8).ToString("HH:mm"));
+            defaultModel.Data.ActivityTimeRange = string.Format("{0}~{1}", DateTime.UtcNow.AddHours(8).ToString("HH:mm"), DateTime.UtcNow.AddHours(8).ToString("HH:mm"));
 
             defaultModel.Data.EnrollmentRestrictions = 10;
             return View(defaultModel);
@@ -1254,6 +1252,7 @@ namespace OutWeb.Controllers
         #endregion 能源 出版品
 
         #region 能源 出版品分類
+
         /// <summary>
         /// 產品分類若停用判斷是否已有產品使用該分類
         /// </summary>
@@ -1278,7 +1277,6 @@ namespace OutWeb.Controllers
             resultJson = Json(new { success = success, messages = messages });
             return resultJson;
         }
-
 
         public ActionResult BookKindList(int? page, string qry, string sort, string status, int? type)
         {
@@ -1445,7 +1443,6 @@ namespace OutWeb.Controllers
 
         #endregion 能源 出版品分類
 
-
         #region 修改密碼
 
         /// 管理員密碼變更
@@ -1494,5 +1491,50 @@ namespace OutWeb.Controllers
         }
 
         #endregion 登入來源
+
+        #region 籃委會
+
+        // 檔案下載-demo
+        public ActionResult DownloadList()
+        {
+            DownloadDetailsModel model = new DownloadDetailsModel();
+            model.Disable = false;
+            return View();
+        }
+
+        public ActionResult DownloadAdd()
+        {
+            DownloadDetailsModel model = new DownloadDetailsModel();
+            model.Disable = false;
+            return View(model);
+        }
+
+        public ActionResult DownloadEdit(int? ID)
+        {
+            if (!ID.HasValue)
+                return RedirectToAction("DownloadList");
+            DownloadDetailsModel model = new DownloadDetailsModel();
+            using (DownloadModule module = new DownloadModule())
+            {
+                model = module.DoGetDetailsByID((int)ID);
+            }
+            FileModule fileModule = new FileModule();
+            model.Files = fileModule.GetFiles((int)model.ID, "Download", "F");
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult DownloadSave(DownloadDataModel model)
+        {
+            int id = 0;
+            using (DownloadModule module = new DownloadModule())
+            {
+                id = module.DoSaveData(model);
+            }
+            var redirectUrl = new UrlHelper(Request.RequestContext).Action("DownloadEdit", "_SysAdm", new { ID = id });
+            return Json(new { Url = redirectUrl });
+        }
+
+        #endregion 籃委會
     }
 }

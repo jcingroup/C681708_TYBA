@@ -5,8 +5,8 @@ namespace OutWeb.Models.FrontEnd.LinkFrontEndModels
 {
     public class LinkFrontListDataModel
     {
-        public List<MemberViewModel> Image { get { return this.m_image; } set { this.m_image = value; } }
-        private List<MemberViewModel> m_image = new List<MemberViewModel>();
+        public List<FileViewModel> Image { get { return this.m_image; } set { this.m_image = value; } }
+        private List<FileViewModel> m_image = new List<FileViewModel>();
 
         /// <summary>
         /// 主索引

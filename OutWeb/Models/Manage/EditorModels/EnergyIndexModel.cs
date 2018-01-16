@@ -7,10 +7,10 @@ namespace OutWeb.Models.Manage.EditorModels
     /// </summary>
     public class EnergyIndexModel : Editor, IManage
     {
-        private List<MemberViewModel> m_filesData = new List<MemberViewModel>();
-        private List<MemberViewModel> m_imagesData = new List<MemberViewModel>();
+        private List<FileViewModel> m_filesData = new List<FileViewModel>();
+        private List<FileViewModel> m_imagesData = new List<FileViewModel>();
 
-        public List<MemberViewModel> FilesData
+        public List<FileViewModel> FilesData
         {
             get
             {
@@ -23,7 +23,7 @@ namespace OutWeb.Models.Manage.EditorModels
             }
         }
 
-        public List<MemberViewModel> ImagesData
+        public List<FileViewModel> ImagesData
         {
             get
             {

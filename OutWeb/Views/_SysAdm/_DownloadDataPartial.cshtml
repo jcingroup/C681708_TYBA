@@ -1,0 +1,271 @@
+﻿@using OutWeb.Models.Manage.DownloadModels
+@model DownloadDetailsModel
+@{
+    string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
+    string ActionName = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Action"]);
+}
+<input type="hidden" id="hdnId" name="ID" value="@Model.ID" />
+
+
+<dl class="field">
+    <dt class="col-2"><sup title="必填">*</sup> 發佈時間</dt>
+    <dd class="col-4">
+        <input type="text" class="datepicker" required name="PublishDateStr" value="@Model.PublishDateStr" placeholder="請輸入發佈日期">
+    </dd>
+</dl>
+<dl class="field">
+    <dt class="col-2"><sup title="必填">*</sup> 標題</dt>
+    <dd class="col-10">
+        <input type="text" name="Title" value="@Model.Title" required placeholder="請輸入標題">
+    </dd>
+</dl>
+
+@*<dl class="field">
+        <dt class="col-2">附件上傳</dt>
+        <dd class="col-4 file-buffer">
+            <div class="input-file">
+                <input type="file" onchange="previewFiles(this, false);" id="full" class="file-obj-input">
+            </div>
+            <ul class="file-pre-ul list-unstyled">
+                <li class="uploaded">
+                    <button type="button" class="close btn-del file-remove-btn" id="">&times;</button>
+                    <a class="dlFile" href="javascript:;" url="" real-name="">檔案名稱.doc</a>
+                </li>
+            </ul>
+        </dd>
+        <dd class="col-6 form-label font-sm text-secondary">可上傳 1 個檔案，請勿超過 50 MB</dd>
+    </dl>*@
+
+<dl class="field">
+    <dt class="col-2">附件上傳</dt>
+    <dd class="col-4 append-file-m">
+        <div class="input-file">
+            <input id="files_m" type="file" onchange="postFiles(this);" multiple>
+        </div>
+        <ul class="file-pre-ul" style="list-style:none;">
+
+            @foreach (var file in Model.Files)
+            {
+                string imgUrl = currentUrl + "/" + file.FileUrl;
+                int index = Model.Files.IndexOf(file);
+                <li class="uploaded">
+                    <button type="button" class="btn-del file-remove-btn" del-obj="f" id="@file.FileName'">&times;</button>
+                    <a class="dlFile" href="javascript:;" url="@imgUrl" real-name="@file.RealFileName">@file.RealFileName</a>
+                    <input type="hidden" id="imgID" name="FileData[@index].ID" value="@file.ID" />
+                </li>
+            }
+        </ul>
+    </dd>
+    <dd class="col-6 form-label font-sm text-secondary">可上傳 1 個檔案，請勿超過 50 MB</dd>
+</dl>
+
+
+
+<dl class="field">
+    <dt class="col-2">排序</dt>
+    <dd class="col-7">
+        <input type="number" value="" class="inline" name="Sort" step="0.1">
+        <small>數字愈大愈前面</small>
+    </dd>
+</dl>
+
+<dl class="field">
+    <dt class="col-2">顯示狀態</dt>
+    <dd class="col-7">
+        @if (!Model.Disable)
+        {
+            <label class="mr-8">
+                <input type="radio" name="status" class="radio" value="true" checked>
+                <i class="icon"></i>上架
+            </label>
+
+            <label>
+                <input type="radio" name="status" value="false" class="radio">
+                <i class="icon"></i>下架
+            </label>
+        }
+        else
+        { <label class="mr-8">
+            <input type="radio" name="status" class="radio" value="true">
+            <i class="icon"></i>上架
+        </label>
+
+        <label>
+            <input type="radio" name="status" value="false" class="radio" checked>
+            <i class="icon"></i>下架
+        </label>
+
+        }
+
+
+
+    </dd>
+</dl>
+
+<footer class="submit-bar clear mt-24">
+    <button id="submitBtn" type="button" class="btn success oi" data-glyph="circle-check">
+        確認儲存
+    </button>
+    <button type="button" class="btn warning oi" data-glyph="circle-x" onclick="location.href = 'DownloadList'">
+        回列表
+    </button>
+</footer>
+
+@*File Upload JS*@
+<script>
+
+    $(function () {
+        //表單送出
+        $('#submitBtn').click(function () {
+            var isValid = validHtmlFormRequired();
+            if (!isValid) {
+                return;
+            }
+            SaveFiles();
+        });
+    })
+
+    //驗證Required欄位
+    function validHtmlFormRequired() {
+        var valid = true;
+        var form = document.getElementById('frmDownload');
+        for (var i = 0; i < form.elements.length; i++) {
+            if (form.elements[i].value === '' && form.elements[i].hasAttribute('required')) {
+                alert(form.elements[i].placeholder);
+                valid = false;
+                return;
+            }
+        }
+        return valid;
+    }
+
+    var fileList = [];
+    var fileLimitFileSize = 52428800//檔案大小50mb 單位bit
+    var blobBuffer = {};
+
+    //圖片/檔案存server
+    function SaveFiles() {
+        //重置ckeditor content
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+        }
+        var ID = $('#hdnID').val();
+        var formData = document.getElementById('frmDownload');
+        formData = new FormData(formData);
+
+        for (var i = 0; i < fileList.length; i++) {
+            var data = fileList[i];
+            formData.append('Files', data.files);
+        }
+
+        formData.append("actionName", '@ActionName');
+        formData.append("ID", ID);
+        url = "@Url.Content("~/_SysAdm/DownloadSave/")";
+
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: url,
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                window.location.href = response.Url;
+            },
+            error: function (error) {
+                alert('error');
+                console.log(error);
+                //window.location.reload();
+            }
+        });
+    }
+
+    //檔案下載
+    $(document).on('click', '.dlFile', function () {
+        downloadFile(this);
+    });
+
+    //檔案刪除
+    $(document).on('click', '.file-remove-btn', function () {
+        var delIndex = [];
+        var id = $(this).attr('id');
+        var t = $(this).attr('del-obj');
+        for (var i = 0; i < fileList.length; i++) {
+            var data = fileList[i];
+            if (data.type == t && data.files.name == id) {
+                delIndex.push(i);
+            }
+        }
+        for (var i = 0; i < delIndex.length; i++) {
+            fileList.splice(delIndex[i], 1);
+        }
+        $(this).parent('li').remove();
+    })
+
+    //檔案預覽
+    function postFiles(elem) {
+        var f = document.getElementById('files_m');
+        //檢查格式尺寸
+        var sizePass = checkFileLimitSize(f, fileLimitFileSize);
+        if (!sizePass) {
+            return;
+        }
+
+        for (var i = 0; i < f.files.length; i++) {
+            //建立Object URL
+            var url = window.URL.createObjectURL(f.files[i]);
+            var filename = f.files[i].name;
+            var blobObjectFile = f.files[i];
+            var ra = '';
+            //For IE
+            if (window.navigator.msSaveOrOpenBlob) {
+                ra = Math.random();
+                blobBuffer[ra] = { blobObj: blobObjectFile, fileName: filename };
+            }
+            var $li = '<li class="uploaded"><button type="button" class="btn-del file-remove-btn" del-obj="f" id="' + f.files[i].name + '">&times;</button>' +
+                '<a class="dlFile"  ie-id="' + ra + '" href="javascript:;" url="' + url + '" real-name="' + filename + '">' + filename + '</a>' +
+                '</li>';
+
+            $('.file-pre-ul').append($li);
+            fileList.push({ type: 'f', files: f.files[i] });
+
+            //註銷Object URL
+            //window.URL.revokeObjectURL(url);
+        }
+    }
+
+    //下載檔案存為指定檔名
+    function downloadFile(elem) {
+        //for IE
+        if (window.navigator.msSaveOrOpenBlob) {
+            if (Object.keys(blobBuffer).length > 0) {
+                var key = $(elem).attr('ie-id');
+                var obj = blobBuffer[key];
+
+                var blobObject = new Blob([obj.blobObj]);
+                window.navigator.msSaveOrOpenBlob(blobObject, obj.fileName);
+            }
+        }
+        else {
+            $(elem).attr('download', $(elem).attr('real-name'))
+           .attr('href', $(elem).attr('url'))
+           .attr('target', '_blank');
+        }
+    }
+
+
+    //檢查尺寸
+    function checkFileLimitSize(totalFiles, fileLimitSize) {
+        var success = true;
+        for (var i = 0; i < totalFiles.files.length; i++) {
+            var file = totalFiles.files[i];
+            if (file.size > fileLimitSize) {
+                success = false;
+                alert("圖片或檔案大小不可超過" + (fileLimitSize / 1024) + " kb.");
+                break;
+            }
+        }
+        return success;
+    }
+</script>

@@ -20,12 +20,12 @@ namespace OutWeb.Models.FrontEnd.TrainModels.TrainApplyModels
         附件1 附件2
         */
 
-        private List<MemberViewModel> m_filesData = new List<MemberViewModel>();
+        private List<FileViewModel> m_filesData = new List<FileViewModel>();
 
         /// <summary>
         /// 圖片
         /// </summary>
-        public List<MemberViewModel> FilesData { get { return this.m_filesData; } set { this.m_filesData = value; } }
+        public List<FileViewModel> FilesData { get { return this.m_filesData; } set { this.m_filesData = value; } }
 
         /// <summary>
         /// 主索引

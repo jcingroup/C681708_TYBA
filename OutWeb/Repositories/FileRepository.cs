@@ -53,16 +53,10 @@ namespace OutWeb.Repositories
                 serverMapPath = "/Content/Upload/Manage/Files/Temp/";
             else
                 serverMapPath = "/Content/Upload/Manage/Files/";
-            if (mode == "S")
-            {
-                foreach (var m in vm.MemberData)
-                    m.FilePath = HttpContext.Current.Server.MapPath(serverMapPath + m.FileName).Replace(rootPath, "");
-            }
-            else
-            {
-                foreach (var m in vm.MemberDataMultiple)
-                    m.FilePath = HttpContext.Current.Server.MapPath(serverMapPath + m.FileName).Replace(rootPath, "");
-            }
+
+            foreach (var m in vm.MemberDataMultiple)
+                m.FilePath = HttpContext.Current.Server.MapPath(serverMapPath + m.FileName).Replace(rootPath, "");
+
 
             if (files != null && files.Count > 0)
             {
@@ -75,26 +69,14 @@ namespace OutWeb.Repositories
 
                     #region data binding to model
 
-                    if (mode == "S")
+                    vm.MemberDataMultiple.Add(new FileViewModel()
                     {
-                        vm.MemberData.Add(new MemberViewModel()
-                        {
-                            RealFileName = realFileName,
-                            FilePath = strFilePath.Replace(rootPath, ""),
-                            FileName = strFileName,
-                            FileUrl = serverMapPath.Substring(2, serverMapPath.Length - 2) + strFileName,
-                        });
-                    }
-                    else if (mode == "M")
-                    {
-                        vm.MemberDataMultiple.Add(new MemberViewModel()
-                        {
-                            RealFileName = realFileName,
-                            FilePath = strFilePath.Replace(rootPath, ""),
-                            FileName = strFileName,
-                            FileUrl = serverMapPath.Substring(1, serverMapPath.Length - 1) + strFileName,
-                        });
-                    }
+                        RealFileName = realFileName,
+                        FilePath = strFilePath.Replace(rootPath, ""),
+                        FileName = strFileName,
+                        FileUrl = serverMapPath.Substring(1, serverMapPath.Length - 1) + strFileName,
+                    });
+
 
                     #endregion data binding to model
                 }
@@ -240,7 +222,7 @@ namespace OutWeb.Repositories
         /// <param name="filename">原始檔案名稱</param>
         /// <param name="strOutput">轉檔後TIL內容</param>
         /// <param name="encoding">編碼模式</param>
-        public MemberViewModel SaveTILFile(String filename, String strOutput, int encoding)
+        public FileViewModel SaveTILFile(String filename, String strOutput, int encoding)
         {
             string serverMapPath = string.Empty;
             serverMapPath = "~/Content/Upload/Manage/Files/";
@@ -250,7 +232,7 @@ namespace OutWeb.Repositories
 
             string FileUrl = serverMapPath.Substring(2, serverMapPath.Length - 2) + strFileName;
 
-           var mv = new MemberViewModel();
+            var mv = new FileViewModel();
 
             mv.RealFileName = strRealFileName;
             mv.FilePath = strFilePath;
@@ -258,7 +240,7 @@ namespace OutWeb.Repositories
             mv.FileUrl = FileUrl;
 
             Encoding ecp = Encoding.GetEncoding(950);
-            File.WriteAllText(string.Concat(rootPath,strFilePath), strOutput, ecp);
+            File.WriteAllText(string.Concat(rootPath, strFilePath), strOutput, ecp);
 
             return mv;
         }

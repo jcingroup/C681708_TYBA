@@ -8,8 +8,8 @@ namespace OutWeb.Models.Manage.ManageLinkModels
         /// <summary>
         /// 圖片
         /// </summary>
-        public List<MemberViewModel> Image { get { return this.m_image; } set { this.m_image = value; } }
-        private List<MemberViewModel> m_image = new List<MemberViewModel>();
+        public List<FileViewModel> Image { get { return this.m_image; } set { this.m_image = value; } }
+        private List<FileViewModel> m_image = new List<FileViewModel>();
 
         private 外部連結 m_details = new 外部連結();
 

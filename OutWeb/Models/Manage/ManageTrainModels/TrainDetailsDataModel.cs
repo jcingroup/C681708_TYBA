@@ -7,8 +7,8 @@ namespace OutWeb.Models.Manage.ManageTrainModels
         /// <summary>
         /// 檔案
         /// </summary>
-        public List<MemberViewModel> FilesData { get { return this.m_filesData; } set { this.m_filesData = value; } }
-        private List<MemberViewModel> m_filesData = new List<MemberViewModel>();
+        public List<FileViewModel> FilesData { get { return this.m_filesData; } set { this.m_filesData = value; } }
+        private List<FileViewModel> m_filesData = new List<FileViewModel>();
 
         private TrainStandardDataModel m_details = new TrainStandardDataModel();
 

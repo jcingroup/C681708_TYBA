@@ -4,8 +4,8 @@ namespace OutWeb.Models.Manage
 {
     public interface IManage
     {
-         List<MemberViewModel> FilesData { get; set; }
+         List<FileViewModel> FilesData { get; set; }
 
-         List<MemberViewModel> ImagesData { get; set; }
+         List<FileViewModel> ImagesData { get; set; }
     }
 }

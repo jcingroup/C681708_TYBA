@@ -8,7 +8,7 @@ namespace OutWeb.Models.Manage
     /// <summary>
     /// 檔案基礎模型
     /// </summary>
-    public class MemberViewModel
+    public class FileViewModel
     {
         public int? ID { get; set; }
         public string RealFileName { get; set; }
@@ -18,8 +18,5 @@ namespace OutWeb.Models.Manage
         public string FileUrl { get; set; }
 
         public int Identify { get; set; }
-
-        
-
     }
 }

@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TYBAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DLFILES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DISABLE" Type="bit" Nullable="false" />
+          <Property Name="TITLE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SQ" Type="float" Nullable="false" />
+          <Property Name="PUB_DT_STR" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="UPT_DT" Type="datetime" Nullable="false" />
+          <Property Name="UPT_ID" Type="int" Nullable="false" />
+          <Property Name="BUD_DT" Type="datetime" Nullable="false" />
+          <Property Name="BUD_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FILEBASE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FILE_RANDOM_NM" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FILE_REL_NM" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FILE_PATH" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="IDENTIFY_KEY" Type="int" />
+          <Property Name="SQ" Type="float" />
+          <Property Name="BUD_DT" Type="datetime" Nullable="false" />
+          <Property Name="BUD_ID" Type="int" Nullable="false" />
+          <Property Name="MAP_ID" Type="int" Nullable="false" />
+          <Property Name="MAP_SITE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FILE_TP" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="URL_PATH" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="TYBAModelStoreContainer">
+          <EntitySet Name="DLFILES" EntityType="Self.DLFILES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FILEBASE" EntityType="Self.FILEBASE" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TYBAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TYBADB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DLFILES" EntityType="TYBAModel.DLFILES" />
+          <EntitySet Name="FILEBASE" EntityType="TYBAModel.FILEBASE" />
+        </EntityContainer>
+        <EntityType Name="DLFILES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DISABLE" Type="Boolean" Nullable="false" />
+          <Property Name="TITLE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SQ" Type="Double" Nullable="false" />
+          <Property Name="PUB_DT_STR" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="UPT_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPT_ID" Type="Int32" Nullable="false" />
+          <Property Name="BUD_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BUD_ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FILEBASE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FILE_RANDOM_NM" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FILE_REL_NM" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FILE_PATH" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IDENTIFY_KEY" Type="Int32" />
+          <Property Name="SQ" Type="Double" />
+          <Property Name="BUD_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BUD_ID" Type="Int32" Nullable="false" />
+          <Property Name="MAP_ID" Type="Int32" Nullable="false" />
+          <Property Name="MAP_SITE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FILE_TP" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="URL_PATH" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TYBAModelStoreContainer" CdmEntityContainer="TYBADB">
+          <EntitySetMapping Name="DLFILES">
+            <EntityTypeMapping TypeName="TYBAModel.DLFILES">
+              <MappingFragment StoreEntitySet="DLFILES">
+                <ScalarProperty Name="BUD_ID" ColumnName="BUD_ID" />
+                <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
+                <ScalarProperty Name="UPT_ID" ColumnName="UPT_ID" />
+                <ScalarProperty Name="UPT_DT" ColumnName="UPT_DT" />
+                <ScalarProperty Name="PUB_DT_STR" ColumnName="PUB_DT_STR" />
+                <ScalarProperty Name="SQ" ColumnName="SQ" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="DISABLE" ColumnName="DISABLE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FILEBASE">
+            <EntityTypeMapping TypeName="TYBAModel.FILEBASE">
+              <MappingFragment StoreEntitySet="FILEBASE">
+                <ScalarProperty Name="URL_PATH" ColumnName="URL_PATH" />
+                <ScalarProperty Name="FILE_TP" ColumnName="FILE_TP" />
+                <ScalarProperty Name="MAP_SITE" ColumnName="MAP_SITE" />
+                <ScalarProperty Name="MAP_ID" ColumnName="MAP_ID" />
+                <ScalarProperty Name="BUD_ID" ColumnName="BUD_ID" />
+                <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
+                <ScalarProperty Name="SQ" ColumnName="SQ" />
+                <ScalarProperty Name="IDENTIFY_KEY" ColumnName="IDENTIFY_KEY" />
+                <ScalarProperty Name="FILE_PATH" ColumnName="FILE_PATH" />
+                <ScalarProperty Name="FILE_REL_NM" ColumnName="FILE_REL_NM" />
+                <ScalarProperty Name="FILE_RANDOM_NM" ColumnName="FILE_RANDOM_NM" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

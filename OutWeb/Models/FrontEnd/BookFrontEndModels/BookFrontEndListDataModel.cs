@@ -14,12 +14,12 @@ namespace OutWeb.Models.FrontEnd.BookFrontEndModels
 
     public class BookFrontEndDataModel
     {
-        private List<MemberViewModel> m_coverImg = new List<MemberViewModel>();
+        private List<FileViewModel> m_coverImg = new List<FileViewModel>();
 
         /// <summary>
         /// 封面圖
         /// </summary>
-        public List<MemberViewModel> CoverImg { get { return this.m_coverImg; } set { this.m_coverImg = value; } }
+        public List<FileViewModel> CoverImg { get { return this.m_coverImg; } set { this.m_coverImg = value; } }
 
         /// <summary>
         /// 主索引

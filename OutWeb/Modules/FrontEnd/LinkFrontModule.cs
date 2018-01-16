@@ -42,9 +42,9 @@ namespace OutWeb.Modules.FrontEnd
             return result;
         }
 
-        private List<MemberViewModel> GetImage(int ID)
+        private List<FileViewModel> GetImage(int ID)
         {
-            List<MemberViewModel> images = new List<MemberViewModel>();
+            List<FileViewModel> images = new List<FileViewModel>();
 
             //取圖檔
             ImgModule imgModule = new ImgModule();

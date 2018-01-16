@@ -98,12 +98,12 @@ namespace OutWeb.Modules.Manage
         /// <param name="actionName"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public List<MemberViewModel> GetImages(int ID, string actionName, string actionMode)
+        public List<FileViewModel> GetImages(int ID, string actionName, string actionMode)
         {
-            List<MemberViewModel> imgList = new List<MemberViewModel>();
+            List<FileViewModel> imgList = new List<FileViewModel>();
             imgList = this.DB.檔案
                     .Where(o => o.對應索引 == ID && o.對應名稱.StartsWith(actionName) && o.檔案模式 == "M" && o.檔案格式 == "P")
-                    .Select(s => new MemberViewModel()
+                    .Select(s => new FileViewModel()
                     {
                         ID = s.主索引,
                         FileName = s.檔案名稱,

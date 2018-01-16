@@ -11,27 +11,18 @@ namespace OutWeb.Models.Manage.FileModels
         public int ID { get; set; }
 
         /// <summary>
-        /// 上傳模式 M:多張 S:單張
-        /// </summary>
-        //public string UploadType { get; set; }
-
-        /// <summary>
         /// Action名稱
         /// </summary>
         public string ActionName { get; set; }
         public FileUploadType UploadIdentify { get { return m_uploadIdentify; } set { m_uploadIdentify = value; } }
         FileUploadType m_uploadIdentify = FileUploadType.NOTSET;
+
         /// <summary>
-        /// 單筆
-        /// </summary>
-        private List<MemberViewModel> m_memberData = new List<MemberViewModel>();
-        public List<MemberViewModel> MemberData { get { return m_memberData; } set { this.m_memberData = value; } }
-        /// <summary>
-        /// 多筆
+        /// 檔案容器
         /// </summary>
 
-        private List<MemberViewModel> m_memberDataMultiple = new List<MemberViewModel>();
-        public List<MemberViewModel> MemberDataMultiple { get { return m_memberDataMultiple; } set { this.m_memberDataMultiple = value; } }
+        private List<FileViewModel> m_memberDataMultiple = new List<FileViewModel>();
+        public List<FileViewModel> MemberDataMultiple { get { return m_memberDataMultiple; } set { this.m_memberDataMultiple = value; } }
     }
 
 }

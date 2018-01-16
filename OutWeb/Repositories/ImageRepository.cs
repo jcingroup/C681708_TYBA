@@ -106,7 +106,7 @@ namespace OutWeb.Repositories
 
                     if (mode == "S")
                     {
-                        vm.MemberData.Add(new MemberViewModel()
+                        vm.MemberData.Add(new FileViewModel()
                         {
                             RealFileName = realFileName,
                             FilePath = strFilePath,
@@ -116,7 +116,7 @@ namespace OutWeb.Repositories
                     }
                     else if (mode == "M")
                     {
-                        vm.MemberDataMultiple.Add(new MemberViewModel()
+                        vm.MemberDataMultiple.Add(new FileViewModel()
                         {
                             RealFileName = realFileName,
                             FilePath = strFilePath,
