@@ -67,27 +67,6 @@
     </nav>
 </form><!-- content //-->
 
-@* 寬度不超過450，高度不超過265
-
-    <div class="wrap clearfix">
-
-        @foreach (var data in Model)
-        {
-            string imgUrl = data.ImagesData == null ? string.Empty : data.ImagesData.FileUrl;
-            <figure class="newslist">
-                <div class="cut">
-                    <img src="~/@imgUrl" alt="最新消息列表圖">
-                </div>
-                <a href="@Url.Content("~/News/Content?ID="+data.ID)"></a>
-                <figcaption>
-                    <h4>@data.Title</h4>
-                    <a href="@Url.Content("~/News/Content?ID="+data.ID)" class="more">more</a>
-                    <small class="date">@data.PublishDateStr</small>
-                </figcaption>
-            </figure>
-        }
-    </div> *@
-
 
 @section scripts {
     <script>

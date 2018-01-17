@@ -222,7 +222,7 @@ a {
   -webkit-transition: color 0.35s, background 0.3s;
   transition: color 0.35s, background 0.3s; }
   a:hover, a:active {
-    color: #ff761b;
+    color: #eb9500;
     outline-width: 0; }
 
 h1 {

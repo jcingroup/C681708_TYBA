@@ -1066,7 +1066,7 @@ a {
   -webkit-transition: color 0.35s, background 0.3s;
   transition: color 0.35s, background 0.3s; }
   a:hover, a:active {
-    color: #ff761b;
+    color: #eb9500;
     outline-width: 0; }
 
 h1 {
@@ -1155,37 +1155,37 @@ dd {
 table {
   border-collapse: collapse;
   border-spacing: 0;
-  width: 100%;
-  border-bottom: 1px solid #c6beaf; }
+  max-width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
   table.fixed {
     table-layout: fixed;
     word-wrap: break-word;
     word-break: break-all; }
 
 tbody + tbody {
-  border-top: 2px solid #c6beaf; }
+  border-top: 2px solid rgba(0, 0, 0, 0.08); }
 
 th, td {
   text-align: center;
   vertical-align: middle;
   padding: 7px 8px;
-  border-top: 1px solid #c6beaf; }
+  border-top: 1px solid rgba(0, 0, 0, 0.08); }
 
 .table-bordered {
-  border: 1px solid #c6beaf; }
+  border: 1px solid rgba(0, 0, 0, 0.08); }
   .table-bordered th, .table-bordered td {
-    border: 1px solid #c6beaf; }
+    border: 1px solid rgba(0, 0, 0, 0.08); }
   .table-bordered thead th, .table-bordered thead td {
     border-bottom-width: 2px; }
 
 .table-striped tr:nth-child(even) {
-  background-color: #fbfdfe; }
+  background-color: #f8f9fa; }
 
 .table-striped-rowspan tbody:nth-child(even) {
-  background-color: #fbfdfe; }
+  background-color: #f8f9fa; }
 
 .table-hover tbody tr:hover {
-  background-color: #89d7de; }
+  background-color: #fff; }
 
 .clearfix::after {
   content: "";
