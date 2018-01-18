@@ -10,6 +10,7 @@
     <meta name="description" content="">
     <title>@ViewBag.Title - 桃園市籃球委員會</title>
     <link rel="stylesheet" href="~/Content/css/vendor/themify-icons.css">
+    <link rel="stylesheet" href="~/Content/css/vendor/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" href="~/Content/css/grid.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
     @Scripts.Render("~/Custom/JS")
@@ -43,6 +44,7 @@
                 <small class="block">TaoYuan Basketball Association</small>
             </h1>
 
+            <button class="mobile-toggle oi ti-menu" title="開啟行動裝置選單"></button>
             <nav id="menu">
                 <a href="~/AboutUs" class='nav-item @(ViewBag.BodyClass == "AboutUs" ? "current" : "")'>本會簡介</a>
                 <a href="~/News/List" class='nav-item @(ViewBag.BodyClass == "News" ? "current" : "")'>比賽訊息</a>
@@ -75,7 +77,7 @@
     <a href="#header" class="goTop ti-angle-up" title="到頂端"></a>
 
     <footer id="footer">
-        <nav class="foot-nav bg-success">
+        <nav class="foot-nav bg-success" data-mcs-axis="x">
             <a href="~/AboutUs" class='@(ViewBag.BodyClass == "AboutUs" ? "current" : "")'>本會簡介</a>
             <a href="~/News/List" class='@(ViewBag.BodyClass == "News" ? "current" : "")'>比賽訊息</a>
             <a href="~/Result/List" class='@(ViewBag.BodyClass == "Result" ? "current" : "")'>比賽成績公告</a>
@@ -97,6 +99,8 @@
         </div>
     </footer><!-- footer //-->
 
+    @* 卷軸特效 *@
+    <script src="~/Content/js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script>
         // 卷軸卷動效果
         $(window).scroll(function() {
@@ -116,6 +120,24 @@
                 scrollTop: $(scrollToAnchor).offset().top - 40
             }, 750);
             return false;
+        });
+
+        // 仿mac卷軸
+        $(".foot-nav").mCustomScrollbar({
+            theme: "minimal-dark"
+        });
+
+        // 行動裝置的主選單
+        $trigger = $('.mobile-toggle');
+        $trigger.click(function () {
+            $(this).toggleClass('active');
+            if ($(this).hasClass('active')) {
+                $(this).attr('data-glyph', 'x');
+            }
+            else {
+                $(this).attr('data-glyph', 'menu');
+            }
+            $('body').toggleClass('js-mobile-body');
         });
     </script>
 

@@ -1803,15 +1803,15 @@ th, td {
     color: #b37100; }
 
 .text-info {
-  color: #c6dce8; }
+  color: #417fa1; }
 
 .bg-info {
-  background-color: #c6dce8; }
+  background-color: #417fa1; }
 
 .hover-info {
-  color: #c6dce8; }
+  color: #417fa1; }
   .hover-info:hover, .hover-info:active {
-    color: #8fbbd2; }
+    color: #2b546b; }
 
 .text-warning {
   color: #ffe23f; }

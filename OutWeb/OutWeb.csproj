@@ -1759,6 +1759,7 @@
     <Content Include="Content\css\login.css" />
     <Content Include="Content\css\page.css" />
     <Content Include="Content\css\standalone.css" />
+    <Content Include="Content\css\vendor\jquery.mCustomScrollbar.css" />
     <Content Include="Content\css\vendor\lightbox.min.css" />
     <Content Include="Content\css\vendor\open-iconic.css" />
     <Content Include="Content\css\vendor\swiper.min.css" />
@@ -1816,6 +1817,7 @@
     <Content Include="Content\images\ui-icons_777777_256x240.png" />
     <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
     <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\js\jquery.mCustomScrollbar.concat.min.js" />
     <Content Include="Content\js\swiper.min.js" />
     <Content Include="Content\noIE\bg.gif" />
     <Content Include="Content\noIE\brow.gif" />

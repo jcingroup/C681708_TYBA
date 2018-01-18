@@ -1424,10 +1424,9 @@ output {
     #sidebar .collapse-content a:last-child {
       border-bottom-style: solid; }
     #sidebar .collapse-content a::before, #sidebar .collapse-content a::after {
+      content: '';
+      display: block;
       position: absolute; }
-      #sidebar .collapse-content a::before, #sidebar .collapse-content a::after, .slider::before, .tooltip .tips::after, .th-sort-toggle::before, .th-sort-toggle::after {
-        content: '';
-        display: block; }
     #sidebar .collapse-content a::before {
       width: 1px;
       height: 100%;
@@ -1507,6 +1506,8 @@ output {
   -webkit-transition: 0.4s;
   transition: 0.4s; }
   .slider::before {
+    content: '';
+    display: block;
     position: absolute;
     bottom: 2px;
     left: 2px;
@@ -1759,6 +1760,8 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
     -webkit-transition: opacity 1s, top 0.35s;
     transition: opacity 1s, top 0.35s; }
     .tooltip .tips::after {
+      content: '';
+      display: block;
       position: absolute;
       bottom: 100%;
       left: 22%;
@@ -1987,6 +1990,8 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
   .th-sort-toggle:hover {
     color: #d8dbdd; }
   .th-sort-toggle::before, .th-sort-toggle::after {
+    content: '';
+    display: block;
     position: absolute;
     right: 0;
     border: 4px solid transparent; }
