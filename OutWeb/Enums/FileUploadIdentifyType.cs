@@ -3,7 +3,7 @@
     /// <summary>
     /// 檔案識別模式
     /// </summary>
-    public enum FileUploadType
+    public enum FileUploadIdentifyType
     {
         NOTSET=0,
         MODE1 = 1,

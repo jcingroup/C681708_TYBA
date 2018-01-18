@@ -146,13 +146,13 @@ namespace OutWeb.Modules.Manage
 
             #region 檔案處理 聯絡人清單
 
-            FileSaveHandler(form, identityId, "MemberFile", "Email", filesMember, FileUploadType.MODE1);
+            FileSaveHandler(form, identityId, "MemberFile", "Email", filesMember, FileUploadIdentifyType.MODE1);
 
             #endregion 檔案處理 聯絡人清單
 
             #region 檔案處理 附件檔
 
-            FileSaveHandler(form, identityId, "AttachmentFile", "Email", filesAttachment, FileUploadType.MODE2);
+            FileSaveHandler(form, identityId, "AttachmentFile", "Email", filesAttachment, FileUploadIdentifyType.MODE2);
 
             #endregion 檔案處理 附件檔
 
@@ -176,7 +176,7 @@ namespace OutWeb.Modules.Manage
             string oldFileIdentifyString,
             string actionName,
             List<HttpPostedFileBase> files,
-            FileUploadType uploadType = FileUploadType.NOTSET)
+            FileUploadIdentifyType uploadType = FileUploadIdentifyType.NOTSET)
         {
             FileRepository fileRepository = new FileRepository();
 
@@ -299,7 +299,7 @@ namespace OutWeb.Modules.Manage
                 && o.對應名稱.StartsWith("EMAIL")
                 && o.檔案模式 == "M"
                 && o.檔案格式 == "F"
-                && o.識別碼 == (int)FileUploadType.MODE1)
+                && o.識別碼 == (int)FileUploadIdentifyType.MODE1)
                 .FirstOrDefault();
 
             if (contactListFile == null)
@@ -311,7 +311,7 @@ namespace OutWeb.Modules.Manage
                 && o.對應名稱.StartsWith("EMAIL")
                 && o.檔案模式 == "M"
                 && o.檔案格式 == "F"
-                && o.識別碼 == (int)FileUploadType.MODE2)
+                && o.識別碼 == (int)FileUploadIdentifyType.MODE2)
                 .ToList();
             List<string> attachmentPathList = new List<string>();
             foreach (var file in attachmentFiles)

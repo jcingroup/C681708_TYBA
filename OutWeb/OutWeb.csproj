@@ -373,7 +373,7 @@
     </Compile>
     <Compile Include="Enums\DietCategory.cs" />
     <Compile Include="Enums\ManageEnums.cs" />
-    <Compile Include="Enums\FileUploadType.cs" />
+    <Compile Include="Enums\FileUploadIdentifyType.cs" />
     <Compile Include="Enums\ModelInitProperty.cs" />
     <Compile Include="Exceptions\TypeIsNotCreateException.cs" />
     <Compile Include="Exceptions\TypeManageRelationExcption.cs" />
@@ -385,6 +385,9 @@
     <Compile Include="Models\FrontEnd\BookFrontEndModels\BookFrontEndListDataModel.cs" />
     <Compile Include="Models\FrontEnd\BookFrontEndModels\BookFrontFilterModel.cs" />
     <Compile Include="Models\FrontEnd\CourseFrontEndModels\CourseFrontListDataModel.cs" />
+    <Compile Include="Models\FrontEnd\DownloadFrontModel\DownloadFrontDataModel.cs" />
+    <Compile Include="Models\FrontEnd\DownloadFrontModel\DownloadFrontResultModel.cs" />
+    <Compile Include="Models\FrontEnd\DownloadFrontModel\DownloadFrontViewModel.cs" />
     <Compile Include="Models\FrontEnd\HomeMultipleModels\HomeFrontListDataModel.cs" />
     <Compile Include="Models\FrontEnd\HomeMultipleModels\HomeListFrontResultModel.cs" />
     <Compile Include="Models\FrontEnd\HomeMultipleModels\HomeListFrontViewModel.cs" />
@@ -421,6 +424,7 @@
     <Compile Include="Models\Manage\DownloadModels\DownloadDetailsModel.cs" />
     <Compile Include="Models\Manage\DownloadModels\DownloadFilterModel.cs" />
     <Compile Include="Models\Manage\DownloadModels\DownloadListResultModel.cs" />
+    <Compile Include="Models\Manage\DownloadModels\DownLoadListViewModel.cs" />
     <Compile Include="Models\Manage\EditorModels\EnergyIndexModel.cs" />
     <Compile Include="Models\Manage\EditorModels\EnergyAuditModel.cs" />
     <Compile Include="Models\Manage\EditorModels\Editor.cs" />
@@ -501,6 +505,7 @@
     <Compile Include="Models\Manage\UserInfo\SignInModel.cs" />
     <Compile Include="Models\WebUser.Controller.cs" />
     <Compile Include="Modules\FrontEnd\BookFrontModule.cs" />
+    <Compile Include="Modules\FrontEnd\DownloadFrontModule.cs" />
     <Compile Include="Modules\FrontEnd\LinkFrontModule.cs" />
     <Compile Include="Modules\FrontEnd\CourseFrontModule.cs" />
     <Compile Include="Modules\FrontEnd\CaseFrontModule.cs" />

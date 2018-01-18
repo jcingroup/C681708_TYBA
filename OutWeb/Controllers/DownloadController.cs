@@ -1,5 +1,5 @@
 ﻿using OutWeb.ActionFilter;
-using OutWeb.Models.FrontEnd.CaseFrontEndModels;
+using OutWeb.Models.FrontEnd.DownloadFrontModel;
 using OutWeb.Models.Manage.CasesModels;
 using OutWeb.Modules.FrontEnd;
 using OutWeb.Modules.Manage;
@@ -23,21 +23,23 @@ namespace OutWeb.Controllers
 
         // 套程式-檔案下載
         // 列表
-        public ActionResult Download(string qry, string bDate, string eDate, string type)
+        public ActionResult Download(int? page)
         {
-            CaseListFrontViewModel model = new CaseListFrontViewModel();
-            try
+            page = page ?? 1;
+            DownloadFrontViewModel model = new DownloadFrontViewModel();
+
+            using (var mdu = new DownloadFrontModule())
             {
-                using (var module = new CaseFrontModule())
+                try
                 {
-                    model.Result.GroupData = module.GetList();
+                    model.Result = mdu.GetList((int)page);
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Error = ex.Message;
                 }
             }
-            catch (Exception ex)
-            {
-                ViewBag.Error = ex.Message;
-                return View(model);
-            }
+
             return View(model);
         }
 

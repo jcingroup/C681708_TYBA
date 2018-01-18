@@ -67,7 +67,7 @@ namespace OutWeb.Modules.Manage
             return details;
         }
 
-        public object DoGetList<TFilter>(DownloadFilterModel filterModel)
+        public DownloadListResultModel DoGetList(DownloadFilterModel filterModel)
         {
             PublicMethodRepository.FilterXss(filterModel);
             DownloadListResultModel result = new DownloadListResultModel();
@@ -88,7 +88,10 @@ namespace OutWeb.Modules.Manage
                 }
 
                 //上下架
-                this.ListStatusFilter(filterModel.Disable, ref data);
+                if (!string.IsNullOrEmpty(filterModel.Disable))
+                {
+                    this.ListStatusFilter(filterModel.Disable, ref data);
+                }
 
                 //排序
                 this.ListSort(filterModel.SortColumn, ref data);
@@ -199,11 +202,11 @@ namespace OutWeb.Modules.Manage
         /// </summary>
         /// <param name="filterStr"></param>
         /// <param name="data"></param>
-        private void ListStatusFilter(bool disable, ref List<DLFILES> data)
+        private void ListStatusFilter(string disable, ref List<DLFILES> data)
         {
             List<DLFILES> result = null;
 
-            result = data.Where(s => s.DISABLE == disable).ToList();
+            result = data.Where(s => s.DISABLE == Convert.ToBoolean(disable)).ToList();
             data = result;
         }
 
@@ -263,7 +266,7 @@ namespace OutWeb.Modules.Manage
                     break;
 
                 default:
-                    data = data.OrderByDescending(o => o.SQ).ThenByDescending(g => g.PUB_DT_STR).ToList();
+                    data = data.OrderByDescending(o => o.PUB_DT_STR).ThenByDescending(g => g.SQ).ToList();
                     break;
             }
         }

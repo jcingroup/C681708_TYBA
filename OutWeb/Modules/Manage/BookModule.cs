@@ -284,7 +284,7 @@ namespace OutWeb.Modules.Manage
                 ActionName = "Book",
                 ID = identityId,
                 OldFileIds = oldFullFileList,
-                UploadIdentify = FileUploadType.MODE1
+                UploadIdentify = FileUploadIdentifyType.MODE1
             };
 
             #endregion 建立檔案模型
@@ -335,7 +335,7 @@ namespace OutWeb.Modules.Manage
                 ActionName = "Book",
                 ID = identityId,
                 OldFileIds = oldChapterFileList,
-                UploadIdentify = FileUploadType.MODE2
+                UploadIdentify = FileUploadIdentifyType.MODE2
             };
 
             #endregion 建立檔案模型 章節
@@ -406,7 +406,7 @@ namespace OutWeb.Modules.Manage
             if (!ID.HasValue)
             {
                 FileModule fileModule = new FileModule();
-                var orderbyData = fileModule.GetFiles(identityId, "Book", "M", FileUploadType.MODE2);
+                var orderbyData = fileModule.GetFiles(identityId, "Book", "M", FileUploadIdentifyType.MODE2);
                 orderbyData = orderbyData.OrderBy(o => o.ID).ToList();
                 List<出版品章節明細檔> fileDetails = new List<出版品章節明細檔>();
                 foreach (var cha in orderbyData)
@@ -453,7 +453,7 @@ namespace OutWeb.Modules.Manage
                         else
                         {
                             FileModule fileModule = new FileModule();
-                            var orderbyData = fileModule.GetFiles(identityId, "Book", "M", FileUploadType.MODE2);
+                            var orderbyData = fileModule.GetFiles(identityId, "Book", "M", FileUploadIdentifyType.MODE2);
                             orderbyData = orderbyData.Where(o => !oldChapterFileList.Contains((int)o.ID)).OrderBy(o => o.ID).ToList();
                             if (orderbyData.Count > 0)
                             {

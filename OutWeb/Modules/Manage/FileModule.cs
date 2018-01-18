@@ -25,7 +25,7 @@ namespace OutWeb.Modules.Manage
             if (model.ID > 0)
             {
                 List<FILEBASE> filterRemove = new List<FILEBASE>();
-                if (model.UploadIdentify == FileUploadType.NOTSET)
+                if (model.UploadIdentify == FileUploadIdentifyType.NOTSET)
                 {
                     filterRemove = this.m_tybaDb.FILEBASE
                                         .Where(o => !model.OldFileIds.Contains(o.ID) &&
@@ -51,7 +51,7 @@ namespace OutWeb.Modules.Manage
                         File.Delete(string.Concat(rootPath, f.FILE_PATH));
                     //刪除舊檔
                     this.m_tybaDb.FILEBASE.RemoveRange(filterRemove);
-                    this.DB.SaveChanges();
+                    this.m_tybaDb.SaveChanges();
                 }
             }
 
@@ -71,22 +71,31 @@ namespace OutWeb.Modules.Manage
                     FILE_TP = "F",
                     FILE_PATH = f.FilePath,
                     URL_PATH = f.FileUrl,
-                    IDENTIFY_KEY = model.UploadIdentify == FileUploadType.NOTSET ? default(int?) : (int)model.UploadIdentify,
+                    IDENTIFY_KEY = model.UploadIdentify == FileUploadIdentifyType.NOTSET ? default(int?) : (int)model.UploadIdentify,
                 };
                 this.m_tybaDb.FILEBASE.Add(file);
-                this.m_tybaDb.SaveChanges();
+                try
+                {
+                    this.m_tybaDb.SaveChanges();
+
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
                 f.ID = file.ID;
             }
         }
 
-        public List<FileViewModel> GetFiles(int ID, string actionName, string actionMode, FileUploadType fileType = FileUploadType.NOTSET)
+        public List<FileViewModel> GetFiles(int ID, string actionName, string fileType, FileUploadIdentifyType fileIdentity= FileUploadIdentifyType.NOTSET)
         {
             List<FileViewModel> fileList = new List<FileViewModel>();
             fileList = this.m_tybaDb.FILEBASE
                     .Where(o => o.MAP_ID == ID
                     && o.MAP_SITE.StartsWith(actionName)
-                    && o.FILE_TP == actionMode
-                    && (fileType == FileUploadType.NOTSET ? true : o.IDENTIFY_KEY == (int)fileType)
+                    && o.FILE_TP == fileType
+                    && (fileIdentity == FileUploadIdentifyType.NOTSET ? true : o.IDENTIFY_KEY == (int)fileIdentity)
                     )
                     .Select(s => new FileViewModel()
                     {

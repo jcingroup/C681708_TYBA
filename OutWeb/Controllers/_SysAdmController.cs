@@ -1192,9 +1192,9 @@ namespace OutWeb.Controllers
             model.CoverImg = imgModule.GetImages((int)model.Data.主索引, "Book", "M");
             //取全文
             FileModule fileModule = new FileModule();
-            model.FullBookFile = fileModule.GetFiles((int)model.Data.主索引, "Book", "M", FileUploadType.MODE1);
+            model.FullBookFile = fileModule.GetFiles((int)model.Data.主索引, "Book", "M", FileUploadIdentifyType.MODE1);
             //取章節
-            model.ChapterFiles = fileModule.GetFiles((int)model.Data.主索引, "Book", "M", FileUploadType.MODE2);
+            model.ChapterFiles = fileModule.GetFiles((int)model.Data.主索引, "Book", "M", FileUploadIdentifyType.MODE2);
             //取章節明細檔
             foreach (var cha in model.ChapterFiles)
                 model.ChapterDetails.Add(module.GetChapterDetailsByFileID(model.Data.主索引, (int)cha.ID));
@@ -1495,17 +1495,28 @@ namespace OutWeb.Controllers
         #region 籃委會
 
         // 檔案下載-demo
-        public ActionResult DownloadList()
+        public ActionResult DownloadList(int? page, string qry, string sort, string disable, string pDate)
         {
-            DownloadDetailsModel model = new DownloadDetailsModel();
-            model.Disable = false;
-            return View();
+            DownLoadListViewModel model = new DownLoadListViewModel();
+            model.Filter.CurrentPage = page ?? 1;
+            model.Filter.QueryString = qry ?? string.Empty;
+            model.Filter.SortColumn = sort ?? string.Empty;
+            model.Filter.Disable = disable ?? string.Empty;
+            model.Filter.PublishDate = pDate;
+
+            using (DownloadModule module = new DownloadModule())
+            {
+                model.Result = module.DoGetList(model.Filter);
+            }
+
+            return View(model);
         }
 
         public ActionResult DownloadAdd()
         {
             DownloadDetailsModel model = new DownloadDetailsModel();
             model.Disable = false;
+            model.Sort = 1;
             return View(model);
         }
 
@@ -1522,17 +1533,44 @@ namespace OutWeb.Controllers
             model.Files = fileModule.GetFiles((int)model.ID, "Download", "F");
             return View(model);
         }
-
+        
         [HttpPost]
         public ActionResult DownloadSave(DownloadDataModel model)
         {
             int id = 0;
             using (DownloadModule module = new DownloadModule())
             {
+                if (model.OldFilesId.Count == 0 && model.Files.Count == 0)
+                {
+                    TempData["UndefinedFile"] = "請上傳檔案";
+                    return RedirectToAction("DownloadEdit", new { ID = (int?)null });
+                }
                 id = module.DoSaveData(model);
             }
             var redirectUrl = new UrlHelper(Request.RequestContext).Action("DownloadEdit", "_SysAdm", new { ID = id });
             return Json(new { Url = redirectUrl });
+        }
+
+        [HttpPost]
+        public JsonResult DownloadDelete(int? ID)
+        {
+            bool success = true;
+            string messages = string.Empty;
+            try
+            {
+                using (DownloadModule module = new DownloadModule())
+                {
+                    module.DoDeleteByID((int)ID);
+                }
+                messages = "刪除成功";
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                messages = ex.Message;
+            }
+            var resultJson = Json(new { success = success, messages = messages });
+            return resultJson;
         }
 
         #endregion 籃委會

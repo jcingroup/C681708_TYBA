@@ -10,7 +10,7 @@
         /// <summary>
         /// 上下架
         /// </summary>
-        public bool Disable { get; set; }
+        public string Disable { get; set; }
 
         /// <summary>
         /// 分類

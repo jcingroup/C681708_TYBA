@@ -14,8 +14,8 @@ namespace OutWeb.Models.Manage.FileModels
         /// Action名稱
         /// </summary>
         public string ActionName { get; set; }
-        public FileUploadType UploadIdentify { get { return m_uploadIdentify; } set { m_uploadIdentify = value; } }
-        FileUploadType m_uploadIdentify = FileUploadType.NOTSET;
+        public FileUploadIdentifyType UploadIdentify { get { return m_uploadIdentify; } set { m_uploadIdentify = value; } }
+        FileUploadIdentifyType m_uploadIdentify = FileUploadIdentifyType.NOTSET;
 
         /// <summary>
         /// 檔案容器
