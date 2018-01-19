@@ -2046,6 +2046,14 @@
     <Content Include="Views\_SysAdm\DownloadEdit.cshtml" />
     <Content Include="Views\_SysAdm\DownloadAdd.cshtml" />
     <Content Include="Views\_SysAdm\_DownloadDataPartial.cshtml" />
+    <Content Include="Views\Apply\contentDemo.cshtml" />
+    <Content Include="Views\Apply\Apply.cshtml" />
+    <Content Include="Views\Apply\Apply2.cshtml" />
+    <Content Include="Views\Apply\Apply3.cshtml" />
+    <Content Include="Views\Manager\ActivityList.cshtml" />
+    <Content Include="Views\Manager\ActivityEdit.cshtml" />
+    <Content Include="Views\Manager\ApplyList.cshtml" />
+    <Content Include="Views\Manager\ApplyEdit.cshtml" />
     <None Include="Web.Debug2.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

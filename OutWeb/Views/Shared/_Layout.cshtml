@@ -44,7 +44,7 @@
                 <small class="block">TaoYuan Basketball Association</small>
             </h1>
 
-            <button class="mobile-toggle oi ti-menu" title="開啟行動裝置選單"></button>
+            <button class="mobile-toggle ti-menu" title="開啟行動裝置選單"></button>
             <nav id="menu">
                 <a href="~/AboutUs" class='nav-item @(ViewBag.BodyClass == "AboutUs" ? "current" : "")'>本會簡介</a>
                 <a href="~/News/List" class='nav-item @(ViewBag.BodyClass == "News" ? "current" : "")'>比賽訊息</a>
@@ -105,10 +105,8 @@
         // 卷軸卷動效果
         $(window).scroll(function() {
             if ($(this).scrollTop() > 100) {
-                $('body').addClass('scrolled');
                 $('.goTop').addClass('fade-in').removeClass('fade-out');
             } else {
-                $('body').removeClass('scrolled');
                 $('.goTop').removeClass('fade-in').addClass('fade-out');
             }
         });
@@ -132,13 +130,22 @@
         $trigger.click(function () {
             $(this).toggleClass('active');
             if ($(this).hasClass('active')) {
-                $(this).attr('data-glyph', 'x');
+                $(this).removeClass('ti-menu').addClass('ti-close');
             }
             else {
-                $(this).attr('data-glyph', 'menu');
+                $(this).removeClass('ti-close').addClass('ti-menu');
             }
             $('body').toggleClass('js-mobile-body');
         });
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            $('#menu').click(function(e){
+                $('body').removeClass('js-mobile-body');
+                $trigger.removeClass('active');
+                e.preventDefault();
+            });
+            $(".nav-item").click(function(e){
+                e.stopPropagation();
+            });        }
     </script>
 
     @RenderSection("scripts", required: false)

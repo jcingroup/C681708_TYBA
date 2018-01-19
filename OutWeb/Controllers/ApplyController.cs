@@ -132,7 +132,24 @@ namespace OutWeb.Controllers
             return RedirectToAction("TrainApply", "User", new { trainID = model.TrainInfo.ID, applyID = identityID });
         }
 
-        public ActionResult sidebar()
+        // ## 靜態demo
+        // 活動內容
+        public ActionResult contentDemo()
+        {
+            return View();
+        }
+        // 報名頁面-1
+        public ActionResult Apply()
+        {
+            return View();
+        }
+        // 報名頁面-2
+        public ActionResult Apply2()
+        {
+            return View();
+        }
+        // 報名頁面-3
+        public ActionResult Apply3()
         {
             return View();
         }

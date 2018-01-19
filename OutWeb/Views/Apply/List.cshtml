@@ -15,7 +15,7 @@
             <tr>
                 <th>活動時間</th>
                 <th class="text-left">活動名稱(報名時間)</th>
-                <th>已報名人數/上限</th>
+                <th>已報名隊伍/上限</th>
                 <th>線上報名</th>
             </tr>
         </thead>
@@ -44,13 +44,31 @@
                         <td data-title="活動名稱(報名時間)" class="text-left">
                             <a href="@Url.Content("~/Apply/Content?trainID=" + data.ID)">@data.ActivityName <small class="date">@timeSpanStr</small></a>
                         </td>
-                        <td data-title="已報名人數/上限">@info</td>
+                        <td data-title="已報名隊伍/上限">@info</td>
                         <td data-title="線上報名"><a href="@applyUrl" class="btn @btnSytle sm">@data.RegistrationStatusDescription</a></td>
                     </tr>
                 }
 
             }
 
+            @* demo *@
+            <tr>
+                <td data-title="活動時間" class="text-secondary">2018/01/21~2018/01/22</td>
+                <td data-title="活動名稱(報名時間)" class="text-left">
+                    <a href="~/Apply/ContentDemo">桃園市主委盃3對3籃球鬥牛賽 <small class="date">(2017/12/1~2017/12/30)</small></a>
+                </td>
+                <td data-title="已報名隊伍/上限">25/300</td>
+                <td data-title="線上報名"><a href="~/Apply/Apply" class="btn sm">我要報名</a></td>
+            </tr>
+
+            <tr>
+                <td data-title="活動時間" class="text-secondary">2018/01/21~2018/01/22</td>
+                <td data-title="活動名稱(報名時間)" class="text-left">
+                    <a href="~/Apply/ContentDemo">桃園市主委盃3對3籃球鬥牛賽 <small class="date">(2017/12/1~2017/12/30)</small></a>
+                </td>
+                <td data-title="已報名隊伍/上限">25/300</td>
+                <td data-title="線上報名"><a href="~/Apply/Apply" class="btn sm" disabled>報名截止</a></td>
+            </tr>
         </tbody>
     </table>
 

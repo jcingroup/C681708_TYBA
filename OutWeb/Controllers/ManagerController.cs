@@ -44,5 +44,24 @@ namespace OutWeb.Controllers
         {
             return View();
         }
+
+        // 活動管理-demo
+        public ActionResult ActivityList()
+        {
+            return View();
+        }
+        public ActionResult ActivityEdit()
+        {
+            return View();
+        }
+        // 線上報名-demo
+        public ActionResult ApplyList()
+        {
+            return View();
+        }
+        public ActionResult ApplyEdit()
+        {
+            return View();
+        }
     }
 }
