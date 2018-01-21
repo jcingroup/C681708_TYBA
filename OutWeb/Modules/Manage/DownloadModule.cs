@@ -115,7 +115,6 @@ namespace OutWeb.Modules.Manage
         public int DoSaveData(DownloadDataModel model)
         {
             DLFILES saveModel;
-            ImageRepository imgepository = new ImageRepository();
             FileRepository fileRepository = new FileRepository();
             if (model.ID == 0)
             {

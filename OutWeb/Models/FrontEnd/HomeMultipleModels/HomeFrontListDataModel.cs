@@ -1,5 +1,4 @@
-﻿using OutWeb.Models.FrontEnd.CaseFrontEndModels;
-using OutWeb.Models.FrontEnd.CourseFrontEndModels;
+﻿using OutWeb.Models.FrontEnd.CourseFrontEndModels;
 using OutWeb.Models.FrontEnd.NewsFrontEndModels;
 
 namespace OutWeb.Models.FrontEnd.HomeMultipleModels
@@ -11,8 +10,5 @@ namespace OutWeb.Models.FrontEnd.HomeMultipleModels
 
         private CourseListFrontViewModel m_course = new CourseListFrontViewModel();
         public CourseListFrontViewModel Course { get { return m_course; } set { m_course = value; } }
-
-        private CaseListFrontViewModel m_caseData = new CaseListFrontViewModel();
-        public CaseListFrontViewModel CaseData { get { return m_caseData; } set { m_caseData = value; } }
     }
 }

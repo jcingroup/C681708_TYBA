@@ -53,11 +53,7 @@ namespace OutWeb.Provider
             else
                 m_user.Role = UserRoleEnum.USER;
             Context.Session["UserInfo"] = m_user;
-            //寫入登入紀錄
-            string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
-            IpHistoryModule ipMdu = new IpHistoryModule();
-            ipMdu.WriteIp(ip, "manager");
-            ipMdu.Dispose();
+  
         }
 
         /// <summary>

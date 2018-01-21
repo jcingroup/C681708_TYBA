@@ -2,7 +2,6 @@
 using OutWeb.Enums;
 using OutWeb.Models;
 using OutWeb.Models.Manage.FileModels;
-using OutWeb.Models.Manage.ImgModels;
 using OutWeb.Models.Manage.ManageCourseModels;
 using OutWeb.Provider;
 using OutWeb.Repositories;
@@ -26,8 +25,8 @@ namespace OutWeb.Modules.Manage
 
         private DBEnergy DB
         { get { return this.m_DB; } set { this.m_DB = value; } }
-        private string rootPath { get { return HttpContext.Current.Server.MapPath("~/"); } }
 
+        private string rootPath { get { return HttpContext.Current.Server.MapPath("~/"); } }
 
         public override void DoDeleteByID(int ID)
         {
@@ -119,7 +118,6 @@ namespace OutWeb.Modules.Manage
         public override int DoSaveData(FormCollection form, Language language, int? ID = null, List<HttpPostedFileBase> images = null, List<HttpPostedFileBase> files = null)
         {
             課程 saveModel;
-            ImageRepository imgepository = new ImageRepository();
             FileRepository fileRepository = new FileRepository();
             if (!ID.HasValue)
             {
@@ -164,34 +162,6 @@ namespace OutWeb.Modules.Manage
 
             #region 圖片處理
 
-            List<int> oldImgList = new List<int>();
-
-            #region 將原存在的Server圖片保留 記錄圖片ID
-
-            //將原存在的Server圖片保留 記錄圖片ID
-            foreach (var f in form.Keys)
-            {
-                if (f.ToString().StartsWith("ImagesData"))
-                {
-                    var id = Convert.ToInt16(form[f.ToString().Split('.')[0] + ".ID"]);
-                    if (!oldImgList.Contains(id))
-                        oldImgList.Add(id);
-                }
-            }
-
-            #endregion 將原存在的Server圖片保留 記錄圖片ID
-
-            #region 建立圖片模型
-
-            ImagesModel imgModel = new ImagesModel()
-            {
-                ActionName = "Course",
-                ID = identityId,
-                OldImageIds = oldImgList
-            };
-
-            #endregion 建立圖片模型
-
             #region 若有null則是前端html的name重複於ajax formData名稱
 
             if (images != null)
@@ -201,14 +171,6 @@ namespace OutWeb.Modules.Manage
             }
 
             #endregion 若有null則是前端html的name重複於ajax formData名稱
-
-            #region img data binding 單筆多筆裝在不同容器
-
-            //imgModel.UploadType = "images_m";
-            imgepository.UploadPhoto("Post", imgModel, images, "M");
-            imgepository.SaveImagesToDB(imgModel);
-
-            #endregion img data binding 單筆多筆裝在不同容器
 
             #endregion 圖片處理
 

@@ -9,7 +9,6 @@ using System.Web.Mvc;
 
 namespace OutWeb.Controllers
 {
-    [SiteCounterFilter]
     public class ApplyController : Controller
     {
 

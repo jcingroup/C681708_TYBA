@@ -8,7 +8,6 @@ using System.Web.Mvc;
 
 namespace OutWeb.Controllers
 {
-    [SiteCounterFilter]
     public class NewsController : Controller
     {
         public NewsController()

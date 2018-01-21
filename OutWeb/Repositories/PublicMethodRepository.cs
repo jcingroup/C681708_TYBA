@@ -17,14 +17,7 @@ namespace OutWeb.Repositories
 
         private static Language m_language = Language.NotSet;
 
-        public static int GetCurrentSiteVisitCount()
-        {
-            IpHistoryModule mdu = new IpHistoryModule();
-            int c = mdu.GetCurrentSiteCount("Front");
-            mdu.Dispose();
-            return c;
-        }
-
+ 
         public static void FilterXss<T>(T obj)
         {
             // Get type.

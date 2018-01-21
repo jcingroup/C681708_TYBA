@@ -78,7 +78,6 @@ namespace OutWeb.Modules.FrontEnd
         {
             PublicMethodRepository.FilterXss(filterModel);
             NewsListFrontResultModel result = new NewsListFrontResultModel();
-            IpHistoryModule ipMdu = new IpHistoryModule();
             try
             {
                 //var data = GetStandardNewsData();
@@ -94,8 +93,7 @@ namespace OutWeb.Modules.FrontEnd
                                         DisplayHome = o.首頁顯示,
                                         SortIndex = o.排序,
                                         PublishDate = o.發稿時間,
-                                        NewsUrl = o.連結位址,
-                                        SiteCount = ipMdu.GetCurrentSiteCount("NewsFront", o.主索引.ToString())
+                                        NewsUrl = o.連結位址
                                     })
                                     .ToList();
 
@@ -126,10 +124,7 @@ namespace OutWeb.Modules.FrontEnd
             {
                 throw ex;
             }
-            finally
-            {
-                ipMdu.Dispose();
-            }
+
             return result;
         }
 

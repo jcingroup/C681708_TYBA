@@ -109,7 +109,6 @@ namespace OutWeb.Modules.Manage
         public int DoSaveData(BannerDataModel model)
         {
             BANNER saveModel;
-            ImageRepository imgepository = new ImageRepository();
             FileRepository fileRepository = new FileRepository();
             if (model.ID == 0)
             {

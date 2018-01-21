@@ -1,7 +1,6 @@
 ﻿using OutWeb.Entities;
 using OutWeb.Enums;
 using OutWeb.Models;
-using OutWeb.Models.Manage.ExportExcelModels.TrainSignListModels;
 using OutWeb.Models.Manage.ManageTrainApplyModels;
 using OutWeb.Models.Manage.ManageTrainApplyModels.TrainApplyDetailsModels;
 using OutWeb.Repositories;
@@ -133,6 +132,7 @@ namespace OutWeb.Modules.Manage
             result.Data.VegetarianCount = StatisticsFoodType(trainID, DietCategory.Vegetarian);
             result.Data.DisplayHome = (bool)details.首頁顯示;
             result.Data.ChargesSatus = (bool)details.收費狀態;
+
             #endregion 上方明細
 
             #region 下方列表
@@ -160,6 +160,7 @@ namespace OutWeb.Modules.Manage
                                     .ToList();
 
             #endregion 下方列表
+
             PublicMethodRepository.HtmlDecode(result);
             foreach (var item in result.List)
                 PublicMethodRepository.HtmlDecode(item);
@@ -220,44 +221,44 @@ namespace OutWeb.Modules.Manage
         /// <param name="trainID"></param>
         /// <param name="applyID"></param>
         /// <returns></returns>
-        public ReplyDataModel GetTrainApplyParticipantsDataByTrainID(int trainID)
-        {
-            ReplyDataModel model = new ReplyDataModel();
+        //public ReplyDataModel GetTrainApplyParticipantsDataByTrainID(int trainID)
+        //{
+        //    ReplyDataModel model = new ReplyDataModel();
 
-            var applyData = this.DB.研討會報名主檔
-                .Join(
-                     this.DB.研討會報名對應檔,
-                    main => main.主索引,
-                    map => map.報名檔主索引,
-                    (main, map) => new { Main = main, Map = map })
-                    .Where(o => o.Map.對應研討會主索引 == trainID)
-                     .Select(o => new Data()
-                     {
-                         TrainID = trainID,
-                         ID = o.Main.主索引,
-                         CompanyName = o.Main.公司名稱,
-                         CompanyPhone = o.Main.公司電話,
-                         Email = o.Main.聯絡人Email,
-                         UserNo = o.Main.用戶編號,
-                     })
-                    .ToList();
+        //    var applyData = this.DB.研討會報名主檔
+        //        .Join(
+        //             this.DB.研討會報名對應檔,
+        //            main => main.主索引,
+        //            map => map.報名檔主索引,
+        //            (main, map) => new { Main = main, Map = map })
+        //            .Where(o => o.Map.對應研討會主索引 == trainID)
+        //             .Select(o => new Data()
+        //             {
+        //                 TrainID = trainID,
+        //                 ID = o.Main.主索引,
+        //                 CompanyName = o.Main.公司名稱,
+        //                 CompanyPhone = o.Main.公司電話,
+        //                 Email = o.Main.聯絡人Email,
+        //                 UserNo = o.Main.用戶編號,
+        //             })
+        //            .ToList();
 
-            foreach (var apply in applyData)
-            {
-                var pa = GetTrainParticipants((int)apply.ID);
-                apply.ParticipantsData = pa;
-            }
-            model.Data = applyData;
-            PublicMethodRepository.HtmlDecode(model);
-            foreach (var d in model.Data)
-            {
-                PublicMethodRepository.HtmlDecode(d);
-                foreach (var p in d.ParticipantsData)
-                    PublicMethodRepository.HtmlDecode(p);
-            }
+        //    foreach (var apply in applyData)
+        //    {
+        //        var pa = GetTrainParticipants((int)apply.ID);
+        //        apply.ParticipantsData = pa;
+        //    }
+        //    model.Data = applyData;
+        //    PublicMethodRepository.HtmlDecode(model);
+        //    foreach (var d in model.Data)
+        //    {
+        //        PublicMethodRepository.HtmlDecode(d);
+        //        foreach (var p in d.ParticipantsData)
+        //            PublicMethodRepository.HtmlDecode(p);
+        //    }
 
-            return model;
-        }
+        //    return model;
+        //}
 
         /// <summary>
         /// 取得每個報名檔的報名人員列表
@@ -449,7 +450,6 @@ namespace OutWeb.Modules.Manage
                            VegetarianCount = StatisticsFoodType(s.Main.主索引, DietCategory.Vegetarian),
                            DisplayHome = (bool)s.Details.首頁顯示,
                            PayOffCount = GetPayOffCountOfTrainByTrainID(s.Main.主索引)
-
                        })
                        .ToList();
                 //關鍵字搜尋
@@ -612,7 +612,5 @@ namespace OutWeb.Modules.Manage
             this.DB.Dispose();
             this.DB = null;
         }
-
-
     }
 }
