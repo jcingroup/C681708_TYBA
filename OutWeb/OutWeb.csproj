@@ -1992,6 +1992,7 @@
     <Content Include="Views\_SysAdm\BookKindList.cshtml" />
     <Content Include="Views\_SysAdm\_BookKindDataPartial.cshtml" />
     <Content Include="Views\_SysAdm\_NewsDataPartial.cshtml" />
+    <Content Include="Views\_SysAdm\_ResultDataPartial.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2092,7 +2093,6 @@
     <Content Include="Views\_SysAdm\ResultEdit.cshtml" />
     <Content Include="Views\_SysAdm\_BannerDataPartial.cshtml" />
     <Content Include="Views\_SysAdm\BannerAdd.cshtml" />
-    <Content Include="Views\_SysAdm\_ResultDataPartial.cshtml" />
     <Content Include="Views\_SysAdm\ResultAdd.cshtml" />
     <None Include="Web.Debug2.config">
       <DependentUpon>Web.config</DependentUpon>
