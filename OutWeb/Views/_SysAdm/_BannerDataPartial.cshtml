@@ -1,66 +1,57 @@
-﻿@using OutWeb.Models.Manage.DownloadModels
-@model DownloadDetailsModel
+﻿@using OutWeb.Models.Manage.BannerModels
+@model BannerDetailsModel
 @{
     string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
     string ActionName = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Action"]);
 }
 <input type="hidden" id="hdnId" name="ID" value="@Model.ID" />
 
-
-<dl class="field">
-    <dt class="col-2"><sup title="必填">*</sup> 發佈時間</dt>
-    <dd class="col-4">
-        <input type="text" class="datepicker" required name="PublishDateStr" value="@Model.PublishDateStr" placeholder="請輸入發佈日期">
-    </dd>
-</dl>
 <dl class="field">
     <dt class="col-2"><sup title="必填">*</sup> 標題</dt>
-    <dd class="col-10">
+    <dd class="col-9">
         <input type="text" name="Title" value="@Model.Title" required placeholder="請輸入標題">
     </dd>
 </dl>
-
 @*<dl class="field">
-        <dt class="col-2">附件上傳</dt>
-        <dd class="col-4 file-buffer">
+        <dt class="col-2">Banner上傳</dt>
+        <dd class="col-9 file-buffer">
             <div class="input-file">
                 <input type="file" onchange="previewFiles(this, false);" id="full" class="file-obj-input">
             </div>
+            <small class="form-label font-sm text-secondary">可上傳 1 個檔案，請勿超過 1 MB</small>
             <ul class="file-pre-ul list-unstyled">
                 <li class="uploaded">
                     <button type="button" class="close btn-del file-remove-btn" id="">&times;</button>
-                    <a class="dlFile" href="javascript:;" url="" real-name="">檔案名稱.doc</a>
+                    <img src="">
                 </li>
             </ul>
         </dd>
-        <dd class="col-6 form-label font-sm text-secondary">可上傳 1 個檔案，請勿超過 50 MB</dd>
     </dl>*@
 
 <dl class="field">
-    <dt class="col-2">附件上傳</dt>
-    <dd class="col-4 append-file-m">
+    <dt class="col-2">Banner上傳</dt>
+    <dd class="col-9 file-buffer">
         <div class="input-file">
-            <input id="files_m" type="file" onchange="previewFiles(this);">
+            <input id="files_m" type="file" onchange="previewFiles(this);" accept="image/*" >
         </div>
+        <small class="form-label font-sm text-secondary">可上傳 1 個檔案，請勿超過 1 MB</small>
         <ul class="file-pre-ul" style="list-style:none;">
 
             @foreach (var file in Model.Files)
             {
-                string fileUrl = currentUrl + "/" + file.FileUrl;
+                string imgUrl = currentUrl + "/" + file.FileUrl;
                 int index = Model.Files.IndexOf(file);
 
                 <li class="uploaded">
                     <button type="button" class="btn-del file-remove-btn" del-obj="f" id="@file.FileName'">&times;</button>
-                    <a class="dlFile-load" href="javascript:;" url="@fileUrl" real-name="@file.RealFileName">@file.RealFileName</a>
+                    @*<a class="dlFile-load" href="javascript:;" url="@imgUrl" real-name="@file.RealFileName">@file.RealFileName</a>*@
+                    <img src="@imgUrl" width="100">
                     <input type="hidden" name="OldFilesId[@index]" class="old-files" value="@file.ID" />
                 </li>
             }
         </ul>
     </dd>
-    <dd class="col-6 form-label font-sm text-secondary">可上傳 1 個檔案，請勿超過 50 MB</dd>
 </dl>
-
-
 
 <dl class="field">
     <dt class="col-2">排序</dt>
@@ -69,10 +60,10 @@
         <small>數字愈大愈前面</small>
     </dd>
 </dl>
-
 <dl class="field">
     <dt class="col-2">顯示狀態</dt>
     <dd class="col-7">
+        @*  新增時預設上架  *@
         @if (!Model.Disable)
         {
             <label class="mr-8">
@@ -97,9 +88,6 @@
         </label>
 
         }
-
-
-
     </dd>
 </dl>
 
@@ -107,7 +95,7 @@
     <button id="submitBtn" type="button" class="btn success oi" data-glyph="circle-check">
         確認儲存
     </button>
-    <button type="button" class="btn warning oi" data-glyph="circle-x" onclick="location.href = 'DownloadList'">
+    <button type="button" class="btn warning oi" data-glyph="circle-x" onclick="location.href = 'BannerList'">
         回列表
     </button>
 </footer>
@@ -131,7 +119,7 @@
     //驗證Required欄位
     function validHtmlFormRequired() {
         var valid = true;
-        var form = document.getElementById('frmDownload');
+        var form = document.getElementById('frmBanner');
         for (var i = 0; i < form.elements.length; i++) {
             if (form.elements[i].value === '' && form.elements[i].hasAttribute('required')) {
                 alert(form.elements[i].placeholder);
@@ -143,7 +131,7 @@
     }
 
     var fileList = [];
-    var fileLimitFileSize = 52428800//檔案大小50mb 單位bit
+    var fileLimitFileSize = 1048576//檔案大小1mb 單位bit
     var blobBuffer = {};
 
     //圖片/檔案存server
@@ -158,7 +146,7 @@
             return;
         }
         var ID = $('#hdnID').val();
-        var formData = document.getElementById('frmDownload');
+        var formData = document.getElementById('frmBanner');
         formData = new FormData(formData);
 
         for (var i = 0; i < fileList.length; i++) {
@@ -168,7 +156,7 @@
 
         formData.append("actionName", '@ActionName');
         formData.append("ID", ID);
-        url = "@Url.Content("~/_SysAdm/DownloadSave/")";
+        url = "@Url.Content("~/_SysAdm/BannerSave/")";
 
         $.ajax({
             async: false,
@@ -219,11 +207,11 @@
         fileList = [];
         $('.file-pre-ul').empty();
         var f = document.getElementById('files_m');
-        //檢查格式尺寸
+        //檢查格式尺寸 格式 檔名長度
         var sizePass = checkFileLimitSize(f, fileLimitFileSize);
-
+        var fileTypePass = checkFileExtension(f, 'image');
         var fileNamePass = checkFileNameLength(f);
-        if (!sizePass || !fileNamePass) {
+        if (!sizePass || !fileNamePass || !fileTypePass) {
             return;
         }
 
@@ -238,8 +226,10 @@
                 ra = Math.random();
                 blobBuffer[ra] = { blobObj: blobObjectFile, fileName: filename };
             }
+
             var $li = '<li class="uploaded"><button type="button" class="btn-del file-remove-btn" del-obj="f" id="' + f.files[i].name + '">&times;</button>' +
-                '<a class="dlFile"  ie-id="' + ra + '" href="javascript:;" url="' + url + '" real-name="' + filename + '">' + filename + '</a>' +
+                //'<a class="dlFile"  ie-id="' + ra + '" href="javascript:;" url="' + url + '" real-name="' + filename + '">' + filename + '</a>' +
+                '<img src="' + url + '" width="100" />' +
                 '</li>';
 
             $('.file-pre-ul').append($li);
@@ -254,8 +244,6 @@
      .attr('href', $(elem).attr('url'))
      .attr('target', '_blank');
     }
-
-
     //下載檔案存為指定檔名
     function downloadFile(elem) {
         //for IE
@@ -273,7 +261,6 @@
         }
     }
 
-
     //檢查尺寸
     function checkFileLimitSize(totalFiles, fileLimitSize) {
         var success = true;
@@ -282,6 +269,34 @@
             if (file.size > fileLimitSize) {
                 success = false;
                 alert("圖片或檔案大小不可超過" + (fileLimitSize / 1024) + " kb.");
+                break;
+            }
+        }
+        return success;
+    }
+
+    //檢查副檔名
+    function checkFileExtension(totalFiles, fileType) {
+        var success = true;
+        var allowedExtension = [];
+        var alertMsg = '';
+        if (fileType == 'image') {
+            allowedExtension = ["image/bmp", "image/gif", "image/jpeg", "image/jpg", "image/png"];
+            alertMsg = '只允許上傳 bmp, gif, jpeg, jpg, png圖檔.';
+        }
+            //else if (fileType == 'doc') {
+            //    allowedExtension = ["application/pdf"];
+            //    alertMsg = '只允許上傳 PDF檔.';
+            //}
+        else {
+            return success;
+        }
+        for (var i = 0; i < totalFiles.files.length; i++) {
+            var fileExtension = totalFiles.files[i].type;
+            var findIndex = $.inArray(fileExtension, allowedExtension);
+            if (findIndex < 0) {
+                success = false;
+                alert(alertMsg);
                 break;
             }
         }

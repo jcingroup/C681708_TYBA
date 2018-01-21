@@ -1,10 +1,10 @@
-﻿@using OutWeb.Models.Manage.DownloadModels
-@model DownLoadListViewModel
+﻿@using OutWeb.Models.Manage.BannerModels
+@model BannerListViewModel
 @{
     Layout = "~/Views/Shared/_MLayout.cshtml";
-    ViewBag.Crumb = "檔案下載";
+    ViewBag.Crumb = "首頁Banner維護";
     ViewBag.subnav = "General";
-    ViewBag.subnav2 = "Download";
+    ViewBag.subnav2 = "Banner";
 }
 @section IncludeScript{
 
@@ -53,7 +53,7 @@
                     else
                     {
                         var id = $(this).attr('data-id');
-                        var url = "@Url.Content("~/_SysAdm/DownloadDelete")";
+                        var url = "@Url.Content("~/_SysAdm/BannerDelete")";
                         $.ajax({
                             async: false,
                             url: url,
@@ -79,10 +79,8 @@
                     var queryStr = $.param(formData);
                     var sortNm = $(this).attr('id');
                     var sortType = $(this).attr('sort-type') == '' ? 'asc' : $(this).attr('sort-type');
-                    window.location = '@Url.Content("~/_SysAdm/DownloadList?")' + queryStr +"&sort=" + sortNm + '/' + sortType + '&page=@Model.Result.Pagination.CurrentPage';
+                    window.location = '@Url.Content("~/_SysAdm/BannerList?")' + queryStr +"&sort=" + sortNm + '/' + sortType + '&page=@Model.Result.Pagination.CurrentPage';
                 })
-
-
 
                 var sortColumn;
                 var sortTp;
@@ -99,10 +97,7 @@
                 }
 
                 switch (sortColumn) {
-                    case "sortPublishDate":
-                        $('#sortPublishDate').addClass(sortTp)
-                        $('#sortPublishDate').attr('sort-type', sortTp);
-                        break;
+
                     case "sortDisable":
                         $('#sortDisable').addClass(sortTp)
                         $('#sortDisable').attr('sort-type', sortTp);
@@ -118,6 +113,7 @@
         })(jQuery);
     </script>
 }
+
 @section Breadcrumb {
     <ul class="breadcrumb">
         <li>一般頁面管理</li>
@@ -126,19 +122,17 @@
 }
 
 <h3 class="title">@ViewBag.Crumb</h3>
-@using (Html.BeginForm("DownloadList", "_SysAdm", FormMethod.Get, new { id = "frmDownList" }))
+@using (Html.BeginForm("BannerList", "_SysAdm", FormMethod.Get, new { id = "frmBannerList" }))
 {
     <div class="alert-warning mb-16">
         <strong>排序：</strong> 在前台顯示的排序，數字愈大愈前面。
     </div>
 
     <div class="btn-group mb-8">
-        <button type="button" class="btn success oi" data-glyph="plus" onclick="location.href='@Url.Content("DownloadAdd")'">新增</button>
+        <button type="button" class="btn success oi" data-glyph="plus" onclick="location.href='@Url.Content("BannerAdd")'">新增</button>
     </div>
 
     <header class="table-head form-inline">
-        <label>發佈時間</label>
-        <input type="text" name="pDate" value="@Model.Filter.PublishDate" class="datepicker">
         <label>狀態</label>
         <select id="statusDisable" name="disable">
             <option value="">全部</option>
@@ -150,14 +144,9 @@
     </header>
     <table class="table-list table-hover table-striped">
         <colgroup>
-            <col span="2">
-            <col style="width: 13.5%">
-            <col>
-            <col span="3" style="width: 11%">
+            <col span="3">
+            <col span="2" style="width: 11%">
         </colgroup>
-
-        @* 預設以發佈時間排序 *@
-
         <tr>
             @* 點選排序功能 (點一下遞增, 點兩下遞減)
                 <button class="th-sort-toggle"></button>
@@ -168,34 +157,31 @@
             *@
             <th class="item-edit">刪除</th>
             <th class="item-edit">修改</th>
-            <th><button id="sortPublishDate" type="button" sort-type="" class="th-sort-toggle">發佈時間</button></th>
             <th class="text-left">標題</th>
             <th><button id="sortDisable" type="button" sort-type="" class="th-sort-toggle">狀態</button></th>
             <th><button id="sortIndex" sort-type="" type="button" class="th-sort-toggle">排序</button></th>
         </tr>
+
+        @*
+            <tr class="bg-pale-red"><td colspan="6">查無資料!</td></tr>
+        *@
         @if (Model.Result.Data.Count == 0)
         {
             <tr class="bg-pale-red"><td colspan="6">查無資料!</td></tr>
         }
-
+        @* 預設以發佈時間排序 *@
         @foreach (var data in Model.Result.Data)
         {
             string disable = !data.DISABLE ? "上架" : "下架";
             string disableStyle = !data.DISABLE ? "label-success" : "label";
-
-
-            @* 預設以發佈時間排序 *@
             <tr>
                 <td><button class="hover-danger oi delete-btn" title="刪除" type="button" data-glyph="trash" data-id="@data.ID"></button></td>
-                <td><button class="hover-primary oi" title="修改" data-glyph="pencil" type="button" onclick="location.href='@Url.Action("DownloadEdit", new { id = data.ID })'"></button></td>
-                <td>@data.PUB_DT_STR</td>
+                <td><button class="hover-primary oi" title="修改" data-glyph="pencil" type="button" onclick="location.href='@Url.Action("BannerEdit", new { id = data.ID })'"></button></td>
                 <td class="text-left">@data.TITLE</td>
                 <td><span class="@disableStyle">@disable</span></td>
                 <td>@data.SQ</td>
             </tr>
         }
-
-
     </table>
 
     <footer class="table-foot">
@@ -217,5 +203,4 @@
             <button @disabledNext class="oi" data-glyph="media-step-forward" title="到最後頁" type="button" onclick="paginationSubmit('@Model.Result.Pagination.LastPage')"></button>
         </nav>
     </footer>
-
             }

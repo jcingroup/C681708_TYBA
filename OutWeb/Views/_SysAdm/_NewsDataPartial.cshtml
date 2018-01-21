@@ -5,26 +5,26 @@
     string ActionName = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Action"]);
 }
 
-<input type="hidden" id="hdnNewsID" name="newsID" value="@Model.Data.主索引" />
+<input type="hidden" id="hdnNewsID" name="pageId" value="@Model.Data.ID" />
 <section class="row row-x0">
 
     <dl class="field">
         <dt class="col-2"><sup title="必填">*</sup> 發佈時間</dt>
         <dd class="col-4">
-            <input type="text" class="datepicker" required name="發稿時間" value="@Convert.ToDateTime(Model.Data.發稿時間).ToString("yyyy\\/MM\\/dd")" placeholder="請輸入發佈日期">
+            <input type="text" class="datepicker" required name="publishDate" value="@Model.Data.PUB_DT_STR" placeholder="請輸入發佈日期">
         </dd>
     </dl>
     <dl class="field">
         <dt class="col-2"><sup title="必填">*</sup> 標題</dt>
         <dd class="col-10">
-            <input type="text" name="標題" value="@Model.Data.標題" required placeholder="請輸入標題">
+            <input type="text" name="title" value="@Model.Data.TITLE" required placeholder="請輸入標題">
         </dd>
     </dl>
 
     <dl class="field">
         <dt class="col-2">排序</dt>
         <dd class="col-7">
-            <input type="number" value="@Model.Data.排序" class="inline" name="sortIndex">
+            <input type="number" value="@Model.Data.SQ" class="inline" name="sortIndex" step="0.1">
             <small>數字愈大愈前面</small>
         </dd>
     </dl>
@@ -32,7 +32,7 @@
         <dt class="col-2">首頁顯示</dt>
         <dd class="col-7">
             <label class="switch">
-                <input type="checkbox" name="hSt" checked>
+                <input type="checkbox" name="disHome" checked>
                 <div class="slider round"></div>
             </label>
         </dd>
@@ -41,27 +41,27 @@
         <dt class="col-2">顯示狀態</dt>
         <dd class="col-7">
             <!-- 新增時預設上架 -->
-            @if (Model.Data.顯示狀態)
+            @if (!Model.Data.DISABLE)
             {
                 <label class="mr-8">
-                    <input type="radio" name="fSt" class="radio" value="Y" checked>
+                    <input type="radio" name="disable" class="radio" value="false" checked>
                     <i class="icon"></i>上架
                 </label>
 
                 <label>
-                    <input type="radio" name="fSt" value="N" class="radio">
+                    <input type="radio" name="disable" value="true" class="radio">
                     <i class="icon"></i>下架
                 </label>
             }
             else
             {
                 <label class="mr-8">
-                    <input type="radio" name="fSt" value="Y" class="radio">
+                    <input type="radio" name="fSt" value="false" class="radio">
                     <i class="icon"></i>上架
                 </label>
 
                 <label>
-                    <input type="radio" name="fSt" value="N" class="radio" checked>
+                    <input type="radio" name="fSt" value="true" class="radio" checked>
                     <i class="icon"></i>下架
                 </label>
             }
@@ -79,11 +79,11 @@
         youtube 可勾選「用自適應縮放模式」
     </div>
     <textarea id="art" class="form-element" maxlength="512" name="contenttext" placeholder="請輸入最新消息內容..." rows="15">
-        @Model.Data.內容
+        @Model.Data.CONTENT
     </textarea>
 </fieldset>
 <footer class="submit-bar clear mt-24">
-    <button id="submitBtn" type="button" class="btn success oi" data-glyph="circle-check">
+    <button id="submitBtn" type="submit" class="btn success oi" data-glyph="circle-check">
         確認儲存
     </button>
     <button type="button" class="btn warning oi" data-glyph="circle-x" onclick="location.href = '/_SysAdm/NewsList'">
@@ -93,15 +93,14 @@
 
 
 <script>
-    $(function () {
-        //if ($('[type="date"]').prop('type') != 'date') {
-        //     不支援date等類型的瀏覽器，類型是date 但是property不是'date'。
-        //     在這裡放入其他的datetime picker，例如 jquery ui 的datetime picker
-        //    $('[type="date"]').datepicker();
-        //}
-        //alert($('[type="date"]').prop('type'));
+        if ('@Model.Data.HOME_PAGE_DISPLAY' == '@true') {
+            $('[name="disHome"]').prop('checked', 'checked');
+        }
+        else {
+            $('[name="disHome"]').prop('checked', '');
+        }
 
-        //alert(CKEDITOR.version);
+    $(function () {
         CKFinder.setupCKEditor(null, { basePath: '/ckfinder/', skin: 'v1' });
         CKEDITOR.replace('contenttext');
     })

@@ -108,23 +108,12 @@
             $('#numPage').val(page);
             $('form')[0].submit();
         }
+
         //下載檔案存為指定檔名
         function downloadFile(elem) {
-            //for IE
-            if (window.navigator.msSaveOrOpenBlob) {
-                if (Object.keys(blobBuffer).length > 0) {
-                    var key = $(elem).attr('ie-id');
-                    var obj = blobBuffer[key];
-
-                    var blobObject = new Blob([obj.blobObj]);
-                    window.navigator.msSaveOrOpenBlob(blobObject, obj.fileName);
-                }
-            }
-            else {
-                $(elem).attr('download', $(elem).attr('real-name'))
-               .attr('href', $(elem).attr('url'))
-               .attr('target', '_blank');
-            }
+            $(elem).attr('download', $(elem).attr('real-name'))
+                  .attr('href', $(elem).attr('url'))
+                  .attr('target', '_blank');
         }
         $(function () {
             $('a').each(function (i,e) {

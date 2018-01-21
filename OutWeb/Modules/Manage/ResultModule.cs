@@ -1,7 +1,7 @@
 ﻿using OutWeb.Entities;
 using OutWeb.Enums;
 using OutWeb.Models;
-using OutWeb.Models.Manage.ManageNewsModels;
+using OutWeb.Models.Manage.ResultModels;
 using OutWeb.Provider;
 using OutWeb.Repositories;
 using System;
@@ -16,7 +16,7 @@ namespace OutWeb.Modules.Manage
     /// <summary>
     /// 最新消息列表模組
     /// </summary>
-    public class NewsModule : IDisposable
+    public class ResultModule : IDisposable
     {
         private TYBADB m_DB = new TYBADB();
 
@@ -27,12 +27,12 @@ namespace OutWeb.Modules.Manage
 
         public void DoDeleteByID(int ID)
         {
-            var data = this.DB.NEWS.Where(s => s.ID == ID).FirstOrDefault();
+            var data = this.DB.RESULT.Where(s => s.ID == ID).FirstOrDefault();
             if (data == null)
                 throw new Exception("[刪除比賽訊息] 查無此訊息，可能已被移除");
             try
             {
-                this.DB.NEWS.Remove(data);
+                this.DB.RESULT.Remove(data);
                 this.DB.SaveChanges();
             }
             catch (Exception ex)
@@ -41,23 +41,23 @@ namespace OutWeb.Modules.Manage
             }
         }
 
-        public NewsDetailsDataModel DoGetDetailsByID(int ID)
+        public ResultDetailsDataModel DoGetDetailsByID(int ID)
         {
-            NewsDetailsDataModel result = new NewsDetailsDataModel();
-            NEWS data = DB.NEWS.Where(w => w.ID == ID).FirstOrDefault();
+            ResultDetailsDataModel result = new ResultDetailsDataModel();
+            RESULT data = DB.RESULT.Where(w => w.ID == ID).FirstOrDefault();
             PublicMethodRepository.HtmlDecode(data);
             result.Data = data;
             return result;
         }
 
-        public NewsListResultModel DoGetList(NewsListFilterModel filterModel)
+        public ResultListResultModel DoGetList(ResultListFilterModel filterModel)
         {
             PublicMethodRepository.FilterXss(filterModel);
-            NewsListResultModel result = new NewsListResultModel();
-            List<NEWS> data = new List<NEWS>();
+            ResultListResultModel result = new ResultListResultModel();
+            List<RESULT> data = new List<RESULT>();
             try
             {
-                data = DB.NEWS.ToList();
+                data = DB.RESULT.ToList();
 
                 //關鍵字搜尋
                 if (!string.IsNullOrEmpty(filterModel.QueryString))
@@ -71,16 +71,10 @@ namespace OutWeb.Modules.Manage
                     this.ListDateFilter(filterModel.PublishDate, ref data);
                 }
 
-                //首頁顯示
-                if (!string.IsNullOrEmpty(filterModel.DisplayForHomePage))
-                {
-                    this.ListStatusFilter(filterModel.DisplayForHomePage, "DisplayHome", ref data);
-                }
-
                 //上下架
                 if (!string.IsNullOrEmpty(filterModel.Disable))
                 {
-                    this.ListStatusFilter(filterModel.Disable, "Disable", ref data);
+                    this.ListStatusFilter(filterModel.Disable, ref data);
                 }
 
                 //排序
@@ -103,20 +97,19 @@ namespace OutWeb.Modules.Manage
 
         public int DoSaveData(FormCollection form, int? ID = null)
         {
-            NEWS saveModel;
+            RESULT saveModel;
 
             if (ID == 0)
             {
-                saveModel = new NEWS();
+                saveModel = new RESULT();
                 saveModel.BUD_ID = UserProvider.Instance.User.ID;
                 saveModel.BUD_DT = DateTime.UtcNow.AddHours(8);
             }
             else
             {
-                saveModel = this.DB.NEWS.Where(s => s.ID == ID).FirstOrDefault();
+                saveModel = this.DB.RESULT.Where(s => s.ID == ID).FirstOrDefault();
             }
             saveModel.TITLE = form["title"];
-            saveModel.HOME_PAGE_DISPLAY = form["disHome"] == "on" ? true : false;
             saveModel.DISABLE = form["disable"] == null ? false : Convert.ToBoolean(form["disable"]);
             saveModel.SQ = form["sortIndex"] == null ? 1 : Convert.ToDouble(form["sortIndex"]);
             saveModel.CONTENT = form["contenttext"];
@@ -127,7 +120,7 @@ namespace OutWeb.Modules.Manage
 
             if (ID == 0)
             {
-                this.DB.NEWS.Add(saveModel);
+                this.DB.RESULT.Add(saveModel);
             }
             else
             {
@@ -152,7 +145,7 @@ namespace OutWeb.Modules.Manage
         /// </summary>
         /// <param name="filterStr"></param>
         /// <param name="data"></param>
-        private void ListFilter(string filterStr, ref List<NEWS> data)
+        private void ListFilter(string filterStr, ref List<RESULT> data)
         {
             var r = data.Where(s => s.TITLE.Contains(filterStr)).ToList();
             data = r;
@@ -163,7 +156,7 @@ namespace OutWeb.Modules.Manage
         /// </summary>
         /// <param name="filterStr"></param>
         /// <param name="data"></param>
-        private void ListDateFilter(string publishdate, ref List<NEWS> data)
+        private void ListDateFilter(string publishdate, ref List<RESULT> data)
         {
             var r = data.Where(s => s.PUB_DT_STR == publishdate).ToList();
             data = r;
@@ -174,16 +167,11 @@ namespace OutWeb.Modules.Manage
         /// </summary>
         /// <param name="filterStr"></param>
         /// <param name="data"></param>
-        private void ListStatusFilter(string filter, string displayMode, ref List<NEWS> data)
+        private void ListStatusFilter(string filter, ref List<RESULT> data)
         {
-            List<NEWS> result = null;
+            List<RESULT> result = null;
             bool filterBooolean = Convert.ToBoolean(filter);
-            if (displayMode == "DisplayHome")
-            {
-                result = data.Where(s => s.HOME_PAGE_DISPLAY == filterBooolean).ToList();
-            }
-            else if (displayMode == "Disable")
-                result = data.Where(s => s.DISABLE == filterBooolean).ToList();
+            result = data.Where(s => s.DISABLE == filterBooolean).ToList();
             data = result;
         }
 
@@ -192,7 +180,7 @@ namespace OutWeb.Modules.Manage
         /// </summary>
         /// <param name="currentPage"></param>
         /// <param name="data"></param>
-        private void ListPageList(int currentPage, ref List<NEWS> data, out PaginationResult pagination)
+        private void ListPageList(int currentPage, ref List<RESULT> data, out PaginationResult pagination)
         {
             int pageSize = (int)PageSizeConfig.SIZE10;
             int startRow = (currentPage - 1) * pageSize;
@@ -214,7 +202,7 @@ namespace OutWeb.Modules.Manage
         /// </summary>
         /// <param name="sortCloumn"></param>
         /// <param name="data"></param>
-        private void ListSort(string sortCloumn, ref List<NEWS> data)
+        private void ListSort(string sortCloumn, ref List<RESULT> data)
         {
             switch (sortCloumn)
             {
@@ -240,14 +228,6 @@ namespace OutWeb.Modules.Manage
 
                 case "sortDisable/desc":
                     data = data.OrderByDescending(o => o.DISABLE).ThenByDescending(g => g.SQ).ToList();
-                    break;
-
-                case "sortDisplayForHome/asc":
-                    data = data.OrderBy(o => o.HOME_PAGE_DISPLAY).ThenByDescending(g => g.SQ).ToList();
-                    break;
-
-                case "sortDisplayForHome/desc":
-                    data = data.OrderByDescending(o => o.HOME_PAGE_DISPLAY).ThenByDescending(g => g.SQ).ToList();
                     break;
 
                 default:

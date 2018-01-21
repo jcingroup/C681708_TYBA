@@ -61,9 +61,6 @@ namespace OutWeb.Controllers
                 model = (module.DoGetDetailsByID((int)ID) as NewsDetailsDataModel);
                 if (model == null)
                     return RedirectToAction("Login", "Login");
-                //取檔案
-                FileModule fileModule = new FileModule();
-                model.FilesData = fileModule.GetFiles((int)model.Data.主索引, "News", "M");
             }
             using (var module = new NewsFrontModule())
             {
@@ -71,7 +68,7 @@ namespace OutWeb.Controllers
             }
 
             ViewBag.Subnav = "sub-news" + type;
-            ViewBag.Breadcrumb = model.Data.標題;
+            ViewBag.Breadcrumb = model.Data.TITLE;
 
             return View(model);
         }

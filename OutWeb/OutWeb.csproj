@@ -230,7 +230,13 @@
     <Compile Include="Controllers\SignInController.cs" />
     <Compile Include="Controllers\ViewTemplateController.cs" />
     <Compile Include="Controllers\_SysAdmController.cs" />
+    <Compile Include="Entities\BANNER.cs">
+      <DependentUpon>TYBADB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\DLFILES.cs">
+      <DependentUpon>TYBADB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\EDITOR.cs">
       <DependentUpon>TYBADB.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\EMAIL.cs">
@@ -262,6 +268,12 @@
     </Compile>
     <Compile Include="Entities\LOGERR.cs">
       <DependentUpon>EnergyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NEWS.cs">
+      <DependentUpon>TYBADB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\RESULT.cs">
+      <DependentUpon>TYBADB.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SiteCounter.cs">
       <DependentUpon>EnergyDB.tt</DependentUpon>
@@ -298,6 +310,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TYBADB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\USER.cs">
+      <DependentUpon>TYBADB.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\人員.cs">
       <DependentUpon>EnergyDB.tt</DependentUpon>
@@ -420,6 +435,11 @@
     <Compile Include="Models\FrontEnd\UserInfo\LogInModel.cs" />
     <Compile Include="Models\FrontEnd\UserInfo\LoginUserInfoModel.cs" />
     <Compile Include="Models\IPaginationModel.cs" />
+    <Compile Include="Models\Manage\BannerModels\BannerDataModel.cs" />
+    <Compile Include="Models\Manage\BannerModels\BannerDetailsModel.cs" />
+    <Compile Include="Models\Manage\BannerModels\BannerFilterModel.cs" />
+    <Compile Include="Models\Manage\BannerModels\BannerListResultModel.cs" />
+    <Compile Include="Models\Manage\BannerModels\BannerListViewModel.cs" />
     <Compile Include="Models\Manage\DownloadModels\DownloadDataModel.cs" />
     <Compile Include="Models\Manage\DownloadModels\DownloadDetailsModel.cs" />
     <Compile Include="Models\Manage\DownloadModels\DownloadFilterModel.cs" />
@@ -466,6 +486,11 @@
     <Compile Include="Models\Manage\ManageTrainModels\TrainListViewModel.cs" />
     <Compile Include="Models\Manage\ManageTrainModels\TrainStandardDataModel.cs" />
     <Compile Include="Models\Manage\ExportExcelModels\QuestionnaireStatisticsReplyModels\ReplyDataModel.cs" />
+    <Compile Include="Models\Manage\ResultModels\ResultDetailsDataModel.cs" />
+    <Compile Include="Models\Manage\ResultModels\ResultListDataModel.cs" />
+    <Compile Include="Models\Manage\ResultModels\ResultListFilterModel.cs" />
+    <Compile Include="Models\Manage\ResultModels\ResultListResultModel.cs" />
+    <Compile Include="Models\Manage\ResultModels\ResultListViewModel.cs" />
     <Compile Include="Models\Manage\SerializationModels\MailStruc.cs" />
     <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\Manage\QuestionnaireStatisticsModels\QuestionnaireStatisticsDetailsDataModel.cs" />
@@ -490,11 +515,11 @@
     <Compile Include="Models\Manage\ManageCourseModels\CourseListFilterModel.cs" />
     <Compile Include="Models\Manage\ManageCourseModels\CourseListResultModel.cs" />
     <Compile Include="Models\Manage\ManageCourseModels\CourseListViewModel.cs" />
-    <Compile Include="Models\Manage\ManageNewsModels\NewsDetailsDataModel.cs" />
-    <Compile Include="Models\Manage\ManageNewsModels\NewsListDataModel.cs" />
-    <Compile Include="Models\Manage\ManageNewsModels\NewsListFilterModel.cs" />
-    <Compile Include="Models\Manage\ManageNewsModels\NewsListResultModel.cs" />
-    <Compile Include="Models\Manage\ManageNewsModels\NewsListViewModel.cs" />
+    <Compile Include="Models\Manage\NewsModels\NewsDetailsDataModel.cs" />
+    <Compile Include="Models\Manage\NewsModels\NewsListDataModel.cs" />
+    <Compile Include="Models\Manage\NewsModels\NewsListFilterModel.cs" />
+    <Compile Include="Models\Manage\NewsModels\NewsListResultModel.cs" />
+    <Compile Include="Models\Manage\NewsModels\NewsListViewModel.cs" />
     <Compile Include="Models\Manage\CasesModels\CasesDetailsDataModel.cs" />
     <Compile Include="Models\Manage\CasesModels\CasesListDataModel.cs" />
     <Compile Include="Models\Manage\CasesModels\CasesListFilterModel.cs" />
@@ -512,6 +537,7 @@
     <Compile Include="Modules\FrontEnd\NewsFrontModule.cs" />
     <Compile Include="Modules\FrontEnd\SearchModule.cs" />
     <Compile Include="Modules\FrontEnd\TrainFrontModule.cs" />
+    <Compile Include="Modules\Manage\BannerModule.cs" />
     <Compile Include="Modules\Manage\EditorModule.cs" />
     <Compile Include="Modules\Manage\EmailModule.cs" />
     <Compile Include="Modules\Manage\FileModule.cs" />
@@ -519,6 +545,7 @@
     <Compile Include="Modules\Manage\IpHistoryModule.cs" />
     <Compile Include="Modules\Manage\LinkModule.cs" />
     <Compile Include="Modules\Manage\DownloadModule.cs" />
+    <Compile Include="Modules\Manage\ResultModule.cs" />
     <Compile Include="Modules\Manage\NotificationListModule.cs" />
     <Compile Include="Modules\Manage\QuestionnaireStatisticsModule.cs" />
     <Compile Include="Modules\Manage\QuestionnairesModule.cs" />
@@ -2054,6 +2081,19 @@
     <Content Include="Views\Manager\ActivityEdit.cshtml" />
     <Content Include="Views\Manager\ApplyList.cshtml" />
     <Content Include="Views\Manager\ApplyEdit.cshtml" />
+    <Content Include="Views\_SysAdm\BannerList.cshtml" />
+    <Content Include="Views\_SysAdm\BannerEdit.cshtml" />
+    <Content Include="Views\_SysAdm\AboutUs.cshtml" />
+    <Content Include="Views\_SysAdm\ActivityEdit.cshtml" />
+    <Content Include="Views\_SysAdm\ActivityList.cshtml" />
+    <Content Include="Views\_SysAdm\ApplyEdit.cshtml" />
+    <Content Include="Views\_SysAdm\ApplyList.cshtml" />
+    <Content Include="Views\_SysAdm\ResultList.cshtml" />
+    <Content Include="Views\_SysAdm\ResultEdit.cshtml" />
+    <Content Include="Views\_SysAdm\_BannerDataPartial.cshtml" />
+    <Content Include="Views\_SysAdm\BannerAdd.cshtml" />
+    <Content Include="Views\_SysAdm\_ResultDataPartial.cshtml" />
+    <Content Include="Views\_SysAdm\ResultAdd.cshtml" />
     <None Include="Web.Debug2.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

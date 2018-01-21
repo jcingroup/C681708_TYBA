@@ -198,7 +198,7 @@ namespace OutWeb.Modules.Manage
         }
 
         /// <summary>
-        /// 前台顯示搜尋
+        /// 上下架
         /// </summary>
         /// <param name="filterStr"></param>
         /// <param name="data"></param>

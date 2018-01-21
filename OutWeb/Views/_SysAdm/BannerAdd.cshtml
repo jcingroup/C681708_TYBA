@@ -1,0 +1,23 @@
+﻿@using OutWeb.Models.Manage.BannerModels
+@model BannerDetailsModel
+@{
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "首頁Banner維護";
+    ViewBag.subnav = "General";
+    ViewBag.subnav2 = "Banner";
+    string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
+    string ActionName = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Action"]);
+}
+
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>一般頁面管理</li>
+        <li>@ViewBag.Crumb</li>
+    </ul>
+}
+
+<h3 class="title">@ViewBag.Crumb <small class="oi" data-glyph="tags">新增</small></h3>
+@using (Html.BeginForm("BannerSave", "_SysAdm", FormMethod.Post, new { id = "frmBanner", @class = "form-list", @enctype = "multipart/form-data" }))
+{
+    Html.RenderPartial("_BannerDataPartial", Model);
+}

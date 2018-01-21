@@ -12,22 +12,21 @@
 @section IncludeScript{
 
     <script>
-
+        function paginationSubmit(page)
+        {
+            $('#numPage').val(page);
+            $('form')[0].submit();
+        }
         (function ($) {
             $(function () {
-                if('@TempData["TypeError"]' != '')
-                {
-                    alert('@TempData["TypeError"]');
-                    window.location.href = '/_SysAdm/TypeManageList';
-                    return;
-                }
-                $('#statusDropListFront').val('@Model.Filter.DisplayForFrontEnd');
+
+                $('#statusDisable').val('@Model.Filter.Disable');
                 $('#statusDropListHome').val('@Model.Filter.DisplayForHomePage');
 
                 //搜尋
                 $('#searchBtn').click(function () {
                     $('#numPage').val(1);
-                    $('#formManageNews').submit();
+                    $('form')[0].submit();
                 });
 
                 //分頁input
@@ -45,35 +44,47 @@
                         currentPage = maxPage;
                     }
                     $(this).val(currentPage);
-                    $('#formManageNews').submit();
+                    $('form')[0].submit();
                 });
 
                 //刪除
                 $('.delete-btn').click(function () {
-                    var id = $(this).attr('data-id');
-                    var url = "@Url.Content("~/_SysAdm/NewsDelete")";
-                    $.ajax({
-                        async: false,
-                        url: url,
-                        data: { ID: id },
-                        type: 'POST',
-                        dataType: 'json',
-                        success: function (data) {
-                            alert(data.messages);
-                            if (data.success) {
-                                window.location.reload()
+                    if(!confirm('請問確定要刪除?'))
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        var id = $(this).attr('data-id');
+                        var url = "@Url.Content("~/_SysAdm/NewsDelete")";
+                        $.ajax({
+                            async: false,
+                            url: url,
+                            data: { ID: id },
+                            type: 'POST',
+                            dataType: 'json',
+                            success: function (data) {
+                                alert(data.messages);
+                                if (data.success) {
+                                    window.location.reload()
+                                }
+                            }, error: function (error) {
+                                console.log(error);
+                                alert(error.messages);
                             }
-                        }, error: function (error) {
-                            //alert(error.messages);
-                        }
-                    });
+                        });
+                    }
+
                 })
 
                 //排序
                 $('.th-sort-toggle').on('click', function () {
+                    var form = document.forms[0];
+                    var  formData =  $(form).serializeArray();
+                    var queryStr = $.param(formData);
                     var sortNm = $(this).attr('id');
                     var sortType = $(this).attr('sort-type') == '' ? 'asc' : $(this).attr('sort-type');
-                    window.location = '@Url.Content("~/_SysAdm/NewsList")' + "?&sort=" + sortNm + '/' + sortType + '&page=@Model.Result.Pagination.CurrentPage';
+                    window.location = '@Url.Content("~/_SysAdm/NewsList?")' + queryStr +"&sort=" + sortNm + '/' + sortType + '&page=@Model.Result.Pagination.CurrentPage';
                 })
 
                 var sortColumn;
@@ -95,10 +106,6 @@
                         $('#sortPublishDate').addClass(sortTp)
                         $('#sortPublishDate').attr('sort-type', sortTp);
                         break;
-                    case "sortDisplayForFront":
-                        $('#sortDisplayForFront').addClass(sortTp)
-                        $('#sortDisplayForFront').attr('sort-type', sortTp);
-                        break;
                     case "sortDisplayForHome":
                         $('#sortDisplayForHome').addClass(sortTp)
                         $('#sortDisplayForHome').attr('sort-type', sortTp);
@@ -107,9 +114,9 @@
                         $('#sortIndex').addClass(sortTp)
                         $('#sortIndex').attr('sort-type', sortTp);
                         break;
-                    case "sortDisabled":
-                        $('#sortDisabled').addClass(sortTp)
-                        $('#sortDisabled').attr('sort-type', sortTp);
+                    case "sortDisable":
+                        $('#sortDisable').addClass(sortTp)
+                        $('#sortDisable').attr('sort-type', sortTp);
                         break;
 
                     default:
@@ -127,7 +134,7 @@
 }
 
 <h3 class="title">@ViewBag.Crumb</h3>
-@using (Html.BeginForm("NewsList", "_SysAdm", FormMethod.Get, new { id = "formManageNews" }))
+@using (Html.BeginForm("NewsList", "_SysAdm", FormMethod.Get, new { id = "frmNewsList" }))
 {
 
     <div class="alert-warning mb-16">
@@ -143,16 +150,16 @@
         <label>發佈時間</label>
         <input type="text" name="pDate" value="@Model.Filter.PublishDate" class="datepicker">
         <label>首頁</label>
-        <select id="statusDropListHome" name="hSt">
+        <select id="statusDropListHome" name="disHome">
             <option value="">全部</option>
-            <option value="Y">顯示</option>
-            <option value="N">隱藏</option>
+            <option value="true">顯示</option>
+            <option value="false">隱藏</option>
         </select>
         <label>狀態</label>
-        <select id="statusDropListFront" name="fSt">
+        <select id="statusDisable" name="disable">
             <option value="">全部</option>
-            <option value="Y">上架</option>
-            <option value="N">下架</option>
+            <option value="false">上架</option>
+            <option value="true">下架</option>
         </select>
         <input type="text" placeholder="請輸入關鍵字" name="qry" value="@Model.Filter.QueryString">
         <button class="btn">搜尋</button>
@@ -178,8 +185,7 @@
             <th><button id="sortPublishDate" type="button" sort-type="" class="th-sort-toggle">發佈時間</button></th>
             <th class="text-left">標題</th>
             <th><button id="sortDisplayForHome" type="button" sort-type="" class="th-sort-toggle">首頁</button></th>
-            <!-- <th><button id="sortDisabled" type="button" sort-type="" class="th-sort-toggle">停用</button></th> -->
-            <th><button id="sortDisplayForFront" type="button" sort-type="" class="th-sort-toggle">狀態</button></th>
+            <th><button id="sortDisable" type="button" sort-type="" class="th-sort-toggle">狀態</button></th>
             <th><button id="sortIndex" sort-type="" type="button" class="th-sort-toggle">排序</button></th>
         </tr>
 
@@ -191,20 +197,19 @@
         @* 預設以發佈時間排序 *@
         @foreach (var data in Model.Result.Data)
         {
-            string disFrontStr = data.顯示狀態 ? "上架" : "下架";
-            string disHomeStr = data.首頁顯示 ? "顯示" : "隱藏";
+            string disable = !data.DISABLE ? "上架" : "下架";
+            string disHomeStr = data.HOME_PAGE_DISPLAY ? "顯示" : "隱藏";
 
-            string disFrontStyle = data.顯示狀態 ? "label-success" : "label";
-            string disHomeStyle = data.首頁顯示 ? "label-success" : "label";
+            string disableStyle = !data.DISABLE ? "label-success" : "label";
+            string disHomeStyle = data.HOME_PAGE_DISPLAY ? "label-success" : "label";
             <tr>
-
-                <td><button class="hover-danger oi delete-btn" title="刪除" type="button" data-glyph="trash" data-id="@data.主索引"></button></td>
-                <td><button class="hover-primary oi" title="修改" data-glyph="pencil" type="button" onclick="location.href='@Url.Content("~/_SysAdm/NewsEdit?ID=" + data.主索引)'"></button></td>
-                <td>@data.發稿時間.ToString("yyyy\\/MM\\/dd")</td>
-                <td class="text-left">@data.標題</td>
+                <td><button class="hover-danger oi delete-btn" title="刪除" type="button" data-glyph="trash" data-id="@data.ID"></button></td>
+                <td><button class="hover-primary oi" title="修改" data-glyph="pencil" type="button" onclick="location.href='@Url.Action("NewsEdit", new {ID= data.ID})'"></button></td>
+                <td>@data.PUB_DT_STR</td>
+                <td class="text-left">@data.TITLE</td>
                 <td><span class="@disHomeStyle">@disHomeStr</span></td>
-                <td><span class="@disFrontStyle">@disFrontStr</span></td>
-                <td>@data.排序</td>
+                <td><span class="@disableStyle">@disable</span></td>
+                <td>@data.SQ</td>
             </tr>
         }
     </table>
@@ -232,10 +237,3 @@
             }
 
 
-<script>
-    function paginationSubmit(page)
-    {
-        $('#numPage').val(page);
-        $('form')[0].submit();
-    }
-</script>

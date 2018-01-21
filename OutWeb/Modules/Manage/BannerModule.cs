@@ -1,22 +1,23 @@
 ﻿using OutWeb.Entities;
 using OutWeb.Enums;
 using OutWeb.Models;
-using OutWeb.Models.Manage.ManageNewsModels;
+using OutWeb.Models.Manage.BannerModels;
+using OutWeb.Models.Manage.FileModels;
 using OutWeb.Provider;
 using OutWeb.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
 
 namespace OutWeb.Modules.Manage
 {
     /// <summary>
     /// 最新消息列表模組
     /// </summary>
-    public class NewsModule : IDisposable
+    public class BannerModule : IDisposable
     {
         private TYBADB m_DB = new TYBADB();
 
@@ -27,37 +28,52 @@ namespace OutWeb.Modules.Manage
 
         public void DoDeleteByID(int ID)
         {
-            var data = this.DB.NEWS.Where(s => s.ID == ID).FirstOrDefault();
+            var data = this.DB.BANNER.Where(s => s.ID == ID).FirstOrDefault();
             if (data == null)
-                throw new Exception("[刪除比賽訊息] 查無此訊息，可能已被移除");
+                throw new Exception("[刪除檔案] 查無此檔案，可能已被移除");
             try
             {
-                this.DB.NEWS.Remove(data);
+                var delFiles = this.DB.FILEBASE.Where(o => o.MAP_SITE.StartsWith("Banner") && o.MAP_ID == ID).ToList();
+                if (delFiles.Count > 0)
+                {
+                    foreach (var f in delFiles)
+                        File.Delete(string.Concat(rootPath, f.FILE_PATH));
+                    this.DB.FILEBASE.RemoveRange(delFiles);
+                }
+
+                this.DB.BANNER.Remove(data);
                 this.DB.SaveChanges();
             }
             catch (Exception ex)
             {
-                throw new Exception("[刪除比賽訊息]" + ex.Message);
+                throw new Exception("[刪除檔案]" + ex.Message);
             }
         }
 
-        public NewsDetailsDataModel DoGetDetailsByID(int ID)
+        public BannerDetailsModel DoGetDetailsByID(int ID)
         {
-            NewsDetailsDataModel result = new NewsDetailsDataModel();
-            NEWS data = DB.NEWS.Where(w => w.ID == ID).FirstOrDefault();
-            PublicMethodRepository.HtmlDecode(data);
-            result.Data = data;
-            return result;
+            BannerDetailsModel details =
+                DB.BANNER.Where(w => w.ID == ID)
+                .Select(s => new BannerDetailsModel()
+                {
+                    ID = s.ID,
+                    Disable = s.DISABLE,
+                    Sort = s.SQ,
+                    Title = s.TITLE
+                })
+                .FirstOrDefault();
+            PublicMethodRepository.HtmlDecode(details);
+            return details;
         }
 
-        public NewsListResultModel DoGetList(NewsListFilterModel filterModel)
+        public BannerListResultModel DoGetList(BannerFilterModel filterModel)
         {
             PublicMethodRepository.FilterXss(filterModel);
-            NewsListResultModel result = new NewsListResultModel();
-            List<NEWS> data = new List<NEWS>();
+            BannerListResultModel result = new BannerListResultModel();
+            List<BANNER> data = new List<BANNER>();
             try
             {
-                data = DB.NEWS.ToList();
+                data = DB.BANNER.ToList();
 
                 //關鍵字搜尋
                 if (!string.IsNullOrEmpty(filterModel.QueryString))
@@ -65,26 +81,15 @@ namespace OutWeb.Modules.Manage
                     this.ListFilter(filterModel.QueryString, ref data);
                 }
 
-                //發佈日期搜尋
-                if (!string.IsNullOrEmpty(filterModel.PublishDate))
-                {
-                    this.ListDateFilter(filterModel.PublishDate, ref data);
-                }
-
-                //首頁顯示
-                if (!string.IsNullOrEmpty(filterModel.DisplayForHomePage))
-                {
-                    this.ListStatusFilter(filterModel.DisplayForHomePage, "DisplayHome", ref data);
-                }
-
                 //上下架
                 if (!string.IsNullOrEmpty(filterModel.Disable))
                 {
-                    this.ListStatusFilter(filterModel.Disable, "Disable", ref data);
+                    this.ListStatusFilter(filterModel.Disable, ref data);
                 }
 
                 //排序
                 this.ListSort(filterModel.SortColumn, ref data);
+
                 PaginationResult pagination;
                 //分頁
                 this.ListPageList(filterModel.CurrentPage, ref data, out pagination);
@@ -101,33 +106,31 @@ namespace OutWeb.Modules.Manage
             return result;
         }
 
-        public int DoSaveData(FormCollection form, int? ID = null)
+        public int DoSaveData(BannerDataModel model)
         {
-            NEWS saveModel;
-
-            if (ID == 0)
+            BANNER saveModel;
+            ImageRepository imgepository = new ImageRepository();
+            FileRepository fileRepository = new FileRepository();
+            if (model.ID == 0)
             {
-                saveModel = new NEWS();
+                saveModel = new BANNER();
                 saveModel.BUD_ID = UserProvider.Instance.User.ID;
                 saveModel.BUD_DT = DateTime.UtcNow.AddHours(8);
             }
             else
             {
-                saveModel = this.DB.NEWS.Where(s => s.ID == ID).FirstOrDefault();
+                saveModel = this.DB.BANNER.Where(s => s.ID == model.ID).FirstOrDefault();
             }
-            saveModel.TITLE = form["title"];
-            saveModel.HOME_PAGE_DISPLAY = form["disHome"] == "on" ? true : false;
-            saveModel.DISABLE = form["disable"] == null ? false : Convert.ToBoolean(form["disable"]);
-            saveModel.SQ = form["sortIndex"] == null ? 1 : Convert.ToDouble(form["sortIndex"]);
-            saveModel.CONTENT = form["contenttext"];
-            saveModel.PUB_DT_STR = form["publishDate"];
-            saveModel.UPT_DT = DateTime.UtcNow.AddHours(8);
+            saveModel.TITLE = model.Title;
+            saveModel.SQ = model.Sort;
+            saveModel.DISABLE = model.Disable;
             saveModel.UPT_ID = UserProvider.Instance.User.ID;
+            saveModel.UPT_DT = DateTime.UtcNow.AddHours(8);
             PublicMethodRepository.FilterXss(saveModel);
 
-            if (ID == 0)
+            if (model.ID == 0)
             {
-                this.DB.NEWS.Add(saveModel);
+                this.DB.BANNER.Add(saveModel);
             }
             else
             {
@@ -144,6 +147,24 @@ namespace OutWeb.Modules.Manage
             }
             int identityId = (int)saveModel.ID;
 
+            #region 檔案處理
+
+
+            FilesModel fileModel = new FilesModel()
+            {
+                ActionName = "Banner",
+                ID = identityId,
+                OldFileIds = model.OldFilesId
+            };
+
+
+
+            fileRepository.UploadFile("Post", fileModel, model.Files, "M");
+            fileRepository.SaveFileToDB(fileModel);
+
+
+            #endregion 檔案處理
+
             return identityId;
         }
 
@@ -152,38 +173,22 @@ namespace OutWeb.Modules.Manage
         /// </summary>
         /// <param name="filterStr"></param>
         /// <param name="data"></param>
-        private void ListFilter(string filterStr, ref List<NEWS> data)
+        private void ListFilter(string filterStr, ref List<BANNER> data)
         {
             var r = data.Where(s => s.TITLE.Contains(filterStr)).ToList();
             data = r;
         }
 
         /// <summary>
-        /// 日期條件搜尋
+        /// 前台顯示搜尋
         /// </summary>
         /// <param name="filterStr"></param>
         /// <param name="data"></param>
-        private void ListDateFilter(string publishdate, ref List<NEWS> data)
+        private void ListStatusFilter(string disable, ref List<BANNER> data)
         {
-            var r = data.Where(s => s.PUB_DT_STR == publishdate).ToList();
-            data = r;
-        }
+            List<BANNER> result = null;
 
-        /// <summary>
-        /// 狀態搜尋
-        /// </summary>
-        /// <param name="filterStr"></param>
-        /// <param name="data"></param>
-        private void ListStatusFilter(string filter, string displayMode, ref List<NEWS> data)
-        {
-            List<NEWS> result = null;
-            bool filterBooolean = Convert.ToBoolean(filter);
-            if (displayMode == "DisplayHome")
-            {
-                result = data.Where(s => s.HOME_PAGE_DISPLAY == filterBooolean).ToList();
-            }
-            else if (displayMode == "Disable")
-                result = data.Where(s => s.DISABLE == filterBooolean).ToList();
+            result = data.Where(s => s.DISABLE == Convert.ToBoolean(disable)).ToList();
             data = result;
         }
 
@@ -192,7 +197,7 @@ namespace OutWeb.Modules.Manage
         /// </summary>
         /// <param name="currentPage"></param>
         /// <param name="data"></param>
-        private void ListPageList(int currentPage, ref List<NEWS> data, out PaginationResult pagination)
+        private void ListPageList(int currentPage, ref List<BANNER> data, out PaginationResult pagination)
         {
             int pageSize = (int)PageSizeConfig.SIZE10;
             int startRow = (currentPage - 1) * pageSize;
@@ -214,24 +219,16 @@ namespace OutWeb.Modules.Manage
         /// </summary>
         /// <param name="sortCloumn"></param>
         /// <param name="data"></param>
-        private void ListSort(string sortCloumn, ref List<NEWS> data)
+        private void ListSort(string sortCloumn, ref List<BANNER> data)
         {
             switch (sortCloumn)
             {
-                case "sortPublishDate/asc":
-                    data = data.OrderBy(o => o.PUB_DT_STR).ThenByDescending(o => o.SQ).ToList();
-                    break;
-
-                case "sortPublishDate/desc":
-                    data = data.OrderByDescending(o => o.PUB_DT_STR).ThenByDescending(o => o.SQ).ToList();
-                    break;
-
                 case "sortIndex/asc":
-                    data = data.OrderBy(o => o.SQ).ThenByDescending(g => g.PUB_DT_STR).ToList();
+                    data = data.OrderBy(o => o.SQ).ThenByDescending(g => g.BUD_DT).ToList();
                     break;
 
                 case "sortIndex/desc":
-                    data = data.OrderByDescending(o => o.SQ).ThenByDescending(g => g.PUB_DT_STR).ToList();
+                    data = data.OrderByDescending(o => o.SQ).ThenByDescending(g => g.BUD_DT).ToList();
                     break;
 
                 case "sortDisable/asc":
@@ -242,16 +239,8 @@ namespace OutWeb.Modules.Manage
                     data = data.OrderByDescending(o => o.DISABLE).ThenByDescending(g => g.SQ).ToList();
                     break;
 
-                case "sortDisplayForHome/asc":
-                    data = data.OrderBy(o => o.HOME_PAGE_DISPLAY).ThenByDescending(g => g.SQ).ToList();
-                    break;
-
-                case "sortDisplayForHome/desc":
-                    data = data.OrderByDescending(o => o.HOME_PAGE_DISPLAY).ThenByDescending(g => g.SQ).ToList();
-                    break;
-
                 default:
-                    data = data.OrderByDescending(o => o.PUB_DT_STR).ThenByDescending(g => g.SQ).ToList();
+                    data = data.OrderByDescending(o => o.BUD_DT).ThenByDescending(g => g.SQ).ToList();
                     break;
             }
         }

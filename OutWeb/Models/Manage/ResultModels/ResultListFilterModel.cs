@@ -1,9 +1,9 @@
-﻿namespace OutWeb.Models.Manage.ManageNewsModels
+﻿namespace OutWeb.Models.Manage.ResultModels
 {
     /// <summary>
     /// 最新消息列表資過濾條件模型
     /// </summary>
-    public class NewsListFilterModel
+    public class ResultListFilterModel
     {
         /// <summary>
         /// 選取頁面
@@ -14,10 +14,7 @@
         /// 查詢狀態
         /// </summary>
         public string Status { get; set; }
-        /// <summary>
-        /// 分類
-        /// </summary>
-        public string Type { get; set; }
+
 
         /// <summary>
         /// 查詢關鍵字
@@ -37,9 +34,9 @@
         public string PublishDate { get; set; }
 
         /// <summary>
-        /// 前台顯示
+        /// 上下架
         /// </summary>
-        public string DisplayForFrontEnd { get; set; }
+        public string Disable { get; set; }
 
         /// <summary>
         /// 首頁顯示

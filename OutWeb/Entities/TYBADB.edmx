@@ -5,6 +5,19 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="TYBAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BANNER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DISABLE" Type="bit" Nullable="false" />
+          <Property Name="TITLE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SQ" Type="float" Nullable="false" />
+          <Property Name="UPT_DT" Type="datetime" Nullable="false" />
+          <Property Name="UPT_ID" Type="int" Nullable="false" />
+          <Property Name="BUD_DT" Type="datetime" Nullable="false" />
+          <Property Name="BUD_ID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="DLFILES">
           <Key>
             <PropertyRef Name="ID" />
@@ -18,6 +31,14 @@
           <Property Name="UPT_ID" Type="int" Nullable="false" />
           <Property Name="BUD_DT" Type="datetime" Nullable="false" />
           <Property Name="BUD_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EDITOR">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MAP_SITE" Type="nvarchar" MaxLength="20" />
+          <Property Name="CONTENT" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="FILEBASE">
           <Key>
@@ -36,9 +57,59 @@
           <Property Name="FILE_TP" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="URL_PATH" Type="nvarchar" MaxLength="500" Nullable="false" />
         </EntityType>
+        <EntityType Name="NEWS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PUB_DT_STR" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="TITLE" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CONTENT" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SQ" Type="float" Nullable="false" />
+          <Property Name="DISABLE" Type="bit" Nullable="false" />
+          <Property Name="HOME_PAGE_DISPLAY" Type="bit" Nullable="false" />
+          <Property Name="BUD_DT" Type="datetime" />
+          <Property Name="BUD_ID" Type="int" Nullable="false" />
+          <Property Name="UPT_DT" Type="datetime" Nullable="false" />
+          <Property Name="UPT_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RESULT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PUB_DT_STR" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="TITLE" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CONTENT" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SQ" Type="float" Nullable="false" />
+          <Property Name="DISABLE" Type="bit" Nullable="false" />
+          <Property Name="BUD_DT" Type="datetime" />
+          <Property Name="BUD_ID" Type="int" Nullable="false" />
+          <Property Name="UPT_DT" Type="datetime" Nullable="false" />
+          <Property Name="UPT_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USR_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="USR_PWD" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BUD_DT" Type="datetime" Nullable="false" />
+          <Property Name="BUD_ID" Type="int" Nullable="false" />
+          <Property Name="UPD_DT" Type="datetime" Nullable="false" />
+          <Property Name="UPD_ID" Type="int" Nullable="false" />
+          <Property Name="USR_NM" Type="nvarchar" MaxLength="50" />
+          <Property Name="DISABLE" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="TYBAModelStoreContainer">
+          <EntitySet Name="BANNER" EntityType="Self.BANNER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DLFILES" EntityType="Self.DLFILES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EDITOR" EntityType="Self.EDITOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FILEBASE" EntityType="Self.FILEBASE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NEWS" EntityType="Self.NEWS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RESULT" EntityType="Self.RESULT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -47,6 +118,11 @@
         <EntityContainer Name="TYBADB" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="DLFILES" EntityType="TYBAModel.DLFILES" />
           <EntitySet Name="FILEBASE" EntityType="TYBAModel.FILEBASE" />
+          <EntitySet Name="BANNER" EntityType="TYBAModel.BANNER" />
+          <EntitySet Name="EDITOR" EntityType="TYBAModel.EDITOR" />
+          <EntitySet Name="NEWS" EntityType="TYBAModel.NEWS" />
+          <EntitySet Name="RESULT" EntityType="TYBAModel.RESULT" />
+          <EntitySet Name="USER" EntityType="TYBAModel.USER" />
         </EntityContainer>
         <EntityType Name="DLFILES">
           <Key>
@@ -78,6 +154,72 @@
           <Property Name="MAP_SITE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FILE_TP" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="URL_PATH" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BANNER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DISABLE" Type="Boolean" Nullable="false" />
+          <Property Name="TITLE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SQ" Type="Double" Nullable="false" />
+          <Property Name="UPT_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPT_ID" Type="Int32" Nullable="false" />
+          <Property Name="BUD_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BUD_ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EDITOR">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MAP_SITE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="NEWS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PUB_DT_STR" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TITLE" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CONTENT" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SQ" Type="Double" Nullable="false" />
+          <Property Name="DISABLE" Type="Boolean" Nullable="false" />
+          <Property Name="HOME_PAGE_DISPLAY" Type="Boolean" Nullable="false" />
+          <Property Name="BUD_DT" Type="DateTime" Precision="3" />
+          <Property Name="BUD_ID" Type="Int32" Nullable="false" />
+          <Property Name="UPT_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPT_ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RESULT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PUB_DT_STR" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TITLE" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CONTENT" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SQ" Type="Double" Nullable="false" />
+          <Property Name="DISABLE" Type="Boolean" Nullable="false" />
+          <Property Name="BUD_DT" Type="DateTime" Precision="3" />
+          <Property Name="BUD_ID" Type="Int32" Nullable="false" />
+          <Property Name="UPT_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPT_ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USR_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USR_PWD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BUD_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BUD_ID" Type="Int32" Nullable="false" />
+          <Property Name="UPD_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USR_NM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DISABLE" Type="Boolean" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -114,6 +256,77 @@
                 <ScalarProperty Name="FILE_PATH" ColumnName="FILE_PATH" />
                 <ScalarProperty Name="FILE_REL_NM" ColumnName="FILE_REL_NM" />
                 <ScalarProperty Name="FILE_RANDOM_NM" ColumnName="FILE_RANDOM_NM" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BANNER">
+            <EntityTypeMapping TypeName="TYBAModel.BANNER">
+              <MappingFragment StoreEntitySet="BANNER">
+                <ScalarProperty Name="BUD_ID" ColumnName="BUD_ID" />
+                <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
+                <ScalarProperty Name="UPT_ID" ColumnName="UPT_ID" />
+                <ScalarProperty Name="UPT_DT" ColumnName="UPT_DT" />
+                <ScalarProperty Name="SQ" ColumnName="SQ" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="DISABLE" ColumnName="DISABLE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EDITOR">
+            <EntityTypeMapping TypeName="TYBAModel.EDITOR">
+              <MappingFragment StoreEntitySet="EDITOR">
+                <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
+                <ScalarProperty Name="MAP_SITE" ColumnName="MAP_SITE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NEWS">
+            <EntityTypeMapping TypeName="TYBAModel.NEWS">
+              <MappingFragment StoreEntitySet="NEWS">
+                <ScalarProperty Name="UPT_ID" ColumnName="UPT_ID" />
+                <ScalarProperty Name="UPT_DT" ColumnName="UPT_DT" />
+                <ScalarProperty Name="BUD_ID" ColumnName="BUD_ID" />
+                <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
+                <ScalarProperty Name="HOME_PAGE_DISPLAY" ColumnName="HOME_PAGE_DISPLAY" />
+                <ScalarProperty Name="DISABLE" ColumnName="DISABLE" />
+                <ScalarProperty Name="SQ" ColumnName="SQ" />
+                <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="PUB_DT_STR" ColumnName="PUB_DT_STR" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RESULT">
+            <EntityTypeMapping TypeName="TYBAModel.RESULT">
+              <MappingFragment StoreEntitySet="RESULT">
+                <ScalarProperty Name="UPT_ID" ColumnName="UPT_ID" />
+                <ScalarProperty Name="UPT_DT" ColumnName="UPT_DT" />
+                <ScalarProperty Name="BUD_ID" ColumnName="BUD_ID" />
+                <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
+                <ScalarProperty Name="DISABLE" ColumnName="DISABLE" />
+                <ScalarProperty Name="SQ" ColumnName="SQ" />
+                <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="PUB_DT_STR" ColumnName="PUB_DT_STR" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USER">
+            <EntityTypeMapping TypeName="TYBAModel.USER">
+              <MappingFragment StoreEntitySet="USER">
+                <ScalarProperty Name="DISABLE" ColumnName="DISABLE" />
+                <ScalarProperty Name="USR_NM" ColumnName="USR_NM" />
+                <ScalarProperty Name="UPD_ID" ColumnName="UPD_ID" />
+                <ScalarProperty Name="UPD_DT" ColumnName="UPD_DT" />
+                <ScalarProperty Name="BUD_ID" ColumnName="BUD_ID" />
+                <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
+                <ScalarProperty Name="USR_PWD" ColumnName="USR_PWD" />
+                <ScalarProperty Name="USR_ID" ColumnName="USR_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

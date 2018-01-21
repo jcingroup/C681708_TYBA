@@ -16,7 +16,7 @@
 
 <h3 class="title">@ViewBag.Crumb <small class="oi" data-glyph="tags">編輯</small></h3>
 
-@using (Html.BeginForm("NewsEdit", "_SysAdm", FormMethod.Post, new { id = "formManageNewsData", @class = "form-list" , enctype = "multipart/form-data" }))
+@using (Html.BeginForm("NewsSave", "_SysAdm", FormMethod.Post, new { id = "formManageNewsData", @class = "form-list" , enctype = "multipart/form-data" }))
 {
     Html.RenderPartial("_NewsDataPartial", Model);
 }

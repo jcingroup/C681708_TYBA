@@ -3,9 +3,9 @@ using OutWeb.Authorize;
 using OutWeb.Entities;
 using OutWeb.Enums;
 using OutWeb.Exceptions;
+using OutWeb.Models.Manage.BannerModels;
 using OutWeb.Models.Manage.CasesModels;
 using OutWeb.Models.Manage.DownloadModels;
-using OutWeb.Models.Manage.EditorModels;
 using OutWeb.Models.Manage.IPModels;
 using OutWeb.Models.Manage.ManageBookModels;
 using OutWeb.Models.Manage.ManageCourseModels;
@@ -16,6 +16,7 @@ using OutWeb.Models.Manage.ManageTrainApplyModels.TrainApplyDetailsModels;
 using OutWeb.Models.Manage.ManageTrainModels;
 using OutWeb.Models.Manage.QuestionnairesModels;
 using OutWeb.Models.Manage.QuestionnaireStatisticsModels;
+using OutWeb.Models.Manage.ResultModels;
 using OutWeb.Models.Manage.TypeManageModels;
 using OutWeb.Modules.Manage;
 using OutWeb.Provider;
@@ -270,211 +271,6 @@ namespace OutWeb.Controllers
         }
 
         #endregion 能源 分類管理
-
-        #region 能源 國內外新聞
-
-        [HttpGet]
-        public ActionResult NewsList(int? page, string qry, string sort, string fSt, string hSt, string pDate, string lang, int? type)
-        {
-            Language language = PublicMethodRepository.CurrentLanguageEnum;
-            NewsListViewModel model = new NewsListViewModel();
-            model.Filter.CurrentPage = page ?? 1;
-            model.Filter.QueryString = qry ?? string.Empty;
-            model.Filter.SortColumn = sort ?? string.Empty;
-            model.Filter.DisplayForFrontEnd = fSt ?? string.Empty;
-            model.Filter.DisplayForHomePage = hSt ?? string.Empty;
-            model.Filter.PublishDate = pDate;
-            model.Filter.Type = type == null ? null : type.ToString();
-
-            using (var module = ListFactoryService.Create(Enums.ListMethodType.NEWS))
-            {
-                model.Result = (module.DoGetList(model.Filter, language) as NewsListResultModel);
-            }
-
-            //分類下拉選單
-            try
-            {
-                TypeManageModule typeModule = new TypeManageModule();
-                SelectList typeList = typeModule.CreateTypeManageDropList(type, true, "News");
-                ViewBag.TypeList = typeList;
-                typeModule.Dispose();
-            }
-            catch (TypeIsNotCreateException typeEx)
-            {
-                TempData["TypeError"] = typeEx.Message;
-            }
-            return View(model);
-        }
-
-        [HttpGet]
-        public ActionResult NewsAdd()
-        {
-            //產品分類下拉選單
-            //SelectList typeList = typeModule.CreateGeneralTypeDropList(null, false);
-            //ViewBag.TypeList = typeList;
-            NewsDetailsDataModel defaultModel = new NewsDetailsDataModel();
-            defaultModel.Data.發稿時間 = DateTime.UtcNow.AddHours(8);
-            defaultModel.Data.發稿人 = "系統管理員";
-            defaultModel.Data.顯示狀態 = true;
-            //產品分類下拉選單
-            TypeManageModule typeModule = new TypeManageModule();
-            SelectList typeList = typeModule.CreateTypeManageDropList(0, false, "News");
-            ViewBag.TypeList = typeList;
-            typeModule.Dispose();
-            return View(defaultModel);
-        }
-
-        [ValidateInput(false)]
-        [HttpPost]
-        public ActionResult NewsAdd(FormCollection form, List<HttpPostedFileBase> images, List<HttpPostedFileBase> files)
-        {
-            string langCode = form["lang"] ?? PublicMethodRepository.CurrentLanguageCode;
-            Language language = PublicMethodRepository.GetLanguageEnumByCode(langCode);
-            int identityId = 0;
-            using (var module = ListFactoryService.Create(Enums.ListMethodType.NEWS))
-            {
-                identityId = module.DoSaveData(form, language, null, images, files);
-            }
-            var redirectUrl = new UrlHelper(Request.RequestContext).Action("NewsEdit", "_SysAdm", new { ID = identityId });
-            return Json(new { Url = redirectUrl });
-        }
-
-        [HttpGet]
-        public ActionResult NewsEdit(int? ID)
-        {
-            if (!ID.HasValue)
-                return RedirectToAction("NewsList");
-            NewsDetailsDataModel model;
-            using (var module = ListFactoryService.Create(Enums.ListMethodType.NEWS))
-            {
-                model = (module.DoGetDetailsByID((int)ID) as NewsDetailsDataModel);
-            }
-            if (model == null)
-                return RedirectToAction("Login", "SignIn");
-            //取圖檔
-            ImgModule imgModule = new ImgModule();
-            model.ImagesData = imgModule.GetImages((int)model.Data.主索引, "News", "M");
-            //取檔案
-            FileModule fileModule = new FileModule();
-            model.FilesData = fileModule.GetFiles((int)model.Data.主索引, "News", "M");
-            //產品分類下拉選單
-            TypeManageModule typeModule = new TypeManageModule();
-            SelectList typeList = typeModule.CreateTypeManageDropList(model.Data.分類代碼, false, "News");
-            ViewBag.TypeList = typeList;
-
-            imgModule.Dispose();
-            fileModule.Dispose();
-            typeModule.Dispose();
-            return View(model);
-        }
-
-        [ValidateInput(false)]
-        [HttpPost]
-        public ActionResult NewsEdit(FormCollection form, List<HttpPostedFileBase> images, List<HttpPostedFileBase> files)
-        {
-            string langCode = form["lang"] ?? PublicMethodRepository.CurrentLanguageCode;
-            Language language = PublicMethodRepository.GetLanguageEnumByCode(langCode);
-            int? ID = Convert.ToInt32(form["newsID"]);
-            int identityId = 0;
-            using (var module = ListFactoryService.Create(Enums.ListMethodType.NEWS))
-            {
-                identityId = module.DoSaveData(form, language, ID, images, files);
-            }
-            var redirectUrl = new UrlHelper(Request.RequestContext).Action("NewsEdit", "_SysAdm", new { ID = identityId });
-            return Json(new { Url = redirectUrl });
-        }
-
-        [HttpPost]
-        public JsonResult NewsDelete(int? ID)
-        {
-            bool success = true;
-            string messages = string.Empty;
-            try
-            {
-                using (var module = ListFactoryService.Create(Enums.ListMethodType.NEWS))
-                {
-                    module.DoDeleteByID((int)ID);
-                }
-                messages = "刪除成功";
-            }
-            catch (Exception ex)
-            {
-                success = false;
-                messages = ex.Message;
-            }
-            var resultJson = Json(new { success = success, messages = messages });
-            return resultJson;
-        }
-
-        #endregion 能源 國內外新聞
-
-        #region 能源 能源查核申報系統
-
-        [HttpGet]
-        public ActionResult EnergyAudit()
-        {
-            EnergyAuditModel model = new EnergyAuditModel() { ID = 1, MappingActionName = "EnergyAudit" };
-            EditorModule editorModule = new EditorModule();
-            model = editorModule.DoGetDetails(ref model);
-            //取圖檔
-            ImgModule imgModule = new ImgModule();
-            model.ImagesData = imgModule.GetImages((int)model.ID, "EnergyAudit", "M");
-            //取檔案
-            FileModule fileModule = new FileModule();
-            model.FilesData = fileModule.GetFiles((int)model.ID, "EnergyAudit", "M");
-            editorModule.Dispose();
-            imgModule.Dispose();
-            fileModule.Dispose();
-            return View(model);
-        }
-
-        [ValidateInput(false)]
-        [HttpPost]
-        public ActionResult EnergyAudit(FormCollection form, List<HttpPostedFileBase> files)
-        {
-            EnergyAuditModel model = new EnergyAuditModel();
-            EditorModule editorModule = new EditorModule();
-            editorModule.DoSaveData(form, files);
-            editorModule.Dispose();
-            var redirectUrl = new UrlHelper(Request.RequestContext).Action("EnergyAudit", "_SysAdm");
-            return Json(new { Url = redirectUrl });
-        }
-
-        #endregion 能源 能源查核申報系統
-
-        #region 能源 能校指標申報系統
-
-        [HttpGet]
-        public ActionResult EnergyIndex()
-        {
-            EnergyIndexModel model = new EnergyIndexModel() { ID = 1, MappingActionName = "EnergyIndex" };
-            EditorModule editorModule = new EditorModule();
-            model = editorModule.DoGetDetails(ref model);
-            //取圖檔
-            ImgModule imgModule = new ImgModule();
-            model.ImagesData = imgModule.GetImages((int)model.ID, "EnergyIndex", "M");
-            //取檔案
-            FileModule fileModule = new FileModule();
-            model.FilesData = fileModule.GetFiles((int)model.ID, "EnergyIndex", "M");
-            editorModule.Dispose();
-            imgModule.Dispose();
-            fileModule.Dispose();
-            return View(model);
-        }
-
-        [ValidateInput(false)]
-        [HttpPost]
-        public ActionResult EnergyIndex(FormCollection form, List<HttpPostedFileBase> files)
-        {
-            EnergyAuditModel model = new EnergyAuditModel();
-            EditorModule editorModule = new EditorModule();
-            editorModule.DoSaveData(form, files);
-            editorModule.Dispose();
-            var redirectUrl = new UrlHelper(Request.RequestContext).Action("EnergyIndex", "_SysAdm");
-            return Json(new { Url = redirectUrl });
-        }
-
-        #endregion 能源 能校指標申報系統
 
         #region 能源 線上課程
 
@@ -1443,37 +1239,6 @@ namespace OutWeb.Controllers
 
         #endregion 能源 出版品分類
 
-        #region 修改密碼
-
-        /// 管理員密碼變更
-        ///
-        [HttpGet]
-        public ActionResult ChangePW()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult ChangePW(FormCollection form)
-        {
-            SignInModule signInModule = new SignInModule();
-            try
-            {
-                signInModule.ChangePassword(form);
-                ViewBag.Message = "success";
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-            }
-            finally
-            {
-                signInModule.Dispose();
-            }
-            return View();
-        }
-
-        #endregion 修改密碼
 
         #region 登入來源
 
@@ -1494,7 +1259,7 @@ namespace OutWeb.Controllers
 
         #region 籃委會
 
-        // 檔案下載-demo
+        // 檔案下載
         public ActionResult DownloadList(int? page, string qry, string sort, string disable, string pDate)
         {
             DownLoadListViewModel model = new DownLoadListViewModel();
@@ -1514,10 +1279,11 @@ namespace OutWeb.Controllers
 
         public ActionResult DownloadAdd()
         {
-            DownloadDetailsModel model = new DownloadDetailsModel();
-            model.Disable = false;
-            model.Sort = 1;
-            return View(model);
+            DownloadDetailsModel defaultModel = new DownloadDetailsModel();
+            defaultModel.Disable = false;
+            defaultModel.PublishDateStr = DateTime.UtcNow.AddHours(8).ToString("yyyy\\/MM\\/dd");
+            defaultModel.Sort = 1;
+            return View(defaultModel);
         }
 
         public ActionResult DownloadEdit(int? ID)
@@ -1533,7 +1299,7 @@ namespace OutWeb.Controllers
             model.Files = fileModule.GetFiles((int)model.ID, "Download", "F");
             return View(model);
         }
-        
+
         [HttpPost]
         public ActionResult DownloadSave(DownloadDataModel model)
         {
@@ -1571,6 +1337,297 @@ namespace OutWeb.Controllers
             }
             var resultJson = Json(new { success = success, messages = messages });
             return resultJson;
+        }
+
+        // 首頁banner
+        public ActionResult BannerList(int? page, string qry, string sort, string disable, string pDate)
+        {
+            BannerListViewModel model = new BannerListViewModel();
+            model.Filter.CurrentPage = page ?? 1;
+            model.Filter.QueryString = qry ?? string.Empty;
+            model.Filter.SortColumn = sort ?? string.Empty;
+            model.Filter.Disable = disable ?? string.Empty;
+            model.Filter.PublishDate = pDate;
+
+            using (BannerModule module = new BannerModule())
+            {
+                model.Result = module.DoGetList(model.Filter);
+            }
+
+            return View(model);
+        }
+
+        public ActionResult BannerAdd()
+        {
+            BannerDetailsModel model = new BannerDetailsModel();
+            model.Disable = false;
+            model.Sort = 1;
+            return View(model);
+        }
+
+        public ActionResult BannerEdit(int? ID)
+        {
+            if (!ID.HasValue)
+                return RedirectToAction("BannerList");
+            BannerDetailsModel model = new BannerDetailsModel();
+            using (BannerModule module = new BannerModule())
+            {
+                model = module.DoGetDetailsByID((int)ID);
+            }
+            FileModule fileModule = new FileModule();
+            model.Files = fileModule.GetFiles((int)model.ID, "Banner", "F");
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult BannerSave(BannerDataModel model)
+        {
+            int id = 0;
+            using (BannerModule module = new BannerModule())
+            {
+                if (model.OldFilesId.Count == 0 && model.Files.Count == 0)
+                {
+                    TempData["UndefinedFile"] = "請上傳檔案";
+                    return RedirectToAction("BannerEdit", new { ID = (int?)null });
+                }
+                id = module.DoSaveData(model);
+            }
+            var redirectUrl = new UrlHelper(Request.RequestContext).Action("BannerEdit", "_SysAdm", new { ID = id });
+            return Json(new { Url = redirectUrl });
+        }
+
+        [HttpPost]
+        public JsonResult BannerDelete(int? ID)
+        {
+            bool success = true;
+            string messages = string.Empty;
+            try
+            {
+                using (BannerModule module = new BannerModule())
+                {
+                    module.DoDeleteByID((int)ID);
+                }
+                messages = "刪除成功";
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                messages = ex.Message;
+            }
+            var resultJson = Json(new { success = success, messages = messages });
+            return resultJson;
+        }
+
+        // 本會簡介
+        [HttpGet]
+        public ActionResult AboutUs()
+        {
+            string content = string.Empty;
+            using (EditorModule editorModule = new EditorModule())
+            {
+                content = editorModule.GetContent();
+            }
+            ViewData["Content"] = content;
+            return View();
+        }
+
+        [ValidateInput(false)]
+        [HttpPost]
+        public ActionResult AboutUs(FormCollection form)
+        {
+            string content = form["contenttext"];
+            if (form == null)
+                return View();
+            EditorModule editorModule = new EditorModule();
+            editorModule.SaveContent(form["contenttext"].ToString());
+            editorModule.Dispose();
+            return RedirectToAction("AboutUs");
+        }
+
+        //比賽訊息
+        [HttpGet]
+        public ActionResult NewsList(int? page, string qry, string sort, string disHome, string disable, string pDate)
+        {
+            NewsListViewModel model = new NewsListViewModel();
+            model.Filter.CurrentPage = page ?? 1;
+            model.Filter.QueryString = qry ?? string.Empty;
+            model.Filter.SortColumn = sort ?? string.Empty;
+            model.Filter.Disable = disable ?? string.Empty;
+            model.Filter.DisplayForHomePage = disHome ?? string.Empty;
+            model.Filter.PublishDate = pDate ?? string.Empty;
+
+            using (var module = new NewsModule())
+            {
+                model.Result = module.DoGetList(model.Filter);
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult NewsAdd()
+        {
+            NewsDetailsDataModel defaultModel = new NewsDetailsDataModel();
+            defaultModel.Data.PUB_DT_STR = DateTime.UtcNow.AddHours(8).ToString("yyyy\\/MM\\/dd");
+            defaultModel.Data.DISABLE = false;
+            defaultModel.Data.SQ = 1;
+            defaultModel.Data.HOME_PAGE_DISPLAY = true;
+            return View(defaultModel);
+        }
+
+        public ActionResult NewsEdit(int? ID)
+        {
+            if (!ID.HasValue)
+                return RedirectToAction("NewsList");
+
+            NewsDetailsDataModel model = new NewsDetailsDataModel();
+            using (var module = new NewsModule())
+            {
+                model = module.DoGetDetailsByID((int)ID);
+            }
+
+            return View(model);
+        }
+
+        [ValidateInput(false)]
+        [HttpPost]
+        public ActionResult NewsSave(FormCollection form)
+        {
+            int? ID = Convert.ToInt32(form["pageId"]);
+            int identityId = 0;
+            using (var module = new NewsModule())
+            {
+                identityId = module.DoSaveData(form, ID);
+            }
+            return RedirectToAction("NewsEdit", new { ID = identityId });
+        }
+
+        [HttpPost]
+        public JsonResult NewsDelete(int? ID)
+        {
+            bool success = true;
+            string messages = string.Empty;
+            try
+            {
+                using (var module = new NewsModule())
+                {
+                    module.DoDeleteByID((int)ID);
+                }
+                messages = "刪除成功";
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                messages = ex.Message;
+            }
+            var resultJson = Json(new { success = success, messages = messages });
+            return resultJson;
+        }
+
+        // 比賽成績公告
+        [HttpGet]
+        public ActionResult ResultList(int? page, string qry, string sort, string disHome, string disable, string pDate)
+        {
+            ResultListViewModel model = new ResultListViewModel();
+            model.Filter.CurrentPage = page ?? 1;
+            model.Filter.QueryString = qry ?? string.Empty;
+            model.Filter.SortColumn = sort ?? string.Empty;
+            model.Filter.Disable = disable ?? string.Empty;
+            model.Filter.DisplayForHomePage = disHome ?? string.Empty;
+            model.Filter.PublishDate = pDate ?? string.Empty;
+
+            using (var module = new ResultModule())
+            {
+                model.Result = module.DoGetList(model.Filter);
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult ResultAdd()
+        {
+            ResultDetailsDataModel defaultModel = new ResultDetailsDataModel();
+            defaultModel.Data.PUB_DT_STR = DateTime.UtcNow.AddHours(8).ToString("yyyy\\/MM\\/dd");
+            defaultModel.Data.DISABLE = false;
+            defaultModel.Data.SQ = 1;
+            return View(defaultModel);
+        }
+
+        public ActionResult ResultEdit(int? ID)
+        {
+            if (!ID.HasValue)
+                return RedirectToAction("ResultList");
+
+            ResultDetailsDataModel model = new ResultDetailsDataModel();
+            using (var module = new ResultModule())
+            {
+                model = module.DoGetDetailsByID((int)ID);
+            }
+
+            return View(model);
+        }
+
+        [ValidateInput(false)]
+        [HttpPost]
+        public ActionResult ResultSave(FormCollection form)
+        {
+            int? ID = Convert.ToInt32(form["pageId"]);
+            int identityId = 0;
+            using (var module = new ResultModule())
+            {
+                identityId = module.DoSaveData(form, ID);
+            }
+            return RedirectToAction("ResultEdit", new { ID = identityId });
+        }
+
+        [HttpPost]
+        public JsonResult ResultDelete(int? ID)
+        {
+            bool success = true;
+            string messages = string.Empty;
+            try
+            {
+                using (var module = new ResultModule())
+                {
+                    module.DoDeleteByID((int)ID);
+                }
+                messages = "刪除成功";
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                messages = ex.Message;
+            }
+            var resultJson = Json(new { success = success, messages = messages });
+            return resultJson;
+        }
+
+        //修改密碼
+        [HttpGet]
+        public ActionResult ChangePW()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePW(FormCollection form)
+        {
+            SignInModule signInModule = new SignInModule();
+            try
+            {
+                signInModule.ChangePassword(form);
+                ViewBag.Message = "success";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+            }
+            finally
+            {
+                signInModule.Dispose();
+            }
+            return View();
         }
 
         #endregion 籃委會

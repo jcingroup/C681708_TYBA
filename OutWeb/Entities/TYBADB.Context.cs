@@ -27,5 +27,10 @@ namespace OutWeb.Entities
     
         public virtual DbSet<DLFILES> DLFILES { get; set; }
         public virtual DbSet<FILEBASE> FILEBASE { get; set; }
+        public virtual DbSet<BANNER> BANNER { get; set; }
+        public virtual DbSet<EDITOR> EDITOR { get; set; }
+        public virtual DbSet<NEWS> NEWS { get; set; }
+        public virtual DbSet<RESULT> RESULT { get; set; }
+        public virtual DbSet<USER> USER { get; set; }
     }
 }

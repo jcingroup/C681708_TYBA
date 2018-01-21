@@ -4,15 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace OutWeb.Models.Manage.ManageNewsModels
+namespace OutWeb.Models.Manage.BannerModels
 {
-    /// <summary>
-    /// 最新消息列表資回傳模型
-    /// </summary>
-    public class NewsListResultModel: IPaginationModel
+    public class BannerListResultModel : IPaginationModel
     {
-        List<新聞> m_data = new List<新聞>();
-        public List<新聞> Data { get { return this.m_data; } set { this.m_data = value; } }
+        List<BANNER> m_data = new List<BANNER>();
+        public List<BANNER> Data { get { return m_data; } set { m_data = value; } }
 
         /// <summary>
         /// 分頁模型

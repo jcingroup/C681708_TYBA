@@ -15,9 +15,9 @@ namespace OutWeb.Modules.Manage
 
     public class SignInModule : IDisposable
     {
-        private DBEnergy m_DB = new DBEnergy();
+        private TYBADB m_DB = new TYBADB();
 
-        private DBEnergy DB
+        private TYBADB DB
         { get { return this.m_DB; } set { this.m_DB = value; } }
 
 
@@ -29,15 +29,14 @@ namespace OutWeb.Modules.Manage
         public LoginUserInfoModel GetUserBySignID(SignInModel userModel)
         {
             LoginUserInfoModel userInfo =
-            this.DB.人員
-                .Where(s => s.帳號 == userModel.Account && s.密碼 == userModel.Password)
+            this.DB.USER
+                .Where(s => s.USR_ID == userModel.Account && s.USR_PWD == userModel.Password)
                          .Select(s => new LoginUserInfoModel()
                          {
-                             ID = s.人員代碼,
-                             UserAccount = s.帳號,
-                             UserName = s.姓名,
-                             IsDisabled = s.停權,
-                             UnitCode = (int)s.單位代碼,
+                             ID = s.ID,
+                             UserAccount = s.USR_ID,
+                             UserName = s.USR_NM,
+                             IsDisabled = s.DISABLE,
                          })
                          .FirstOrDefault();
             PublicMethodRepository.HtmlDecode(userInfo);
@@ -54,16 +53,19 @@ namespace OutWeb.Modules.Manage
             var oldPwd = form["oldPw"];
             var newPwd = form["newPw"];
             var rePwd = form["rePw"];
-            var entityUser = this.DB.人員.Where(o => o.人員代碼 == UserProvider.Instance.User.ID).First();
+            var entityUser = this.DB.USER
+                .Where(o => o.ID == UserProvider.Instance.User.ID &&
+            o.USR_ID == UserProvider.Instance.User.UserAccount).First();
             PublicMethodRepository.HtmlDecode(entityUser);
-            foreach (var f in form.AllKeys)
-                PublicMethodRepository.FilterXss(form[f]);
-            bool isTruePw = (oldPwd == entityUser.密碼);
+
+
+            bool isTruePw = (oldPwd == entityUser.USR_PWD);
             if (isTruePw)
             {
                 if (newPwd.Equals(rePwd))
                 {
-                    entityUser.密碼 = rePwd;
+                    PublicMethodRepository.FilterXss(entityUser);
+                    entityUser.USR_PWD = rePwd;
                     this.DB.Entry(entityUser).State = EntityState.Modified;
                     this.DB.SaveChanges();
                 }
