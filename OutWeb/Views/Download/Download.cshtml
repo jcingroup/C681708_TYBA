@@ -37,7 +37,7 @@
             </a>*@
     </nav>
 
-    @*<nav class="pager py-16 pr-32">
+    @*<nav class="pager py-16">
             <span class="pull-right">
                 1/2頁 11筆
             </span>
@@ -62,7 +62,7 @@
             </label>
         </nav>*@
 
-    <nav class="pager py-16 pr-32">
+    <nav class="pager py-16">
         @{
             int beginCount = Model.Result.Pagination.CurrentPage > 1 ? ((Model.Result.Pagination.CurrentPage - 1) * Model.Result.Pagination.PageSize) + 1 : 1;
             int lastCount =

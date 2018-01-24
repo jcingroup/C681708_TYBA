@@ -214,7 +214,7 @@ button, [role="button"], [type="button"] {
   border: none; }
   button:focus, [role="button"]:focus, [type="button"]:focus {
     outline: 0;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px rgba(255, 162, 0, 0.35); }
+    box-shadow: 0 0 0 2px rgba(255, 162, 0, 0.35); }
 
 a {
   color: #000;
@@ -259,10 +259,6 @@ h6 {
 
 b, strong, .b, .strong {
   font-weight: bold; }
-
-small {
-  font-size: 80%;
-  font-weight: normal; }
 
 mark {
   background-color: #fffFD7;
@@ -968,15 +964,15 @@ dd {
     color: #f2cd00; }
 
 .text-danger, .help {
-  color: #090404; }
+  color: #FF2200; }
 
 .bg-danger {
-  background-color: #090404; }
+  background-color: #FF2200; }
 
 .hover-danger {
-  color: #090404; }
+  color: #FF2200; }
   .hover-danger:hover, .hover-danger:active {
-    color: black; }
+    color: #b31800; }
 
 [class*="text-"].disabled, [class*="text-"][disabled],
 [class*="hover-"].disabled,
@@ -1174,7 +1170,7 @@ dd {
   @media (max-width: 74.9375em) {
     #menu {
       z-index: 999;
-      background: rgba(9, 4, 4, 0.7);
+      background: rgba(0, 0, 0, 0.7);
       -webkit-transition: opacity .5s;
       transition: opacity .5s;
       overflow-y: auto;
@@ -1186,7 +1182,7 @@ dd {
       left: 0;
       height: 100%;
       text-align: left;
-      padding: 82px 16px 0 16px; }
+      padding: 72px 16px 16px 16px; }
       .js-mobile-body #menu {
         opacity: 1;
         visibility: visible; } }
@@ -1245,16 +1241,19 @@ dd {
       padding-right: 18px; } }
   @media (max-width: 74.9375em) {
     .nav-item {
-      margin-top: 12px;
-      width: 49%;
-      padding-top: 48px;
-      padding-bottom: 24px;
       font-size: 1.25rem;
       text-align: center;
       background-color: #fff;
-      background-position: center 16px; }
+      background-position: center 16px;
+      margin-top: 12px;
+      width: 48.5%;
+      padding-top: 48px;
+      padding-bottom: 24px; }
       .nav-item:nth-child(even) {
-        margin-left: 1.3%; } }
+        margin-left: 1.6%; } }
+  @media (max-width: 35.4375em) {
+    .nav-item:nth-child(even) {
+      margin-left: .7%; } }
 
 svg {
   display: block;
@@ -1396,8 +1395,9 @@ svg {
   border: 1px solid #ed8000; }
 
 .title {
-  line-height: 1.2; }
+  line-height: 1.6; }
   .title.underline {
+    line-height: 1.3;
     border-width: 3px; }
 
 .help {

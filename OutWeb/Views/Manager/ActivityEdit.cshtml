@@ -1,7 +1,179 @@
 ﻿
 @{
-    ViewBag.Title = "ActivityEdit";
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "報名活動維護";
+    ViewBag.subnav = "Applys";
+    ViewBag.subnav2 = "Activity";
 }
 
-<h2>ActivityEdit</h2>
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>線上報名管理</li>
+        <li>@ViewBag.Crumb</li>
+    </ul>
+}
 
+<h3 class="title">@ViewBag.Crumb <small class="oi" data-glyph="tags">編輯</small></h3>
+
+<form action="" class="form-list">
+
+    <dl class="field">
+        <dt class="col-2"><sup title="必填">*</sup> 發佈時間</dt>
+        <dd class="col-3">
+            <input type="text" class="datepicker" required name="發佈時間" value="" placeholder="請輸入發佈日期">
+        </dd>
+    </dl>
+
+    <dl class="field">
+        <dt class="col-2"><sup title="必填">*</sup> 活動名稱</dt>
+        <dd class="col-9">
+            <input type="text" name="活動名稱" value="" required placeholder="請輸入活動名稱">
+        </dd>
+    </dl>
+
+    <dl class="field">
+        <dt class="col-2"><sup title="必填">*</sup> 活動時間</dt>
+        <dd class="col-9">
+            <input type="text" name="活動時間" value="" required placeholder="請輸入活動時間">
+        </dd>
+    </dl>
+
+    <dl class="field">
+        <dt class="col-2"><sup title="必填">*</sup> 報名時間</dt>
+        <dd class="col-3">
+            <div class="input-group">
+                <label class="input-group-addon">起</label>
+                <span class="input-group-box"><input type="text" class="datepicker" name="DeadlineBegin" value="" required placeholder="請輸入報名期限(起)"></span>
+            </div>
+        </dd>
+        <dd class="col-3">
+            <div class="input-group">
+                <label class="input-group-addon">迄</label>
+                <span class="input-group-box"><input type="text" class="datepicker" name="DeadlineEnd" value="" required placeholder="請輸入報名期限(迄)"></span>
+            </div>
+        </dd>
+        <dd class="col-4 form-label">
+            <small class="text-danger">*活動可報名時間</small>
+        </dd>
+    </dl>
+    <dl class="field">
+        <dt class="col-2"><sup title="必填">*</sup> 活動編號</dt>
+        <dd class="col-6">
+            <input type="text" required placeholder="設定活動編號">
+            <small class="text-danger">*活動編號規則，如: 年度-3碼英數字(107-ABC)</small><br>
+            <small class="text-danger">*報名編號由系統自動產生，如: 年度-3碼英數字-系統編碼(107-ABC-0001)</small>
+        </dd>
+    </dl>
+    <dl class="field">
+        <dt class="col-2">排序</dt>
+        <dd class="col-7">
+            @* 預設給 1 或 0 *@
+            <input type="number" value="1" class="inline" name="sortIndex">
+            <small class="text-danger">*數字愈大愈前面</small>
+        </dd>
+    </dl>
+
+    <dl class="field">
+        <dt class="col-2">顯示狀態</dt>
+        <dd class="col-7">
+            @*  新增時預設上架  *@
+            <label class="mr-8">
+                <input type="radio" name="fSt" class="radio" value="Y" checked>
+                <i class="icon"></i>上架
+            </label>
+
+            <label>
+                <input type="radio" name="fSt" value="N" class="radio">
+                <i class="icon"></i>下架
+            </label>
+        </dd>
+    </dl>
+
+    <dl class="field">
+        <dt class="col-2">附件上傳</dt>
+        <dd class="col-6 file-buffer">
+            <div class="input-file">
+                <input type="file" onchange="previewFiles(this, false);" id="full" class="file-obj-input">
+            </div>
+            <ul class="file-pre-ul list-unstyled">
+                <li class="uploaded">
+                    <button type="button" class="close btn-del file-remove-btn" id="">&times;</button>
+                    <a class="dlFile" href="javascript:;" url="" real-name="">檔案名稱.doc</a>
+                </li>
+            </ul>
+        </dd>
+        <dd class="col-4 form-label">
+            <small class="text-danger">*可上傳多筆檔案，單檔請勿超過 50 MB</small>
+        </dd>
+    </dl>
+
+    <fieldset class="mt-24">
+        <legend class="underline">
+            [ 組別維護 ]
+            <button type="button" class="btn success pull-right mb-4 oi" data-glyph="plus">新增組別</button>
+        </legend>
+        <table class="w-100">
+            <colgroup>
+                <col style="width: 50px">
+                <col span="4">
+            </colgroup>
+            <tr class="bg-light">
+                <th>#</th>
+                <th class="text-left">組別名稱</th>
+                <th class="text-left">隊伍報名上限</th>
+                <th class="text-left">隊員人數上限</th>
+                <th class="item-edit">刪除</th>
+            </tr>
+            @* <tr>
+                <td class="text-left" colspan="4">目前無組別</td>
+            </tr> *@
+
+            <tr>
+                <td>1</td>
+                <td><input type="text"></td>
+                <td><input type="number" min="0" class="form-element"></td>
+                <td><input type="number" min="0" class="form-element"></td>
+                <td><button type="button" class="btn danger oi" data-glyph="trash" title="刪除"></button></td>
+            </tr>
+        </table>
+    </fieldset>
+
+    <fieldset class="mt-24">
+        <legend class="underline">[ 活動說明 ]</legend>
+        <div class="alert-warning mb-16">
+            <strong>編輯器注意事項:</strong><br>
+            從 WORD 複製文字時，請使用下方的 <img src="/Content/images/icon-word.jpg" /> 圖示來貼上 WORD 文字，避免跑版<br />
+            編輯器上傳圖片或新增表格等時，請勿設定寬度及高度(將數字刪除) ，以免行動裝置顯示時會跑版。<br />
+            檔案尺寸寬度超過 1600 或 高度超過1200 的圖片會被壓縮(PNG透明背景會變成不透明) <br />
+            youtube 可勾選「用自適應縮放模式」
+        </div>
+        <textarea class="form-element" maxlength="512" name="contenttext" placeholder="請輸入活動說明..." rows="12">
+        </textarea>
+    </fieldset>
+
+    <footer class="submit-bar clear mt-24">
+        <button id="submitBtn" type="button" class="btn success oi" data-glyph="circle-check">
+            確認儲存
+        </button>
+        <button type="button" class="btn warning oi" data-glyph="circle-x" onclick="location.href = 'ActivityList'">
+            回列表
+        </button>
+    </footer>
+</form>
+
+@section IncludeScript {
+    <script>
+        $(function () {
+            //if ($('[type="date"]').prop('type') != 'date') {
+            //     不支援date等類型的瀏覽器，類型是date 但是property不是'date'。
+            //     在這裡放入其他的datetime picker，例如 jquery ui 的datetime picker
+            //    $('[type="date"]').datepicker();
+            //}
+            //alert($('[type="date"]').prop('type'));
+
+            //alert(CKEDITOR.version);
+            CKFinder.setupCKEditor(null, { basePath: '/ckfinder/', skin: 'v1' });
+            CKEDITOR.replace('contenttext');
+        })
+    </script>
+}

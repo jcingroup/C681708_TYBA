@@ -260,10 +260,6 @@ h6 {
 b, strong, .b, .strong {
   font-weight: bold; }
 
-small {
-  font-size: 80%;
-  font-weight: normal; }
-
 mark {
   background-color: #fffFD7;
   padding: .2em; }
@@ -345,8 +341,7 @@ th, td {
 
 .table-rwd {
   overflow-x: auto;
-  min-height: 0.01%;
-  max-width: 1400px; }
+  min-height: 0.01%; }
   .table-rwd table {
     max-width: 100%; }
   @media (max-width: 63.9375em) {
@@ -1350,7 +1345,7 @@ output {
 
 .wrapper {
   min-width: 1008px;
-  min-height: 100%;
+  min-height: 100vh;
   padding-bottom: 30px; }
 
 #header {
@@ -1487,11 +1482,7 @@ output {
 .field dt {
   font-weight: normal; }
 .field dd {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
   min-height: 28px; }
-.field > [class*="col-"]:first-child {
-  padding-left: 0; }
 .field sup {
   cursor: help; }
 
@@ -1764,9 +1755,9 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
       left: 22%;
       width: 0;
       height: 0;
-      border: 9px solid transparent;
-      border-bottom: 10px solid rgba(0, 0, 0, 0.85);
-      border-top-width: 8px;
+      border-style: solid;
+      border-width: 0 18px 10px 18px;
+      border-color: transparent transparent rgba(0, 0, 0, 0.85) transparent;
       margin-left: -5px; }
   .tooltip:hover .tips {
     visibility: visible;
@@ -1962,19 +1953,21 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
   .table-head .btn {
     height: 28px; }
 
-.table-list caption {
-  background: #F2F7FA;
-  color: #818A91;
-  font-size: 1.1875em; }
-.table-list th {
-  border-bottom: 2px solid #dee2e6;
-  font-weight: normal;
-  line-height: 1.4;
-  word-break: keep-all; }
-.table-list .item-edit {
-  width: 54px; }
-.table-list .sum td {
-  background: #fef7d9 !important; }
+.table-list {
+  width: 100%; }
+  .table-list caption {
+    background: #F2F7FA;
+    color: #818A91;
+    font-size: 1.1875em; }
+  .table-list th {
+    border-bottom: 2px solid #dee2e6;
+    font-weight: normal;
+    line-height: 1.4;
+    word-break: keep-all; }
+  .table-list .item-edit {
+    width: 54px; }
+  .table-list .sum td {
+    background: #fef7d9 !important; }
 
 .th-sort-toggle {
   display: block;

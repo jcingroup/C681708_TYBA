@@ -1885,6 +1885,7 @@
     <Content Include="Entities\TYBADB.edmx.diagram">
       <DependentUpon>TYBADB.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\ExcelTemp\Apply.xlsx" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

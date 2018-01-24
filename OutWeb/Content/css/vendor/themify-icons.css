@@ -26,7 +26,7 @@
 	vertical-align: baseline;
 }
 
-[class^="ti-"]:not(:empty):before, [class*=" ti-"]:not(:empty):before { margin-right: .5em; }
+[class^="ti-"]:not(:empty):before, [class*=" ti-"]:not(:empty):before { margin-right: .3em; }
 
 .ti-wand:before {
 	content: "\e600";

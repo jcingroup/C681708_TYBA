@@ -3,14 +3,14 @@
 @{
     ViewBag.Title = "線上報名";
     ViewBag.BodyClass = "Apply";
-    ViewBag.ContentClass ="pt-32";
+    ViewBag.ContentClass ="apply-list";
 }
 
-<h4 class="title text-left mx-32"><span class="underline">@ViewBag.Title</span></h4>
+<h4 class="title text-left"><span class="underline">@ViewBag.Title</span></h4>
 
 <form action="/Apply/List" method="get" class="frmTrainList">
 
-    <table class="table-list table-hover rwd-table mx-32">
+    <table class="table-list table-hover rwd-table">
         <thead class="list-head">
             <tr>
                 <th>活動時間</th>
@@ -45,7 +45,7 @@
                             <a href="@Url.Content("~/Apply/Content?trainID=" + data.ID)">@data.ActivityName <small class="date">@timeSpanStr</small></a>
                         </td>
                         <td data-title="已報名隊伍/上限">@info</td>
-                        <td data-title="線上報名"><a href="@applyUrl" class="btn @btnSytle sm">@data.RegistrationStatusDescription</a></td>
+                        <td><a href="@applyUrl" class="btn @btnSytle sm">@data.RegistrationStatusDescription</a></td>
                     </tr>
                 }
 
@@ -58,7 +58,7 @@
                     <a href="~/Apply/ContentDemo">桃園市主委盃3對3籃球鬥牛賽 <small class="date">(2017/12/1~2017/12/30)</small></a>
                 </td>
                 <td data-title="已報名隊伍/上限">25/300</td>
-                <td data-title="線上報名"><a href="~/Apply/Apply" class="btn sm">我要報名</a></td>
+                <td><a href="~/Apply/Apply" class="btn sm">我要報名</a></td>
             </tr>
 
             <tr>
@@ -67,12 +67,12 @@
                     <a href="~/Apply/ContentDemo">桃園市主委盃3對3籃球鬥牛賽 <small class="date">(2017/12/1~2017/12/30)</small></a>
                 </td>
                 <td data-title="已報名隊伍/上限">25/300</td>
-                <td data-title="線上報名"><a href="~/Apply/Apply" class="btn sm" disabled>報名截止</a></td>
+                <td><a href="~/Apply/Apply" class="btn sm" disabled>報名截止</a></td>
             </tr>
         </tbody>
     </table>
 
-    <nav class="pager text-info px-32 py-12">
+    <nav class="pager text-info py-16">
         @{
             int beginCount = Model.Result.Pagination.CurrentPage > 1 ? ((Model.Result.Pagination.CurrentPage - 1) * Model.Result.Pagination.PageSize) + 1 : 1;
             int lastCount =
@@ -83,7 +83,7 @@
             string disabledPageInput = Model.Result.Pagination.LastPage == 1 ? "disabled" : "";
             string pageTotalInfo = string.Format("{0}/{1}頁 {2}筆", Model.Result.Pagination.CurrentPage, Model.Result.Pagination.LastPage, Model.Result.Pagination.DataCount);
         }
-        <span class="pull-left">
+        <span class="pull-right">
             @pageTotalInfo
         </span>
 

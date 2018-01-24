@@ -1,7 +1,86 @@
 ﻿
 @{
-    ViewBag.Title = "ApplyList";
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "報名維護";
+    ViewBag.subnav = "Applys";
+    ViewBag.subnav2 = "Apply";
 }
 
-<h2>ApplyList</h2>
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>線上報名管理</li>
+        <li>@ViewBag.Crumb</li>
+    </ul>
+}
 
+<h3 class="title">@ViewBag.Crumb</h3>
+
+@* 查詢先不做
+<header class="table-head form-inline">
+    <label>活動時間</label>
+    <input type="date"> ~ <input type="date">
+    <label>報名狀態</label>
+    <select id="statusDropListFront" name="">
+        <option value="">全部</option>
+        <option value="Y">開放報名</option>
+        <option value="N">全部報名</option>
+    </select>
+    <input type="text" placeholder="請輸入關鍵字" name="" value="">
+    <button class="btn">搜尋</button>
+</header> *@
+
+<table class="table-list table-hover table-striped">
+    <colgroup>
+        <col>
+        <col style="width: 18%">
+        <col>
+        <col style="width: 15%">
+        <col style="width: 8%">
+    </colgroup>
+    <tr>
+        @* 點選排序功能 (點一下遞增, 點兩下遞減)
+            <button class="th-sort-toggle"></button>
+            遞增 asc
+            <button class="th-sort-toggle asc"></button>
+            遞減 desc
+            <button class="th-sort-toggle desc"></button>
+        *@
+        <th class="item-edit">查看</th>
+        <th>活動時間</th>
+        <th class="text-left">活動名稱</th>
+        <th>已報名隊伍/上限</th>
+        <th><button id="" type="button" sort-type="" class="th-sort-toggle">報名狀態</button></th>
+    </tr>
+
+    @*
+        <tr class="bg-pale-red"><td colspan="6">查無資料!</td></tr>
+    *@
+
+    @* 預設以發佈時間排序 *@
+    <tr>
+        <td><button class="hover-primary oi" title="查看" data-glyph="magnifying-glass" type="button" onclick="location.href='@Url.Content("ApplyEdit")'"></button></td>
+        <td>2017/1/21~2017/1/22</td>
+        <td class="text-left">Apply1</td>
+        <td>100/240</td>
+        <td>
+            <span class="label-success">開放報名</span>
+            @* <span class="label">結束報名</span> *@
+        </td>
+    </tr>
+
+</table>
+
+<footer class="table-foot">
+    <small class="pull-right">第 1 - 1 筆，共 2 筆</small>
+    <nav class="pager">
+        <button disabled class="oi" data-glyph="media-step-backward" title="到最前頁" type="button"></button>
+        <button disabled class="oi" data-glyph="chevron-left" title="上一頁" type="button"></button>
+        <span>
+            第
+            <input disabled id="numPage" name="page" class="text-center" type="number" value="1">
+            頁，共 1 頁
+        </span>
+        <button disabled class="oi" data-glyph="chevron-right" title="下一頁" type="button"></button>
+        <button disabled class="oi" data-glyph="media-step-forward" title="到最後頁" type="button"></button>
+    </nav>
+</footer>

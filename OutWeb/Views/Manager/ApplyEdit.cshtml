@@ -1,7 +1,291 @@
 ﻿
 @{
-    ViewBag.Title = "ApplyEdit";
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "報名維護";
+    ViewBag.subnav = "Applys";
+    ViewBag.subnav2 = "Apply";
 }
 
-<h2>ApplyEdit</h2>
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>線上報名管理</li>
+        <li>@ViewBag.Crumb</li>
+    </ul>
+}
 
+<h3 class="title">@ViewBag.Crumb <small class="oi" data-glyph="tags">編輯</small></h3>
+
+<div class="btn-group">
+    <a href="ApplyList" class="btn warning oi" data-glyph="chevron-left">回列表</a>
+</div>
+
+<section class="my-24 p-12 bg-light">
+    <dl class="field">
+        <dt class="col-1">活動時間</dt>
+        <dd class="col-11 form-label underline">2017/12/01 ~ 2017/12/31</dd>
+    </dl>
+    <dl class="field">
+        <dt class="col-1">活動名稱</dt>
+        <dd class="col-11 form-label underline">桃園市主委盃3對3籃球鬥牛賽(代辦)</dd>
+    </dl>
+    <dl class="field">
+        <dt class="col-1">隊伍上限</dt>
+        <dd class="col-3 form-label underline">300</dd>
+
+        <dt class="col-1">已報名</dt>
+        <dd class="col-3 form-label underline">30</dd>
+
+        <dt class="col-1">報名完成</dt>
+        <dd class="col-3 form-label underline">20</dd>
+    </dl>
+</section>
+
+<header class="table-head form-inline">
+    <select id="" name="">
+        <option value="">全部組別</option>
+        <option value="">男子組</option>
+        <option value="">女子組</option>
+    </select>
+    <input type="text" placeholder="請輸入關鍵字" name="" value="">
+    <button class="btn">搜尋</button>
+    <a class="btn info pull-right" href="/Content/ExcelTemp/Apply.xlsx">匯出清單</a>
+</header>
+
+<table class="table-list table-hover table-striped">
+    <colgroup>
+        <col span="2">
+        <col style="width: 12%">
+        <col style="width: 14%">
+        <col>
+        <col span="2" style="width: 12%">
+        <col style="width: 10%">
+    </colgroup>
+    <tr>
+        @* 點選排序功能 (點一下遞增, 點兩下遞減)
+            <button class="th-sort-toggle"></button>
+            遞增 asc
+            <button class="th-sort-toggle asc"></button>
+            遞減 desc
+            <button class="th-sort-toggle desc"></button>
+        *@
+        <th class="item-edit">刪除</th>
+        <th class="item-edit">修改</th>
+        <th>報名時間</th>
+        <th class="text-left">報名編號</th>
+        <th class="text-left">隊名</th>
+        <th>聯絡電話</th>
+        <th>隊伍球員人數</th>
+        <th><button id="sortIndex" sort-type="" type="button" class="th-sort-toggle">報名狀態</button></th>
+    </tr>
+
+    @*
+        <tr class="bg-pale-red"><td colspan="9">查無資料!</td></tr>
+    *@
+
+    @* 預設以發佈時間排序 *@
+    <tr>
+        <td><button class="hover-danger oi delete-btn" title="刪除" type="button" data-glyph="trash" data-id=""></button></td>
+        <td><button class="hover-primary oi" title="修改" data-glyph="pencil" data-modal="#md1" type="button"></button></td>
+        <td>2017/1/24</td>
+        <td class="text-left">107-ABC-0001</td>
+        <td class="text-left">AAAAAA</td>
+        <td>000-000-000</td>
+        <td>4</td>
+        <td>
+            <span class="label-success">完成</span>
+            @* <span class="label">未完成</span> *@
+        </td>
+    </tr>
+    <tr>
+        <td><button class="hover-danger oi delete-btn" title="刪除" type="button" data-glyph="trash" data-id=""></button></td>
+        <td><button class="hover-primary oi" title="修改" data-glyph="pencil" data-modal="#md1" type="button"></button></td>
+        <td>2017/1/24</td>
+        <td class="text-left">107-ABC-0002</td>
+        <td class="text-left">BBB</td>
+        <td>000-000-000</td>
+        <td>3</td>
+        <td>
+            @* <span class="label-success">完成</span> *@
+            <span class="label">未完成</span>
+        </td>
+    </tr>
+</table>
+
+<div id="md1" class="modal" onclick="closeModal();" hidden>
+    <div class="modal-content p-8">
+        <header class="modal-header clearfix">
+            報名詳細資料
+            <button onclick="closeModal();" class="modal-close pull-right">&#10005;</button>
+        </header>
+        <dl class="field">
+            <dt class="col-2">報名狀態</dt>
+            <dd class="col-4">
+                <select name="" id="">
+                    <option value="">未完成</option>
+                    <option value="">完成</option>
+                </select>
+            </dd>
+        </dl>
+        <dl class="field">
+            <dt class="col-2">報名編號</dt>
+            <dd class="col-10 form-label underline">107-ABC-0001</dd>
+        </dl>
+        <dl class="field">
+            <dt class="col-2">活動名稱</dt>
+            <dd class="col-10 form-label underline">桃園市主委盃3對3籃球鬥牛賽(代辦)</dd>
+        </dl>
+        <dl class="field">
+            <dt class="col-2">隊名</dt>
+            <dd class="col-10">
+                <input type="text" value="AAAAAA" required>
+            </dd>
+        </dl>
+        <section class="row no-gutters my-12">
+            <div class="col-6">
+                <dl class="field">
+                    <dt class="col-4">參賽組別</dt>
+                    <dd class="col-8">
+                        <select name="" id="">
+                            <option value="" selected>男子組</option>
+                            <option value="">女子組</option>
+                        </select>
+                    </dd>
+                </dl>
+                <dl class="field">
+                    <dt class="col-4">聯絡人</dt>
+                    <dd class="col-8">
+                        <input type="text" value="XXX" required>
+                    </dd>
+                </dl>
+                <dl class="field">
+                    <dt class="col-4">聯絡電話</dt>
+                    <dd class="col-8">
+                        <input type="tel" value="000-000-000" required>
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-6">
+                <dl class="field">
+                    <dt class="col-4">教練</dt>
+                    <dd class="col-8">
+                        <input type="text" value="">
+                    </dd>
+                </dl>
+                <dl class="field">
+                    <dt class="col-4">E-mail</dt>
+                    <dd class="col-8">
+                        <input type="email" value="abc@abc.com">
+                    </dd>
+                </dl>
+            </div>
+        </section>
+        <dl class="field">
+            <dt class="col-2">其他</dt>
+            <dd class="col-10">
+                <textarea rows="4" class="form-element" placeholder="如有隨行人員請在此登打">領隊：EEE
+助理教練：CCC
+管理人員：DDD</textarea>
+            </dd>
+        </dl>
+
+        <fieldset class="form-list mt-24">
+            <legend class="underline">隊伍資料</legend>
+            @* 預設第一筆是隊長 *@
+            <dl class="field">
+                <dt class="col-1">隊長</dt>
+                <dd class="col-3">
+                    <div class="input-group">
+                        <label class="input-group-addon">姓名</label>
+                        <div class="input-group-box">
+                            <input type="text" value="AAA" required>
+                        </div>
+                    </div>
+                </dd>
+                <dd class="col-4">
+                    <div class="input-group">
+                        <label class="input-group-addon">身份證字號</label>
+                        <div class="input-group-box">
+                            <input type="text" value="h123456789" required>
+                        </div>
+                    </div>
+                </dd>
+                <dd class="col-3">
+                    <div class="input-group">
+                        <label class="input-group-addon">生日</label>
+                        <div class="input-group-box">
+                            <input type="date" value="2017-01-01" required>
+                        </div>
+                    </div>
+                </dd>
+                <dd class="col-1">
+                    <button type="button" class="btn sm danger">刪除</button>
+                </dd>
+            </dl>
+            <dl class="field">
+                <dt class="col-1">隊員1</dt>
+                <dd class="col-3">
+                    <div class="input-group">
+                        <label class="input-group-addon">姓名</label>
+                        <div class="input-group-box">
+                            <input type="text" value="BBB" required>
+                        </div>
+                    </div>
+                </dd>
+                <dd class="col-4">
+                    <div class="input-group">
+                        <label class="input-group-addon">身份證字號</label>
+                        <div class="input-group-box">
+                            <input type="text" value="h123456789" required>
+                        </div>
+                    </div>
+                </dd>
+                <dd class="col-3">
+                    <div class="input-group">
+                        <label class="input-group-addon">生日</label>
+                        <div class="input-group-box">
+                            <input type="date" value="2017-01-01" required>
+                        </div>
+                    </div>
+                </dd>
+                <dd class="col-1">
+                    <button type="button" class="btn sm danger">刪除</button>
+                </dd>
+            </dl>
+            <footer class="offset-1 pl-8 mt-12">
+                <button type="button" class="btn success oi" data-glyph="plus">新增隊員</button>
+            </footer>
+        </fieldset>
+
+        <footer class="submit-bar clear mt-24">
+            <button id="submitBtn" type="button" class="btn success oi" data-glyph="circle-check">
+                確認儲存
+            </button>
+            <button type="button" class="btn warning oi" data-glyph="circle-x" onclick="closeModal();">
+                回列表
+            </button>
+        </footer>
+    </div><!-- modal-content //-->
+</div><!-- modal //-->
+
+@section IncludeScript {
+    <script>
+        // modal open
+        $("[data-modal]").click(function(e){
+            var modal = $(this).attr("data-modal");
+            $(modal).show();
+            $('body').css('overflow', 'hidden');
+            e.preventDefault();
+        });
+
+        // modal close
+        function closeModal() {
+            $('.modal').fadeOut('fast');
+            $('body').removeAttr('style');
+        }
+
+        // 點中間內容時不會被close
+        $(".modal-content").click(function(e){
+            e.stopPropagation();
+        });
+    </script>
+}

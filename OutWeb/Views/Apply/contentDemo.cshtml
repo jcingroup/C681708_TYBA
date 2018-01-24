@@ -1,7 +1,42 @@
 ﻿
 @{
-    ViewBag.Title = "contentDemo";
+    ViewBag.Title = "桃園市主委盃3對3籃球鬥牛賽";
+    ViewBag.BodyClass = "Apply";
+    ViewBag.ContentClass ="p-48 text-left";
 }
 
-<h2>contentDemo</h2>
+<h4 class="title">
+    <span class="underline">@ViewBag.Title</span>
+</h4>
 
+<a href="Apply" class="btn pull-right mb-16 ti-comments-smiley">線上報名</a>
+@* 若時間過掉或額滿時顯示
+<a href="Apply" class="btn pull-right mb-16" disabled>報名截止</a> *@
+
+<div class="table-rwd clear">
+    <table class="table-striped w-100 activity-info">
+        <colgroup>
+            <col style="width:18%">
+        </colgroup>
+        <tr>
+            <th>活動時間</th>
+            <td class="text-left">2017/12/01 ~ 2017/12/31</td>
+        </tr>
+        <tr>
+            <th>報名時間</th>
+            <td class="text-left">2017/12/01 ~ 2017/12/31</td>
+        </tr>
+        <tr>
+            <th>活動說明</th>
+            <td class="text-left">說明aaaaaaaaaaaaaaaaaaaaaaa</td>
+        </tr>
+    </table>
+</div>
+<footer class="download">
+    <a href="" class="inline-blcok ti-clip">附件1</a>
+    <a href="" class="inline-blcok ti-clip">附件2</a>
+</footer>
+
+<hr class="mb-12">
+
+<a href="~/Apply" class="back pull-right ti-arrow-left">回列表</a>

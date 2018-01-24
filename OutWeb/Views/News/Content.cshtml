@@ -5,21 +5,19 @@
     ViewBag.BodyClass = "News";
     ViewBag.Breadcrumb = Model.Data.標題.Length > 30 ? Model.Data.標題.Substring(0, 30) : Model.Data.標題; @* 最後層的麵包屑-只取前30字 *@
     string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
-    ViewBag.ContentClass ="text-left ind";
+    ViewBag.ContentClass ="text-left ind pb-24";
 }
 
 <h4 class="title text-left ml-72">
     <span class="underline">@Model.Data.標題</span>
-    <small class="block font-sm text-success mt-16">@Model.Data.發稿時間</small>
+    <small class="block font-sm text-success mt-12">@Model.Data.發稿時間</small>
 </h4>
 
-<article class="editor mt-16 mr-32 ml-72">
+<article class="editor ml-72">
     @* 活動內容(編輯器) *@
     @Html.Raw(Model.Data.內容)
 </article>
 
 <hr class="mb-12">
 
-<div class="text-right pr-32">
-    <a href="~/News" class="ti-arrow-left">回列表</a>
-</div>
+<a href="~/News" class="back pull-right ti-arrow-left">回列表</a>

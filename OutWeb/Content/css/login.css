@@ -218,10 +218,6 @@ h6 {
 b, strong, .b, .strong {
   font-weight: bold; }
 
-small {
-  font-size: 80%;
-  font-weight: normal; }
-
 mark {
   background-color: #fffFD7;
   padding: .2em; }
@@ -1192,7 +1188,7 @@ output {
     padding-right: 1.5rem; } }
 
 .wrapper {
-  min-height: 100%;
+  min-height: 100vh;
   padding-bottom: 100px; }
 
 .site-title {
