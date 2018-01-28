@@ -405,9 +405,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FrontEnd\ApplyModels\ApplyDataModel.cs" />
     <Compile Include="Models\FrontEnd\ApplyModels\ApplyListViewModel.cs" />
     <Compile Include="Models\FrontEnd\ApplyModels\ApplyViewDetailsModel.cs" />
-    <Compile Include="Models\FrontEnd\ApplyModels\ApplyDataModel.cs" />
     <Compile Include="Models\FrontEnd\ApplyModels\ApplyListContentModel.cs" />
     <Compile Include="Models\FrontEnd\CourseFrontEndModels\CourseFrontListDataModel.cs" />
     <Compile Include="Models\FrontEnd\DownloadFrontModel\DownloadFrontDataModel.cs" />
