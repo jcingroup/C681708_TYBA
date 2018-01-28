@@ -223,6 +223,15 @@
     <Compile Include="Controllers\ResultController.cs" />
     <Compile Include="Controllers\SignInController.cs" />
     <Compile Include="Controllers\_SysAdmController.cs" />
+    <Compile Include="Entities\APPLY.cs">
+      <DependentUpon>TYBADB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\APPLY_MEMBER.cs">
+      <DependentUpon>TYBADB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\APPLY_NUMBER.cs">
+      <DependentUpon>TYBADB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\BANNER.cs">
       <DependentUpon>TYBADB.tt</DependentUpon>
     </Compile>
@@ -263,6 +272,12 @@
       <DependentUpon>EnergyDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\NEWS.cs">
+      <DependentUpon>TYBADB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\OLACT.cs">
+      <DependentUpon>TYBADB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\OLACTGROUP.cs">
       <DependentUpon>TYBADB.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\RESULT.cs">
@@ -390,6 +405,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FrontEnd\ApplyModels\ApplyListViewModel.cs" />
+    <Compile Include="Models\FrontEnd\ApplyModels\ApplyViewDetailsModel.cs" />
+    <Compile Include="Models\FrontEnd\ApplyModels\ApplyDataModel.cs" />
+    <Compile Include="Models\FrontEnd\ApplyModels\ApplyListContentModel.cs" />
     <Compile Include="Models\FrontEnd\CourseFrontEndModels\CourseFrontListDataModel.cs" />
     <Compile Include="Models\FrontEnd\DownloadFrontModel\DownloadFrontDataModel.cs" />
     <Compile Include="Models\FrontEnd\DownloadFrontModel\DownloadFrontResultModel.cs" />
@@ -414,6 +433,11 @@
     <Compile Include="Models\FrontEnd\UserInfo\LogInModel.cs" />
     <Compile Include="Models\FrontEnd\UserInfo\LoginUserInfoModel.cs" />
     <Compile Include="Models\IPaginationModel.cs" />
+    <Compile Include="Models\Manage\ActivityModels\ActivityDataModel.cs" />
+    <Compile Include="Models\Manage\ActivityModels\ActivityDetailsModel.cs" />
+    <Compile Include="Models\Manage\ActivityModels\ActivityFilterModel.cs" />
+    <Compile Include="Models\Manage\ActivityModels\ActivityListResultModel.cs" />
+    <Compile Include="Models\Manage\ActivityModels\ActivityListViewModel.cs" />
     <Compile Include="Models\Manage\BannerModels\BannerDataModel.cs" />
     <Compile Include="Models\Manage\BannerModels\BannerDetailsModel.cs" />
     <Compile Include="Models\Manage\BannerModels\BannerFilterModel.cs" />
@@ -443,11 +467,6 @@
     <Compile Include="Models\Manage\ManageTrainApplyModels\TrainApplyListModels\TrainApplyListResultModel.cs" />
     <Compile Include="Models\Manage\ManageTrainApplyModels\TrainApplyListModels\TrainApplyListViewModel.cs" />
     <Compile Include="Models\Manage\ManageTrainApplyModels\TrainApplyListModels\TrainApplyStandardDataModel.cs" />
-    <Compile Include="Models\Manage\ManageTrainModels\TrainDetailsDataModel.cs" />
-    <Compile Include="Models\Manage\ManageTrainModels\TrainListFilterModel.cs" />
-    <Compile Include="Models\Manage\ManageTrainModels\TrainListResultModel.cs" />
-    <Compile Include="Models\Manage\ManageTrainModels\TrainListViewModel.cs" />
-    <Compile Include="Models\Manage\ManageTrainModels\TrainStandardDataModel.cs" />
     <Compile Include="Models\Manage\ResultModels\ResultDetailsDataModel.cs" />
     <Compile Include="Models\Manage\ResultModels\ResultListDataModel.cs" />
     <Compile Include="Models\Manage\ResultModels\ResultListFilterModel.cs" />
@@ -469,11 +488,13 @@
     <Compile Include="Models\Manage\UserInfo\LoginUserInfoModel.cs" />
     <Compile Include="Models\Manage\UserInfo\SignInModel.cs" />
     <Compile Include="Models\WebUser.Controller.cs" />
+    <Compile Include="Modules\FrontEnd\ApplyFrontModule.cs" />
     <Compile Include="Modules\FrontEnd\DownloadFrontModule.cs" />
     <Compile Include="Modules\FrontEnd\CourseFrontModule.cs" />
     <Compile Include="Modules\FrontEnd\NewsFrontModule.cs" />
     <Compile Include="Modules\FrontEnd\TrainFrontModule.cs" />
     <Compile Include="Modules\Manage\BannerModule.cs" />
+    <Compile Include="Modules\Manage\ActivityModule.cs" />
     <Compile Include="Modules\Manage\EditorModule.cs" />
     <Compile Include="Modules\Manage\FileModule.cs" />
     <Compile Include="Modules\Manage\DownloadModule.cs" />
@@ -1910,6 +1931,9 @@
     <None Include="Scripts\_references.js" />
     <Content Include="Views\News\Content.cshtml" />
     <Content Include="Views\Apply\ApplyAdd.cshtml" />
+    <Content Include="Views\_SysAdm\_BannerDataPartial.cshtml" />
+    <Content Include="Views\_SysAdm\_CourseDataPartial.cshtml" />
+    <Content Include="Views\_SysAdm\_DownloadDataPartial.cshtml" />
     <Content Include="Views\_SysAdm\_NewsDataPartial.cshtml" />
     <Content Include="Views\_SysAdm\_ResultDataPartial.cshtml" />
     <Content Include="Web.config">
@@ -1932,7 +1956,6 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Result\List.cshtml" />
     <Content Include="Views\Result\Content.cshtml" />
-    <Content Include="Views\_SysAdm\_CourseDataPartial.cshtml" />
     <Content Include="Views\_SysAdm\CourseAdd.cshtml" />
     <Content Include="Views\_SysAdm\CourseEdit.cshtml" />
     <Content Include="Views\_SysAdm\CourseList.cshtml" />
@@ -1960,7 +1983,6 @@
     <Content Include="Views\_SysAdm\DownloadList.cshtml" />
     <Content Include="Views\_SysAdm\DownloadEdit.cshtml" />
     <Content Include="Views\_SysAdm\DownloadAdd.cshtml" />
-    <Content Include="Views\_SysAdm\_DownloadDataPartial.cshtml" />
     <Content Include="Views\Apply\contentDemo.cshtml" />
     <Content Include="Views\Apply\Apply.cshtml" />
     <Content Include="Views\Apply\Apply2.cshtml" />
@@ -1978,9 +2000,10 @@
     <Content Include="Views\_SysAdm\ApplyList.cshtml" />
     <Content Include="Views\_SysAdm\ResultList.cshtml" />
     <Content Include="Views\_SysAdm\ResultEdit.cshtml" />
-    <Content Include="Views\_SysAdm\_BannerDataPartial.cshtml" />
     <Content Include="Views\_SysAdm\BannerAdd.cshtml" />
     <Content Include="Views\_SysAdm\ResultAdd.cshtml" />
+    <Content Include="Views\_SysAdm\_ActivityDataPartial.cshtml" />
+    <Content Include="Views\_SysAdm\ActivityAdd.cshtml" />
     <None Include="Web.Debug2.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

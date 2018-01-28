@@ -1,9 +1,9 @@
-﻿@using OutWeb.Models.FrontEnd.TrainModels.TrainListModels
-@model TrainListViewModel
+﻿@using OutWeb.Models.FrontEnd.ApplyModels
+@model ApplyListViewModel
 @{
     ViewBag.Title = "線上報名";
     ViewBag.BodyClass = "Apply";
-    ViewBag.ContentClass ="apply-list";
+    ViewBag.ContentClass = "apply-list";
 }
 
 <h4 class="title text-left"><span class="underline">@ViewBag.Title</span></h4>
@@ -20,89 +20,75 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var data in Model.Result.Data)
+            @foreach (var data in Model.ListData)
             {
-                string info = string.Format("{0}/{1}", data.AlreadyRegistered.ToString().PadLeft(2, '0'), data.LimitCount.ToString().PadLeft(2, '0'));
-                string applyUrl = string.Empty;
-                string timeSpanStr = string.Format("({0}~{1})", data.RegistrationBeginDate.ToString("yyyy\\/MM\\/dd"), data.RegistrationEndDate.ToString("yyyy\\/MM\\/dd"));
-                string btnSytle = string.Empty;
-                if (data.IsStopRegistering)
-                {
-                    btnSytle = "info";
-                    applyUrl = Url.Content("~/Train/ApplyAdd?trainID=" + data.ID);
-                }
-                else
-                {
-                    btnSytle = "disabled";
-                    applyUrl = "javascript:;";
-                }
-
-                if (data.ActivityStatus)
-                {
-                    <tr>
-                        <td data-title="活動時間" class="text-secondary">@data.ActivityDateStr</td>
-                        <td data-title="活動名稱(報名時間)" class="text-left">
-                            <a href="@Url.Content("~/Apply/Content?trainID=" + data.ID)">@data.ActivityName <small class="date">@timeSpanStr</small></a>
-                        </td>
-                        <td data-title="已報名隊伍/上限">@info</td>
-                        <td><a href="@applyUrl" class="btn @btnSytle sm">@data.RegistrationStatusDescription</a></td>
-                    </tr>
-                }
+                string applyLimitInfo = string.Concat(data.Registered, "/", data.GroupApplyLimit);
+                string applyStr = data.ActivityStatus ? "我要報名" : "報名截止";
+                string applyStrStyle = data.ActivityStatus ? "" : "disabled";
+                string applyUrl = data.ActivityStatus ? "/Apply/Apply?id=" + data.ID : "javascript:;";
+                <tr>
+                    <td data-title="活動時間" class="text-secondary">@data.ActivityDateTimeDescription</td>
+                    <td data-title="活動名稱(報名時間)" class="text-left">
+                        <a href="~/Apply/Content?id=@data.ID">@data.Title<small class="date">(@data.ApplyDateRange)</small></a>
+                    </td>
+                    <td data-title="已報名隊伍/上限">@applyLimitInfo</td>
+                    <td><a href="@applyUrl" class="btn sm" @applyStrStyle>@applyStr</a></td>
+                </tr>
 
             }
 
             @* demo *@
-            <tr>
-                <td data-title="活動時間" class="text-secondary">2018/01/21~2018/01/22</td>
-                <td data-title="活動名稱(報名時間)" class="text-left">
-                    <a href="~/Apply/ContentDemo">桃園市主委盃3對3籃球鬥牛賽 <small class="date">(2017/12/1~2017/12/30)</small></a>
-                </td>
-                <td data-title="已報名隊伍/上限">25/300</td>
-                <td><a href="~/Apply/Apply" class="btn sm">我要報名</a></td>
-            </tr>
+            @*<tr>
+                    <td data-title="活動時間" class="text-secondary">2018/01/21~2018/01/22</td>
+                    <td data-title="活動名稱(報名時間)" class="text-left">
+                        <a href="~/Apply/ContentDemo">桃園市主委盃3對3籃球鬥牛賽 <small class="date">(2017/12/1~2017/12/30)</small></a>
+                    </td>
+                    <td data-title="已報名隊伍/上限">25/300</td>
+                    <td><a href="~/Apply/Apply" class="btn sm">我要報名</a></td>
+                </tr>*@
 
-            <tr>
-                <td data-title="活動時間" class="text-secondary">2018/01/21~2018/01/22</td>
-                <td data-title="活動名稱(報名時間)" class="text-left">
-                    <a href="~/Apply/ContentDemo">桃園市主委盃3對3籃球鬥牛賽 <small class="date">(2017/12/1~2017/12/30)</small></a>
-                </td>
-                <td data-title="已報名隊伍/上限">25/300</td>
-                <td><a href="~/Apply/Apply" class="btn sm" disabled>報名截止</a></td>
-            </tr>
+            @*<tr>
+                    <td data-title="活動時間" class="text-secondary">2018/01/21~2018/01/22</td>
+                    <td data-title="活動名稱(報名時間)" class="text-left">
+                        <a href="~/Apply/ContentDemo">桃園市主委盃3對3籃球鬥牛賽 <small class="date">(2017/12/1~2017/12/30)</small></a>
+                    </td>
+                    <td data-title="已報名隊伍/上限">25/300</td>
+                    <td><a href="~/Apply/Apply" class="btn sm" disabled>報名截止</a></td>
+                </tr>*@
         </tbody>
     </table>
 
-    <nav class="pager text-info py-16">
+    <nav class="pager py-16">
         @{
-            int beginCount = Model.Result.Pagination.CurrentPage > 1 ? ((Model.Result.Pagination.CurrentPage - 1) * Model.Result.Pagination.PageSize) + 1 : 1;
+            int beginCount = Model.Pagination.CurrentPage > 1 ? ((Model.Pagination.CurrentPage - 1) * Model.Pagination.PageSize) + 1 : 1;
             int lastCount =
-                Model.Result.Data.Count >= Model.Result.Pagination.PageSize ?
-                ((Model.Result.Pagination.CurrentPage) * Model.Result.Pagination.PageSize) : Model.Result.Pagination.DataCount;
-            string disabledPre = Model.Result.Pagination.CurrentPage == 1 ? "disabled" : "";
-            string disabledNext = Model.Result.Pagination.CurrentPage == Model.Result.Pagination.LastPage ? "disabled" : "";
-            string disabledPageInput = Model.Result.Pagination.LastPage == 1 ? "disabled" : "";
-            string pageTotalInfo = string.Format("{0}/{1}頁 {2}筆", Model.Result.Pagination.CurrentPage, Model.Result.Pagination.LastPage, Model.Result.Pagination.DataCount);
+                Model.ListData.Count >= Model.Pagination.PageSize ?
+                ((Model.Pagination.CurrentPage) * Model.Pagination.PageSize) : Model.Pagination.DataCount;
+            string disabledPre = Model.Pagination.CurrentPage == 1 ? "disabled" : "";
+            string disabledNext = Model.Pagination.CurrentPage == Model.Pagination.LastPage ? "disabled" : "";
+            string disabledPageInput = Model.Pagination.LastPage == 1 ? "disabled" : "";
+            string pageTotalInfo = string.Format("{0}/{1}頁 {2}筆", Model.Pagination.CurrentPage, Model.Pagination.LastPage, Model.Pagination.DataCount);
         }
         <span class="pull-right">
             @pageTotalInfo
         </span>
 
         <a @disabledPre href="javascript:;"
-           onclick="paginationSubmit('@Model.Result.Pagination.FirstPage');"
+           onclick="paginationSubmit('@Model.Pagination.FirstPage');"
            class="btn ti-angle-double-left"></a>
         <a @disabledPre href="javascript:;"
-           onclick="paginationSubmit('@Model.Result.Pagination.PrePage');"
+           onclick="paginationSubmit('@Model.Pagination.PrePage');"
            class="btn ti-angle-left"></a>
         <a @disabledNext href="javascript:;"
-           onclick="paginationSubmit('@Model.Result.Pagination.NextPage');"
+           onclick="paginationSubmit('@Model.Pagination.NextPage');"
            class="btn ti-angle-right"></a>
         <a @disabledNext href="javascript:;"
-           onclick="paginationSubmit('@Model.Result.Pagination.LastPage');"
+           onclick="paginationSubmit('@Model.Pagination.LastPage');"
            class="btn ti-angle-double-right"></a>
 
         <label for="numPage" class="ml-16">
             第
-            <input @disabledPageInput id="numPage" name="page" class="form-element inline text-center" type="number" min="1" value="@Model.Result.Pagination.CurrentPage">
+            <input @disabledPageInput id="numPage" name="page" class="form-element inline text-center" type="number" min="1" value="@Model.Pagination.CurrentPage">
             頁
         </label>
     </nav>
@@ -111,16 +97,15 @@
 
 @section scripts {
     <script>
-        if ('@TempData["Error"]' != '') {
+        if ('@TempData["ErrorMsg"]' != '') {
             alert('@TempData["Error"]');
         }
 
         function paginationSubmit(page)
         {
             $('#numPage').val(page);
-            $('.frmTrainList')[0].submit();
+            $('form')[0].submit();
         }
-
 
         $(function () {
             $('a').each(function (i,e) {
@@ -131,16 +116,10 @@
                 }
             });
 
-            //搜尋
-            $('#searchBtn').click(function () {
-                $('#numPage').val(1);
-                $('.frmTrainList').submit();
-            });
-
             //分頁input
             $('#numPage').on('keyup change', function () {
-                var minPage = @Model.Result.Pagination.FirstPage;
-                var maxPage = @Model.Result.Pagination.LastPage;
+                var minPage = @Model.Pagination.FirstPage;
+                var maxPage = @Model.Pagination.LastPage;
                 var currentPage=$(this).val() ;
                 if(currentPage < minPage)
                 {
@@ -152,7 +131,7 @@
                     currentPage = maxPage;
                 }
                 $(this).val(currentPage);
-                $('.frmTrainList').submit();
+                $('form')[0].submit();
             })
         })
     </script>

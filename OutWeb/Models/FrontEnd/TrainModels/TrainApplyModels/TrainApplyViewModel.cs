@@ -1,5 +1,4 @@
-﻿using OutWeb.Models.Manage.ManageTrainModels;
-
+﻿
 namespace OutWeb.Models.FrontEnd.TrainModels.TrainApplyModels
 {
     /// <summary>

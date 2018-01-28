@@ -12,7 +12,12 @@
         <EntityTypeShape EntityType="TYBAModel.NEWS" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="TYBAModel.RESULT" Width="1.5" PointX="5.375" PointY="4.75" />
         <EntityTypeShape EntityType="TYBAModel.USER" Width="1.5" PointX="7.375" PointY="0.75" />
-      </Diagram>
+        <EntityTypeShape EntityType="TYBAModel.OLACT" Width="1.5" PointX="7.375" PointY="4.75" />
+        <EntityTypeShape EntityType="TYBAModel.OLACTGROUP" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="TYBAModel.APPLY" Width="1.5" PointX="3.375" PointY="8.75" />
+        <EntityTypeShape EntityType="TYBAModel.APPLY_MEMBER" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TYBAModel.APPLY_NUMBER" Width="1.5" PointX="9.375" PointY="4.75" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

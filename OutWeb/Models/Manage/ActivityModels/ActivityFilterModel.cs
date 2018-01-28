@@ -1,9 +1,6 @@
-﻿namespace OutWeb.Models.Manage.ManageTrainModels
+﻿namespace OutWeb.Models.Manage.ActivityModels
 {
-    /// <summary>
-    /// 最新消息列表資過濾條件模型
-    /// </summary>
-    public class TrainListFilterModel
+    public class ActivityFilterModel
     {
         /// <summary>
         /// 選取頁面
@@ -11,14 +8,14 @@
         public int CurrentPage { get; set; }
 
         /// <summary>
-        /// 查詢狀態
+        /// 上下架
         /// </summary>
-        public string Status { get; set; }
-        /// <summary>
-        /// 查詢狀態
-        /// </summary>
-        public string HomeDisplay { get; set; }
+        public string Disable { get; set; }
 
+        /// <summary>
+        /// 分類
+        /// </summary>
+        public string Type { get; set; }
 
         /// <summary>
         /// 查詢關鍵字

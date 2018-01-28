@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -17,7 +18,7 @@ namespace OutWeb.Repositories
 
         private static Language m_language = Language.NotSet;
 
- 
+
         public static void FilterXss<T>(T obj)
         {
             // Get type.
@@ -97,6 +98,35 @@ namespace OutWeb.Repositories
             public DateTime EndDate { get; set; }
 
         }
+
+        public static DateTime GetDateBeginTime(this DateTime d)
+        {
+            var dateRange = GetFilterDateBeginAndEnd(d);
+            return dateRange.StartDate;
+        }
+        public static DateTime GetDateEndTime(this DateTime d)
+        {
+            var dateRange = GetFilterDateBeginAndEnd(d);
+            return dateRange.EndDate;
+        }
+        /// <summary>
+        /// 將字串 yyyy/MM/dd轉為時間 
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static DateTime ToDatetime(this string date)
+        {
+            DateTime d;
+            bool valid = DateTime.TryParseExact(date, "yyyy/MM/dd",
+                                       CultureInfo.InvariantCulture,
+                                       DateTimeStyles.None,
+                                       out d);
+            if (!valid)
+                throw new FormatException("Convert To Datetime Has Some Error.");
+            return d;
+        }
+
+
 
         /// <summary>
         /// 使用者自訂語系

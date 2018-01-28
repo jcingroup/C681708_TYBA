@@ -1,78 +1,65 @@
-﻿@using OutWeb.Models.FrontEnd.TrainModels.TrainApplyModels
-@model TrainContentModel
-@using OutWeb.Provider
-@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
+﻿@using OutWeb.Models.FrontEnd.DownloadFrontModel
+@model ApplyListContentModel
 
 @{
-    ViewBag.Title = Model.ActivityName;
     ViewBag.BodyClass = "Apply";
-    ViewBag.ContentClass ="p-48 text-left";
-string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
-string ActionName = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Action"]);
-}
+    ViewBag.ContentClass = "p-48 text-left";
+    ViewBag.Title = Model.Data.Title;
+    string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
 
+    string applyStr = Model.Data.ActivityStatus ? "我要報名" : "報名截止";
+    string applyStrStyle = Model.Data.ActivityStatus ? "" : "disabled";
+    string applyUrl = Model.Data.ActivityStatus ? "/Apply/Apply?id=" + Model.Data.ID : "javascript:;";
+}
 <h4 class="title">
     <span class="underline">@ViewBag.Title</span>
 </h4>
-
-@if (Model.IsStopRegistering)
-{
-    <a href="@Url.Content("~/Train/ApplyAdd?trainID=" + Model.ID)" class="btn pull-right mb-16 ti-comments-smiley">線上報名</a>
-}
-else
-{
-    <a href="javascript:;" class="btn pull-right mb-16" disabled>報名截止</a>
-}
-
+<a href="@applyUrl" class="btn pull-right mb-16 ti-comments-smiley" @applyStrStyle>@applyStr</a>
+@* 若時間過掉或額滿時顯示
+    <a href="Apply" class="btn pull-right mb-16" disabled>報名截止</a> *@
 <div class="table-rwd clear">
     <table class="table-striped w-100 activity-info">
         <colgroup>
             <col style="width:18%">
         </colgroup>
-        <tr><th>活動時間</th><td class="text-left">@Model.ActivityDate</td></tr>
-        <tr><th>報名時間</th><td class="text-left">@Model.DeadlineBegin ~ @Model.DeadlineEnd</td></tr>
-        <tr><th>活動說明</th><td class="text-left editor">@Html.Raw(Model.ActivityContent)</td></tr>
+        <tr>
+            <th>活動時間</th>
+            <td class="text-left">@Model.Data.ActivityDateTimeDescription</td>
+        </tr>
+        <tr>
+            <th>報名時間</th>
+            <td class="text-left">@Model.Data.ApplyDateRange</td>
+        </tr>
+        <tr>
+            <th>活動說明</th>
+            <td class="text-left">@Html.Raw(Model.Data.Remark)</td>
+        </tr>
     </table>
 </div>
-@if (Model.FilesData.Count > 0 && Model.FilesData != null)
-{
-    <footer class="download">
 
-        @foreach (var file in Model.FilesData)
-        {
-            string fileUrl = currentUrl + "/" + file.FileUrl;
-            <a class="inline-block ti-clip" href="@fileUrl" url="@fileUrl" real-name="@file.RealFileName">@file.RealFileName</a>
-        }
 
-    </footer>
-}
+<footer class="download">
+    @foreach (var file in Model.Files)
+    {
+        string fileUrl = currentUrl + "/" + file.FileUrl;
+        <a class="inline-block ti-clip dlFile" href="@fileUrl" url="@fileUrl" real-name="@file.RealFileName">@file.RealFileName</a>
+    }
 
+</footer>
 <hr class="mb-12">
-
 <a href="~/Apply" class="back pull-right ti-arrow-left">回列表</a>
 
+
 <script>
-    $(function () {
-        @*$('#editBtn').click(function () {
+    //下載檔案存為指定檔名
+    function downloadFile(elem) {
+        $(elem).attr('download', $(elem).attr('real-name'))
+              .attr('href', $(elem).attr('url'))
+              .attr('target', '_blank');
+    }
 
-            var url = "/Train/GetApplyIDByTrainID?trainID="+ @Model.ID;
-            $.ajax({
-                async: false,
-                type: 'GET',
-                url: url,
-                success: function (result) {
-                    if(!result.success)
-                    {
-                        alert(result.msg);
-                    }
-                    else
-                    {
-                        window.location.href = result.url;
-                    }
-                }
-            })
-
-
-        });*@
-    })
+    //檔案下載
+    $(document).on('click', '.dlFile', function () {
+        downloadFile(this);
+    });
 </script>

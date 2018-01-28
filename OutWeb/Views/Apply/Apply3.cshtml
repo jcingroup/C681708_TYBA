@@ -1,38 +1,33 @@
-﻿
+﻿@using OutWeb.Models.FrontEnd.ApplyModels
+@model ApplyDataModel
 @{
-    ViewBag.Title = "桃園市主委盃3對3籃球鬥牛賽";
+    ViewBag.Title = Model.ActivityTitle;
     ViewBag.BodyClass = "Apply";
-    ViewBag.ContentClass ="p-48 text-left";
+    ViewBag.ContentClass = "p-48 text-left";
 }
-
 <h4 class="title">
     <span class="underline">@ViewBag.Title</span>
     線上報名
 </h4>
-
 <ul class="list-unstyled apply-step">
     <li><em class="font-sp">1</em> 填寫資料</li>
     <li><em class="font-sp">2</em> 確認報名資料</li>
     <li class="active"><em class="font-sp">3</em> 完成報名</li>
 </ul>
-
 <header class="font-lg ti-info-alt apply-done">
-    親愛的 <strong class="text-primary">@* 隊名 *@AAAAAAAAAA</strong> 您好，<br>
-    您已完成報上報名作業，您的報名編號為 <strong class="text-primary">107abc-0001</strong>，請列印或拍照保留此編號，報名資料若有異動請EMAIL或電話聯絡管理員，謝謝。
+    親愛的 <strong class="text-primary">@* 隊名 *@ @Model.TeamName</strong> 您好，<br>
+    您已完成報上報名作業，您的報名編號為 <strong class="text-primary">@Model.ApplyNumber</strong>，請列印或拍照保留此編號，報名資料若有異動請EMAIL或電話聯絡管理員，謝謝。
 </header>
-
 <hr>
-
 <fieldset id="print" class="apply-info clearfix">
     <legend class="font-xl">
         您的報名資料
         <button class="btn info pull-right ti-printer" type="button" onclick="webprint('print')">列印報名資料</button>
     </legend>
-
     <dl class="field">
         <dt class="col-xs-2 col-md-1">報名編號</dt>
         <dd class="col-xs-10 col-md-5 form-label underline">
-            107abc-0001
+            @Model.ApplyNumber
         </dd>
     </dl>
     <dl class="field">
@@ -44,28 +39,27 @@
     <dl class="field">
         <dt class="col-xs-2 col-md-1">隊名</dt>
         <dd class="col-xs-10 col-md-11 form-label underline">
-            AAAAAAAAAA
+            @Model.TeamName
         </dd>
     </dl>
-
     <div class="clearfix">
         <section class="col-md-6 pl-0">
             <dl class="field">
                 <dt class="col-xs-2">參賽組別</dt>
                 <dd class="col-xs-10 form-label underline">
-                    男子組
+                    @Model.ApplyGroupName
                 </dd>
             </dl>
             <dl class="field">
                 <dt class="col-xs-2">教練</dt>
                 <dd class="col-xs-10 form-label underline">
-                    &nbsp;
+                    @Model.Coach &nbsp;
                 </dd>
             </dl>
             <dl class="field">
                 <dt class="col-xs-2">E-mail</dt>
                 <dd class="col-xs-10 form-label underline">
-                    BBB
+                    @Model.Email
                 </dd>
             </dl>
         </section>
@@ -73,45 +67,43 @@
             <dl class="field">
                 <dt class="col-xs-2">聯絡人</dt>
                 <dd class="col-xs-10 form-label underline">
-                    AAAAAA
+                    @Model.Contact
                 </dd>
             </dl>
             <dl class="field">
                 <dt class="col-xs-2">聯絡電話</dt>
                 <dd class="col-xs-10 form-label underline">
-                    00-000-000
+                    @Model.ContactPhone
                 </dd>
             </dl>
         </section>
     </div>
-
     <div class="table-rwd">
         <table class="table-bordered table-striped w-100 mt-32">
             <caption class="font-xl text-left">隊伍資料</caption>
+
             <tr class="list-head">
                 <th>#</th>
                 <th class="text-left">姓名</th>
                 <th>身份證字號</th>
                 <th>生日</th>
             </tr>
-            <tr>
-                <td>1</td>
-                <td class="text-left">XXX(隊長)</td>
-                <td>h123456789</td>
-                <td>2000/01/01</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td class="text-left">YYY</td>
-                <td>h123456789</td>
-                <td>2000/01/01</td>
-            </tr>
+            @foreach (var member in Model.Member)
+            {
+                string memberType = member.MemberType == "Leader" ? "(隊長)" : "";
+                int index = Model.Member.IndexOf(member) + 1;
+                string mName = string.Concat(member.MemberName, memberType);
+                <tr>
+                    <td>@index</td>
+                    <td class="text-left">@mName</td>
+                    <td>@member.MemberIdentityID</td>
+                    <td>@member.MemberBirthday</td>
+                </tr>
+            }
         </table>
     </div>
 </fieldset>
-
 <a href="List" class="btn success ti-arrow-left">回報名列表</a>
-
 @section scripts {
     <script>
         // 列印

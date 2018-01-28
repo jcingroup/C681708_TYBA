@@ -1,5 +1,6 @@
 ﻿using OutWeb.ActionFilter;
 using OutWeb.Authorize;
+using OutWeb.Models.Manage.ActivityModels;
 using OutWeb.Models.Manage.BannerModels;
 using OutWeb.Models.Manage.DownloadModels;
 using OutWeb.Models.Manage.ManageNewsModels;
@@ -635,6 +636,86 @@ namespace OutWeb.Controllers
             try
             {
                 using (var module = new ResultModule())
+                {
+                    module.DoDeleteByID((int)ID);
+                }
+                messages = "刪除成功";
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                messages = ex.Message;
+            }
+            var resultJson = Json(new { success = success, messages = messages });
+            return resultJson;
+        }
+
+        // 活動管理
+        public ActionResult ActivityList(int? page, string qry, string sort, string disable, string pDate)
+        {
+            ActivityListViewModel model = new ActivityListViewModel();
+            model.Filter.CurrentPage = page ?? 1;
+            model.Filter.QueryString = qry ?? string.Empty;
+            model.Filter.SortColumn = sort ?? string.Empty;
+            model.Filter.Disable = disable ?? string.Empty;
+            model.Filter.PublishDate = pDate;
+
+            using (ActivityModule module = new ActivityModule())
+            {
+                model.Result = module.DoGetList(model.Filter);
+            }
+
+            return View(model);
+        }
+
+        public ActionResult ActivityAdd()
+        {
+            ActivityDetailsModel defaultModel = new ActivityDetailsModel();
+            defaultModel.Disable = false;
+            defaultModel.PublishDateStr = DateTime.UtcNow.AddHours(8).ToString("yyyy\\/MM\\/dd");
+            defaultModel.Sort = 1;
+            return View(defaultModel);
+        }
+
+        public ActionResult ActivityEdit(int? ID)
+        {
+            if (!ID.HasValue)
+                return RedirectToAction("ActivityList");
+            ActivityDetailsModel model = new ActivityDetailsModel();
+            using (ActivityModule module = new ActivityModule())
+            {
+                model = module.DoGetDetailsByID((int)ID);
+            }
+            FileModule fileModule = new FileModule();
+            model.Files = fileModule.GetFiles((int)model.ID, "Activity", "F");
+            return View(model);
+        }
+        [ValidateInput(false)]
+        [HttpPost]
+        public ActionResult ActivitySave(ActivityDataModel model)
+        {
+            int id = 0;
+            using (ActivityModule module = new ActivityModule())
+            {
+                if (model.OldFilesId.Count == 0 && model.Files.Count == 0)
+                {
+                    TempData["UndefinedFile"] = "請上傳檔案";
+                    return RedirectToAction("ActivityEdit", new { ID = (int?)null });
+                }
+                id = module.DoSaveData(model);
+            }
+            var redirectUrl = new UrlHelper(Request.RequestContext).Action("ActivityEdit", "_SysAdm", new { ID = id });
+            return Json(new { Url = redirectUrl });
+        }
+
+        [HttpPost]
+        public JsonResult ActivityDelete(int? ID)
+        {
+            bool success = true;
+            string messages = string.Empty;
+            try
+            {
+                using (ActivityModule module = new ActivityModule())
                 {
                     module.DoDeleteByID((int)ID);
                 }

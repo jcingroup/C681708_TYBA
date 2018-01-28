@@ -1,0 +1,446 @@
+﻿@using OutWeb.Models.Manage.ActivityModels
+@model ActivityDetailsModel
+@{
+    string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
+    string ActionName = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Action"]);
+}
+<input type="hidden" id="hdnId" name="ID" value="@Model.ID" />
+
+<dl class="field">
+    <dt class="col-2"><sup title="必填">*</sup> 發佈時間</dt>
+    <dd class="col-3">
+        <input type="text" class="datepicker" required name="PublishDateStr" value="@Model.PublishDateStr" placeholder="請輸入發佈日期">
+    </dd>
+</dl>
+<dl class="field">
+    <dt class="col-2"><sup title="必填">*</sup> 活動名稱</dt>
+    <dd class="col-9">
+        <input type="text" name="Title" value="@Model.Title" required placeholder="請輸入活動名稱">
+    </dd>
+</dl>
+<dl class="field">
+    <dt class="col-2"><sup title="必填">*</sup> 活動時間</dt>
+    <dd class="col-9">
+        <input type="text" name="ActivityDateTimeDescription" value="@Model.ActivityDateTimeDescription" required placeholder="請輸入活動時間">
+    </dd>
+</dl>
+<dl class="field">
+    <dt class="col-2"><sup title="必填">*</sup> 報名時間</dt>
+    <dd class="col-3">
+        <div class="input-group">
+            <label class="input-group-addon">起</label>
+            <span class="input-group-box"><input type="text" class="datepicker" name="ApplyDateTimeBegin" value="@Model.ApplyDateTimeBegin" required placeholder="請輸入報名期限(起)"></span>
+        </div>
+    </dd>
+    <dd class="col-3">
+        <div class="input-group">
+            <label class="input-group-addon">迄</label>
+            <span class="input-group-box"><input type="text" class="datepicker" name="ApplyDateTimeEnd" value="@Model.ApplyDateTimeEnd" required placeholder="請輸入報名期限(迄)"></span>
+        </div>
+    </dd>
+    <dd class="col-4 form-label">
+        <small class="text-danger">*活動可報名時間</small>
+    </dd>
+</dl>
+<dl class="field">
+    <dt class="col-2"><sup title="必填">*</sup> 活動編號</dt>
+    <dd class="col-6">
+        <input type="text" required placeholder="設定活動編號" name="ActivityNumber" value="@Model.ActivityNumber">
+        <small class="text-danger">*活動編號規則，如: 年度-3碼英數字(107-ABC)</small><br>
+        <small class="text-danger">*報名編號由系統自動產生，如: 年度-3碼英數字-系統編碼(107-ABC-0001)</small>
+    </dd>
+</dl>
+<dl class="field">
+    <dt class="col-2">排序</dt>
+    <dd class="col-7">
+        @* 預設給 1 或 0 *@
+        <input type="number" value="@Model.Sort" class="inline" name="Sort" step="0.1">
+        <small class="text-danger">*數字愈大愈前面</small>
+    </dd>
+</dl>
+<dl class="field">
+    <dt class="col-2">顯示狀態</dt>
+    <dd class="col-7">
+        @*  新增時預設上架  *@
+
+        @if (!Model.Disable)
+        {
+            <label class="mr-8">
+                <input type="radio" name="Disable" class="radio" value="false" checked>
+                <i class="icon"></i>上架
+            </label>
+            <label>
+                <input type="radio" name="Disable" value="true" class="radio">
+                <i class="icon"></i>下架
+            </label>
+
+        }
+        else
+        {
+            <label class="mr-8">
+                <input type="radio" name="Disable" class="radio" value="false">
+                <i class="icon"></i>上架
+            </label>
+            <label>
+                <input type="radio" name="Disable" value="true" class="radio" checked>
+                <i class="icon"></i>下架
+            </label>
+        }
+    </dd>
+</dl>
+
+<dl class="field">
+    <dt class="col-2">附件上傳</dt>
+    <dd class="col-6 file-buffer">
+        <div class="input-file">
+            <input id="files_m" type="file" onchange="previewFiles(this);" name="" multiple>
+        </div>
+        <ul class="file-pre-ul list-unstyled">
+
+            @foreach (var file in Model.Files)
+            {
+                string fileUrl = currentUrl + "/" + file.FileUrl;
+                int index = Model.Files.IndexOf(file);
+
+                <li class="uploaded">
+                    <button type="button" class="btn-del file-remove-btn" del-obj="f" id="@file.FileName'">&times;</button>
+                    <a class="dlFile-load" href="javascript:;" url="@fileUrl" real-name="@file.RealFileName">@file.RealFileName</a>
+                    <input type="hidden" name="OldFilesId[@index]" class="old-files" value="@file.ID" />
+                </li>
+            }
+        </ul>
+    </dd>
+    <dd class="col-4 form-label">
+        <small class="text-danger">*可上傳多筆檔案，單檔請勿超過 50 MB</small>
+    </dd>
+</dl>
+<fieldset class="mt-24">
+    <legend class="underline">
+        [ 組別維護 ]
+        <button type="button" class="btn success pull-right mb-4 oi" data-glyph="plus" id="addNewGroup">新增組別</button>
+    </legend>
+    <table class="w-100 act-group-table">
+        <colgroup>
+            <col style="width: 50px">
+            <col span="4">
+        </colgroup>
+        <tr class="bg-light">
+            <th>#</th>
+            <th class="text-left">組別名稱</th>
+            <th class="text-left">隊伍報名上限</th>
+            <th class="text-left">隊員人數上限</th>
+            <th class="item-edit">刪除</th>
+        </tr>
+
+        @if (Model.ActivityGroup.Count == 0)
+        {
+            @**@
+            <tr class="emptyGroup">
+                <td class="text-left" colspan="4">目前無組別</td>
+            </tr>
+        }
+
+        @foreach (var group in Model.ActivityGroup)
+        {
+            int index = Model.ActivityGroup.IndexOf(group);
+            int sort = index + 1;
+            <tr class="group-list-item">
+                <td>
+                    @sort
+                </td>
+                <td>
+                    <input type="hidden" name="ActivityGroup[@index].GroupID" value="@group.GroupID" maxlength="70" />
+                    <input type="text" required name="ActivityGroup[@index].GroupName" value="@group.GroupName" placeholder="請輸入組別名稱">
+                </td>
+                <td><input type="number" placeholder="請輸入隊伍報名上限" required min="0" class="form-element" name="ActivityGroup[@index].GroupApplyLimit" value="@group.GroupApplyLimit"></td>
+                <td><input type="number" placeholder="請輸入隊員人數上限" required min="0" class="form-element" name="ActivityGroup[@index].CountApplyLimit" value="@group.CountApplyLimit"></td>
+                <td><button type="button" class="btn danger oi group-del-btn" data-glyph="trash" title="刪除"></button></td>
+            </tr>
+        }
+    </table>
+
+</fieldset>
+<fieldset class="mt-24">
+    <legend class="underline">[ 活動說明 ]</legend>
+    <div class="alert-warning mb-16">
+        <strong>編輯器注意事項:</strong><br>
+        從 WORD 複製文字時，請使用下方的 <img src="/Content/images/icon-word.jpg" /> 圖示來貼上 WORD 文字，避免跑版<br />
+        編輯器上傳圖片或新增表格等時，請勿設定寬度及高度(將數字刪除) ，以免行動裝置顯示時會跑版。<br />
+        檔案尺寸寬度超過 1600 或 高度超過1200 的圖片會被壓縮(PNG透明背景會變成不透明) <br />
+        youtube 可勾選「用自適應縮放模式」
+    </div>
+    <textarea class="form-element" maxlength="512" name="contenttext" placeholder="請輸入活動說明..." rows="12">@Html.Raw(Model.ActivityContent)</textarea>
+</fieldset>
+<footer class="submit-bar clear mt-24">
+    <button id="submitBtn" type="button" class="btn success oi" data-glyph="circle-check">
+        確認儲存
+    </button>
+    <button type="button" class="btn warning oi" data-glyph="circle-x" onclick="location.href = 'ActivityList'">
+        回列表
+    </button>
+</footer>
+<script>
+    $('#addNewGroup').click(function () {
+        if ($('.emptyGroup').length > 0) {
+            $('.emptyGroup').remove();
+        }
+        var trLen = $('.group-list-item').length;
+        var $tr = $(
+                        '<tr class="group-list-item">' +
+                        '<td>' + (trLen + 1) + '</td>' +
+                        '<td>' + '<input type="text" required name="ActivityGroup[' + trLen + '].GroupName" maxlength="70" placeholder="請輸入組別名稱">' + '</td>' +
+                        '<td>' + '<input type="number" required min="0" class="form-element" name="ActivityGroup[' + trLen + '].GroupApplyLimit" placeholder="請輸入隊伍報名上限">' + '</td>' +
+                        '<td>' + '<input type="number" required min="0" class="form-element" name="ActivityGroup[' + trLen + '].CountApplyLimit" placeholder="請輸入隊員人數上限">' + '</td>' +
+                        '<td>' + '<button type="button" class="btn danger oi group-del-btn" data-glyph="trash" title="刪除">' + '</button>' + '</td>' +
+                        '</tr>'
+                        );
+        $('.act-group-table').append($tr);
+        resetServerIndex();
+    });
+
+    $(document).on('click', '.group-del-btn', function () {
+        $(this).closest('tr').remove();
+        var trLen = $('.group-list-item').length;
+        if (trLen == 0) {
+            var emptyTr = $(
+                '<tr class="emptyGroup">' +
+                    '<td class="text-left" colspan="4">目前無組別</td>' +
+                '</tr>');
+            emptyTr.appendTo($('.act-group-table'));
+        }
+        resetServerIndex();
+    })
+    //重置serverIndex
+    function resetServerIndex() {
+        $('.group-list-item').each(function (index, elem) {
+            var nameAttrValues = ["GroupID", "GroupName", "GroupApplyLimit", "CountApplyLimit"];
+            resetInputIndex(index, elem, nameAttrValues);
+        });
+        reSortForItemIndex();
+    }
+
+    //顯示組號重置
+    function reSortForItemIndex() {
+        $('.group-list-item').each(function (index, elem) {
+            $(elem).find('td').eq(0).text(index + 1);
+        });
+    }
+    //重置input index
+    function resetInputIndex(index, elem, nameAttrValues) {
+        for (var i = 0; i < nameAttrValues.length; i++) {
+            $(elem).find("[name*='" + nameAttrValues[i] + "']").each(function (i, e) {
+                var oldNameSplit = $(e).attr('name').split('.');
+                var newModelName = 'ActivityGroup[' + index + ']';
+                for (var i = 1; i < oldNameSplit.length; i++) {
+                    newModelName += '.' + oldNameSplit[i];
+                }
+                $(e).attr('name', newModelName);
+                newModelName = '';
+            })
+        }
+
+    }
+
+</script>
+@*File Upload JS*@
+<script>
+    if ('@TempData["UndefinedFile"]' != '') {
+        alert('@TempData["UndefinedFile"]');
+    }
+    $(function () {
+        CKFinder.setupCKEditor(null, { basePath: '/ckfinder/', skin: 'v1' });
+        CKEDITOR.replace('contenttext');
+
+        //表單送出
+        $('#submitBtn').click(function () {
+            var isValid = validHtmlFormRequired();
+            if (!isValid) {
+                return;
+            }
+            var trLen = $('.group-list-item').length;
+
+            if (trLen == 0) {
+                alert('請輸入至少一組參賽組別');
+                return;
+            }
+            SaveFiles();
+        });
+    })
+
+    //驗證Required欄位
+    function validHtmlFormRequired() {
+        var valid = true;
+        var form = document.forms[0];
+        for (var i = 0; i < form.elements.length; i++) {
+            if (form.elements[i].value === '' && form.elements[i].hasAttribute('required')) {
+                alert(form.elements[i].placeholder);
+                valid = false;
+                return;
+            }
+        }
+        return valid;
+    }
+
+    var fileList = [];
+    var fileLimitFileSize = 52428800//檔案大小50mb 單位bit
+    var blobBuffer = {};
+
+    //圖片/檔案存server
+    function SaveFiles() {
+        var fileAggregate = parseInt($('.old-files').length) + parseInt(fileList.length);
+        if (fileAggregate == 0) {
+            alert('請上傳檔案!');
+            return;
+        }
+        //if (fileAggregate > 1) {
+        //    alert('只限上傳一個檔案!');
+        //    return;
+        //}
+
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+        }
+
+        var ID = $('#hdnID').val();
+        var formData = document.forms[0];
+        formData = new FormData(formData);
+
+        for (var i = 0; i < fileList.length; i++) {
+            var data = fileList[i];
+            formData.append('Files', data.files);
+        }
+
+        formData.append("actionName", '@ActionName');
+        formData.append("ID", ID);
+        url = "@Url.Content("~/_SysAdm/ActivitySave/")";
+
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: url,
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                window.location.href = response.Url;
+            },
+            error: function (error) {
+                alert('error');
+                console.log(error);
+                //window.location.reload();
+            }
+        });
+    }
+
+    //檔案下載
+    $(document).on('click', '.dlFile', function () {
+        downloadFile(this);
+    });
+    $(document).on('click', '.dlFile-load', function () {
+        downloadDefaultProcess(this);
+    });
+
+    //檔案刪除
+    $(document).on('click', '.file-remove-btn', function () {
+        var delIndex = [];
+        var id = $(this).attr('id');
+        var t = $(this).attr('del-obj');
+        for (var i = 0; i < fileList.length; i++) {
+            var data = fileList[i];
+            if (data.type == t && data.files.name == id) {
+                delIndex.push(i);
+            }
+        }
+        for (var i = 0; i < delIndex.length; i++) {
+            fileList.splice(delIndex[i], 1);
+        }
+        $(this).parent('li').remove();
+    })
+
+    //檔案預覽
+    function previewFiles(elem) {
+        fileList = [];
+        $('.file-pre-ul').empty();
+        var f = document.getElementById('files_m');
+        //檢查格式尺寸
+        var sizePass = checkFileLimitSize(f, fileLimitFileSize);
+
+        //var fileNamePass = checkFileNameLength(f);
+        if (!sizePass) {
+            return;
+        }
+
+        for (var i = 0; i < f.files.length; i++) {
+            //建立Object URL
+            var url = window.URL.createObjectURL(f.files[i]);
+            var filename = f.files[i].name;
+            var blobObjectFile = f.files[i];
+            var ra = '';
+            //For IE
+            if (window.navigator.msSaveOrOpenBlob) {
+                ra = Math.random();
+                blobBuffer[ra] = { blobObj: blobObjectFile, fileName: filename };
+            }
+            var $li = '<li class="uploaded"><button type="button" class="btn-del file-remove-btn" del-obj="f" id="' + f.files[i].name + '">&times;</button>' +
+                '<a class="dlFile"  ie-id="' + ra + '" href="javascript:;" url="' + url + '" real-name="' + filename + '">' + filename + '</a>' +
+                '</li>';
+
+            $('.file-pre-ul').append($li);
+            fileList.push({ type: 'f', files: f.files[i] });
+
+            //註銷Object URL
+            //window.URL.revokeObjectURL(url);
+        }
+    }
+    function downloadDefaultProcess(elem) {
+        $(elem).attr('download', $(elem).attr('real-name'))
+     .attr('href', $(elem).attr('url'))
+     .attr('target', '_blank');
+    }
+
+    //下載檔案存為指定檔名
+    function downloadFile(elem) {
+        //for IE
+        if (window.navigator.msSaveOrOpenBlob) {
+            if (Object.keys(blobBuffer).length > 0) {
+                var key = $(elem).attr('ie-id');
+                var obj = blobBuffer[key];
+
+                var blobObject = new Blob([obj.blobObj]);
+                window.navigator.msSaveOrOpenBlob(blobObject, obj.fileName);
+            }
+        }
+        else {
+            downloadDefaultProcess(elem);
+        }
+    }
+
+    //檢查尺寸
+    function checkFileLimitSize(totalFiles, fileLimitSize) {
+        var success = true;
+        for (var i = 0; i < totalFiles.files.length; i++) {
+            var file = totalFiles.files[i];
+            if (file.size > fileLimitSize) {
+                success = false;
+                alert("圖片或檔案大小不可超過" + (fileLimitSize / 1024) + " kb.");
+                break;
+            }
+        }
+        return success;
+    }
+
+    function checkFileNameLength(totalFiles) {
+        var limitLength = 50;
+        var success = true;
+        for (var i = 0; i < totalFiles.files.length; i++) {
+            var file = totalFiles.files[i];
+            if (file.name.length > limitLength) {
+                success = false;
+                alert("檔案名稱長度不得超過" + 50 + '個字元');
+                break;
+            }
+        }
+        return success;
+    }
+</script>

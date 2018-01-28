@@ -32,5 +32,10 @@ namespace OutWeb.Entities
         public virtual DbSet<NEWS> NEWS { get; set; }
         public virtual DbSet<RESULT> RESULT { get; set; }
         public virtual DbSet<USER> USER { get; set; }
+        public virtual DbSet<OLACT> OLACT { get; set; }
+        public virtual DbSet<OLACTGROUP> OLACTGROUP { get; set; }
+        public virtual DbSet<APPLY> APPLY { get; set; }
+        public virtual DbSet<APPLY_MEMBER> APPLY_MEMBER { get; set; }
+        public virtual DbSet<APPLY_NUMBER> APPLY_NUMBER { get; set; }
     }
 }

@@ -1,52 +1,58 @@
-﻿
-@{
-    ViewBag.Title = "桃園市主委盃3對3籃球鬥牛賽";
-    ViewBag.BodyClass = "Apply";
-    ViewBag.ContentClass ="pt-48 px-48 text-left";
-}
+﻿@using OutWeb.Models.FrontEnd.ApplyModels
+@model ApplyViewDetailsModel
 
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.BodyClass = "Apply";
+    ViewBag.ContentClass = "pt-48 px-48 text-left";
+
+}
 <h4 class="title">
     <span class="underline">@ViewBag.Title</span>
     線上報名
 </h4>
-
 <ul class="list-unstyled apply-step">
     <li class="active"><em class="font-sp">1</em> 填寫資料</li>
     <li><em class="font-sp">2</em> 確認報名資料</li>
     <li><em class="font-sp">3</em> 完成報名</li>
 </ul>
+<form action="/Apply/Apply2" method="post" class="form-signup">
 
-<form action="" class="form-signup">
+    <input type="hidden" id="hdnId" name="ActivityID" value="@Model.ID" />
+    <input type="hidden" id="hdnTitle" name="ActivityTitle" value="@Model.Title" />
     <fieldset class="clearfix my-16">
         <legend class="font-xl">報名資料</legend>
         <dl class="field">
             @* 檢查隊名，同組別的隊名不能相同 *@
             <dt class="col-md-1">隊名 <sup title="必填">*</sup></dt>
             <dd class="col-md-11">
-                <input type="text" class="form-element" placeholder="必填" required>
+                <input type="text" class="form-element" placeholder="必填" required name="TeamName">
             </dd>
         </dl>
         <section class="col-sm-6 pl-0">
             <dl class="field">
                 <dt class="col-md-2">參賽組別 <sup title="必填">*</sup></dt>
                 <dd class="col-md-10">
-                    <select name="" id="" class="form-element" required>
+                    <select name="ApplyGroupID" id="actGroup" class="form-element" required>
                         <option value="0">請選擇組別</option>
-                        <option value="1">男子組</option>
-                        <option value="2">女子組</option>
+                        @foreach (var group in Model.ActivityGroup)
+                        {
+                            string disabled = group.CountApplyLastLimit == 0 ? "disabled" : "";
+                            <option @disabled value="@group.GroupID">@group.GroupName -餘 @group.CountApplyLastLimit</option>
+                        }
                     </select>
                 </dd>
             </dl>
             <dl class="field">
                 <dt class="col-md-2">聯絡人 <sup title="必填">*</sup></dt>
                 <dd class="col-md-10">
-                    <input type="text" class="form-element" placeholder="必填" required>
+                    <input type="text" class="form-element" placeholder="必填" required name="Contact">
                 </dd>
             </dl>
             <dl class="field">
                 <dt class="col-md-2">聯絡電話 <sup title="必填">*</sup></dt>
                 <dd class="col-md-10">
-                    <input type="tel" class="form-element" placeholder="必填" required>
+                    <input type="tel" class="form-element" placeholder="必填" required name="ContactPhone">
                 </dd>
             </dl>
         </section>
@@ -54,28 +60,29 @@
             <dl class="field">
                 <dt class="col-md-2">教練</dt>
                 <dd class="col-md-10">
-                    <input type="text" class="form-element">
+                    <input type="text" class="form-element" name="Coach">
                 </dd>
             </dl>
             <dl class="field">
                 <dt class="col-md-2">E-mail <sup title="必填">*</sup></dt>
                 <dd class="col-md-10">
-                    <input type="email" class="form-element" placeholder="必填" required>
+                    <input type="email" class="form-element" placeholder="必填" required name="Email">
                 </dd>
             </dl>
         </section>
         <dl class="field clear">
             <dt class="col-md-1">其他</dt>
             <dd class="col-md-11">
-                <textarea rows="4" class="form-element" placeholder="如有隨行人員請在此登打">領隊：
-助理教練：
-管理人員：</textarea>
+                <textarea rows="4" class="form-element" placeholder="如有隨行人員請在此登打" name="Remark">
+                    領隊：
+                    助理教練：
+                    管理人員：
+                </textarea>
                 <small class="text-danger">*如有隨行人員請在此登打</small>
             </dd>
         </dl>
     </fieldset>
-
-    <fieldset class="clearfix my-16">
+    <fieldset class="clearfix my-16 member-group">
         <legend class="font-xl underline">隊伍資料</legend>
         @* 預設第一筆是隊長 *@
         <dl class="field team-item">
@@ -84,55 +91,211 @@
                 <div class="input-group team-data" title="姓名">
                     <label class="input-group-addon ti-user"></label>
                     <div class="input-group-box">
-                        <input type="text" class="form-element" placeholder="請輸入姓名(必填)" required>
+                        <input type="hidden" name="Member[0].MemberType" value="Leader" />
+                        <input type="text" name="Member[0].MemberName" class="form-element" placeholder="請輸入姓名(必填)" required>
                     </div>
                 </div>
                 <div class="input-group team-data" title="身份證字號">
                     <label class="input-group-addon ti-id-badge"></label>
                     <div class="input-group-box">
-                        <input type="text" class="form-element" placeholder="請輸入身份證字號(必填)" required>
+                        <input type="text" class="form-element" name="Member[0].MemberIdentityID" placeholder="請輸入身份證字號(必填)" required>
                     </div>
                 </div>
                 <div class="input-group team-data" title="生日">
                     <label class="input-group-addon ti-gift"></label>
                     <div class="input-group-box">
-                        <input type="date" class="form-element" placeholder="請輸入生日(必填)" required>
+                        <input type="date" class="form-element" name="Member[0].MemberBirthday" placeholder="請輸入生日(必填)" required>
                     </div>
                 </div>
-                <button type="button" class="btn danger ti-trash">刪除</button>
+                @*<button type="button" class="btn danger ti-trash">刪除</button>*@
             </dd>
         </dl>
-        <dl class="field team-item">
-            <dt class="col-sm-1">隊員1</dt>
-            <dd class="col-sm-11">
-                <div class="input-group team-data" title="姓名">
-                    <label class="input-group-addon ti-user"></label>
-                    <div class="input-group-box">
-                        <input type="text" class="form-element" placeholder="請輸入姓名(必填)" required>
-                    </div>
-                </div>
-                <div class="input-group team-data" title="身份證字號">
-                    <label class="input-group-addon ti-id-badge"></label>
-                    <div class="input-group-box">
-                        <input type="text" class="form-element" placeholder="請輸入身份證字號(必填)" required>
-                    </div>
-                </div>
-                <div class="input-group team-data" title="生日">
-                    <label class="input-group-addon ti-gift"></label>
-                    <div class="input-group-box">
-                        <input type="date" class="form-element" placeholder="請輸入生日(必填)" required>
-                    </div>
-                </div>
-                <button type="button" class="btn danger ti-trash">刪除</button>
-            </dd>
-        </dl>
+
         <footer class="offset-sm-1 team-item-add">
-            <button type="button" class="btn success ti-plus">新增隊員</button>
+            <button type="button" class="btn success ti-plus" id="addNewMember">新增隊員</button>
         </footer>
     </fieldset>
-
     <footer class="submit-bar text-center">
-        <button class="btn lg" type="button" onclick="location.href='Apply2'">我要報名</button>
-        <a href="javascript:history.back()" class="btn success lg">取消</a>
+        <button class="btn lg" type="submit">我要報名</button>
+        <a href="/Apply/List" class="btn success lg">取消</a>
     </footer>
 </form>
+
+
+<script>
+    if ('@TempData["ErrorMsg"]' != '') {
+        alert('@TempData["ErrorMsg"]');
+    }
+    hasGroup = true;
+
+    if ('@Model.ActivityGroup.Count' == '0') {
+        hasGroup = false;
+        alert('已無可報名的參賽組別');
+    }
+
+    $('#addNewMember').click(function () {
+        var currentGroupId = $('#actGroup').val();
+        var currentGroupName = $('#actGroup').find("option:selected").text().split('-')[0];;
+
+        if (currentGroupId == '0') {
+            alert('請選擇參賽組別');
+            return;
+        }
+
+        var limitMemberCount = 0;
+        var groupInfo = JSON.parse('@Html.Raw(Model.ApplyGroupJsonString)');
+        for (var i = 0; i < groupInfo.length; i++) {
+            var group = groupInfo[i];
+            if (group.GroupID == currentGroupId) {
+                limitMemberCount = group.CountApplyLimit;
+                break;
+            }
+        }
+
+
+        var trLen = $('.team-item').length;
+        if (trLen == parseInt(limitMemberCount)) {
+            alert('參賽組別：' + currentGroupName + ' 每組參賽人數只限：' + limitMemberCount + ' 人');
+            return;
+        }
+        var $dl = $(
+        '<dl class="field team-item">' +
+            '<dt class="col-sm-1">隊員' + trLen + '</dt>' +
+            '<dd class="col-sm-11">' +
+                '<div class="input-group team-data" title="姓名">' +
+                    '<label class="input-group-addon ti-user">' + '</label>' +
+                    '<div class="input-group-box">' +
+                        '<input type="hidden" name="Member[' + trLen + '].MemberType" value="Member" />' +
+                        '<input type="text" name="Member[' + trLen + '].MemberName" class="form-element" placeholder="請輸入姓名(必填)" required>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="input-group team-data" title="身份證字號">' +
+                    '<label class="input-group-addon ti-id-badge">' + '</label>' +
+                    '<div class="input-group-box">' +
+                        '<input type="text" class="form-element" name="Member[' + trLen + '].MemberIdentityID" placeholder="請輸入身份證字號(必填)" required>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="input-group team-data" title="生日">' +
+                    '<label class="input-group-addon ti-gift">' + '</label>' +
+                    '<div class="input-group-box">' +
+                        '<input type="date" class="form-element" name="Member[' + trLen + '].MemberBirthday" placeholder="請輸入生日(必填)" required>' +
+                    '</div>' +
+                '</div>' +
+                '<button type="button" class="btn danger ti-trash group-del-btn">刪除</button>' +
+            '</dd>' +
+        '</dl>'
+        );
+
+        $('.team-item-add').before($dl);
+        resetIndex();
+    });
+
+    $(document.forms[0]).submit(function () {
+        var validRequired = validHtmlFormRequired();
+        var validTeamName = validApplyTeamName();
+        if (!validRequired || !validTeamName) {
+            return false;
+        }
+
+        if (!hasGroup) {
+            alert('已無可報名的參賽組別');
+            return false;
+        }
+
+        if ($('#actGroup').val() == '0') {
+            alert('請選擇參賽組別');
+            return false;
+        }
+    });
+
+    $(document).on('click', '.group-del-btn', function () {
+        $(this).closest('dl').remove();
+        var trLen = $('.team-item').length;
+        if (trLen == 1) {
+            return;
+        }
+        resetIndex();
+    })
+    //重置serverIndex
+    function resetIndex() {
+        $('.team-item').each(function (index, elem) {
+            var nameAttrValues = ["MemberType", "MemberName", "MemberIdentityID", "MemberBirthday"];
+            resetInputIndex(index, elem, nameAttrValues);
+        });
+        reSortForItemIndex();
+    }
+
+    //顯示組號重置
+    function reSortForItemIndex() {
+        $('.team-item').each(function (index, elem) {
+            if (index > 0) {
+                $(elem).find('dt').eq(0).text('隊員' + index);
+            }
+        });
+    }
+
+    //重置input index
+    function resetInputIndex(index, elem, nameAttrValues) {
+        for (var i = 0; i < nameAttrValues.length; i++) {
+            $(elem).find("[name*='" + nameAttrValues[i] + "']").each(function (i, e) {
+                var oldNameSplit = $(e).attr('name').split('.');
+                var newModelName = 'Member[' + index + ']';
+                for (var i = 1; i < oldNameSplit.length; i++) {
+                    newModelName += '.' + oldNameSplit[i];
+                }
+                $(e).attr('name', newModelName);
+                newModelName = '';
+            })
+        }
+
+    }
+
+    $('[name="TeamName"]').focusout(function () {
+        validApplyTeamName();
+    });
+    $('#actGroup').change(function () {
+        validApplyTeamName();
+    });
+
+
+    function validApplyTeamName() {
+        var valid = true;
+        var actId = $('#hdnId').val();
+        var groupId = $('#actGroup').val();
+        var groupName = $('#actGroup').find("option:selected").text();
+        var teamName = $('[name="TeamName"]').val();
+
+        if (groupId != '0' && teamName != '') {
+            var send = { "actId": actId, "groupId": groupId, "teamName": teamName };
+
+            $.ajax({
+                async:false,
+                url: '/Apply/ValidTeamName',
+                data: send,
+                dataType: 'json',
+                success: function (data) {
+                    if (!data.success) {
+                        groupName = groupName.split('-')[0];
+                        alert('組別：' + groupName + ' 已有相同隊名：' + teamName + '  請更換隊名');
+                        valid = false;
+                    }
+                },
+            });
+        }
+        return valid;
+    }
+
+    //驗證Required欄位
+    function validHtmlFormRequired() {
+        var valid = true;
+        var form = document.forms[0];
+        for (var i = 0; i < form.elements.length; i++) {
+            if (form.elements[i].value === '' && form.elements[i].hasAttribute('required')) {
+                alert(form.elements[i].placeholder);
+                valid = false;
+                return;
+            }
+        }
+        return valid;
+    }
+</script>

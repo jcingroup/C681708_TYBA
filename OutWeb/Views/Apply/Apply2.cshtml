@@ -1,28 +1,26 @@
-﻿
+﻿@using OutWeb.Models.FrontEnd.ApplyModels
+@model ApplyDataModel
 @{
-    ViewBag.Title = "桃園市主委盃3對3籃球鬥牛賽";
+    ViewBag.Title = Model.ActivityTitle;
     ViewBag.BodyClass = "Apply";
-    ViewBag.ContentClass ="pt-48 px-48 text-left";
+    ViewBag.ContentClass = "pt-48 px-48 text-left";
 }
-
 <h4 class="title">
     <span class="underline">@ViewBag.Title</span>
     線上報名
 </h4>
-
 <ul class="list-unstyled apply-step">
     <li><em class="font-sp">1</em> 填寫資料</li>
     <li class="active"><em class="font-sp">2</em> 確認報名資料</li>
     <li><em class="font-sp">3</em> 完成報名</li>
 </ul>
-
 <form action="" class="form-signup">
     <fieldset class="clearfix my-16">
         <legend class="font-xl">報名資料</legend>
         <dl class="field">
             <dt class="col-md-1">隊名 <sup title="必填">*</sup></dt>
             <dd class="col-md-11">
-                <input type="text" class="form-element" value="AAAAAAAAAA" readonly>
+                <input type="text" class="form-element" value="@Model.TeamName" readonly>
             </dd>
         </dl>
         <section class="col-sm-6 pl-0">
@@ -30,22 +28,20 @@
                 <dt class="col-md-2">參賽組別 <sup title="必填">*</sup></dt>
                 <dd class="col-md-10">
                     <select name="" id="" class="form-element" readonly>
-                        <option value="0">請選擇組別</option>
-                        <option value="1" selected>男子組</option>
-                        <option value="2">女子組</option>
+                        <option value="@Model.ApplyGroupID" selected>@Model.ApplyGroupName</option>
                     </select>
                 </dd>
             </dl>
             <dl class="field">
                 <dt class="col-md-2">聯絡人 <sup title="必填">*</sup></dt>
                 <dd class="col-md-10">
-                    <input type="text" class="form-element" value="AAAAAA" readonly>
+                    <input type="text" class="form-element" value="@Model.Contact" readonly>
                 </dd>
             </dl>
             <dl class="field">
                 <dt class="col-md-2">聯絡電話 <sup title="必填">*</sup></dt>
                 <dd class="col-md-10">
-                    <input type="tel" class="form-element" value="00-000-000" readonly>
+                    <input type="tel" class="form-element" value="@Model.ContactPhone" readonly>
                 </dd>
             </dl>
         </section>
@@ -53,75 +49,56 @@
             <dl class="field">
                 <dt class="col-md-2">教練</dt>
                 <dd class="col-md-10">
-                    <input type="text" class="form-element" value="" readonly>
+                    <input type="text" class="form-element" value="@Model.Coach" readonly>
                 </dd>
             </dl>
             <dl class="field">
                 <dt class="col-md-2">E-mail <sup title="必填">*</sup></dt>
                 <dd class="col-md-10">
-                    <input type="email" class="form-element" value="BBB" readonly>
+                    <input type="email" class="form-element" value="@Model.Email" readonly>
                 </dd>
             </dl>
         </section>
         <dl class="field clear">
             <dt class="col-md-1">其他</dt>
             <dd class="col-md-11">
-                <textarea rows="4" class="form-element" readonly>助理教練：CCC</textarea>
+                <textarea rows="4" class="form-element" readonly>@Model.Remark</textarea>
             </dd>
         </dl>
     </fieldset>
-
     <fieldset class="clearfix my-16">
         <legend class="font-xl underline">隊伍資料</legend>
         @* 預設第一筆是隊長 *@
-        <dl class="field team-item">
-            <dt class="col-sm-1">隊長</dt>
-            <dd class="col-sm-11">
-                <div class="input-group team-data" title="姓名">
-                    <label class="input-group-addon ti-user"></label>
-                    <div class="input-group-box">
-                        <input type="text" class="form-element" value="XXX" readonly>
+        @foreach (var member in Model.Member)
+        {
+            string memberType = member.MemberType == "Leader" ? "隊長" : "隊員";
+            <dl class="field team-item">
+                <dt class="col-sm-1">@memberType</dt>
+                <dd class="col-sm-11">
+                    <div class="input-group team-data" title="姓名">
+                        <label class="input-group-addon ti-user"></label>
+                        <div class="input-group-box">
+                            <input type="text" class="form-element" value="@member.MemberName" readonly>
+                        </div>
                     </div>
-                </div>
-                <div class="input-group team-data" title="身份證字號">
-                    <label class="input-group-addon ti-id-badge"></label>
-                    <div class="input-group-box">
-                        <input type="text" class="form-element" value="h12345678" readonly>
+                    <div class="input-group team-data" title="身份證字號">
+                        <label class="input-group-addon ti-id-badge"></label>
+                        <div class="input-group-box">
+                            <input type="text" class="form-element" value="@member.MemberIdentityID" readonly>
+                        </div>
                     </div>
-                </div>
-                <div class="input-group team-data" title="生日">
-                    <label class="input-group-addon ti-gift"></label>
-                    <div class="input-group-box">
-                        <input type="date" class="form-element" value="2000-01-01" readonly>
+                    <div class="input-group team-data" title="生日">
+                        <label class="input-group-addon ti-gift"></label>
+                        <div class="input-group-box">
+                            <input type="date" class="form-element" value="@member.MemberBirthday" readonly>
+                        </div>
                     </div>
-                </div>
-            </dd>
-        </dl>
-        <dl class="field team-item">
-            <dt class="col-sm-1">隊員1</dt>
-            <dd class="col-sm-11">
-               <div class="input-group team-data" title="姓名">
-                    <label class="input-group-addon ti-user"></label>
-                    <div class="input-group-box">
-                        <input type="text" class="form-element" value="XXX" readonly>
-                    </div>
-                </div>
-                <div class="input-group team-data" title="身份證字號">
-                    <label class="input-group-addon ti-id-badge"></label>
-                    <div class="input-group-box">
-                        <input type="text" class="form-element" value="h12345678" readonly>
-                    </div>
-                </div>
-                <div class="input-group team-data" title="生日">
-                    <label class="input-group-addon ti-gift"></label>
-                    <div class="input-group-box">
-                        <input type="date" class="form-element" value="2000-01-01" readonly>
-                    </div>
-                </div>
-            </dd>
-        </dl>
-    </fieldset>
+                </dd>
+            </dl>
+        }
 
+
+    </fieldset>
     <footer class="submit-bar">
         <a href="Apply" class="btn success lg pull-left ti-arrow-left">修改資料</a>
         <button class="btn lg pull-right ti-check" type="button" onclick="location.href='Apply3'">送出報名</button>

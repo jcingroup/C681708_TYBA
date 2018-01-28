@@ -5,6 +5,43 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="TYBAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="APPLY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MAP_ACT_ID" Type="int" Nullable="false" />
+          <Property Name="TEAM_NM" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MAP_ACT_GUP_ID" Type="int" Nullable="false" />
+          <Property Name="CONTACT" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CONTACT_PHONE" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="REMRK" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="APPLY_IDEN_NUM" Type="nvarchar" MaxLength="50" />
+          <Property Name="TEAM_COACH" Type="nvarchar" MaxLength="50" />
+          <Property Name="EMAIL" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="APPLY_MEMBER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MAP_APPLY_ID" Type="int" Nullable="false" />
+          <Property Name="REF_ACT_ID" Type="int" Nullable="false" />
+          <Property Name="MEMBER_IDEN_ID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="MERBER_NM" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MERBER_TP" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="MEMBER_BIRDT" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="BUD_DT" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="APPLY_NUMBER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="REF_ACT_ID" Type="int" Nullable="false" />
+          <Property Name="APPLY_NUM" Type="int" Nullable="false" />
+          <Property Name="MAP_APPLY_ID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="BANNER">
           <Key>
             <PropertyRef Name="ID" />
@@ -73,6 +110,39 @@
           <Property Name="UPT_DT" Type="datetime" Nullable="false" />
           <Property Name="UPT_ID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="OLACT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ACTITLE" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BUD_DT" Type="datetime" Nullable="false" />
+          <Property Name="BUD_ID" Type="int" Nullable="false" />
+          <Property Name="UPD_DT" Type="datetime" Nullable="false" />
+          <Property Name="UPD_ID" Type="int" Nullable="false" />
+          <Property Name="SQ" Type="float" />
+          <Property Name="PUB_DT_STR" Type="nvarchar" MaxLength="10" />
+          <Property Name="DISABLE" Type="bit" Nullable="false" />
+          <Property Name="ACT_DATE_DESC" Type="nvarchar" MaxLength="70" Nullable="false" />
+          <Property Name="APPLY_DATE_BEGIN" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="APPLY_DATE_END" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ACT_NUM" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ACT_CONTENT" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="OLACTGROUP">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MAP_ACT_ID" Type="int" Nullable="false" />
+          <Property Name="GROUP_NAME" Type="nvarchar" MaxLength="70" Nullable="false" />
+          <Property Name="TEAM_APPLY_LIMIT" Type="int" Nullable="false" />
+          <Property Name="COUNT_APPLY_LIMIT" Type="int" Nullable="false" />
+          <Property Name="BUD_DT" Type="datetime" Nullable="false" />
+          <Property Name="BUD_ID" Type="int" Nullable="false" />
+          <Property Name="UPD_DT" Type="datetime" Nullable="false" />
+          <Property Name="UPD_ID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="RESULT">
           <Key>
             <PropertyRef Name="ID" />
@@ -103,11 +173,16 @@
           <Property Name="DISABLE" Type="bit" Nullable="false" />
         </EntityType>
         <EntityContainer Name="TYBAModelStoreContainer">
+          <EntitySet Name="APPLY" EntityType="Self.APPLY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="APPLY_MEMBER" EntityType="Self.APPLY_MEMBER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="APPLY_NUMBER" EntityType="Self.APPLY_NUMBER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BANNER" EntityType="Self.BANNER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DLFILES" EntityType="Self.DLFILES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EDITOR" EntityType="Self.EDITOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FILEBASE" EntityType="Self.FILEBASE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NEWS" EntityType="Self.NEWS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OLACT" EntityType="Self.OLACT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OLACTGROUP" EntityType="Self.OLACTGROUP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RESULT" EntityType="Self.RESULT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -123,7 +198,12 @@
           <EntitySet Name="NEWS" EntityType="TYBAModel.NEWS" />
           <EntitySet Name="RESULT" EntityType="TYBAModel.RESULT" />
           <EntitySet Name="USER" EntityType="TYBAModel.USER" />
-        </EntityContainer>
+          <EntitySet Name="OLACT" EntityType="TYBAModel.OLACT" />
+          <EntitySet Name="OLACTGROUP" EntityType="TYBAModel.OLACTGROUP" />
+          <EntitySet Name="APPLY" EntityType="TYBAModel.APPLY" />
+          <EntitySet Name="APPLY_MEMBER" EntityType="TYBAModel.APPLY_MEMBER" />
+          <EntitySet Name="APPLY_NUMBER" EntityType="TYBAModel.APPLY_NUMBER" />
+          </EntityContainer>
         <EntityType Name="DLFILES">
           <Key>
             <PropertyRef Name="ID" />
@@ -221,7 +301,77 @@
           <Property Name="USR_NM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DISABLE" Type="Boolean" Nullable="false" />
         </EntityType>
-      </Schema>
+        <EntityType Name="OLACT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ACTITLE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BUD_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BUD_ID" Type="Int32" Nullable="false" />
+          <Property Name="UPD_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPD_ID" Type="Int32" Nullable="false" />
+          <Property Name="SQ" Type="Double" />
+          <Property Name="PUB_DT_STR" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DISABLE" Type="Boolean" Nullable="false" />
+          <Property Name="ACT_DATE_DESC" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="APPLY_DATE_BEGIN" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="APPLY_DATE_END" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ACT_NUM" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ACT_CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="OLACTGROUP">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MAP_ACT_ID" Type="Int32" Nullable="false" />
+          <Property Name="GROUP_NAME" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="TEAM_APPLY_LIMIT" Type="Int32" Nullable="false" />
+          <Property Name="COUNT_APPLY_LIMIT" Type="Int32" Nullable="false" />
+          <Property Name="BUD_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BUD_ID" Type="Int32" Nullable="false" />
+          <Property Name="UPD_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPD_ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="APPLY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MAP_ACT_ID" Type="Int32" Nullable="false" />
+          <Property Name="TEAM_NM" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MAP_ACT_GUP_ID" Type="Int32" Nullable="false" />
+          <Property Name="CONTACT" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CONTACT_PHONE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="REMRK" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="APPLY_IDEN_NUM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TEAM_COACH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="APPLY_MEMBER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MAP_APPLY_ID" Type="Int32" Nullable="false" />
+          <Property Name="REF_ACT_ID" Type="Int32" Nullable="false" />
+          <Property Name="MEMBER_IDEN_ID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MERBER_NM" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MERBER_TP" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="MEMBER_BIRDT" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="BUD_DT" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="APPLY_NUMBER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="REF_ACT_ID" Type="Int32" Nullable="false" />
+          <Property Name="APPLY_NUM" Type="Int32" Nullable="false" />
+          <Property Name="MAP_APPLY_ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -327,6 +477,81 @@
                 <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
                 <ScalarProperty Name="USR_PWD" ColumnName="USR_PWD" />
                 <ScalarProperty Name="USR_ID" ColumnName="USR_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OLACT">
+            <EntityTypeMapping TypeName="TYBAModel.OLACT">
+              <MappingFragment StoreEntitySet="OLACT">
+                <ScalarProperty Name="ACT_CONTENT" ColumnName="ACT_CONTENT" />
+                <ScalarProperty Name="ACT_NUM" ColumnName="ACT_NUM" />
+                <ScalarProperty Name="APPLY_DATE_END" ColumnName="APPLY_DATE_END" />
+                <ScalarProperty Name="APPLY_DATE_BEGIN" ColumnName="APPLY_DATE_BEGIN" />
+                <ScalarProperty Name="ACT_DATE_DESC" ColumnName="ACT_DATE_DESC" />
+                <ScalarProperty Name="DISABLE" ColumnName="DISABLE" />
+                <ScalarProperty Name="PUB_DT_STR" ColumnName="PUB_DT_STR" />
+                <ScalarProperty Name="SQ" ColumnName="SQ" />
+                <ScalarProperty Name="UPD_ID" ColumnName="UPD_ID" />
+                <ScalarProperty Name="UPD_DT" ColumnName="UPD_DT" />
+                <ScalarProperty Name="BUD_ID" ColumnName="BUD_ID" />
+                <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
+                <ScalarProperty Name="ACTITLE" ColumnName="ACTITLE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OLACTGROUP">
+            <EntityTypeMapping TypeName="TYBAModel.OLACTGROUP">
+              <MappingFragment StoreEntitySet="OLACTGROUP">
+                <ScalarProperty Name="UPD_ID" ColumnName="UPD_ID" />
+                <ScalarProperty Name="UPD_DT" ColumnName="UPD_DT" />
+                <ScalarProperty Name="BUD_ID" ColumnName="BUD_ID" />
+                <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
+                <ScalarProperty Name="COUNT_APPLY_LIMIT" ColumnName="COUNT_APPLY_LIMIT" />
+                <ScalarProperty Name="TEAM_APPLY_LIMIT" ColumnName="TEAM_APPLY_LIMIT" />
+                <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+                <ScalarProperty Name="MAP_ACT_ID" ColumnName="MAP_ACT_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APPLY">
+            <EntityTypeMapping TypeName="TYBAModel.APPLY">
+              <MappingFragment StoreEntitySet="APPLY">
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="TEAM_COACH" ColumnName="TEAM_COACH" />
+                <ScalarProperty Name="APPLY_IDEN_NUM" ColumnName="APPLY_IDEN_NUM" />
+                <ScalarProperty Name="REMRK" ColumnName="REMRK" />
+                <ScalarProperty Name="CONTACT_PHONE" ColumnName="CONTACT_PHONE" />
+                <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
+                <ScalarProperty Name="MAP_ACT_GUP_ID" ColumnName="MAP_ACT_GUP_ID" />
+                <ScalarProperty Name="TEAM_NM" ColumnName="TEAM_NM" />
+                <ScalarProperty Name="MAP_ACT_ID" ColumnName="MAP_ACT_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APPLY_MEMBER">
+            <EntityTypeMapping TypeName="TYBAModel.APPLY_MEMBER">
+              <MappingFragment StoreEntitySet="APPLY_MEMBER">
+                <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
+                <ScalarProperty Name="MEMBER_BIRDT" ColumnName="MEMBER_BIRDT" />
+                <ScalarProperty Name="MERBER_TP" ColumnName="MERBER_TP" />
+                <ScalarProperty Name="MERBER_NM" ColumnName="MERBER_NM" />
+                <ScalarProperty Name="MEMBER_IDEN_ID" ColumnName="MEMBER_IDEN_ID" />
+                <ScalarProperty Name="REF_ACT_ID" ColumnName="REF_ACT_ID" />
+                <ScalarProperty Name="MAP_APPLY_ID" ColumnName="MAP_APPLY_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APPLY_NUMBER">
+            <EntityTypeMapping TypeName="TYBAModel.APPLY_NUMBER">
+              <MappingFragment StoreEntitySet="APPLY_NUMBER">
+                <ScalarProperty Name="MAP_APPLY_ID" ColumnName="MAP_APPLY_ID" />
+                <ScalarProperty Name="APPLY_NUM" ColumnName="APPLY_NUM" />
+                <ScalarProperty Name="REF_ACT_ID" ColumnName="REF_ACT_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
