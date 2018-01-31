@@ -189,7 +189,10 @@
         </dl>
 
         <fieldset class="form-list mt-24">
-            <legend class="underline">隊伍資料</legend>
+            <legend class="underline">
+                @* 只顯示活動設定的人數上限，但系統不做判斷防呆 *@
+                隊伍資料(人數上限: <strong>8</strong> 人)
+            </legend>
             @* 預設第一筆是隊長 *@
             <dl class="field">
                 <dt class="col-1">隊長</dt>
@@ -218,7 +221,7 @@
                     </div>
                 </dd>
                 <dd class="col-1">
-                    <button type="button" class="btn sm danger">刪除</button>
+                    <button type="button" class="btn sm danger" disabled>刪除</button>
                 </dd>
             </dl>
             <dl class="field">
