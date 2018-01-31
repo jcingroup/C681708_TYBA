@@ -306,6 +306,10 @@
     <Compile Include="Models\Manage\ActivityModels\ActivityFilterModel.cs" />
     <Compile Include="Models\Manage\ActivityModels\ActivityListResultModel.cs" />
     <Compile Include="Models\Manage\ActivityModels\ActivityListViewModel.cs" />
+    <Compile Include="Models\Manage\ApplyMaintainModels\ApplyMaintainListResultModel.cs" />
+    <Compile Include="Models\Manage\ApplyMaintainModels\ApplyMaintainListFilterModel.cs" />
+    <Compile Include="Models\Manage\ApplyMaintainModels\ApplyMaintainListDataModel.cs" />
+    <Compile Include="Models\Manage\ApplyMaintainModels\ApplyMaintainListViewModel.cs" />
     <Compile Include="Models\Manage\BannerModels\BannerDataModel.cs" />
     <Compile Include="Models\Manage\BannerModels\BannerDetailsModel.cs" />
     <Compile Include="Models\Manage\BannerModels\BannerFilterModel.cs" />
@@ -338,6 +342,7 @@
     <Compile Include="Modules\FrontEnd\ApplyFrontModule.cs" />
     <Compile Include="Modules\FrontEnd\DownloadFrontModule.cs" />
     <Compile Include="Modules\FrontEnd\HomeFrontModule.cs" />
+    <Compile Include="Modules\Manage\ApplyMaintainModule.cs" />
     <Compile Include="Modules\Manage\BannerModule.cs" />
     <Compile Include="Modules\Manage\ActivityModule.cs" />
     <Compile Include="Modules\Manage\EditorModule.cs" />
