@@ -51,7 +51,7 @@
         <nav class="news-list">
             @foreach (var data in Model.News.Data)
             {
-                <a href="@Url.Action("Content","News",new {ID=data.ID })" class="list-item"><span class="date">@data.PUB_DT_STR</span>@data.TITLE</a>
+                <a href="@Url.Action("Content","News",new {ID=data.ID })" class="news-link"><span class="date">@data.PUB_DT_STR</span>@data.TITLE</a>
             }
         </nav>
 
