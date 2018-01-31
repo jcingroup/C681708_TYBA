@@ -97,8 +97,8 @@
 
 @section scripts {
     <script>
-        if ('@TempData["ErrorMsg"]' != '') {
-            alert('@TempData["Error"]');
+        if ('@TempData["ErrorMsg"]' != '' && '@TempData["ErrorMsg"]' != null) {
+            alert('@TempData["ErrorMsg"]');
         }
 
         function paginationSubmit(page)

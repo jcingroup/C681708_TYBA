@@ -28,6 +28,11 @@ namespace OutWeb.Modules.Manage
 
         public void DoDeleteByID(int ID)
         {
+            //檢查是否有人報名
+            var valid = DB.APPLY.Where(o => o.MAP_ACT_ID == ID).ToList();
+            if (valid.Count > 0)
+                throw new Exception("[刪除檔案] 此紅動尚有隊伍報名中，無法移除");
+
             var data = this.DB.OLACT.Where(s => s.ID == ID).FirstOrDefault();
             if (data == null)
                 throw new Exception("[刪除檔案] 查無此活動，可能已被移除");

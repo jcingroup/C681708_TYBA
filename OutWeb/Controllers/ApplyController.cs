@@ -98,6 +98,10 @@ namespace OutWeb.Controllers
                     return RedirectToAction("List");
                 }
             }
+
+            if (Session["ApplyGuid"] != null)
+                Session.Remove("ApplyGuid");
+
             return View(model);
         }
 
@@ -120,16 +124,24 @@ namespace OutWeb.Controllers
         // 報名頁面-3
         public ActionResult Apply3()
         {
+            if (Session["ApplyGuid"] != null)
+            {
+                TempData["ErrorMsg"] = "請勿重新報名";
+                return RedirectToAction("List");
+            }
+
             if (Session["ApplyInfo"] == null)
             {
                 TempData["ErrorMsg"] = "網頁閒置過久,請重新填寫";
-                return RedirectToAction("ApplyList");
+                return RedirectToAction("List");
             }
             ApplyDataModel model = Session["ApplyInfo"] as ApplyDataModel;
             //資料庫存檔
             using (var applyModule = new ApplyFrontModule())
             {
                 ApplyDataModel result = applyModule.SaveApply(model);
+                result.MemberLimitCount = model.MemberLimitCount;
+                Session["ApplyGuid"] = System.Guid.NewGuid().ToString();
                 return View(result);
             }
         }

@@ -24,5 +24,8 @@ namespace OutWeb.Entities
         public string APPLY_IDEN_NUM { get; set; }
         public string TEAM_COACH { get; set; }
         public string EMAIL { get; set; }
+        public System.DateTime BUD_DT { get; set; }
+        public bool APPLY_SUCCESS { get; set; }
+        public System.DateTime UPD_DT { get; set; }
     }
 }

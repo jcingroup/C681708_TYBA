@@ -22,5 +22,6 @@ namespace OutWeb.Entities
         public string MERBER_TP { get; set; }
         public string MEMBER_BIRDT { get; set; }
         public System.DateTime BUD_DT { get; set; }
+        public System.DateTime UPD_DT { get; set; }
     }
 }

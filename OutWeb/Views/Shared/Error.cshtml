@@ -3,12 +3,14 @@
 @{
     Layout = "~/Views/Shared/_MLayout.cshtml";
     ViewBag.Title = "Error";
+    ViewBag.IsFirstPage = false;
+
 }
 <style>
     .text-danger {
         color: red;
     }
 </style>
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">網站出錯了!</h2>
-<h1>錯誤代碼： @ViewData["LogGuId"]</h1>
+<h3 class="text-danger">Error.</h3>
+<h3 class="text-danger">網站出錯了!</h3>
+<h3>錯誤代碼： @ViewData["LogGuId"]</h3>

@@ -25,18 +25,18 @@ namespace OutWeb.Entities
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<DLFILES> DLFILES { get; set; }
-        public virtual DbSet<FILEBASE> FILEBASE { get; set; }
-        public virtual DbSet<BANNER> BANNER { get; set; }
-        public virtual DbSet<EDITOR> EDITOR { get; set; }
-        public virtual DbSet<NEWS> NEWS { get; set; }
-        public virtual DbSet<RESULT> RESULT { get; set; }
-        public virtual DbSet<USER> USER { get; set; }
-        public virtual DbSet<OLACT> OLACT { get; set; }
-        public virtual DbSet<OLACTGROUP> OLACTGROUP { get; set; }
         public virtual DbSet<APPLY> APPLY { get; set; }
         public virtual DbSet<APPLY_MEMBER> APPLY_MEMBER { get; set; }
         public virtual DbSet<APPLY_NUMBER> APPLY_NUMBER { get; set; }
+        public virtual DbSet<BANNER> BANNER { get; set; }
+        public virtual DbSet<DLFILES> DLFILES { get; set; }
+        public virtual DbSet<EDITOR> EDITOR { get; set; }
+        public virtual DbSet<FILEBASE> FILEBASE { get; set; }
         public virtual DbSet<LOGERR> LOGERR { get; set; }
+        public virtual DbSet<NEWS> NEWS { get; set; }
+        public virtual DbSet<OLACT> OLACT { get; set; }
+        public virtual DbSet<OLACTGROUP> OLACTGROUP { get; set; }
+        public virtual DbSet<RESULT> RESULT { get; set; }
+        public virtual DbSet<USER> USER { get; set; }
     }
 }

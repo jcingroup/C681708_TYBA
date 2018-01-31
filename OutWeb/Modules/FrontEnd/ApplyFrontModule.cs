@@ -117,6 +117,9 @@ namespace OutWeb.Modules.FrontEnd
                     REMRK = model.Remark,
                     TEAM_NM = model.TeamName,
                     MAP_ACT_ID = model.ActivityID,
+                    BUD_DT = DateTime.UtcNow.AddHours(8),
+                    UPD_DT = DateTime.UtcNow.AddHours(8),
+                    APPLY_SUCCESS = false
                 };
 
                 try
@@ -164,6 +167,7 @@ namespace OutWeb.Modules.FrontEnd
                             MERBER_NM = member.MemberName,
                             MERBER_TP = member.MemberType,
                             BUD_DT = DateTime.UtcNow.AddHours(8),
+                            UPD_DT = DateTime.UtcNow.AddHours(8),
                             MAP_APPLY_ID = identityId,
                             REF_ACT_ID = model.ActivityID
                         };
@@ -301,7 +305,7 @@ namespace OutWeb.Modules.FrontEnd
             {
                 foreach (var d in data)
                 {
-                    d.GroupApplyLimit = DB.OLACTGROUP.Where(o => o.MAP_ACT_ID == d.ID).First().TEAM_APPLY_LIMIT;
+                    d.GroupApplyLimit = DB.OLACTGROUP.Where(o => o.MAP_ACT_ID == d.ID).Sum(o => o.TEAM_APPLY_LIMIT);
                     d.Registered = DB.APPLY.Where(g => g.MAP_ACT_ID == d.ID).Count();
                     d.ActivityStatus = actModule.ActivityStatusCheckByID((int)d.ID);
                 }

@@ -306,6 +306,12 @@
     <Compile Include="Models\Manage\ActivityModels\ActivityFilterModel.cs" />
     <Compile Include="Models\Manage\ActivityModels\ActivityListResultModel.cs" />
     <Compile Include="Models\Manage\ActivityModels\ActivityListViewModel.cs" />
+    <Compile Include="Models\Manage\ApplyMaintainModels\ApplyDetailsModels\ApplyDetailsDataModel.cs" />
+    <Compile Include="Models\Manage\ApplyMaintainModels\ApplyDetailsModels\ApplyDetailsListModels\ApplyDetailsListDataModel.cs" />
+    <Compile Include="Models\Manage\ApplyMaintainModels\ApplyDetailsModels\ApplyDetailsListModels\ApplyDetailsListFilterModel.cs" />
+    <Compile Include="Models\Manage\ApplyMaintainModels\ApplyDetailsModels\ApplyDetailsListModels\ApplyDetailsListResultModel.cs" />
+    <Compile Include="Models\Manage\ApplyMaintainModels\ApplyDetailsModels\ApplyDetailsListModels\ApplyDetailsListViewModel.cs" />
+    <Compile Include="Models\Manage\ApplyMaintainModels\ApplyDetailsModels\ApplyModalModels\ApplyModalDataModel.cs" />
     <Compile Include="Models\Manage\ApplyMaintainModels\ApplyMaintainListResultModel.cs" />
     <Compile Include="Models\Manage\ApplyMaintainModels\ApplyMaintainListFilterModel.cs" />
     <Compile Include="Models\Manage\ApplyMaintainModels\ApplyMaintainListDataModel.cs" />
@@ -1760,7 +1766,6 @@
     <Content Include="Views\News\Content.cshtml" />
     <Content Include="Views\Apply\ApplyAdd.cshtml" />
     <Content Include="Views\_SysAdm\_BannerDataPartial.cshtml" />
-    <Content Include="Views\_SysAdm\_CourseDataPartial.cshtml" />
     <Content Include="Views\_SysAdm\_DownloadDataPartial.cshtml" />
     <Content Include="Views\_SysAdm\_NewsDataPartial.cshtml" />
     <Content Include="Views\_SysAdm\_ResultDataPartial.cshtml" />
@@ -1784,21 +1789,11 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Result\List.cshtml" />
     <Content Include="Views\Result\Content.cshtml" />
-    <Content Include="Views\_SysAdm\CourseAdd.cshtml" />
-    <Content Include="Views\_SysAdm\CourseEdit.cshtml" />
-    <Content Include="Views\_SysAdm\CourseList.cshtml" />
     <Content Include="Views\Download\Download.cshtml" />
     <Content Include="Views\Apply\List.cshtml" />
     <Content Include="Views\Apply\Content.cshtml" />
     <Content Include="Views\Apply\sidebar.cshtml" />
-    <Content Include="Views\_SysAdm\TrainApplyEdit.cshtml" />
-    <Content Include="Views\_SysAdm\TrainApplyList.cshtml" />
-    <Content Include="Views\_SysAdm\TrainEdit.cshtml" />
-    <Content Include="Views\_SysAdm\TrainList.cshtml" />
-    <Content Include="Views\_SysAdm\TrainAdd.cshtml" />
-    <Content Include="Views\_SysAdm\_TrainDataPartial.cshtml" />
     <Content Include="Views\Shared\_ApplyContentPartial.cshtml" />
-    <Content Include="Views\_SysAdm\_TrainApplyViewPartial.cshtml" />
     <Content Include="Views\SignIn\Login.cshtml" />
     <Content Include="Views\Manager\AboutUs.cshtml" />
     <Content Include="Views\Manager\ResultList.cshtml" />
@@ -1831,6 +1826,7 @@
     <Content Include="Views\_SysAdm\ResultAdd.cshtml" />
     <Content Include="Views\_SysAdm\_ActivityDataPartial.cshtml" />
     <Content Include="Views\_SysAdm\ActivityAdd.cshtml" />
+    <Content Include="Views\_SysAdm\_ApplyModalPartial.cshtml" />
     <None Include="Web.Debug2.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

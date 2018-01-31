@@ -5,20 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="2edd4737e15249b7b02ee216819ae957" Name="Diagram1">
-        <EntityTypeShape EntityType="TYBAModel.DLFILES" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="TYBAModel.FILEBASE" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="TYBAModel.BANNER" Width="1.5" PointX="0.75" PointY="4.75" />
-        <EntityTypeShape EntityType="TYBAModel.EDITOR" Width="1.5" PointX="3.375" PointY="4.75" />
-        <EntityTypeShape EntityType="TYBAModel.NEWS" Width="1.5" PointX="5.375" PointY="0.75" />
-        <EntityTypeShape EntityType="TYBAModel.RESULT" Width="1.5" PointX="5.375" PointY="4.75" />
-        <EntityTypeShape EntityType="TYBAModel.USER" Width="1.5" PointX="7.375" PointY="0.75" />
-        <EntityTypeShape EntityType="TYBAModel.OLACT" Width="1.5" PointX="7.375" PointY="4.75" />
+        <EntityTypeShape EntityType="TYBAModel.APPLY" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TYBAModel.APPLY_MEMBER" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TYBAModel.APPLY_NUMBER" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TYBAModel.BANNER" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="TYBAModel.DLFILES" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="TYBAModel.EDITOR" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TYBAModel.FILEBASE" Width="1.5" PointX="6.75" PointY="3.75" />
+        <EntityTypeShape EntityType="TYBAModel.LOGERR" Width="1.5" PointX="4.75" PointY="7.75" />
+        <EntityTypeShape EntityType="TYBAModel.NEWS" Width="1.5" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="TYBAModel.OLACT" Width="1.5" PointX="8.75" PointY="0.75" />
         <EntityTypeShape EntityType="TYBAModel.OLACTGROUP" Width="1.5" PointX="0.75" PointY="8.75" />
-        <EntityTypeShape EntityType="TYBAModel.APPLY" Width="1.5" PointX="3.375" PointY="8.75" />
-        <EntityTypeShape EntityType="TYBAModel.APPLY_MEMBER" Width="1.5" PointX="9.375" PointY="0.75" />
-        <EntityTypeShape EntityType="TYBAModel.APPLY_NUMBER" Width="1.5" PointX="9.375" PointY="4.75" />
-        <EntityTypeShape EntityType="TYBAModel.LOGERR" Width="1.5" PointX="5.375" PointY="9.75" />
-        </Diagram>
+        <EntityTypeShape EntityType="TYBAModel.RESULT" Width="1.5" PointX="8.75" PointY="5.75" />
+        <EntityTypeShape EntityType="TYBAModel.USER" Width="1.5" PointX="8.75" PointY="9.75" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

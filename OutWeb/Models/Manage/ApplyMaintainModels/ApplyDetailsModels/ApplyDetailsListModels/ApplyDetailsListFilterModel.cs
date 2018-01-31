@@ -1,7 +1,8 @@
-﻿namespace OutWeb.Models.Manage.ActivityModels
+﻿namespace OutWeb.Models.Manage.ApplyMaintainModels.ApplyDetailsModels.ApplyDetailsListModels
 {
-    public class ApplyMaintainListFilterModel
+    public class ApplyDetailsListFilterModel
     {
+        public int? GroupID { get; set; }
         /// <summary>
         /// 排序條件
         /// </summary>
@@ -10,6 +11,6 @@
         /// 選取頁面
         /// </summary>
         public int CurrentPage { get; set; }
-        public int QueryString { get; set; }
+        public string QueryString { get; set; }
     }
 }

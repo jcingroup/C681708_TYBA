@@ -2,10 +2,13 @@
 using OutWeb.Authorize;
 using OutWeb.Models.Manage.ActivityModels;
 using OutWeb.Models.Manage.ApplyMaintainModels;
+using OutWeb.Models.Manage.ApplyMaintainModels.ApplyDetailsModels;
+using OutWeb.Models.Manage.ApplyMaintainModels.ApplyDetailsModels.ApplyModalModels;
 using OutWeb.Models.Manage.BannerModels;
 using OutWeb.Models.Manage.DownloadModels;
 using OutWeb.Models.Manage.ManageNewsModels;
 using OutWeb.Models.Manage.ResultModels;
+using OutWeb.Modules.FrontEnd;
 using OutWeb.Modules.Manage;
 using System;
 using System.Web.Mvc;
@@ -408,6 +411,7 @@ namespace OutWeb.Controllers
             model.Files = fileModule.GetFiles((int)model.ID, "Activity", "F");
             return View(model);
         }
+
         [ValidateInput(false)]
         [HttpPost]
         public ActionResult ActivitySave(ActivityDataModel model)
@@ -448,12 +452,13 @@ namespace OutWeb.Controllers
             return resultJson;
         }
 
-
         // 報名維護
-        public ActionResult ApplyList(int? page)
+        public ActionResult ApplyList(int? page, string sort)
         {
+            page = page ?? 1;
             ApplyMaintainListViewModel model = new ApplyMaintainListViewModel();
-
+            model.Filter.CurrentPage = (int)page;
+            model.Filter.SortColumn = sort ?? string.Empty;
             using (ApplyMaintainModule module = new ApplyMaintainModule())
             {
                 model.Result = module.DoGetList(model.Filter);
@@ -462,47 +467,74 @@ namespace OutWeb.Controllers
             return View(model);
         }
 
-        //public ActionResult ActivityAdd()
-        //{
-        //    ActivityDetailsModel defaultModel = new ActivityDetailsModel();
-        //    defaultModel.Disable = false;
-        //    defaultModel.PublishDateStr = DateTime.UtcNow.AddHours(8).ToString("yyyy\\/MM\\/dd");
-        //    defaultModel.Sort = 1;
-        //    return View(defaultModel);
-        //}
+        public ActionResult ApplyEdit(int? ID, int? page, int? groupId, string sort, string qry)
+        {
+            page = page ?? 1;
+            if (!ID.HasValue)
+                return RedirectToAction("ApplyList");
+            ApplyDetailsDataModel model = new ApplyDetailsDataModel();
+            model.ActivityID = (int)ID;
+            model.ListData.Filter.CurrentPage = (int)page;
+            model.ListData.Filter.GroupID = groupId;
+            model.ListData.Filter.SortColumn = sort ?? string.Empty;
+            model.ListData.Filter.QueryString = qry ?? string.Empty;
 
-        //public ActionResult ActivityEdit(int? ID)
-        //{
-        //    if (!ID.HasValue)
-        //        return RedirectToAction("ActivityList");
-        //    ActivityDetailsModel model = new ActivityDetailsModel();
-        //    using (ActivityModule module = new ActivityModule())
-        //    {
-        //        model = module.DoGetDetailsByID((int)ID);
-        //    }
-        //    FileModule fileModule = new FileModule();
-        //    model.Files = fileModule.GetFiles((int)model.ID, "Activity", "F");
-        //    return View(model);
-        //}
-        //[ValidateInput(false)]
-        //[HttpPost]
-        //public ActionResult ActivitySave(ActivityDataModel model)
-        //{
-        //    int id = 0;
-        //    using (ActivityModule module = new ActivityModule())
-        //    {
-        //        if (model.OldFilesId.Count == 0 && model.Files.Count == 0)
-        //        {
-        //            TempData["UndefinedFile"] = "請上傳檔案";
-        //            return RedirectToAction("ActivityEdit", new { ID = (int?)null });
-        //        }
-        //        id = module.DoSaveData(model);
-        //    }
-        //    var redirectUrl = new UrlHelper(Request.RequestContext).Action("ActivityEdit", "_SysAdm", new { ID = id });
-        //    return Json(new { Url = redirectUrl });
-        //}
+            using (ApplyMaintainModule module = new ApplyMaintainModule())
+            {
+                model = module.GetApplyDetails(model);
+            }
+            return View(model);
+        }
 
+        [HttpPost]
+        public JsonResult ApplyDelete(int? actID, int? applyID)
+        {
+            bool success = true;
+            string messages = string.Empty;
+            try
+            {
+                using (ApplyMaintainModule module = new ApplyMaintainModule())
+                {
+                    module.DoDeleteByID((int)actID, (int)applyID);
+                }
+                messages = "刪除成功";
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                messages = ex.Message;
+            }
+            var resultJson = Json(new { success = success, messages = messages });
+            return resultJson;
+        }
 
+        [HttpGet]
+        public ActionResult ApplyModal(int actID, int applyID)
+        {
+            ApplyModalDataModel model = new ApplyModalDataModel();
+            using (var applyModule = new ApplyFrontModule())
+            {
+                using (ApplyMaintainModule module = new ApplyMaintainModule())
+                {
+                    model = module.GetApplyData((int)actID, (int)applyID);
+                    if (model == null)
+                        TempData["ErrorMsg"] = "查無該活動賽事";
+                }
+            }
+            return PartialView("_ApplyModalPartial", model);
+        }
+
+        [HttpPost]
+        public ActionResult ApplyModal(ApplyModalDataModel model)
+        {
+            using (ApplyMaintainModule module = new ApplyMaintainModule())
+            {
+                var details = module.SaveApply(model);
+                if (details == null)
+                    TempData["ErrorMsg"] = "查無該活動賽事";
+            }
+            return RedirectToAction("ApplyEdit", new { ID = model.ActivityID });
+        }
 
         //修改密碼
         [HttpGet]

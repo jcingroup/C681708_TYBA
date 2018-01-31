@@ -17,7 +17,8 @@
     <li><em class="font-sp">3</em> 完成報名</li>
 </ul>
 <form action="/Apply/Apply2" method="post" class="form-signup">
-
+    
+    <input type="hidden" id="hdnMemberLimitCount" name="MemberLimitCount" value="" />
     <input type="hidden" id="hdnId" name="ActivityID" value="@Model.ID" />
     <input type="hidden" id="hdnTitle" name="ActivityTitle" value="@Model.Title" />
     <fieldset class="clearfix my-16">
@@ -83,7 +84,7 @@
         </dl>
     </fieldset>
     <fieldset class="clearfix my-16 member-group">
-        <legend class="font-xl underline">隊伍資料(人數上限: <strong>8</strong> 人)</legend>
+        <legend class="font-xl underline">隊伍資料(人數上限: <strong id="limitMenberCount"></strong> 人)</legend>
         @* 預設第一筆是隊長 *@
         <dl class="field team-item">
             <dt class="col-sm-1">隊長</dt>
@@ -255,6 +256,18 @@
     });
     $('#actGroup').change(function () {
         validApplyTeamName();
+        var currentGroupId = $('#actGroup').val();
+        var limitMemberCount = 0;
+        var groupInfo = JSON.parse('@Html.Raw(Model.ApplyGroupJsonString)');
+        for (var i = 0; i < groupInfo.length; i++) {
+            var group = groupInfo[i];
+            if (group.GroupID == currentGroupId) {
+                limitMemberCount = group.CountApplyLimit;
+                break;
+            }
+        }
+        $('#limitMenberCount').text(limitMemberCount);
+        $('#hdnMemberLimitCount').val(limitMemberCount);
     });
 
 
@@ -269,7 +282,7 @@
             var send = { "actId": actId, "groupId": groupId, "teamName": teamName };
 
             $.ajax({
-                async:false,
+                async: false,
                 url: '/Apply/ValidTeamName',
                 data: send,
                 dataType: 'json',
