@@ -1,21 +1,20 @@
 ﻿@using OutWeb.Models.Manage.ManageNewsModels
-@model NewsDetailsDataModel
-@{
-    ViewBag.Title = Model.Data.標題;
-    ViewBag.BodyClass = "News";
-    ViewBag.Breadcrumb = Model.Data.標題.Length > 30 ? Model.Data.標題.Substring(0, 30) : Model.Data.標題; @* 最後層的麵包屑-只取前30字 *@
-    string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
-    ViewBag.ContentClass ="text-left ind pb-24";
-}
+    @model NewsDetailsDataModel
+        @{
+            ViewBag.Title = Model.Data.TITLE;
+            ViewBag.BodyClass = "News";
+            ViewBag.Breadcrumb = Model.Data.TITLE.Length > 30 ? Model.Data.TITLE.Substring(0, 30) : Model.Data.TITLE; @* 最後層的麵包屑-只取前30字 *@
+        ViewBag.ContentClass = "text-left ind pb-24";
+        }
 
-<h4 class="title text-left ml-72">
-    <span class="underline">@Model.Data.標題</span>
-    <small class="block font-sm text-success mt-12">@Model.Data.發稿時間</small>
+        <h4 class="title text-left ml-72">
+            <span class="underline">@Model.Data.TITLE</span>
+    <small class="block font-sm text-success mt-12">@Model.Data.PUB_DT_STR</small>
 </h4>
 
 <article class="editor ml-72">
     @* 活動內容(編輯器) *@
-    @Html.Raw(Model.Data.內容)
+    @Html.Raw(Model.Data.CONTENT)
 </article>
 
 <hr class="mb-12">

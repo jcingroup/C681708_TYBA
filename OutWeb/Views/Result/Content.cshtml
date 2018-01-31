@@ -1,17 +1,20 @@
-﻿@{
-    ViewBag.Title = "比賽成績公告";
+﻿@using OutWeb.Models.Manage.ResultModels
+@model ResultDetailsDataModel
+
+@{
+    ViewBag.Title = Model.Data.TITLE;
     ViewBag.BodyClass = "Result";
     ViewBag.ContentClass ="text-left ind pb-24";
 }
 
 <h4 class="title text-left ml-72">
-    <span class="underline">xxxx活動報名開始</span>
-    <small class="block font-sm text-success mt-12">2017/10/23</small>
+    <span class="underline">@Model.Data.TITLE</span>
+    <small class="block font-sm text-success mt-12">@Model.Data.PUB_DT_STR</small>
 </h4>
 
 <article class="editor ml-72">
     @* 活動內容(編輯器) *@
-    活動內容說明
+    @Html.Raw(Model.Data.CONTENT)
 </article>
 
 <hr class="mb-12">

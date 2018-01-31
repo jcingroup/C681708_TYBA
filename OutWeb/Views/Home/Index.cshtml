@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = "首頁";
+    string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
 }
 
 @section scripts {
@@ -22,8 +23,15 @@
 }
 
 <section id="banner" class="swiper-container">
+
     <main class="swiper-wrapper">
-        <div class="swiper-slide"><img src="~/Content/images/index/banner.jpg" alt="Banner1"></div>
+        @foreach (var banner in Model.Banner)
+        {
+            string imgUrl = currentUrl + "/" + banner.Files.First().FileUrl;
+            <div class="swiper-slide">
+                <img src="@imgUrl" alt="@banner.Title">
+            </div>
+        }
     </main>
     <div class="swiper-pager"></div>
 </section>
@@ -41,24 +49,9 @@
 
         @* 套程式 - 最多5則 *@
         <nav class="news-list">
-            @foreach (var data in Model.News.Result.Data)
+            @foreach (var data in Model.News.Data)
             {
-                string newsRedirectUrl = string.Empty;
-                string urlBlank = string.Empty;
-                if (string.IsNullOrEmpty(data.NewsUrl))
-                {
-                    newsRedirectUrl = Url.Content("~/News/Content?ID=" + data.ID);
-                }
-                else
-                {
-                    newsRedirectUrl = data.NewsUrl;
-                    urlBlank = "_blank";
-                }
-
-                <a target="@urlBlank" href="@newsRedirectUrl" class="news-link">
-                    <span class="date">@data.PublishDateStr</span>
-                    @data.Title
-                </a>
+                <a href="@Url.Action("Content","News",new {ID=data.ID })" class="list-item"><span class="date">@data.PUB_DT_STR</span>@data.TITLE</a>
             }
         </nav>
 

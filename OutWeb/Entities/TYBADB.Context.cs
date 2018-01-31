@@ -37,5 +37,6 @@ namespace OutWeb.Entities
         public virtual DbSet<APPLY> APPLY { get; set; }
         public virtual DbSet<APPLY_MEMBER> APPLY_MEMBER { get; set; }
         public virtual DbSet<APPLY_NUMBER> APPLY_NUMBER { get; set; }
+        public virtual DbSet<LOGERR> LOGERR { get; set; }
     }
 }

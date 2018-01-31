@@ -1,21 +1,15 @@
-﻿using OutWeb.ActionFilter;
-using OutWeb.Models.FrontEnd.ApplyModels;
-using OutWeb.Models.FrontEnd.TrainModels.TrainApplyModels;
-using OutWeb.Models.FrontEnd.TrainModels.TrainListModels;
-using OutWeb.Models.Manage.ActivityModels;
+﻿using OutWeb.Models.FrontEnd.ApplyModels;
+using OutWeb.Models.FrontEnd.DownloadFrontModel;
 using OutWeb.Modules.FrontEnd;
 using OutWeb.Modules.Manage;
-using OutWeb.Provider;
 using System;
-using System.Web.Mvc;
 using System.Linq;
-using OutWeb.Models.FrontEnd.DownloadFrontModel;
+using System.Web.Mvc;
 
 namespace OutWeb.Controllers
 {
     public class ApplyController : Controller
     {
-
         public ApplyController()
         {
             ViewBag.IsFirstPage = false;
@@ -54,7 +48,6 @@ namespace OutWeb.Controllers
                     {
                         TempData["ErrorMsg"] = "查無該活動賽事";
                         return RedirectToAction("List");
-
                     }
                     //取檔案
                     using (var fileModule = new FileModule())
@@ -66,14 +59,13 @@ namespace OutWeb.Controllers
             return View(model);
         }
 
-
-
         // ## 靜態demo
         // 活動內容
         public ActionResult contentDemo()
         {
             return View();
         }
+
         // 報名頁面-1
         public JsonResult ValidTeamName(int actId, int groupId, string teamName)
         {
@@ -89,6 +81,7 @@ namespace OutWeb.Controllers
             }
             return Json(new { success = success }, JsonRequestBehavior.AllowGet);
         }
+
         public ActionResult Apply(int? id)
         {
             if (!id.HasValue)
@@ -107,6 +100,7 @@ namespace OutWeb.Controllers
             }
             return View(model);
         }
+
         // 報名頁面-2
         [HttpPost]
         public ActionResult Apply2(ApplyDataModel model)
@@ -122,7 +116,6 @@ namespace OutWeb.Controllers
             Session["ApplyInfo"] = model;
             return View(model);
         }
-
 
         // 報名頁面-3
         public ActionResult Apply3()

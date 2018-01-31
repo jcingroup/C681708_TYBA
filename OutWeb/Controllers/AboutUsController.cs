@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using OutWeb.Modules.Manage;
+using OutWeb.Repositories;
+using System.Web;
+using System.Web.Mvc;
 
 namespace OutWeb.Controllers
 {
@@ -12,11 +15,17 @@ namespace OutWeb.Controllers
         // GET: AboutUs
         public ActionResult Index()
         {
-            return View("AboutUs");
+            return RedirectToAction("AboutUs");
         }
 
-        public ActionResult AboutUs()        {
-            
+        public ActionResult AboutUs()
+        {
+            string content = string.Empty;
+            using (EditorModule editorModule = new EditorModule())
+            {
+                content = HttpUtility.HtmlDecode(editorModule.GetContent());
+            }
+            ViewData["Content"] = content;
             return View();
         }
     }

@@ -1,4 +1,7 @@
-﻿@{
+﻿@using OutWeb.Models.Manage.ResultModels
+@model ResultListViewModel
+
+@{
     ViewBag.Title = "比賽成績公告";
     ViewBag.BodyClass = "Result";
     ViewBag.ContentClass ="ind";
@@ -6,37 +9,94 @@
 
 <h4 class="title text-left ml-72"><span class="underline">@ViewBag.Title</span></h4>
 
-<form>
-
+<form action="/Result/List" method="get" class="frmResultList">
     <nav class="list text-left ml-72">
-        <a href="~/Result/Content" class="list-item">
-            <span class="date">2017/10/23</span>
-            <span class="rest">XXXXX活動報名開始</span>
-        </a>
+
+        @foreach (var data in Model.Result.Data)
+        {
+            <a href="@Url.Action("Content",new {ID=data.ID })" class="list-item">
+                <span class="date">@data.PUB_DT_STR</span>
+                <span class="rest">@data.TITLE</span>
+            </a>
+        }
     </nav>
 
+
     <nav class="pager py-16 pr-32">
+        @{
+            int beginCount = Model.Result.Pagination.CurrentPage > 1 ? ((Model.Result.Pagination.CurrentPage - 1) * Model.Result.Pagination.PageSize) + 1 : 1;
+            int lastCount =
+                Model.Result.Data.Count >= Model.Result.Pagination.PageSize ?
+                ((Model.Result.Pagination.CurrentPage) * Model.Result.Pagination.PageSize) : Model.Result.Pagination.DataCount;
+            string disabledPre = Model.Result.Pagination.CurrentPage == 1 ? "disabled" : "";
+            string disabledNext = Model.Result.Pagination.CurrentPage == Model.Result.Pagination.LastPage ? "disabled" : "";
+            string disabledPageInput = Model.Result.Pagination.LastPage == 1 ? "disabled" : "";
+            string pageTotalInfo = string.Format("{0}/{1}頁 {2}筆", Model.Result.Pagination.CurrentPage, Model.Result.Pagination.LastPage, Model.Result.Pagination.DataCount);
+        }
         <span class="pull-right">
-            1/2頁 11筆
+            @pageTotalInfo
         </span>
 
-        <a disabled href="javascript:;"
-           onclick=""
+        <a @disabledPre href="javascript:;"
+           onclick="paginationSubmit('@Model.Result.Pagination.FirstPage');"
            class="btn ti-angle-double-left"></a>
-        <a disabled href="javascript:;"
-           onclick=""
+        <a @disabledPre href="javascript:;"
+           onclick="paginationSubmit('@Model.Result.Pagination.PrePage');"
            class="btn ti-angle-left"></a>
-        <a href="javascript:;"
-           onclick=""
+        <a @disabledNext href="javascript:;"
+           onclick="paginationSubmit('@Model.Result.Pagination.NextPage');"
            class="btn ti-angle-right"></a>
-        <a href="javascript:;"
-           onclick=""
+        <a @disabledNext href="javascript:;"
+           onclick="paginationSubmit('@Model.Result.Pagination.LastPage');"
            class="btn ti-angle-double-right"></a>
 
         <label for="numPage" class="ml-16">
             第
-            <input id="numPage" name="page" class="form-element inline text-center" type="number" min="1" value="1">
+            <input @disabledPageInput id="numPage" name="page" class="form-element inline text-center" type="number" min="1" value="@Model.Result.Pagination.CurrentPage">
             頁
         </label>
     </nav>
+
 </form><!-- content //-->
+
+@section scripts {
+    <script>
+        if ('@TempData["Error"]' != '') {
+            alert('@TempData["Error"]');
+        }
+
+        function paginationSubmit(page)
+        {
+            $('#numPage').val(page);
+            $('form')[0].submit();
+        }
+
+        $(function () {
+            $('a').each(function (i,e) {
+                var $elm =$(e);
+                if($elm.attr('disabled') != undefined)
+                {
+                    $elm.attr('href','javascript:;').attr('onclick','javascript:;');
+                }
+            });
+
+            //分頁input
+            $('#numPage').on('keyup change', function () {
+                var minPage = @Model.Result.Pagination.FirstPage;
+                var maxPage = @Model.Result.Pagination.LastPage;
+                var currentPage=$(this).val() ;
+                if(currentPage < minPage)
+                {
+                    currentPage = minPage;
+                }
+
+                if(currentPage > maxPage)
+                {
+                    currentPage = maxPage;
+                }
+                $(this).val(currentPage);
+                $('form')[0].submit();
+            })
+        })
+    </script>
+}

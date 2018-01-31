@@ -212,7 +212,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Authorize\AuthAttribute.cs" />
-    <Compile Include="Authorize\AuthAttributeFront.cs" />
     <Compile Include="Authorize\ErrorHandlerAttribute.cs" />
     <Compile Include="Controllers\AboutUsController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
@@ -241,35 +240,11 @@
     <Compile Include="Entities\EDITOR.cs">
       <DependentUpon>TYBADB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\EMAIL.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\EnergyDB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EnergyDB.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\EnergyDB.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\EnergyDB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EnergyDB.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\FAX.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\FAXDetail.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entities\FILEBASE.cs">
       <DependentUpon>TYBADB.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\LOGERR.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
+      <DependentUpon>TYBADB.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\NEWS.cs">
       <DependentUpon>TYBADB.tt</DependentUpon>
@@ -282,27 +257,6 @@
     </Compile>
     <Compile Include="Entities\RESULT.cs">
       <DependentUpon>TYBADB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\SiteCounter.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\SMS.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\SMSDetail.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\SMSResponseMsg.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\SMS_EMAIL_FAX_LIST.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\SystemLog.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\TempValidUser.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\TYBADB.Context.cs">
       <AutoGen>True</AutoGen>
@@ -322,78 +276,6 @@
     <Compile Include="Entities\USER.cs">
       <DependentUpon>TYBADB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\人員.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\出版品主檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\出版品章節明細檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\分類主檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\分類對應檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\分類明細檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\功能項目檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\問卷主檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\問卷答案主檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\問卷答案明細檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\問卷選項檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\問卷題目檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\問卷題目類型檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\外部連結.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\新聞.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\檔案.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\研討會主檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\研討會報名主檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\研討會報名人員.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\研討會報名對應檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\研討會明細檔.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\編輯器.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\能源案例.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\課程.cs">
-      <DependentUpon>EnergyDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Enums\DietCategory.cs" />
     <Compile Include="Enums\ManageEnums.cs" />
     <Compile Include="Enums\FileUploadIdentifyType.cs" />
@@ -409,7 +291,6 @@
     <Compile Include="Models\FrontEnd\ApplyModels\ApplyListViewModel.cs" />
     <Compile Include="Models\FrontEnd\ApplyModels\ApplyViewDetailsModel.cs" />
     <Compile Include="Models\FrontEnd\ApplyModels\ApplyListContentModel.cs" />
-    <Compile Include="Models\FrontEnd\CourseFrontEndModels\CourseFrontListDataModel.cs" />
     <Compile Include="Models\FrontEnd\DownloadFrontModel\DownloadFrontDataModel.cs" />
     <Compile Include="Models\FrontEnd\DownloadFrontModel\DownloadFrontResultModel.cs" />
     <Compile Include="Models\FrontEnd\DownloadFrontModel\DownloadFrontViewModel.cs" />
@@ -417,19 +298,6 @@
     <Compile Include="Models\FrontEnd\HomeMultipleModels\HomeListFrontResultModel.cs" />
     <Compile Include="Models\FrontEnd\HomeMultipleModels\HomeListFrontViewModel.cs" />
     <Compile Include="Models\FrontEnd\EditModels\EditorFront.cs" />
-    <Compile Include="Models\FrontEnd\CourseFrontEndModels\CourseListFrontResultModel.cs" />
-    <Compile Include="Models\FrontEnd\CourseFrontEndModels\CourseListFrontViewModel.cs" />
-    <Compile Include="Models\FrontEnd\NewsFrontEndModels\NewsFrontListDataModel.cs" />
-    <Compile Include="Models\FrontEnd\NewsFrontEndModels\NewsListFrontFilterModel.cs" />
-    <Compile Include="Models\FrontEnd\NewsFrontEndModels\NewsListFrontResultModel.cs" />
-    <Compile Include="Models\FrontEnd\NewsFrontEndModels\NewsListFrontViewModel.cs" />
-    <Compile Include="Models\FrontEnd\TrainModels\TrainApplyModels\TrainApplyDataModel.cs" />
-    <Compile Include="Models\FrontEnd\TrainModels\TrainApplyModels\TrainApplyViewModel.cs" />
-    <Compile Include="Models\FrontEnd\TrainModels\TrainApplyModels\TrainContentModel.cs" />
-    <Compile Include="Models\FrontEnd\TrainModels\TrainListModels\TrainListDataModel.cs" />
-    <Compile Include="Models\FrontEnd\TrainModels\TrainListModels\TrainListFilterModel.cs" />
-    <Compile Include="Models\FrontEnd\TrainModels\TrainListModels\TrainListResultModel.cs" />
-    <Compile Include="Models\FrontEnd\TrainModels\TrainListModels\TrainListViewModel.cs" />
     <Compile Include="Models\FrontEnd\UserInfo\LogInModel.cs" />
     <Compile Include="Models\FrontEnd\UserInfo\LoginUserInfoModel.cs" />
     <Compile Include="Models\IPaginationModel.cs" />
@@ -452,21 +320,6 @@
     <Compile Include="Models\Manage\EditorModels\EnergyAuditModel.cs" />
     <Compile Include="Models\Manage\EditorModels\Editor.cs" />
     <Compile Include="Models\Manage\FileModels\FilesModel.cs" />
-    <Compile Include="Models\Manage\ManageBookModels\BookChapterDetalisModel.cs" />
-    <Compile Include="Models\Manage\ManageBookModels\BookDetailsDataModel.cs" />
-    <Compile Include="Models\Manage\ManageBookModels\BookListDataModel.cs" />
-    <Compile Include="Models\Manage\ManageBookModels\BookListFilterModel.cs" />
-    <Compile Include="Models\Manage\ManageBookModels\BookListResultModel.cs" />
-    <Compile Include="Models\Manage\ManageBookModels\BookListViewModel.cs" />
-    <Compile Include="Models\Manage\ManageTrainApplyModels\TrainApplyDetailsModels\TrainApplyDataListModel.cs" />
-    <Compile Include="Models\Manage\ManageTrainApplyModels\TrainApplyDetailsModels\TrainApplyDataModel.cs" />
-    <Compile Include="Models\Manage\ManageTrainApplyModels\TrainApplyDetailsModels\TrainApplyParticipants.cs" />
-    <Compile Include="Models\Manage\ManageTrainApplyModels\TrainApplyDetailsModels\TrainApplyDetailsModel.cs" />
-    <Compile Include="Models\Manage\ManageTrainApplyModels\TrainApplyDetailsModels\TrainApplyViewModel.cs" />
-    <Compile Include="Models\Manage\ManageTrainApplyModels\TrainApplyListModels\TrainApplyListFilterModel.cs" />
-    <Compile Include="Models\Manage\ManageTrainApplyModels\TrainApplyListModels\TrainApplyListResultModel.cs" />
-    <Compile Include="Models\Manage\ManageTrainApplyModels\TrainApplyListModels\TrainApplyListViewModel.cs" />
-    <Compile Include="Models\Manage\ManageTrainApplyModels\TrainApplyListModels\TrainApplyStandardDataModel.cs" />
     <Compile Include="Models\Manage\ResultModels\ResultDetailsDataModel.cs" />
     <Compile Include="Models\Manage\ResultModels\ResultListDataModel.cs" />
     <Compile Include="Models\Manage\ResultModels\ResultListFilterModel.cs" />
@@ -474,11 +327,6 @@
     <Compile Include="Models\Manage\ResultModels\ResultListViewModel.cs" />
     <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\Manage\IManage.cs" />
-    <Compile Include="Models\Manage\ManageCourseModels\CourseDetailsDataModel.cs" />
-    <Compile Include="Models\Manage\ManageCourseModels\CourseListDataModel.cs" />
-    <Compile Include="Models\Manage\ManageCourseModels\CourseListFilterModel.cs" />
-    <Compile Include="Models\Manage\ManageCourseModels\CourseListResultModel.cs" />
-    <Compile Include="Models\Manage\ManageCourseModels\CourseListViewModel.cs" />
     <Compile Include="Models\Manage\NewsModels\NewsDetailsDataModel.cs" />
     <Compile Include="Models\Manage\NewsModels\NewsListDataModel.cs" />
     <Compile Include="Models\Manage\NewsModels\NewsListFilterModel.cs" />
@@ -487,26 +335,18 @@
     <Compile Include="Models\PaginationResult.cs" />
     <Compile Include="Models\Manage\UserInfo\LoginUserInfoModel.cs" />
     <Compile Include="Models\Manage\UserInfo\SignInModel.cs" />
-    <Compile Include="Models\WebUser.Controller.cs" />
     <Compile Include="Modules\FrontEnd\ApplyFrontModule.cs" />
     <Compile Include="Modules\FrontEnd\DownloadFrontModule.cs" />
-    <Compile Include="Modules\FrontEnd\CourseFrontModule.cs" />
-    <Compile Include="Modules\FrontEnd\NewsFrontModule.cs" />
-    <Compile Include="Modules\FrontEnd\TrainFrontModule.cs" />
+    <Compile Include="Modules\FrontEnd\HomeFrontModule.cs" />
     <Compile Include="Modules\Manage\BannerModule.cs" />
     <Compile Include="Modules\Manage\ActivityModule.cs" />
     <Compile Include="Modules\Manage\EditorModule.cs" />
     <Compile Include="Modules\Manage\FileModule.cs" />
     <Compile Include="Modules\Manage\DownloadModule.cs" />
     <Compile Include="Modules\Manage\ResultModule.cs" />
-    <Compile Include="Modules\Manage\LogInModule.cs" />
-    <Compile Include="Modules\Manage\TrainApplyModule.cs" />
-    <Compile Include="Modules\Manage\TrainModule.cs" />
-    <Compile Include="Modules\Manage\CourseModule.cs" />
     <Compile Include="Modules\Manage\NewsModule.cs" />
     <Compile Include="Modules\Manage\SignInModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Provider\UserFrontProvider.cs" />
     <Compile Include="Provider\UserProvider.cs" />
     <Compile Include="Repositories\FileRepository.cs" />
     <Compile Include="Repositories\PublicMethodRepository.cs" />
@@ -1804,16 +1644,6 @@
     <Content Include="Content\noIE\line.gif" />
     <Content Include="Content\noIE\noIE.css" />
     <Content Include="Content\noIE\noIE.html" />
-    <Content Include="Entities\EnergyDB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EnergyDB.edmx</DependentUpon>
-      <LastGenOutput>EnergyDB.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Entities\EnergyDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EnergyDB.edmx</DependentUpon>
-      <LastGenOutput>EnergyDB.cs</LastGenOutput>
-    </Content>
     <Content Include="Entities\TYBADB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>TYBADB.edmx</DependentUpon>
@@ -1831,13 +1661,6 @@
     <Content Include="Content\font\themify-icons\themify.eot" />
     <Content Include="Content\font\themify-icons\themify.ttf" />
     <Content Include="Content\font\themify-icons\themify.woff" />
-    <EntityDeploy Include="Entities\EnergyDB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EnergyDB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Entities\EnergyDB.edmx.diagram">
-      <DependentUpon>EnergyDB.edmx</DependentUpon>
-    </Content>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1971,7 +1794,6 @@
     <Content Include="Views\_SysAdm\_TrainDataPartial.cshtml" />
     <Content Include="Views\Shared\_ApplyContentPartial.cshtml" />
     <Content Include="Views\_SysAdm\_TrainApplyViewPartial.cshtml" />
-    <Content Include="Views\Mail\MsgMail.cshtml" />
     <Content Include="Views\SignIn\Login.cshtml" />
     <Content Include="Views\Manager\AboutUs.cshtml" />
     <Content Include="Views\Manager\ResultList.cshtml" />

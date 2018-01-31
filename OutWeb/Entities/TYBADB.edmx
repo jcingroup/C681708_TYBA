@@ -94,6 +94,17 @@
           <Property Name="FILE_TP" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="URL_PATH" Type="nvarchar" MaxLength="500" Nullable="false" />
         </EntityType>
+        <EntityType Name="LOGERR">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ERR_GID" Type="int" Nullable="false" />
+          <Property Name="ERR_SMRY" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ERR_DESC" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ERR_SRC" Type="varchar(max)" Nullable="false" />
+          <Property Name="LOG_DTM" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="NEWS">
           <Key>
             <PropertyRef Name="ID" />
@@ -180,6 +191,7 @@
           <EntitySet Name="DLFILES" EntityType="Self.DLFILES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EDITOR" EntityType="Self.EDITOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FILEBASE" EntityType="Self.FILEBASE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOGERR" EntityType="Self.LOGERR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NEWS" EntityType="Self.NEWS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OLACT" EntityType="Self.OLACT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OLACTGROUP" EntityType="Self.OLACTGROUP" Schema="dbo" store:Type="Tables" />
@@ -203,6 +215,7 @@
           <EntitySet Name="APPLY" EntityType="TYBAModel.APPLY" />
           <EntitySet Name="APPLY_MEMBER" EntityType="TYBAModel.APPLY_MEMBER" />
           <EntitySet Name="APPLY_NUMBER" EntityType="TYBAModel.APPLY_NUMBER" />
+          <EntitySet Name="LOGERR" EntityType="TYBAModel.LOGERR" />
           </EntityContainer>
         <EntityType Name="DLFILES">
           <Key>
@@ -370,6 +383,17 @@
           <Property Name="REF_ACT_ID" Type="Int32" Nullable="false" />
           <Property Name="APPLY_NUM" Type="Int32" Nullable="false" />
           <Property Name="MAP_APPLY_ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LOGERR">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ERR_GID" Type="Int32" Nullable="false" />
+          <Property Name="ERR_SMRY" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ERR_DESC" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ERR_SRC" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LOG_DTM" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -552,6 +576,18 @@
                 <ScalarProperty Name="MAP_APPLY_ID" ColumnName="MAP_APPLY_ID" />
                 <ScalarProperty Name="APPLY_NUM" ColumnName="APPLY_NUM" />
                 <ScalarProperty Name="REF_ACT_ID" ColumnName="REF_ACT_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOGERR">
+            <EntityTypeMapping TypeName="TYBAModel.LOGERR">
+              <MappingFragment StoreEntitySet="LOGERR">
+                <ScalarProperty Name="LOG_DTM" ColumnName="LOG_DTM" />
+                <ScalarProperty Name="ERR_SRC" ColumnName="ERR_SRC" />
+                <ScalarProperty Name="ERR_DESC" ColumnName="ERR_DESC" />
+                <ScalarProperty Name="ERR_SMRY" ColumnName="ERR_SMRY" />
+                <ScalarProperty Name="ERR_GID" ColumnName="ERR_GID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -17,6 +17,7 @@
         <EntityTypeShape EntityType="TYBAModel.APPLY" Width="1.5" PointX="3.375" PointY="8.75" />
         <EntityTypeShape EntityType="TYBAModel.APPLY_MEMBER" Width="1.5" PointX="9.375" PointY="0.75" />
         <EntityTypeShape EntityType="TYBAModel.APPLY_NUMBER" Width="1.5" PointX="9.375" PointY="4.75" />
+        <EntityTypeShape EntityType="TYBAModel.LOGERR" Width="1.5" PointX="5.375" PointY="9.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

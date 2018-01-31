@@ -1,14 +1,16 @@
-﻿using OutWeb.Models.FrontEnd.CourseFrontEndModels;
-using OutWeb.Models.FrontEnd.NewsFrontEndModels;
+﻿using OutWeb.Models.Manage.BannerModels;
+using OutWeb.Models.Manage.ManageNewsModels;
+using System.Collections.Generic;
 
 namespace OutWeb.Models.FrontEnd.HomeMultipleModels
 {
     public class HomeFrontListDataModel
     {
-        private NewsListFrontViewModel m_news = new NewsListFrontViewModel();
-        public NewsListFrontViewModel News { get { return m_news; } set { m_news = value; } }
+        private NewsListResultModel m_news = new NewsListResultModel();
+        public NewsListResultModel News { get { return m_news; } set { m_news = value; } }
 
-        private CourseListFrontViewModel m_course = new CourseListFrontViewModel();
-        public CourseListFrontViewModel Course { get { return m_course; } set { m_course = value; } }
+        private List<BannerDetailsModel> m_banner = new List<BannerDetailsModel>();
+        public List<BannerDetailsModel> Banner { get { return m_banner; } set { m_banner = value; } }
+
     }
 }

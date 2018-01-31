@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "本會簡介";
     ViewBag.BodyClass = "AboutUs";
     ViewBag.ContentClass ="text-left p-32";
@@ -10,5 +9,5 @@
 <div class="editor">
     @* 這裡是編輯器內容 *@
     <h5>本會宗旨</h5>
-    為提升桃園市籃球運動風氣，促進籃球運動技術水準，推廣全民運動提供桃園地區籃球運動相關活動資訊。
+    @Html.Raw(ViewData["Content"])
 </div>

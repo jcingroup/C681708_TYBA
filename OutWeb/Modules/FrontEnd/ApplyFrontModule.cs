@@ -133,7 +133,7 @@ namespace OutWeb.Modules.FrontEnd
                 }
             }
 
-            using (var transaction = DB.Database.CurrentTransaction ?? DB.Database.BeginTransaction(System.Data.IsolationLevel.RepeatableRead))
+            using (var transaction = DB.Database.CurrentTransaction ?? DB.Database.BeginTransaction(System.Data.IsolationLevel.Serializable))
             {
                 var aply = DB.APPLY.Where(o => o.ID == identityId).FirstOrDefault();
                 aply.APPLY_IDEN_NUM = CreateApplyNumberByActivityID(model.ActivityID, identityId, DB);

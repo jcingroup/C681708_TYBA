@@ -1,9 +1,9 @@
-﻿@using OutWeb.Models.FrontEnd.NewsFrontEndModels
-@model NewsListFrontViewModel
+﻿@using OutWeb.Models.Manage.ManageNewsModels
+@model NewsListViewModel
 @{
     ViewBag.Title = "比賽訊息";
     ViewBag.BodyClass = "News";
-    ViewBag.ContentClass ="ind";
+    ViewBag.ContentClass = "ind";
 }
 
 <h4 class="title text-left ml-72"><span class="underline">@ViewBag.Title</span></h4>
@@ -13,20 +13,9 @@
     <nav class="list text-left ml-72">
         @foreach (var data in Model.Result.Data)
         {
-            string newsRedirectUrl = string.Empty;
-            string urlBlank = string.Empty;
-            if (string.IsNullOrEmpty(data.NewsUrl))
-            {
-                newsRedirectUrl = Url.Content("~/News/Content?ID=" + data.ID + "&type=" + data.Type);
-            }
-            else
-            {
-                newsRedirectUrl = data.NewsUrl;
-                urlBlank = "_blank";
-            }
-            <a href="@newsRedirectUrl" class="list-item" target="@urlBlank">
-                <span class="date">@data.PublishDateStr</span>
-                <span class="rest">@data.Title</span>
+            <a href="@Url.Action("Content",new {ID=data.ID })" class="list-item">
+            <span class="date">@data.PUB_DT_STR</span>
+            <span class="rest">@data.TITLE</span>
             </a>
         }
     </nav>
@@ -77,9 +66,10 @@
         function paginationSubmit(page)
         {
             $('#numPage').val(page);
-            $('.frmNewsList')[0].submit();
+            $('form')[0].submit();
         }
 
+    
         $(function () {
             $('a').each(function (i,e) {
                 var $elm =$(e);
@@ -88,18 +78,13 @@
                     $elm.attr('href','javascript:;').attr('onclick','javascript:;');
                 }
             });
-            //搜尋
-            $('#searchBtn').on('click keypress', function () {
-                $('#numPage').val(1);
-                $('.frmNewsList').submit();
-            });
 
+      
             //分頁input
             $('#numPage').on('keyup change', function () {
-
                 var minPage = @Model.Result.Pagination.FirstPage;
                 var maxPage = @Model.Result.Pagination.LastPage;
-                var currentPage = $(this).val();
+                var currentPage=$(this).val() ;
                 if(currentPage < minPage)
                 {
                     currentPage = minPage;
@@ -110,7 +95,7 @@
                     currentPage = maxPage;
                 }
                 $(this).val(currentPage);
-                $('.frmNewsList').submit();
+                $('form')[0].submit();
             })
         })
     </script>
