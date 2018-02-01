@@ -25,6 +25,8 @@ namespace OutWeb.Modules.Manage
         private TYBADB DB
         { get { return this.m_DB; } set { this.m_DB = value; } }
 
+
+
         private List<MemberInfo> GetMemberInfoByApplyID(int actID, int applyID)
         {
             List<MemberInfo> memberList = new List<MemberInfo>();
@@ -65,7 +67,7 @@ namespace OutWeb.Modules.Manage
                                  Contact = s.apply.CONTACT,
                                  ContactPhone = s.apply.CONTACT_PHONE,
                                  Email = s.apply.EMAIL,
-                                 Remark = s.apply.REMRK,
+                                 Remark = s.apply.REMRK.ReplaceEmpty(),
                                  TeamName = s.apply.TEAM_NM,
                                  Member = GetMemberInfoByApplyID(s.act.ID, s.apply.ID)
                              })
@@ -217,6 +219,46 @@ namespace OutWeb.Modules.Manage
             return details;
         }
 
+        public ApplyExcelReplyDataModel GetApplyDetailsForExcel(ApplyExcelReplyDataModel details)
+        {
+            details.GroupList = GetActivityGroupListByID(details.ActivityID);
+            var activityData = DB.OLACT.Where(o => o.ID == details.ActivityID).FirstOrDefault();
+            if (activityData == null)
+                throw new Exception("無法取得該活動賽事,是否已被移除？");
+
+            details.ActivityID = activityData.ID;
+            details.ActivityName = activityData.ACTITLE;
+
+            var applyLstData =
+                DB.APPLY
+                .Where(w => w.MAP_ACT_ID == details.ActivityID)
+                .AsEnumerable()
+                .Select(s => new ApplyListDetailsData()
+                {
+                    ID = s.ID,
+                    ApplyDate = s.BUD_DT.ConvertDateTimeTo10CodeString(),
+                    ApplyNumber = s.APPLY_IDEN_NUM,
+                    ApplySuccessStatus = s.APPLY_SUCCESS,
+                    ApplyTeamName = s.TEAM_NM,
+                    ApplyTeamMemberCount = DB.APPLY_MEMBER.Where(o => o.MAP_APPLY_ID == s.ID && o.REF_ACT_ID == details.ActivityID).Count(),
+                    GroupID = s.MAP_ACT_GUP_ID,
+                    ContactPhone = s.CONTACT_PHONE,
+                    ContactEmail = s.EMAIL,
+                    Remark = s.REMRK.ReplaceEmpty(),
+                    Coach = s.TEAM_COACH,
+                    Contact = s.CONTACT,
+                    MemberInfo = GetMemberInfoByApplyID(details.ActivityID, s.ID)
+                })
+                .ToList();
+
+            details.ApplyListData = applyLstData;
+
+
+            foreach (var d in details.ApplyListData)
+                PublicMethodRepository.HtmlDecode(d);
+            return details;
+        }
+
         public ApplyModalDataModel SaveApply(ApplyModalDataModel model)
         {
             ApplyModalDataModel result = new ApplyModalDataModel();
@@ -232,7 +274,7 @@ namespace OutWeb.Modules.Manage
                 apply.CONTACT = model.Contact;
                 apply.CONTACT_PHONE = model.ContactPhone;
                 apply.EMAIL = model.Email;
-                apply.REMRK = model.Remark;
+                apply.REMRK = model.Remark.ReplaceEmpty();
                 apply.TEAM_NM = model.TeamName;
                 apply.MAP_ACT_ID = model.ActivityID;
                 apply.APPLY_SUCCESS = model.ApplyStatus;

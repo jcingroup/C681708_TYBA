@@ -131,7 +131,38 @@
         </select>
         <input type="text" placeholder="請輸入關鍵字" name="qry" value="@Model.ListData.Filter.QueryString">
         <button class="btn">搜尋</button>
-        <a class="btn info pull-right" href="/Content/ExcelTemp/Apply.xlsx">匯出清單</a>
+        <a class="btn info pull-right export-reply" href="javacscript:;">匯出清單</a>
+
+        <script>
+            $('.export-reply').on('click', function (e) {
+                e.preventDefault();
+                var url = "@Url.Content("~/FileProcess/GetFile")";
+                var id = '@Model.ActivityID';
+         
+                $.ajax({
+                    async: false,
+                    cache: false,
+                    type: 'POST',
+                    url: url,
+                    data: { type: 'ApplyReply', ID: id },
+                    success: function (data) {
+                        if (typeof data.success === 'undefined') {
+                            alert('系統發收未知錯誤');
+                            return;
+                        }
+                        else {
+                            if (!data.success) {
+                                alert(data.msg);
+                                return;
+                            }
+                        }
+                        var response = data;
+                        window.location = '/FileProcess/Download?fileGuid=' + response.FileGuid
+                                          + '&filename=' + response.FileName;
+                    }
+                })
+            });
+        </script>
     </header>
     <table class="table-list table-hover table-striped">
         <colgroup>

@@ -10,7 +10,10 @@ using OutWeb.Models.Manage.ManageNewsModels;
 using OutWeb.Models.Manage.ResultModels;
 using OutWeb.Modules.FrontEnd;
 using OutWeb.Modules.Manage;
+using OutWeb.Repositories;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace OutWeb.Controllers
@@ -519,6 +522,8 @@ namespace OutWeb.Controllers
                     model = module.GetApplyData((int)actID, (int)applyID);
                     if (model == null)
                         TempData["ErrorMsg"] = "查無該活動賽事";
+                    else
+                        TempData["ErrorMsg"] = "";
                 }
             }
             return PartialView("_ApplyModalPartial", model);

@@ -10,6 +10,5 @@ namespace OutWeb.Models.Manage.ApplyMaintainModels.ApplyDetailsModels.ApplyDetai
         private ApplyDetailsListResultModel m_result = new ApplyDetailsListResultModel();
         public ApplyDetailsListResultModel Result { get { return m_result; } set { m_result = value; } }
 
-
     }
 }

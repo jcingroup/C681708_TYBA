@@ -18,7 +18,20 @@ namespace OutWeb.Repositories
 
         private static Language m_language = Language.NotSet;
 
-
+        public static string ReplaceEmpty(this string str)
+        {
+            if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str))
+                return str;
+            List<string> reRemark = new List<string>();
+            var spRemark = str.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            foreach (var c in spRemark)
+            {
+                if (string.IsNullOrWhiteSpace(c))
+                    continue;
+                reRemark.Add(c.Trim());
+            }
+            return string.Join("\r\n", reRemark);
+        }
         public static void FilterXss<T>(T obj)
         {
             // Get type.

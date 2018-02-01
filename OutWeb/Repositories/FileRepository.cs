@@ -1,9 +1,12 @@
-﻿using OutWeb.Models.Manage;
+﻿using ClosedXML.Excel;
+using OutWeb.Models.Manage;
+using OutWeb.Models.Manage.ApplyMaintainModels;
 using OutWeb.Models.Manage.FileModels;
 using OutWeb.Modules.Manage;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Web;
 
@@ -78,106 +81,126 @@ namespace OutWeb.Repositories
 
         #endregion 儲存處理函式
 
-        /// <summary>
-        /// 用於HINETFAX所需的TIL文件
-        /// </summary>
-        /// <param name="filename">原始檔案名稱</param>
-        /// <param name="strOutput">轉檔後TIL內容</param>
-        /// <param name="encoding">編碼模式</param>
-        public FileViewModel SaveTILFile(String filename, String strOutput, int encoding)
+
+        #region Excel處理函式
+
+        public MemoryStream ObjectToExcel<TModel>(TModel obj) where TModel : ExcelReplyBase
         {
-            string serverMapPath = string.Empty;
-            serverMapPath = "~/Content/Upload/Manage/Files/";
-            string strRealFileName = filename;
-            string strFileName = Guid.NewGuid().ToString() + Path.GetExtension(filename);
-            string strFilePath = HttpContext.Current.Server.MapPath(serverMapPath + strFileName).Replace(rootPath, "");
+            Type type = obj.GetType();
+            MemoryStream fs = new MemoryStream();
+            var typeProcessorMap = new Dictionary<Type, Delegate>
+            {
+            { typeof(ApplyExcelReplyDataModel), new Action<ExcelReplyBase>(m => {
+                /* Excel Bind*/
+               ApplyExcelReplyDataModel  model =(m as ApplyExcelReplyDataModel);
+                try
+                {
+                    string folderPath = "~/Content/ExcelTemp/";
+                    string TemplateFile =string.Empty;
+                    int rangeDefualtLength = 0;
+                    switch (model.GetExcelFormType)
+                    {
+                        case ExcelForm.EmptyForm1:
+                            TemplateFile=  HttpContext.Current.Server.MapPath(folderPath + "Apply.xlsx");
+                            rangeDefualtLength = 17;
+                        break;
+                        default:
+                            throw new Exception("can't get method with excel base file.");
+                    }
 
-            string FileUrl = serverMapPath.Substring(2, serverMapPath.Length - 2) + strFileName;
+                    XLWorkbook exl = new XLWorkbook(TemplateFile);
+                    IXLWorksheet wsht = exl.Worksheet(1);
+                    wsht.RangeUsed().SetAutoFilter();
 
-            var mv = new FileViewModel();
+                    //var defualtRowHeight = wsht.Row(2).Height;
+                    var defualtRowHeight = 80;
+                    var sexCell= wsht.Cell("G2").Value;
+                    int satartRow = 3;
+                    /*
+                    報名編號	隊名	參賽組別	教練	聯絡人	聯絡電話	E-mail	其他	隊長	隊員
+                    */
+                   string docTitle =  "比賽報名明細表";
+                    wsht.Cell(1,1).Value =string.Concat(model.ActivityName ,docTitle);
+                    wsht.Cell(2,2).Value =model.ActivityName ;
+                    if(model.GetExcelFormType == ExcelForm.EmptyForm1)
+                    {
+                       foreach (var data in model.ApplyListData)
+                        {
+                                wsht.Cell(++satartRow,1).Value = data.ApplyNumber;
+                                wsht.Cell(satartRow,2).Value = data.ApplyTeamName;
+                                wsht.Cell(satartRow,3).Value = model.GroupList.Where(o=>o.Key==data.GroupID).First().Value;
+                                wsht.Cell(satartRow,4).Value = data.Coach;
+                                wsht.Cell(satartRow,5).Value = data.Contact;
+                                wsht.Cell(satartRow,6).Value = data.ContactPhone;
+                                wsht.Cell(satartRow,7).Value = data.ContactEmail;
+                                wsht.Cell(satartRow,8).Value = data.Remark;
+ 
+                                int mbIndex = 10;
+                                foreach (var mb in data.MemberInfo)
+                                {
+                                    string memberInfo =string.Format("{0}\r\n{1}\r\n{2}",mb.MemberName,mb.MemberBirthday,mb.MemberIdentityID);
+                                    if(mb.MemberType=="Leader")
+                                    wsht.Cell(satartRow,9).Value = memberInfo;
+                                    else
+                                    {
+                                    wsht.Cell(satartRow,mbIndex).Value = memberInfo;
+                                    mbIndex++;
+                                    }
+                                 }
+                                wsht.Row(satartRow).Height = defualtRowHeight;
+                           
+                        }
+                    }
 
-            mv.RealFileName = strRealFileName;
-            mv.FilePath = strFilePath;
-            mv.FileName = strFileName;
-            mv.FileUrl = FileUrl;
+                        wsht.RangeUsed().SetAutoFilter(); //Add autofilter
+                        wsht.Columns().AdjustToContents();
+                        //wsht.FirstRowUsed().Style.Fill.BackgroundColor = XLColor.PowderBlue;
+                        //wsht.FirstRowUsed().Style.Font.Bold = true;
+                        satartRow = wsht.RowsUsed().Count();
 
-            Encoding ecp = Encoding.GetEncoding(950);
-            File.WriteAllText(string.Concat(rootPath, strFilePath), strOutput, ecp);
+                        IXLRange rangeFirst = wsht.Range(1, 1, 1, rangeDefualtLength);
+                        rangeFirst.Style.Fill.BackgroundColor = XLColor.PowderBlue;
+                        rangeFirst.Style.Font.Bold = true;
+                        rangeFirst.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
 
-            return mv;
+                        IXLRange range = wsht.Range(4, 1, satartRow, rangeDefualtLength);
+                        range.Style.Font.FontSize = 12;
+                          //水平置中
+                        range.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                         //垂直置中
+                         range.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center; ;
+
+                        range.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                        range.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                        range.Style.Alignment.WrapText = true;
+                        range.Style.Font.SetFontName("細明體");
+
+
+
+                        exl.SaveAs(fs);
+                        fs.Position = 0;
+                        fs.Close();
+                        fs.Dispose();
+                        wsht.Dispose();
+                        exl.Dispose();
+                    }
+                    catch (Exception ex)
+                    {
+                        model.IsSuccess = false;
+                        model.Message = ex.Message;
+                    }
+                model.IsSuccess =true;
+                }) },
+                };
+
+            typeProcessorMap[type].DynamicInvoke(obj);
+            if (!obj.IsSuccess)
+                throw new Exception(obj.Message);
+            return fs;
         }
 
-        /// <summary>
-        /// 將傳真所需的檔案格式另存成既定格式
-        /// </summary>
-        /// <param name="filePath">原始檔案路徑</param>
-        /// <param name="oriName">原始檔案內容</param>
-        /// <param name="hiNetUser">HINET帳戶名稱</param>
-        /// <param name="timeStr">時間字串(6碼)</param>
-        /// <param name="dateStr">年份日期字串</param>
-        public Param CopyFile(String filePath, String oriName, String hiNetUser, String timeStr, String dateStr)
-        {
-            Param li = new Param();
-            string serverMapPath = string.Empty;
+        #endregion Excel處理函式
 
-            serverMapPath = "~/Content/Upload/Manage/Files/Fax/" + dateStr + "/"; //創建日期資料夾
 
-            string tilNeedStr = "HN" + hiNetUser + "." + timeStr; //檔名格式 HNNo.序號.tif (序號自訂，最多6碼) e.g.HN90000376.911122.til
-
-            string file_ext = Path.GetExtension(oriName); //取得檔案副檔名
-            //檔案類型
-            if (file_ext.ToLower().Contains(".docx"))
-            {
-                tilNeedStr += ".docx";
-            }
-            else if (file_ext.ToLower().Contains(".doc"))
-            {
-                tilNeedStr += ".doc";
-            }
-            else if (file_ext.ToLower().Contains(".pdf"))
-            {
-                tilNeedStr += ".pdf";
-            }
-            else
-            {
-                tilNeedStr += ".til";
-            }
-
-            string strFilePath = HttpContext.Current.Server.MapPath(serverMapPath); //檢查資料夾目錄是否存在
-
-            if (!Directory.Exists(strFilePath))
-            {
-                //新增資料夾
-                Directory.CreateDirectory(strFilePath);
-            }
-
-            strFilePath = HttpContext.Current.Server.MapPath(serverMapPath + tilNeedStr);  //產生CopyTo需要的路徑
-
-            var relatePath = strFilePath.Replace(rootPath, ""); //取相對路徑
-            try
-            {
-                FileInfo fi = new FileInfo(@filePath);
-                fi.CopyTo(@strFilePath, true); // existing file will be overwritten
-                li.success = true;
-                li.fileName = tilNeedStr;
-                li.filePath = relatePath;
-                li.oriName = oriName;
-            }
-            catch (Exception ex)
-            {
-                li.success = false;
-                li.errorMsg = "[傳真維護啟動發送] 複製檔案名稱為: " + oriName + " 時發生錯誤，錯誤訊息:" + ex.ToString();
-            }
-            return li;
-        }
-
-        public class Param
-        {
-            public bool success { get; set; }
-            public string errorMsg { get; set; }
-            public string fileName { get; set; }
-            public string filePath { get; set; }
-            public string oriName { get; set; }
-        }
     }
 }

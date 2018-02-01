@@ -2,6 +2,7 @@
 using OutWeb.Models.FrontEnd.DownloadFrontModel;
 using OutWeb.Modules.FrontEnd;
 using OutWeb.Modules.Manage;
+using OutWeb.Repositories;
 using System;
 using System.Linq;
 using System.Web.Mvc;
@@ -139,6 +140,7 @@ namespace OutWeb.Controllers
             //資料庫存檔
             using (var applyModule = new ApplyFrontModule())
             {
+                model.Remark = model.Remark.ReplaceEmpty();
                 ApplyDataModel result = applyModule.SaveApply(model);
                 result.MemberLimitCount = model.MemberLimitCount;
                 Session["ApplyGuid"] = System.Guid.NewGuid().ToString();

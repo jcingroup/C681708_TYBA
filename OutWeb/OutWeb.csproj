@@ -214,6 +214,7 @@
     <Compile Include="Authorize\AuthAttribute.cs" />
     <Compile Include="Authorize\ErrorHandlerAttribute.cs" />
     <Compile Include="Controllers\AboutUsController.cs" />
+    <Compile Include="Controllers\FileProcessController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
@@ -316,6 +317,7 @@
     <Compile Include="Models\Manage\ApplyMaintainModels\ApplyMaintainListFilterModel.cs" />
     <Compile Include="Models\Manage\ApplyMaintainModels\ApplyMaintainListDataModel.cs" />
     <Compile Include="Models\Manage\ApplyMaintainModels\ApplyMaintainListViewModel.cs" />
+    <Compile Include="Models\Manage\ApplyMaintainModels\ApplyExcelReplyDataModel.cs" />
     <Compile Include="Models\Manage\BannerModels\BannerDataModel.cs" />
     <Compile Include="Models\Manage\BannerModels\BannerDetailsModel.cs" />
     <Compile Include="Models\Manage\BannerModels\BannerFilterModel.cs" />
@@ -329,6 +331,7 @@
     <Compile Include="Models\Manage\EditorModels\EnergyIndexModel.cs" />
     <Compile Include="Models\Manage\EditorModels\EnergyAuditModel.cs" />
     <Compile Include="Models\Manage\EditorModels\Editor.cs" />
+    <Compile Include="Models\Manage\ExcelReplyBase.cs" />
     <Compile Include="Models\Manage\FileModels\FilesModel.cs" />
     <Compile Include="Models\Manage\ResultModels\ResultDetailsDataModel.cs" />
     <Compile Include="Models\Manage\ResultModels\ResultListDataModel.cs" />
