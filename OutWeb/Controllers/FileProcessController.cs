@@ -36,7 +36,7 @@ namespace OutWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetFile(string type, int? ID)
+        public ActionResult GetFile(string type, int? ID, int? groupID)
         {
             bool isSuccess = true;
             bool chkHasData = true;
@@ -51,7 +51,7 @@ namespace OutWeb.Controllers
                         chkHasData = CheckActivityHasData((int)ID);
                         if (!chkHasData)
                             break;
-                        sm = GetReplyWithQuestionnaires((int)ID);
+                        sm = GetReplyWithApply((int)ID, (int)groupID);
                         break;
 
                     default:
@@ -104,14 +104,18 @@ namespace OutWeb.Controllers
             return isHasData;
         }
 
-        private MemoryStream GetReplyWithQuestionnaires(int? ID)
+        private MemoryStream GetReplyWithApply(int ID, int groupID)
         {
             MemoryStream sm;
             ApplyExcelReplyDataModel model = new ApplyExcelReplyDataModel();
             using (var module = new ApplyMaintainModule())
             {
-                model.ActivityID = (int)ID;
+                model.ActivityID = ID;
                 var result = module.GetApplyDetailsForExcel(model);
+                if (groupID > 0)
+                {
+                    result.ApplyListData = result.ApplyListData.Where(o => o.GroupID == groupID).ToList();
+                }
                 model.GetExcelFormType = Models.Manage.ExcelForm.EmptyForm1;
                 sm = FileRepo.ObjectToExcel<ApplyExcelReplyDataModel>(model);
             }

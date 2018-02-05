@@ -379,7 +379,7 @@ namespace OutWeb.Controllers
         {
             ActivityListViewModel model = new ActivityListViewModel();
             model.Filter.CurrentPage = page ?? 1;
-            model.Filter.QueryString = qry ?? string.Empty;
+            model.Filter.QueryString = qry == null ? string.Empty : qry.Trim();
             model.Filter.SortColumn = sort ?? string.Empty;
             model.Filter.Disable = disable ?? string.Empty;
             model.Filter.PublishDate = pDate;
@@ -422,11 +422,6 @@ namespace OutWeb.Controllers
             int id = 0;
             using (ActivityModule module = new ActivityModule())
             {
-                if (model.OldFilesId.Count == 0 && model.Files.Count == 0)
-                {
-                    TempData["UndefinedFile"] = "請上傳檔案";
-                    return RedirectToAction("ActivityEdit", new { ID = (int?)null });
-                }
                 id = module.DoSaveData(model);
             }
             var redirectUrl = new UrlHelper(Request.RequestContext).Action("ActivityEdit", "_SysAdm", new { ID = id });
@@ -480,7 +475,7 @@ namespace OutWeb.Controllers
             model.ListData.Filter.CurrentPage = (int)page;
             model.ListData.Filter.GroupID = groupId;
             model.ListData.Filter.SortColumn = sort ?? string.Empty;
-            model.ListData.Filter.QueryString = qry ?? string.Empty;
+            model.ListData.Filter.QueryString = qry == null ? string.Empty : qry.Trim();
 
             using (ApplyMaintainModule module = new ApplyMaintainModule())
             {

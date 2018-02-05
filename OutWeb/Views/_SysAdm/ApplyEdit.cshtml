@@ -134,38 +134,9 @@
         </select>
         <input type="text" placeholder="請輸入關鍵字" name="qry" value="@Model.ListData.Filter.QueryString">
         <button class="btn">搜尋</button>
-        <a class="btn info pull-right export-reply" href="javacscript:;">匯出清單</a>
+        <a class="btn info pull-right export-reply" data-modal="#md2" href="javacscript:;">匯出清單</a>
 
-        <script>
-            $('.export-reply').on('click', function (e) {
-                e.preventDefault();
-                var url = "@Url.Content("~/FileProcess/GetFile")";
-                var id = '@Model.ActivityID';
 
-                $.ajax({
-                    async: false,
-                    cache: false,
-                    type: 'POST',
-                    url: url,
-                    data: { type: 'ApplyReply', ID: id },
-                    success: function (data) {
-                        if (typeof data.success === 'undefined') {
-                            alert('系統發收未知錯誤');
-                            return;
-                        }
-                        else {
-                            if (!data.success) {
-                                alert(data.msg);
-                                return;
-                            }
-                        }
-                        var response = data;
-                        window.location = '/FileProcess/Download?fileGuid=' + response.FileGuid
-                                          + '&filename=' + response.FileName;
-                    }
-                })
-            });
-        </script>
     </header>
     <table class="table-list table-hover table-striped">
         <colgroup>
@@ -215,7 +186,7 @@
                 <td>
                     <span class="@successStyle">@success</span>
                     @*
-                    <span class="label">未完成</span> *@
+                        <span class="label">未完成</span> *@
                 </td>
             </tr>
         }
@@ -226,6 +197,35 @@
 <div id="modalArea">
 </div>
 <!-- modal //-->
+
+<div id="md2" class="modal" onclick="closeModal();" hidden>
+    <div class="modal-content p-8">
+        <header class="modal-header clearfix">
+            匯出清單
+            <button onclick="closeModal();" class="modal-close pull-right">&#10005;</button>
+        </header>
+        <dl class="field">
+            <dt class="col-2">組別</dt>
+            <dd class="col-4">
+                <select id="groupList">
+                    <option value="0">不限組別</option>
+                    @foreach (var group in Model.GroupList)
+                    {
+                        <option value="@group.Key">@group.Value</option>
+                    }
+                </select>
+            </dd>
+        </dl>
+        <footer class="submit-bar clear mt-24">
+            <button id="submitExcel" type="button" class="btn success oi" data-glyph="circle-check">
+                確認匯出
+            </button>
+            <button type="button" class="btn warning oi" data-glyph="circle-x" onclick="closeModal();">
+                回列表
+            </button>
+        </footer>
+    </div><!-- modal-content //-->
+</div><!-- modal //-->
 
 
 @*<div id="md1" class="modal" onclick="closeModal();" hidden>
@@ -397,7 +397,7 @@
                 url: url,
                 success: function (result) {
                     $('#modalArea').html(result);
-                    $('.modal').show();
+                    $('#md1').show();
                 },
                 error: function (error) {
                     console.log(error);
@@ -406,6 +406,53 @@
             $('body').css('overflow', 'hidden');
         }
 
+        
+        // modal open
+        $(".export-reply").click(function (e) {
+            var modal = $(this).attr("data-modal");
+            $(modal).show();
+            $('body').css('overflow', 'hidden');
+            e.preventDefault();
+        });
+
+        // modal close
+        function closeModal() {
+            $('.modal').fadeOut('fast');
+            $('body').removeAttr('style');
+        }
+        // 點中間內容時不會被close
+        $(".modal-content").click(function (e) {
+            e.stopPropagation();
+        });
+
+        $('#submitExcel').on('click', function (e) {
+            e.preventDefault();
+            var url = "@Url.Content("~/FileProcess/GetFile")";
+            var id = '@Model.ActivityID';
+            var group = $('#groupList').val();
+            $.ajax({
+                async: false,
+                cache: false,
+                type: 'POST',
+                url: url,
+                data: { "type": 'ApplyReply', "ID": id, "groupID": group },
+                success: function (data) {
+                    if (typeof data.success === 'undefined') {
+                        alert('系統發收未知錯誤');
+                        return;
+                    }
+                    else {
+                        if (!data.success) {
+                            alert(data.msg);
+                            return;
+                        }
+                    }
+                    var response = data;
+                    window.location = '/FileProcess/Download?fileGuid=' + response.FileGuid
+                                      + '&filename=' + response.FileName;
+                }
+            })
+        });
 
         // modal open
         //$("[data-modal]").click(function (e) {

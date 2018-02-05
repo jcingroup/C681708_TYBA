@@ -183,7 +183,8 @@ namespace OutWeb.Modules.Manage
 
             if (details.ListData.Filter.GroupID.HasValue)
             {
-                details.ListData.Result.Data = applyLstData.Where(o => o.GroupID == details.ListData.Filter.GroupID).ToList();
+                applyLstData = applyLstData.Where(o => o.GroupID == details.ListData.Filter.GroupID).ToList();
+                details.ListData.Result.Data = applyLstData;
                 //若要在上方訊息區塊秀出對應的組別資料 移除下面註解
                 //details.GroupInfo = GetGroupInfoByID(details.ActivityID, (int)details.ListData.Filter.GroupID);
             }

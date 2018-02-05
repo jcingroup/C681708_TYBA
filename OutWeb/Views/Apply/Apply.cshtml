@@ -288,7 +288,7 @@
                 dataType: 'json',
                 success: function (data) {
                     if (!data.success) {
-                        groupName = groupName.split('-')[0];
+                        groupName = groupName.substring(0,groupName.indexOf('(可報名:'));
                         alert('組別：' + groupName + ' 已有相同隊名：' + teamName + '  請更換隊名');
                         valid = false;
                     }
