@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_MLayout.cshtml";
     ViewBag.Crumb = "報名維護";
     ViewBag.subnav = "Applys";
-    ViewBag.subnav2 = "Apply";
+    ViewBag.subnav2 = "ApplyList";
 }
 @section Breadcrumb {
     <ul class="breadcrumb">
@@ -120,6 +120,9 @@
             <dd class="col-3 form-label underline">@Model.GroupInfo.RegisteredSuccessCount</dd>
         </dl>
     </section>
+
+    <div class="alert-warning mb-8">請先審核報名是否完成</div>
+
     <header class="table-head form-inline">
         <select id="" name="groupId">
             <option value="">全部組別</option>
@@ -138,7 +141,7 @@
                 e.preventDefault();
                 var url = "@Url.Content("~/FileProcess/GetFile")";
                 var id = '@Model.ActivityID';
-         
+
                 $.ajax({
                     async: false,
                     cache: false,
@@ -211,7 +214,8 @@
                 <td>@data.ApplyTeamMemberCount</td>
                 <td>
                     <span class="@successStyle">@success</span>
-                    @* <span class="label">未完成</span> *@
+                    @*
+                    <span class="label">未完成</span> *@
                 </td>
             </tr>
         }

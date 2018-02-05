@@ -17,7 +17,7 @@
     <li><em class="font-sp">3</em> 完成報名</li>
 </ul>
 <form action="/Apply/Apply2" method="post" class="form-signup">
-    
+
     <input type="hidden" id="hdnMemberLimitCount" name="MemberLimitCount" value="" />
     <input type="hidden" id="hdnId" name="ActivityID" value="@Model.ID" />
     <input type="hidden" id="hdnTitle" name="ActivityTitle" value="@Model.Title" />
@@ -39,7 +39,7 @@
                         @foreach (var group in Model.ActivityGroup)
                         {
                             string disabled = group.CountApplyLastLimit == 0 ? "disabled" : "";
-                            <option @disabled value="@group.GroupID">@group.GroupName -餘 @group.CountApplyLastLimit</option>
+                            <option @disabled value="@group.GroupID">@group.GroupName (可報名: @group.CountApplyLastLimit)</option>
                         }
                     </select>
                 </dd>
@@ -74,11 +74,11 @@
         <dl class="field clear">
             <dt class="col-md-1">其他</dt>
             <dd class="col-md-11">
-                <textarea rows="4" class="form-element" placeholder="如有隨行人員請在此登打" name="Remark">
-                    領隊：
-                    助理教練：
-                    管理人員：
-                </textarea>
+<textarea rows="4" class="form-element" placeholder="如有隨行人員請在此登打" name="Remark">
+領隊：
+助理教練：
+管理人員：
+</textarea>
                 <small class="text-danger">*如有隨行人員請在此登打</small>
             </dd>
         </dl>

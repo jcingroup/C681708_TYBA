@@ -179,7 +179,7 @@ textarea {
   h2, h3 {
     page-break-after: avoid; }
 
-  header {
+  header, .text-left, .logo, .breadcrumb, .apply-info, .editor {
     text-align: left !important; } }
 /*      base
 -----------------------------------------------------------------------*/
@@ -1794,7 +1794,9 @@ svg {
 
 @media (min-width: 64em) {
   .table-list {
-    margin: 0 48px 48px; } }
+    margin: 0 48px 48px;
+    width: -webkit-calc(100% - 96px);
+    width: calc(100% - 96px); } }
 .table-list .date {
   color: #152934; }
 
