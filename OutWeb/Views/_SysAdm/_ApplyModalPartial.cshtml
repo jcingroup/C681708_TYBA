@@ -58,7 +58,7 @@
                                     {
                                         selected = "selected";
                                     }
-                                    string disabled = group.CountApplyLastLimit == 0 ? "disabled" : "";
+                                    string disabled = group.CountApplyLastLimit == 0  && string.IsNullOrEmpty(selected) ? "disabled" : "";
                                     <option @disabled value="@group.GroupID" @selected>@group.GroupName -餘 @group.CountApplyLastLimit</option>
                                 }
                             </select>
