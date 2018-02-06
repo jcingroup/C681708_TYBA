@@ -180,7 +180,10 @@ textarea {
     page-break-after: avoid; }
 
   header, .text-left, #main, #sidebar, .table-list caption {
-    text-align: left !important; } }
+    text-align: left !important; }
+
+  .text-left *, #main *, #sidebar *, .table-list caption * {
+    text-align: left; } }
 /*      base
 -----------------------------------------------------------------------*/
 @-moz-viewport , @-ms-viewport, @-o-viewport, @-webkit-viewport, @viewport {

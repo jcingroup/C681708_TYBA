@@ -180,7 +180,10 @@ textarea {
     page-break-after: avoid; }
 
   header, .text-left, .logo, .news-link {
-    text-align: left !important; } }
+    text-align: left !important; }
+
+  .text-left *, .logo *, .news-link * {
+    text-align: left; } }
 /*      base
 -----------------------------------------------------------------------*/
 @-moz-viewport , @-ms-viewport, @-o-viewport, @-webkit-viewport, @viewport {
