@@ -1615,6 +1615,7 @@
     <Content Include="Content\images\icon-gallery.png" />
     <Content Include="Content\images\icon-word.jpg" />
     <Content Include="Content\images\index\banner.jpg" />
+    <Content Include="Content\images\index\banner2.jpg" />
     <Content Include="Content\images\index\gallery.jpg" />
     <Content Include="Content\images\index\gallery2.jpg" />
     <Content Include="Content\images\index\gallery3.jpg" />
@@ -1836,6 +1837,7 @@
     <Content Include="Views\_SysAdm\_ApplyModalPartial.cshtml" />
     <None Include="Web.Debug2.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -18,7 +18,7 @@
             <div class="input-file">
                 <input type="file" onchange="previewFiles(this, false);" id="full" class="file-obj-input">
             </div>
-            <small class="form-label font-sm text-secondary">可上傳 1 個檔案，請勿超過 1 MB</small>
+            <small class="form-label font-sm text-secondary">建議尺寸: 1400px(寬) x 583px(高) 72dpi, 可上傳 1 個檔案，請勿超過 1 MB</small>
             <ul class="file-pre-ul list-unstyled">
                 <li class="uploaded">
                     <button type="button" class="close btn-del file-remove-btn" id="">&times;</button>
@@ -34,7 +34,7 @@
         <div class="input-file">
             <input id="files_m" type="file" onchange="previewFiles(this);" accept="image/*" >
         </div>
-        <small class="form-label font-sm text-secondary">可上傳 1 個檔案，請勿超過 1 MB</small>
+        <small class="form-label font-sm text-secondary">建議尺寸: 1400px(寬) x 583px(高) 72dpi, 可上傳 1 個檔案，請勿超過 1 MB</small>
         <ul class="file-pre-ul" style="list-style:none;">
 
             @foreach (var file in Model.Files)
