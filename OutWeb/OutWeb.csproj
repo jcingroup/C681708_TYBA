@@ -1749,6 +1749,71 @@
       <DependentUpon>TYBADB.edmx</DependentUpon>
     </Content>
     <Content Include="Content\ExcelTemp\Apply.xlsx" />
+    <Content Include="Content\sass\admin.scss" />
+    <Content Include="Content\sass\core\mixins\_animation.scss" />
+    <Content Include="Content\sass\core\mixins\_center.scss" />
+    <Content Include="Content\sass\core\mixins\_font.scss" />
+    <Content Include="Content\sass\core\mixins\_gradient.scss" />
+    <Content Include="Content\sass\core\mixins\_grid.scss" />
+    <Content Include="Content\sass\core\mixins\_icon.scss" />
+    <Content Include="Content\sass\core\mixins\_mq.scss" />
+    <Content Include="Content\sass\core\mixins\_placeholders.scss" />
+    <Content Include="Content\sass\core\mixins\_position.scss" />
+    <Content Include="Content\sass\core\mixins\_prefix.scss" />
+    <Content Include="Content\sass\core\mixins\_pseudo.scss" />
+    <Content Include="Content\sass\core\mixins\_rem.scss" />
+    <Content Include="Content\sass\core\mixins\_shape.scss" />
+    <Content Include="Content\sass\core\mixins\_tab-focus.scss" />
+    <Content Include="Content\sass\core\mixins\_text.scss" />
+    <Content Include="Content\sass\core\_function.scss" />
+    <Content Include="Content\sass\core\_mixins.scss" />
+    <Content Include="Content\sass\core\_variables.scss" />
+    <Content Include="Content\sass\editor.scss" />
+    <Content Include="Content\sass\element\_basic.scss" />
+    <Content Include="Content\sass\element\_btn.scss" />
+    <Content Include="Content\sass\element\_form.scss" />
+    <Content Include="Content\sass\element\_link.scss" />
+    <Content Include="Content\sass\element\_table.scss" />
+    <Content Include="Content\sass\element\_type.scss" />
+    <Content Include="Content\sass\element\_util.scss" />
+    <Content Include="Content\sass\grid.scss" />
+    <Content Include="Content\sass\index.scss" />
+    <Content Include="Content\sass\login.scss" />
+    <Content Include="Content\sass\page.scss" />
+    <Content Include="Content\sass\vendor\open-iconic.scss" />
+    <Content Include="Content\sass\vendor\typeahead.scss" />
+    <Content Include="Content\sass\vendor\_normalize.scss" />
+    <Content Include="Content\sass\vendor\_print.scss" />
+    <Content Include="Content\sass\_admin\modules\_alerts.scss" />
+    <Content Include="Content\sass\_admin\modules\_btn-group.scss" />
+    <Content Include="Content\sass\_admin\modules\_field.scss" />
+    <Content Include="Content\sass\_admin\modules\_input-group.scss" />
+    <Content Include="Content\sass\_admin\modules\_input-switch.scss" />
+    <Content Include="Content\sass\_admin\modules\_label.scss" />
+    <Content Include="Content\sass\_admin\modules\_list-group.scss" />
+    <Content Include="Content\sass\_admin\modules\_loader.scss" />
+    <Content Include="Content\sass\_admin\modules\_modal.scss" />
+    <Content Include="Content\sass\_admin\modules\_nav.scss" />
+    <Content Include="Content\sass\_admin\modules\_tab.scss" />
+    <Content Include="Content\sass\_admin\modules\_tooltip.scss" />
+    <Content Include="Content\sass\_admin\_custom.scss" />
+    <Content Include="Content\sass\_admin\_layout.scss" />
+    <Content Include="Content\sass\_admin\_setting.scss" />
+    <Content Include="Content\sass\_client\modules\_alerts.scss" />
+    <Content Include="Content\sass\_client\modules\_btn-group.scss" />
+    <Content Include="Content\sass\_client\modules\_field.scss" />
+    <Content Include="Content\sass\_client\modules\_figure.scss" />
+    <Content Include="Content\sass\_client\modules\_input-group.scss" />
+    <Content Include="Content\sass\_client\modules\_input-switch.scss" />
+    <Content Include="Content\sass\_client\modules\_label.scss" />
+    <Content Include="Content\sass\_client\modules\_list-group.scss" />
+    <Content Include="Content\sass\_client\modules\_loader.scss" />
+    <Content Include="Content\sass\_client\modules\_modal.scss" />
+    <Content Include="Content\sass\_client\modules\_nav.scss" />
+    <Content Include="Content\sass\_client\modules\_tooltip.scss" />
+    <Content Include="Content\sass\_client\_custom.scss" />
+    <Content Include="Content\sass\_client\_layout.scss" />
+    <Content Include="Content\sass\_client\_setting.scss" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1835,6 +1900,7 @@
     <Content Include="Views\_SysAdm\_ActivityDataPartial.cshtml" />
     <Content Include="Views\_SysAdm\ActivityAdd.cshtml" />
     <Content Include="Views\_SysAdm\_ApplyModalPartial.cshtml" />
+    <Content Include="Views\_SysAdm\Guide.cshtml" />
     <None Include="Web.Debug2.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1843,6 +1909,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="bin\" />
+    <Folder Include="Content\sass\vendor\datepicker\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

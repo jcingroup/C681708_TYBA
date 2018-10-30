@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "系統操作教學影片";
+    ViewBag.subnav = "Cog";
+    ViewBag.subnav2 = "Guide";
+}
+
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>系統設定</li>
+        <li>@ViewBag.Crumb</li>
+    </ul>
+}
+
+<h2 class="title">@ViewBag.Crumb</h2>
+
+<nav class="guide-list">
+    <a href="~/Content/Guide/Activity.html" target="new"><em>1</em>【線上報名管理】報名活動維護</a>
+    <a href="~/Content/Guide/SignUpManagement.html" target="new"><em>2</em>【線上報名管理】報名維護</a>
+    <a href="~/Content/Guide/UserSignUp.html" target="new"><em>3</em>【前台線上報名】報名操作流程</a>
+    <a href="~/Content/Guide/Banner.html" target="new"><em>4</em>【一般頁面操作】首頁banner維護</a>
+    <a href="~/Content/Guide/Introduction.html" target="new"><em>5</em>【一般頁面操作】本會簡介</a>
+    <a href="~/Content/Guide/GameMessengeResult.html" target="new"><em>6</em>【一般頁面操作】比賽訊息&比賽成績公告</a>
+    <a href="~/Content/Guide/Download.html" target="new"><em>7</em>【一般頁面操作】檔案下載</a>
+    <a href="~/Content/Guide/BasicEdit.html" target="new"><em>8</em>【基本操作】新增修改刪除</a>
+    <a href="~/Content/Guide/BasicSearch.html" target="new"><em>9</em>【基本操作】資料搜尋</a>
+</nav>

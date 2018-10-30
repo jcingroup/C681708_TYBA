@@ -344,3 +344,34 @@ $blue-grey:        #607D8B;
     @extend .text-white, .bg-warning;
     overflow: hidden;
 }
+
+// == 教學影片
+.guide-list {
+    a {
+        @extend .font-md, .mb-4;
+
+        display: block;
+        border: 1px solid lighten(color(), 30);
+        background: lighten(color(), 49);
+        color: darken(color(), 20);
+        line-height: 2.5;
+
+        &:hover, &:active {
+            color: #fff;
+            background: lighten(color(), 10);
+            em {
+                background: color();
+            }
+        }
+    }
+    em {
+        @extend .px-12, .mr-8;
+
+        display: inline-block;
+        height: 100%;
+        border-right: 1px solid lighten(color(), 30);
+        background: lighten(color(), 45);
+
+        @include transition(background .3s);
+    }
+}

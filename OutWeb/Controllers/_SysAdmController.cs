@@ -564,5 +564,11 @@ namespace OutWeb.Controllers
         }
 
         #endregion 籃委會
+
+        // 教學影片
+        public ActionResult Guide()
+        {
+            return View();
+        }
     }
 }

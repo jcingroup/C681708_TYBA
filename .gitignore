@@ -247,6 +247,4 @@ ModelManifest.xml
 /OutWeb/ckfinder/**/
 /OutWeb/Content/Upload
 /OutWeb/Content/doc
-/OutWeb/Content/sass
-/OutWeb/Content/images/sys/Tutorial
-/OutWeb/Content/sass_BK
+/OutWeb/Content/Guide
