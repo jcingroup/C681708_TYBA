@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+$table-rwd: false;
+
+$grid-breakpoints: (
+    xs:                   phone,
+    sm:                   tablet,
+    md:                   desktop,
+    lg:                   wide,
+);
+
+// import
+// ------------------------------------------------------------
+@import "core/function";
+
+@import "_client/setting";
+@import "core/variables";
+@import "core/mixins";
+
+@import "vendor/normalize";
+
+@import "element/basic";
+@import "element/link";
+@import "element/type";
+@import "element/table";
+@import "element/util";
+@import "_client/custom";
+
+body {
+    padding: 10px 15px; height: auto;
+    text-align: left;
+}
+
+img {
+    max-width: 100%;
+}

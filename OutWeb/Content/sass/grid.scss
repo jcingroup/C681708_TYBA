@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+$lte7:                    false;
+$enable-flex:             false;     // 是否使用 flex 版
+
+$grid-breakpoints: (
+    xs:                   phone,
+    sm:                   tablet,
+    md:                   desktop,
+    lg:                   wide,
+    // xl:                   wider
+) !default;
+
+@import "core/function";
+@import "core/mixins";
+
+
+// output
+// ------------------------------------------------------------
+.row {
+    @include clearfix;
+
+    margin-right: -($gutter / 2);
+    margin-left:  -($gutter / 2);
+
+    & + & { margin-top: 0.5rem; }
+}
+
+.row-x-0 {
+    > [class*="col-"] {
+        &:first-child { padding-left: 0; }
+        &:last-child  { padding-right: 0; }
+    }
+}
+
+// helper> mixins> grid
+@include make-grid-columns;
+
+.no-gutters {
+    margin-left: 0;
+    margin-right: 0;
+
+    > [class*="col-"] {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+// 模擬 table
+.cells    { display: table; width:100%; }
+.cell     { display: table-cell; }
+
+//
+// grid-new src: http://www.responsivegridsystem.com/
+.col {
+    display: block;
+    float: left;
+    margin: 1% 0 1% $gap;
+
+    &:first-of-type { margin-left: 0; }
+}

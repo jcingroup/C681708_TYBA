@@ -1,0 +1,125 @@
+@charset "UTF-8";
+
+$img-path:                '../images';
+
+// == color
+// ----------------------------------------------------------------------
+$pale-green:              #E7FFE7 !default;
+$pale-blue:               #E7FFFF !default;
+$pale-yellow:             #fffFD7 !default;
+$pale-red:                #FFE7E7 !default;
+
+// 情境狀態 + 配色
+$colors: (
+    primary:              #ff761b, // 04828d
+    secondary:            #ed8000,
+    muted:                #dbd6cd,
+    success:              #ffa200,
+    info:                 #417fa1, // 30bebc
+    warning:              #ffe23f,
+    danger:               #FF2200
+);
+
+
+// == custom
+// ----------------------------------------------------------------------
+// basic
+$body-color:                 #000;
+$font-family-sp:             'Julius Sans One', sans-serif;
+
+// link
+$link-color:                 $body-color;
+$link-color-hover:           darken(color(success), 4);
+
+$border-color:               color(secondary);
+$border-radius:              4px;
+
+$hr-border:                  1px solid rgba(#000, .1);
+
+// table
+$table-color-border:         rgba(#000, .08);
+$table-pd:                   7px 8px;
+$table-bg-hover:             #fff;
+$table-bg-striped:           #fff;
+
+// form
+$input-color:                darken(color(), 45);
+$input-color-border:         #e9cf98;
+$input-color-placeholder:    darken(color(muted), 13);
+$input-height:               30px;
+$input-shadow:               false;
+
+$input-focus-border-color:   color(success);
+
+$input-group-addon-color:    darken($input-color-border, 20);
+$input-group-addon-bg:       lighten($input-color-border, 10);
+
+
+// btn
+$btn-font-size:              18px !default;
+// $btn-bg:                     color(success) !default;
+$btn-bg-hover:               color(secondary) !default;
+$btn-bg-disabled:            darken(color(muted), 10) !default;
+$btn-theme: (
+    success:                 color(success),
+    info:                    color(info),
+    warning:                 color(warning),
+    danger:                  color(danger),
+    muted:                   darken(color(muted), 20)
+) !default;
+
+// label
+$label-pd:                   5px 8px;
+$label-radius:               4px;
+
+// modal
+$modal-top:                  false;
+
+
+// == layout
+// ----------------------------------------------------------------------
+$min-width:             1200px;     // 網頁最小尺寸 1008
+$max-width:             1400px;     // 網頁最寬尺寸: .wrap
+
+// $wrapper-bg:            url(#{$img-path}/bg.gif) center bottom no-repeat !default;
+$wrapper-bg:            false !default;
+$wrapper-b-spacing:     50px !default;
+
+// header
+$header-height:         122px !default; // for page
+$header-bg:             url(#{$img-path}/header-bg.png) 330px 8px no-repeat !default;
+$header-mobile-height:  90px !default;
+
+// logo
+$logo-img:              'logo.gif' !default; // 'logo.gif' or false
+$logo-size:             95px 88px !default;
+
+// footer
+$footer-height:         280px !default; //288-拿掉不在規格內的
+$footer-bg:             #aaa !default;
+$footer-color:          #fff !default;
+
+// nav
+$sub-nav-has:           false !default;         // 子選單
+$nav-root:              if($sub-nav-has, 'li > a', 'a') !default;
+
+// 行動版
+$mobile-menu-has:       true !default;
+$mobile-menu-bk:        'wide' !default;     // 從()螢幕寬度以下開始出現行動版選單
+$mobile-menu-bg:        rgba(#000, .7) !default;          // rgba(#fff,.95)
+$mobile-menu-width:     100% !default;
+$mobile-transition:     'opacity .5s' !default;    // push - left .35s; overlay - opacity 1s
+
+// z-index
+$z-index: (
+    header:             3,
+    main:               1,
+    footer:             2,
+    logo:               10,
+    menu:               20,
+    figure:             1,
+    tooltip:            88,
+    goTop:              99,
+    overlay:            999,
+    acckey:             19
+);

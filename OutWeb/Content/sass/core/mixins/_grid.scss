@@ -1,0 +1,144 @@
+@charset "UTF-8";
+
+$grid-columns:            12 !default;
+$gutter:                  16px !default;
+$gap:                     1.6% !default;
+
+//
+// 使用方法:
+// @include grid(1/3);
+// width: 33.33%;
+// 四捨五入: decimal-round($number, 2) in function
+@mixin grid($fraction, $selector: 'width') {
+    #{$selector}: decimal-round(($fraction * 100%), 2, 'floor');
+}
+
+// 使用方法:
+// @include grid-gap(1, 2, $gap);
+@mixin grid-gap($size, $columns, $gap: $gap) {
+    width: decimal-round( percentage($size / $columns) - ($gap / $columns * ($columns - 1)), 2, 'floor' );
+}
+
+// src: bs4
+@mixin make-col($size, $columns: $grid-columns, $gap: $gutter) {
+    @if $enable-flex {
+        flex: 0 0 percentage($size / $columns);
+        @include grid($size / $columns, 'max-width');
+    }
+    @else {
+        @include grid($size / $columns);
+    }
+}
+
+@mixin make-col-modifier($type, $size, $columns) {
+    // Work around the lack of dynamic mixin @include support (https://github.com/sass/sass/issues/626)
+    @if $type == push {
+        position: relative;
+        left: if($size > 0, decimal-round(($size / $columns * 100%), 2), auto);
+    }
+    @else if $type == pull {
+        position: relative;
+        right: if($size > 0, decimal-round(($size / $columns * 100%), 2), auto);
+    }
+    @else if $type == offset {
+        @include grid($size / $columns, 'margin-left');
+    }
+}
+
+@mixin make-grid-columns($columns: $grid-columns, $gap: $gutter, $breakpoints: $grid-breakpoints) {
+    // Common properties for all breakpoints
+    %grid-column {
+        // Prevent columns from collapsing when empty
+        min-height: 1px;
+
+        @if $enable-flex {
+            width: 100%;
+        }
+    }
+    %grid-padding {
+        @if not $enable-flex {
+            float: left;
+        }
+        // Inner gutter via padding
+        padding-right: ($gap / 2);
+        padding-left: ($gap / 2);
+    }
+
+    // 全營幕通用
+    @for $i from 1 through $columns {
+        .col-#{$i} {
+            @extend %grid-column, %grid-padding;
+            @include make-col($i, $grid-columns, $gap);
+        }
+        @if $i != $columns { // Avoid emitting useless .offset-xs-0
+            @each $modifier in (pull, push) {
+                .#{$modifier}-#{$i} {
+                    @include make-col-modifier($modifier, $i, $columns)
+                }
+            }
+            .offset-#{$i} {
+                @include make-col-modifier(offset, $i, $columns)
+            }
+        }
+    }
+
+    $breakpoint-counter: 0;
+    @each $breakpoint, $value in $breakpoints {
+        $breakpoint-counter: ($breakpoint-counter + 1);
+
+        @for $i from 1 through $columns {
+            .col-#{$breakpoint}-#{$i} {
+                @extend %grid-column;
+            }
+        }
+
+        @include mq($value) {
+            $col-this: ();
+
+            @for $i from 1 through $columns {
+                .col-#{$breakpoint}-#{$i} {
+                    @include make-col($i, $columns, $gap);
+                }
+                @if not $enable-flex {
+                    $col-this: $col-this, '.col-#{$breakpoint}-#{$i}';
+                }
+            }
+
+            // Provide basic `.col-{bp}` classes for equal-width flexbox columns
+            @if $enable-flex {
+                .col-#{$breakpoint} {
+                    flex-basis: 0;
+                    flex-grow: 1;
+                    max-width: 100%;
+                    padding-right: ($gap / 2);
+                    padding-left: ($gap / 2);
+                }
+            }
+            @else {
+                #{$col-this} {
+                    float: left;
+                    padding-right: ($gap / 2);
+                    padding-left: ($gap / 2);
+                }
+            }
+
+            @each $modifier in (pull, push) {
+                @for $i from 0 through $columns {
+                    .#{$modifier}-#{$breakpoint}-#{$i} {
+                        @include make-col-modifier($modifier, $i, $columns)
+                    }
+                }
+            }
+
+            // `$columns - 1` because offsetting by the width of an entire row isn't possible
+            @for $i from 0 through ($columns - 1) {
+                @if $breakpoint-counter != 1 or $i != 0 { // Avoid emitting useless .offset-xs-0
+                    .offset-#{$breakpoint}-#{$i} {
+                        @include make-col-modifier(offset, $i, $columns)
+                    }
+                }
+            }
+        }
+    }
+}
+

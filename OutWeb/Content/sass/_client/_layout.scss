@@ -1,0 +1,264 @@
+@charset "UTF-8";
+
+/*      layout
+-----------------------------------------------------------------------*/
+// 置中(有最大寬度限制,非滿版才需要)
+.wrap {
+    @extend .center;
+
+    @include clearfix;
+
+    max-width: $max-width;
+
+    @include mq(desktop, $max-width) {
+        max-width: $min-width;
+    }
+
+    @if $enable-RWD {
+        @include mq-max(break($min-width, -1)) {
+            @include rem('padding-left', 16px);
+            @include rem('padding-right', 16px);
+        }
+    } @else {
+        min-width: $min-width;
+    }
+}
+
+#wrapper {
+    @if $wrapper-bg     { background: $wrapper-bg; }
+    @if not $enable-RWD { min-width: $min-width; }
+
+    @if $lte7           { _height: 100%; }
+    min-height: 100vh;
+    padding-bottom: $footer-height + $wrapper-b-spacing; // 內容與footer間距
+
+    // 本次專案
+    // position: relative;
+}
+
+// header
+// ----------------------------------------------------------------------
+#header {
+    // @if $header-bg     { background: $header-bg; }
+    @if $header-height { height: $header-height; }
+    position: relative;
+    z-index: z(header);
+
+    // 本次專案
+    border-bottom: 8px solid color(success);
+
+    @include mq(tablet) {
+        background: $header-bg;
+    }
+
+    @include mq-max(break($mobile-menu-bk, -1)) {
+        height: $header-mobile-height;
+    }
+}
+
+.logo {
+    cursor: pointer; cursor: hand; // for ie
+    z-index: z(logo);
+
+    // @include text-pic($logo-img, nth($logo-size,1), nth($logo-size,2));
+    @include transition(.3s);
+
+    // 本次專案
+    $font-size: 27px;
+
+    @extend .text-left, .mb-0;
+
+    background: url(#{$img-path}/#{$logo-img}) 0 0 no-repeat;
+    color: #090404;
+    font-weight: bold;
+
+    float: left;
+
+    @include rem('font-size', $font-size);
+
+    @include mq($mobile-menu-bk) {
+        $height: nth($logo-size, 2);
+
+        height: $height;
+        margin-top: ($header-height - $height - 8)/2;
+        padding-top: (($height - ($font-size*2))/2);
+        padding-left: nth($logo-size, 1) + 12;
+    }
+
+    @include mq-max(break($mobile-menu-bk, -1)) {
+        $height: 65px;
+
+        background-size: contain;
+        background-position: 0 center;
+
+        height: $height;
+        margin-top: ($header-mobile-height - $height - 8)/2;
+        padding-left: 80px;
+        padding-top: 6px;
+    }
+    @include mq-max(400px) {
+        @include text-hide(false);
+        width: 72px;
+    }
+
+    small {
+        @extend .mt-4, .pt-4;
+
+        font-weight: normal;
+        letter-spacing: 1;
+        border-top: 1px solid rgba(#fff, .3);
+
+        @include rem('font-size', 14);
+    }
+}
+
+// 三角背景-左上
+.triangle-up-left {
+    padding-bottom: 38.5%;
+    padding-left: 38.5%;
+    overflow: hidden;
+    z-index: -1;
+
+    @include size(0);
+    @include absolute(left 0 top 0);
+
+    @include el(after) {
+        $size: 823px;
+
+        margin-left: -($size);
+        border-bottom: $size solid transparent;
+        border-left: $size solid color();
+
+        @include size(0);
+    }
+}
+
+// 三角背景-右下
+.triangle-down-right {
+    padding-bottom: 12%;
+    padding-left: 12%;
+    overflow: hidden;
+    z-index: -1;
+
+    @include size(0);
+    @include absolute(right 0 bottom $footer-height);
+
+    @include el(after) {
+        $size: 606px;
+
+        margin-left: -($size);
+        border-top: $size solid transparent;
+        border-right: $size solid color();
+
+        @include size(0);
+    }
+}
+
+
+// footer 頁腳
+// ----------------------------------------------------------------------
+#footer {
+    @if $footer-bg     { background: $footer-bg; }
+    @if $footer-color  { color: $footer-color; }
+    min-height: $footer-height;
+    margin-top: -($footer-height);
+    position: relative;
+    z-index: z(footer);
+
+    // 本次專案
+    @include mq(wider) {
+        @include el(before, $ext: false) {
+            width: 131px;
+            height: 183px;
+            background: url(#{$img-path}/footer-bg.png) 0 0 no-repeat;
+
+            @include absolute(right 8px top -112px);
+        }
+    }
+}
+
+.foot-nav {
+    overflow-x: auto;
+    white-space: nowrap;
+
+    a {
+        @extend .py-16, .px-24, .text-white;
+
+        display: inline-block;
+
+        @include mq-max(break(desktop, -1)) {
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        &:hover, &:active {
+            color: #222;
+        }
+    }
+}
+
+.foot-logo {
+    @extend .font-xl;
+
+    background: url(#{$img-path}/logo-s.gif) 12px center no-repeat;
+    color: #505050;
+    letter-spacing: 1.7px;
+    font-weight: bold;
+
+    @include mq(tablet) {
+        padding: 30px 0 14px 115px;
+        width: 374px;
+        vertical-align: middle;
+    }
+
+    @include mq-max(break(tablet, -1)) {
+        background-position: center 0;
+        padding-top: 100px;
+        text-align: center;
+    }
+
+    small {
+        @extend .font-sm;
+
+        letter-spacing: 0;
+        font-weight: normal;
+    }
+}
+
+.foot-contact {
+    @extend .font-md;
+
+    padding: 20px 0;
+
+    @include mq(tablet) {
+        border-left: 1px solid #fff;
+        padding-left: 32px;
+    }
+
+    li {
+        @extend .mb-16;
+
+        background: url(#{$img-path}/foot-icon.gif) 0 1px no-repeat;
+        padding-left: 36px;
+
+        &:nth-child(1) { @extend .py-4; }
+        &:nth-child(2) { background-position: 0 -42px; }
+        &:nth-child(3) { background-position: 0 -77px; }
+    }
+
+    a {
+        @extend .text-white;
+
+        &:hover, &:active {
+            @extend .text-success;
+        }
+    }
+}
+
+@include mq-max(break(tablet, -1)) {
+    #footer {
+        .cells, .cell {
+            display: block;
+        }
+    }
+}

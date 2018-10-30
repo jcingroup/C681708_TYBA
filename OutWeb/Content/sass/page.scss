@@ -1,0 +1,498 @@
+@charset "UTF-8";
+
+// 本頁專用變數(覆蓋)
+// ------------------------------------------------------------
+$isPage:                 true;
+
+$link-transition:        '.35s';
+
+$choice-box-has:         true;
+
+
+// import
+// ------------------------------------------------------------
+@import "core/function";     // (置頂)
+
+@import "_client/setting";   // 前台用變數
+@import "core/variables";
+@import "core/mixins";
+
+// 由此 output css
+@import "vendor/normalize";  // 重置樣式
+@import "vendor/print";      // 列印樣式
+
+@import "element/basic";
+@import "element/link";
+@import "element/type";
+@import "element/table";
+@import "element/form";
+@import "element/btn";
+@import "element/util";
+
+@import "_client/layout";
+@import "_client/modules/nav";
+@import "_client/modules/field";
+@import "_client/modules/input-group";
+
+@import "_client/custom";   // 本專案自定樣式
+
+
+// main
+// ------------------------------------------------------------
+// == common
+.breadcrumb {
+    @extend %list-inline, .font-sm, .text-left;
+
+    line-height: 1.4;
+    letter-spacing: 1px;
+    color: darken(color(muted), 30);
+
+    @include clearfix;
+
+    li {
+        &:not(:last-child) {
+
+            margin-right: -2px;
+
+            @include el(after, false, '/') {
+                @extend .m-4, .text-muted;
+            }
+        }
+    }
+}
+
+.content {
+    background-color: #fff5e7;
+
+    &.ind {
+        @extend .pt-24;
+
+        .title {
+            @extend .mb-32;
+        }
+
+        .editor {
+            margin-top: -12px;
+        }
+    }
+
+    @include mq(desktop) {
+        &.ind { padding: 70px 0 24px 270px; }
+
+        .ml-72 {
+            margin-left: 72px;
+            margin-right: 32px;
+        }
+
+        .back { margin-right: 32px; }
+
+        .News &,
+        .Result &,
+        .Download &,
+        .ContactUs & {
+            background-color: transparent, #fff5e7;
+            background-position: 0 0;
+            background-repeat: no-repeat, repeat-y;
+        }
+        .News & {
+            background-image: url(#{$img-path}/newsBg.jpg), url(#{$img-path}/newsBg.gif);
+        }
+        .Result & {
+            background-image: url(#{$img-path}/resultBg.jpg), url(#{$img-path}/newsBg.gif);
+        }
+        .Download & {
+            background-image: url(#{$img-path}/downloadBg.jpg), url(#{$img-path}/newsBg.gif);
+        }
+        .ContactUs & {
+            background-image: url(#{$img-path}/contactBg.jpg), url(#{$img-path}/newsBg.gif);
+        }
+    }
+}
+
+// == 列表
+.list {
+    @extend .mr-32;
+
+    &-item {
+        @extend .my-16;
+
+        display: block;
+
+        span { display: block; }
+
+        .date {
+            @extend .text-secondary;
+
+            @include mq(tablet) {
+                float: left;
+                margin-right: 24px;
+            }
+        }
+
+        &:hover, &:active {
+            @extend .text-info;
+        }
+    }
+}
+
+// == 線上報名
+
+// submit-bar
+.submit-bar {
+    @extend .py-16;
+
+    background-color: #f7e0c5;
+
+    @include clearfix;
+
+    @include mq-max(break(tablet, -1)) {
+        .btn.pull-left,
+        .btn.pull-right {
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+    }
+}
+
+// 附件下載
+.download {
+    @extend .p-12;
+
+    border-top: 2px solid darken(#f7e0c5, 5);
+    background: #f7e0c5;
+
+    @include mq-max(tablet) {
+        br { display: none; }
+    }
+
+    a {
+        margin-top: 4px;
+
+        @include mq(break(tablet, -1)) {
+            margin-right: 12px;
+        }
+
+        &:not(.item) {
+            @include mq-max(tablet) {
+                display: block;
+            }
+        }
+    }
+}
+
+// 活動列表
+.apply-list {
+    @extend .pt-24;
+
+    @include mq(desktop) {
+        padding-top: 48px;
+
+        .title {
+            margin-left: 48px;
+            margin-right: 48px;
+        }
+    }
+}
+
+.list-head {
+    @extend .text-white;
+
+    background: rgba(#000, .8);
+
+    th {
+        @extend .text-nowrap;
+    }
+}
+.table-list {
+    @include mq(desktop) {
+        margin: 0 48px 48px;
+
+        @include prefix(width, calc(100% - 96px), $type: o)
+    }
+
+    .date {
+        color: darken(color(info), 30);
+    }
+}
+
+// 表格變形
+.rwd-table {
+    @include mq-max(tablet) {
+        tr, td { display: block; }
+        thead { display: none; }
+        tbody tr {
+            position: relative;
+
+            // 本次專案
+            border-top: 1px solid rgba(#000, .1);
+            padding: 8px 0;
+        }
+        td {
+            text-align: left;
+            border-top: none;
+
+            &:not(:last-child)::before {
+                content: attr(data-title); // who knew you could do this? The internet, that's who.
+                margin-right: 10px;
+                color: lighten($body-color, 50);
+                font-size: rem(14);
+            }
+
+            &:nth-child(2) {
+                &::before {
+                    display: block;
+                }
+            }
+
+            padding: 4px 8px;
+        }
+    }
+}
+
+// 活動內容
+.activity-info {
+    th {
+        @extend .text-white;
+        background: rgba(#000, .8);
+    }
+}
+
+// 報名步驟
+.apply-step {
+    @extend .font-lg, .mt-12, .mb-24;
+
+    $bg: #F0E7D9;
+
+    background-color: $bg;
+
+    @include clearfix;
+
+    li {
+        $w: 18px;
+        $h: 48px;
+
+        @include mq(phone) {
+            float: left;
+            position: relative;
+            padding: 0 $w*1.8;
+
+            line-height: $h;
+
+            &:not(:last-child) {
+                padding-right: $w*.3;
+
+                @include el(all, $ext:false) {
+                    @include arrow($width: $w, $height: $h/2, $color: darken($bg, 6));
+                    @include absolute(top 0 right (-$w));
+                    z-index: 1;
+                }
+                &::before {
+                    border-left-color: rgba(#000, .15);
+                    right: -($w + 1);
+                }
+            }
+
+            &:first-child {
+                background-color: darken($bg, 6);
+            }
+            &:nth-child(2) {
+                background-color: darken($bg, 3);
+
+                &::after {
+                    border-left-color: darken($bg, 3);
+                }
+            }
+        }
+    }
+
+    em {
+        @extend .mr-8, .font-xl;
+        font-style: normal;
+
+        @include mq-max(break(phone,-1)) {
+            width: 24px;
+            text-align: center;
+            display: inline-block;
+        }
+    }
+
+    .active {
+        @extend .text-white;
+
+        $bg: #605C57;
+
+        background-color: $bg !important;
+
+        &::after {
+            border-left-color: $bg !important;
+        }
+    }
+}
+
+// 報名表單
+.form-signup {
+    legend.underline {
+        @extend .mb-16;
+
+        border-color: #f1e0c9;
+        border-width: 1px;
+        line-height: 1.8;
+    }
+
+    .form-inline {
+        label {
+            color: darken($input-color-border, 20);
+        }
+    }
+
+    .form-element {
+        &[readonly] {
+            background-color: lighten(#e9cf98, 16);
+        }
+    }
+
+    .submit-bar {
+
+        @include mq($min-width) {
+            margin: 48px -48px 0 -48px;
+            padding-left: 48px;
+            padding-right: 48px;
+        }
+
+        @include mq-max(break($min-width, -1)) {
+            margin: 48px -16px 0 -16px;
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+    }
+}
+
+// 隊伍人員群組資料
+.team-item-add {
+    @include mq(tablet) {
+        padding-left: 8px;
+    }
+    @include mq-max(break(tablet, -1)) {
+        .btn { width: 100%; }
+    }
+}
+
+// 隊伍各欄位資料
+.team-data {
+    @include mq-max(break(desktop, -1)) {
+        margin-bottom: 4px;
+    }
+    @include mq(tablet) {
+        float: left;
+        width: 29%;
+        margin-right: 1%;
+    }
+}
+
+// 報名完成
+.apply-done {
+    @include mq(mobile) {
+        padding-left: 48px;
+        position: relative;
+    }
+
+    &::before {
+        @extend .font-xxl;
+
+        color: mix(color(warning), color(success));
+
+        @include mq(mobile) {
+            @include absolute(left 0 top 2px);
+        }
+        @include mq-max(break(mobile, -1)) {
+            display: none;
+        }
+    }
+}
+// 報名完成資料
+.apply-info {
+    @extend  .my-16, .text-left;
+
+    @include mq-max(break(phone, -1)) {
+        dl {
+            @include prefix(display, flex, $type:o);
+            width: 100%;
+        }
+        dt {
+            @include prefix(flex, 1);
+            margin-right: 10px;
+        }
+        dd {
+            @include prefix(flex, 3);
+        }
+        legend .btn {
+            width: 100%;
+            margin: 8px 0;
+        }
+    }
+}
+
+
+// == 分頁
+.pager {
+    @extend .font-sm;
+
+    margin-top: 20px;
+    border-top: 1px solid rgba(#000, .05);
+    color: #494949;
+
+    @include clearfix;
+
+    @include mq(desktop) {
+        padding-left: 48px;
+        padding-right: 48px;
+    }
+
+    span, label {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    span {
+        line-height: 35px;
+    }
+    .btn {
+        padding: 0;
+
+        @include circle(35px, center);
+    }
+
+    .form-element {
+        width: 70px;
+    }
+
+    @include mq-max(break(phone-plus, -1)) {
+        padding-bottom: 20px;
+        // label { float: right; } // 選頁數
+        .btn { display: none; }
+    }
+}
+
+// == 聯絡我們
+.contact-list {
+    @extend .font-lg;
+
+    li {
+        @extend .my-16;
+
+        &::before {
+            color: darken(color(muted), 8);
+        }
+    }
+}
+
+// == editor
+.editor {
+    @extend .text-left;
+
+    word-wrap: normal;
+    word-break: break-all;
+
+    img {
+        max-width: 100% !important;
+    }
+}

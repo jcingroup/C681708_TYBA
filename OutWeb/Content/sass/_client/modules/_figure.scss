@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+figcaption {
+//     @include prefix(backface-visibility, hidden);
+//     &::before, &::after { pointer-events: none; }
+}
+
+figure {
+    position: relative;
+    // cursor: pointer;
+    margin: 0;
+
+    > a {
+        z-index: z(figure);
+        opacity: 0;
+        background: #fff; // for IE10 bugfix
+
+        @include size(100%);
+        @include absolute(left 0 top 0);
+    }
+}
