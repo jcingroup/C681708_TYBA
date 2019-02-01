@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 
 // 本頁專用變數(覆蓋)
 // ------------------------------------------------------------
@@ -36,6 +36,7 @@ $btn-radius:                     false;
 
 @import "_client/layout";
 @import "_client/modules/nav";
+@import "_client/modules/modal";
 
 @import "_client/custom"; // 建議置底
 
@@ -74,6 +75,25 @@ $btn-radius:                     false;
 @include mq-max(break(desktop,-1)) {
     .main, .news, .vedio {
         display: block;
+    }
+}
+
+// 有影片的樣式
+.modal-open {
+    cursor: pointer;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+.modal-content {
+    top: 50%;
+
+    @include transform(translateY(-50%));
+
+    iframe {
+        max-width: 100%;
     }
 }
 
@@ -158,7 +178,7 @@ $btn-radius:                     false;
 
 // FB影片
 .vedio {
-    @extend .p-24;
+    @extend .p-16;
 
     background: #262626;
 
@@ -172,12 +192,30 @@ $btn-radius:                     false;
     // padding-bottom: 56.25%;
     // height: 0;
     overflow: hidden;
+    max-height: 230px;
 
+    @include mq(mobile) {
+        max-height: 340px;
+    }
+
+    @include mq(phone) {
+        max-height: 100%;
+    }
+
+    @include mq(desktop) {
+        max-height: 320px;
+    }
+
+    @include mq(wider) {
+        max-height: 100%;
+    }
     // iframe, object, embed {
     //     @include absolute(top 0 left 0);
     //     @include size(100%);
     // }
-    img { width: 100%; }
+    img {
+        width: 100%;
+    }
 }
 
 // 活動花絮

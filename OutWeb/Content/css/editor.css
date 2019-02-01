@@ -952,35 +952,35 @@ th, td {
   color: #c6beaf; }
 
 .font-tiny {
-  font-size: 13;
+  font-size: 13px;
   font-size: 0.8125rem; }
 
 .font-sm, .btn.sm {
-  font-size: 14;
+  font-size: 14px;
   font-size: 0.875rem; }
 
 .font-md {
-  font-size: 15;
+  font-size: 15px;
   font-size: 0.9375rem; }
 
 .font-lg, .btn.lg, .goTop {
-  font-size: 18;
+  font-size: 18px;
   font-size: 1.125rem; }
 
 .font-xl {
-  font-size: 24;
+  font-size: 24px;
   font-size: 1.5rem; }
 
 .font-xxl {
-  font-size: 32;
+  font-size: 32px;
   font-size: 2rem; }
 
 .font-xxxl {
-  font-size: 48;
+  font-size: 48px;
   font-size: 3rem; }
 
 .font-jumbo {
-  font-size: 64;
+  font-size: 64px;
   font-size: 4rem; }
 
 .goTop {
@@ -1060,3 +1060,5 @@ body {
 
 img {
   max-width: 100%; }
+
+/*# sourceMappingURL=editor.css.map */

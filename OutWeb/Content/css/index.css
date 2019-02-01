@@ -744,7 +744,7 @@ dd {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem; }
 
-.p-16 {
+.p-16, .vedio {
   padding: 1rem; }
 
 .pt-16 {
@@ -767,7 +767,7 @@ dd {
   padding-top: 1rem;
   padding-bottom: 1rem; }
 
-.p-24, .vedio {
+.p-24 {
   padding: 1.5rem; }
 
 .pt-24 {
@@ -1051,7 +1051,7 @@ dd {
     font-weight: normal;
     letter-spacing: 1;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
-    font-size: 14;
+    font-size: 14px;
     font-size: 0.875rem; }
 
 .triangle-up-left {
@@ -1304,36 +1304,133 @@ svg {
   .mobile-toggle:focus {
     box-shadow: none; }
 
+.modal {
+  z-index: 999;
+  overflow: auto;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-animation: fadeIn 0.4s;
+  animation: fadeIn 0.4s;
+  padding-top: 42px;
+  padding-bottom: 42px; }
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    top: 0;
+    opacity: 1; } }
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    top: 0;
+    opacity: 1; } }
+  @media (max-width: 35.4375em) {
+    .modal {
+      padding-top: 5%;
+      padding-bottom: 5%; } }
+
+.modal-close {
+  background: none;
+  color: #fff;
+  font-size: 3.125em;
+  line-height: 1;
+  z-index: 1000;
+  -webkit-transition: color 0.35s;
+  transition: color 0.35s; }
+  .modal-close:hover, .modal-close:focus {
+    color: #ffe23f;
+    cursor: pointer; }
+  .modal > .modal-close {
+    position: fixed;
+    top: 1%;
+    right: 1.5%; }
+  .modal-content .modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0; }
+    @media (min-width: 64em) {
+      .modal-content .modal-close {
+        right: -50px; } }
+
+.modal-content {
+  margin: auto;
+  position: relative; }
+
+.animate-top {
+  position: relative;
+  -webkit-animation: slide-down 0.4s;
+  animation: slide-down 0.4s; }
+@-webkit-keyframes slide-down {
+  from {
+    top: -300px;
+    opacity: 0; }
+  to {
+    top: 0;
+    opacity: 1; } }
+@keyframes slide-down {
+  from {
+    top: -300px;
+    opacity: 0; }
+  to {
+    top: 0;
+    opacity: 1; } }
+.animate-zoom {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s; }
+@-webkit-keyframes animatezoom {
+  from {
+    -ms-transform: scale(0);
+    -webkit-transform: scale(0);
+    transform: scale(0); }
+  to {
+    -ms-transform: scale(1);
+    -webkit-transform: scale(1);
+    transform: scale(1); } }
+@keyframes animatezoom {
+  from {
+    -ms-transform: scale(0);
+    -webkit-transform: scale(0);
+    transform: scale(0); }
+  to {
+    -ms-transform: scale(1);
+    -webkit-transform: scale(1);
+    transform: scale(1); } }
 .font-tiny {
-  font-size: 13;
+  font-size: 13px;
   font-size: 0.8125rem; }
 
 .font-sm, .foot-logo small, .btn.sm {
-  font-size: 14;
+  font-size: 14px;
   font-size: 0.875rem; }
 
 .font-md, .foot-contact {
-  font-size: 15;
+  font-size: 15px;
   font-size: 0.9375rem; }
 
 .font-lg, .btn.lg, .goTop {
-  font-size: 18;
+  font-size: 18px;
   font-size: 1.125rem; }
 
 .font-xl, .foot-logo, .news .more::after {
-  font-size: 24;
+  font-size: 24px;
   font-size: 1.5rem; }
 
 .font-xxl, .mobile-toggle {
-  font-size: 32;
+  font-size: 32px;
   font-size: 2rem; }
 
 .font-xxxl {
-  font-size: 48;
+  font-size: 48px;
   font-size: 3rem; }
 
 .font-jumbo {
-  font-size: 64;
+  font-size: 64px;
   font-size: 4rem; }
 
 .goTop {
@@ -1433,6 +1530,20 @@ svg {
 @media (max-width: 63.9375em) {
   .main, .news, .vedio {
     display: block; } }
+.modal-open {
+  cursor: pointer;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat; }
+
+.modal-content {
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%); }
+  .modal-content iframe {
+    max-width: 100%; }
+
 .news {
   background: url(../images/index/newsBg.jpg) center no-repeat;
   background-size: cover;
@@ -1495,7 +1606,20 @@ svg {
   background: #262626; }
 
 .video-contain {
-  overflow: hidden; }
+  overflow: hidden;
+  max-height: 230px; }
+  @media (min-width: 23.4375em) {
+    .video-contain {
+      max-height: 340px; } }
+  @media (min-width: 35.5em) {
+    .video-contain {
+      max-height: 100%; } }
+  @media (min-width: 64em) {
+    .video-contain {
+      max-height: 320px; } }
+  @media (min-width: 87.5em) {
+    .video-contain {
+      max-height: 100%; } }
   .video-contain img {
     width: 100%; }
 
@@ -1533,3 +1657,5 @@ svg {
     display: none; } }
 iframe {
   max-width: 100%; }
+
+/*# sourceMappingURL=index.css.map */
