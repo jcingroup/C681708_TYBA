@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 
 // overlay
 .modal {
@@ -41,11 +41,17 @@
         color: $modal-close-color-hover;
         cursor: pointer;
     }
+
     .modal > & {
         @include fixed(top 1% right 1.5%);
     }
+
     .modal-content & {
-        @include absolute(top -40px right -50px);
+        @include absolute(top -40px right 0);
+
+        @include mq(desktop) {
+            right: -50px;
+        }
     }
 }
 
@@ -54,13 +60,10 @@
     margin: auto;
     position: relative;
 
-    @if $modal-content-bg {
-        background-color: $modal-content-bg;
-    }
+    //@if $modal-content-bg {
+    //    background-color: $modal-content-bg;
+    //}
 
-    // 本次專案
-    max-width: 1120px;
-    padding: 32px;
 }
 
 // 特效

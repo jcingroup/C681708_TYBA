@@ -191,6 +191,25 @@
             </tr>
         }
     </table>
+    <footer class="table-foot">
+        @{
+            int beginCount = Model.ListData.Result.Pagination.CurrentPage > 1 ? ((Model.ListData.Result.Pagination.CurrentPage - 1) * Model.ListData.Result.Pagination.PageSize) + 1 : 1;
+            int lastCount =
+                Model.ListData.Result.Data.Count >= Model.ListData.Result.Pagination.PageSize ?
+                ((Model.ListData.Result.Pagination.CurrentPage) * Model.ListData.Result.Pagination.PageSize) : Model.ListData.Result.Pagination.DataCount;
+            string disabledPre = Model.ListData.Result.Pagination.CurrentPage == 1 ? "disabled" : "";
+            string disabledNext = Model.ListData.Result.Pagination.CurrentPage == Model.ListData.Result.Pagination.LastPage ? "disabled" : "";
+            string disabledPageInput = Model.ListData.Result.Pagination.LastPage == 1 ? "disabled" : "";
+        }
+        <small class="pull-right">第 @beginCount - @lastCount 筆，共 @Model.ListData.Result.Pagination.DataCount 筆</small>
+        <nav class="pager">
+            <button @disabledPre class="oi" data-glyph="media-step-backward" title="到最前頁" type="button" onclick="paginationSubmit('@Model.ListData.Result.Pagination.FirstPage');"></button>
+            <button @disabledPre class="oi" data-glyph="chevron-left" title="上一頁" type="button" onclick="paginationSubmit('@Model.ListData.Result.Pagination.PrePage');"></button>
+            <span>第<input @disabledPageInput id="numPage" name="page" class="text-center" type="number" value="@Model.ListData.Result.Pagination.CurrentPage">頁，共 @Model.ListData.Result.Pagination.LastPage 頁</span>
+            <button @disabledNext class="oi" data-glyph="chevron-right" title="下一頁" type="button" onclick="paginationSubmit('@Model.ListData.Result.Pagination.NextPage');"></button>
+            <button @disabledNext class="oi" data-glyph="media-step-forward" title="到最後頁" type="button" onclick="paginationSubmit('@Model.ListData.Result.Pagination.LastPage')"></button>
+        </nav>
+    </footer>
 }
 
 @* 隱藏: hidden *@
@@ -226,8 +245,6 @@
         </footer>
     </div><!-- modal-content //-->
 </div><!-- modal //-->
-
-
 @*<div id="md1" class="modal" onclick="closeModal();" hidden>
         <div class="modal-content p-8">
             <header class="modal-header clearfix">
@@ -406,7 +423,7 @@
             $('body').css('overflow', 'hidden');
         }
 
-        
+
         // modal open
         $(".export-reply").click(function (e) {
             var modal = $(this).attr("data-modal");

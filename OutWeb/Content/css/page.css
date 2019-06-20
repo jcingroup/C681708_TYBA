@@ -1272,7 +1272,7 @@ output {
     font-weight: normal;
     letter-spacing: 1;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
-    font-size: 14;
+    font-size: 14px;
     font-size: 0.875rem; }
 
 .triangle-up-left {
@@ -1617,35 +1617,35 @@ svg {
       margin-bottom: 0.5rem; }
 
 .font-tiny {
-  font-size: 13;
+  font-size: 13px;
   font-size: 0.8125rem; }
 
 .font-sm, .foot-logo small, .btn.sm, .breadcrumb, .pager {
-  font-size: 14;
+  font-size: 14px;
   font-size: 0.875rem; }
 
 .font-md, .foot-contact, .field .btn {
-  font-size: 15;
+  font-size: 15px;
   font-size: 0.9375rem; }
 
 .font-lg, .btn.lg, .goTop, .apply-step, .contact-list {
-  font-size: 18;
+  font-size: 18px;
   font-size: 1.125rem; }
 
 .font-xl, .foot-logo, .apply-step em {
-  font-size: 24;
+  font-size: 24px;
   font-size: 1.5rem; }
 
 .font-xxl, .mobile-toggle, .apply-done::before {
-  font-size: 32;
+  font-size: 32px;
   font-size: 2rem; }
 
 .font-xxxl {
-  font-size: 48;
+  font-size: 48px;
   font-size: 3rem; }
 
 .font-jumbo {
-  font-size: 64;
+  font-size: 64px;
   font-size: 4rem; }
 
 .goTop {
@@ -1972,3 +1972,5 @@ svg {
   word-break: break-all; }
   .editor img {
     max-width: 100% !important; }
+
+/*# sourceMappingURL=page.css.map */

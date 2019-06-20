@@ -1253,35 +1253,35 @@ output {
     background-image: url(../images/temp-t2.gif); }
 
 .font-tiny {
-  font-size: 12;
+  font-size: 12px;
   font-size: 0.75rem; }
 
 .font-sm, .btn.sm {
-  font-size: 13;
+  font-size: 13px;
   font-size: 0.8125rem; }
 
 .font-md, label {
-  font-size: 15;
+  font-size: 15px;
   font-size: 0.9375rem; }
 
 .font-lg, .btn.lg, .title {
-  font-size: 20;
+  font-size: 20px;
   font-size: 1.25rem; }
 
 .font-xl {
-  font-size: 24;
+  font-size: 24px;
   font-size: 1.5rem; }
 
 .font-xxl, .site-title {
-  font-size: 32;
+  font-size: 32px;
   font-size: 2rem; }
 
 .font-xxxl {
-  font-size: 48;
+  font-size: 48px;
   font-size: 3rem; }
 
 .font-jumbo {
-  font-size: 64;
+  font-size: 64px;
   font-size: 4rem; }
 
 .w-15 {
@@ -1316,3 +1316,5 @@ form {
 
 .action-bar {
   border-top: 1px solid #3c80a6; }
+
+/*# sourceMappingURL=login.css.map */

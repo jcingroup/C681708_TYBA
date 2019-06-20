@@ -19,6 +19,18 @@
             // grabCursor: true,
             effect: 'fade'
         });
+
+        // 直播影片用，點開直接播放，關閉就停止播放(移除程式碼)，參考：https://live.fb.com/
+        //var ifamevideo = '<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ftyba99%2Fvideos%2F712741642453743%2F&show_text=0&width=560" width="560" height="372" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>', modalMain = "#youtube-video";
+        //function openModal() {
+        //    console.dir("111");
+        //    $(modalMain).append($(ifamevideo));
+        //    $('.modal').show();
+        //}
+        //function closeModal() {
+        //    $(modalMain).find('iframe').remove();
+        //    $('.modal').hide();
+        //}
     </script>
 }
 
@@ -38,11 +50,11 @@
 
 <section class="wrap cells main">
     <aside class="cell vedio">
-        <h4 class="title"><span class="underline">FB影片</span></h4>
-        <a class="video-contain block" href="https://www.facebook.com/tyba99/videos/?ref=page_internal" target="new">
-            @* <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ftyba99%2Fvideos%2F1600943106628525%2F&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe> *@
-            <img src="~/Content/images/index/vedio.jpg" alt="影片示意圖">
-        </a>
+        <h4 class="title"><span class="underline">籃球元年</span></h4>
+        <div class="video-contain block pt-16">
+            <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ftyba99%2Fvideos%2F712741642453743%2F&show_text=0&width=560" width="560" height="373" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
+            @*<img src="~/Content/images/index/vedio.jpg" alt="影片示意圖">*@
+        </div>
     </aside>
 
     <article class="cell news">
@@ -64,9 +76,22 @@
     <h4 class="title underline">活動花絮</h4>
     @* <iframe scrolling="no" marginheight="0" frameborder="0" width="1061" style="height:420px;" src="https://socialgalleria.com/gallery.php?id=tyba99&rows=2&margin=10&cols=5&width=200&font_size=11&title_color=000&hide_next_back=1&share_buttons=1&shape=rectangle&frame=1"></iframe> *@
     <a class="mb-32 block" href="https://www.facebook.com/pg/tyba99/photos/" target="new">
-        <img class="gallery-desktop" src="~/Content/images/index/gallery.jpg" alt="相簿圖">
-        <img class="gallery-tablet" src="~/Content/images/index/gallery2.jpg" alt="相簿圖">
-        <img class="gallery-phone" src="~/Content/images/index/gallery3.jpg" alt="相簿圖">
+        <img src="~/Content/images/index/gallery2018.jpg" alt="相簿圖">
+        @*<img class="gallery-desktop" src="~/Content/images/index/gallery.jpg" alt="相簿圖">*@
+        @*<img class="gallery-tablet" src="~/Content/images/index/gallery2.jpg" alt="相簿圖">*@
+        @*<img class="gallery-phone" src="~/Content/images/index/gallery3.jpg" alt="相簿圖">*@
     </a>
-    <footer><a class="btn more" href="https://www.facebook.com/pg/tyba99/photos/" target="new">看更多花絮</a></footer>
+            <footer><a class="btn more" href="https://www.facebook.com/pg/tyba99/photos/" target="new">看更多花絮</a></footer>
+        </section>
+        <section>
+            <div class="modal" onclick="closeModal()" hidden>
+                <main id="youtube-video" class="modal-content inline-block">
+
+                    @* modal-close 點選> 下面的程式碼就刪除 *@
+        <button class="modal-close" onclick="closeModal()">&#215;</button>
+
+        @* 上面的 modal-open 點選> 才載入下面的程式碼 *@
+
+        </main>
+        </div>
 </section>
