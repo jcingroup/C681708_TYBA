@@ -173,6 +173,7 @@
             background: url(#{$img-path}/footer-bg.png) 0 0 no-repeat;
 
             @include absolute(right 8px top -112px);
+            z-index: 1;
         }
     }
 }
@@ -240,11 +241,10 @@
 
         background: url(#{$img-path}/foot-icon.gif) 0 1px no-repeat;
         padding-left: 36px;
-
-        &:nth-child(1) { @extend .py-4; }
-        &:nth-child(2) { background-position: 0 -42px; }
-        &:nth-child(3) { background-position: 0 -77px; }
     }
+    .icon-email { background-position: 0 -42px; }
+    .icon-msg { background-position: 0 -77px; }
+    .icon-fax { background-image: url(#{$img-path}/foot-icon-fax.gif); }
 
     a {
         @extend .text-white;

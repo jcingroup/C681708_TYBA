@@ -1599,6 +1599,7 @@
     <Content Include="Content\images\bg.gif" />
     <Content Include="Content\images\contactBg.jpg" />
     <Content Include="Content\images\downloadBg.jpg" />
+    <Content Include="Content\images\foot-icon-fax.gif" />
     <Content Include="Content\images\foot-icon.gif" />
     <Content Include="Content\images\footer-bg.png" />
     <Content Include="Content\images\gallery\photo1.jpg" />
